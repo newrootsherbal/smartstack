@@ -8,8 +8,9 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "typecheck": "tsc -p tsconfig.json",
-    "data:validate": "node --experimental-strip-types scripts/validate-data.ts"
+    "typecheck": "tsc -p tsconfig.json && tsc -p scripts/tsconfig.json",
+    "data:validate": "tsx scripts/validate-data.ts",
+    "data:import": "tsx scripts/import-csv.ts"
   },
   "dependencies": {
     "@smartstack/shared": "*"

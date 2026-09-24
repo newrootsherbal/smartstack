@@ -1,0 +1,53 @@
+{
+  "app": {
+    "name": "SmartStack",
+    "tagline": "Your supplements. Your schedule. Smarter timing."
+  },
+  "banner": {
+    "sample": "Sample data — not reviewed, not medical advice. Rules and product details are placeholders for testing. Talk to a healthcare professional about your supplements."
+  },
+  "nav": {
+    "today": "Today",
+    "stack": "My stack",
+    "add": "Add",
+    "reminders": "Reminders",
+    "settings": "Settings"
+  },
+  "severity": {
+    "important": { "label": "Important", "sub": "Action required" },
+    "timing_conflict": { "label": "Timing conflict", "sub": "Action recommended" },
+    "consideration": { "label": "Consideration", "sub": "" },
+    "product_instruction": { "label": "Product instruction", "sub": "" },
+    "informational": { "label": "Informational", "sub": "" }
+  },
+  "anchor": {
+    "breakfast": "Morning",
+    "lunch": "Lunch",
+    "dinner": "Evening",
+    "bedtime": "Bedtime"
+  },
+  "adjustment": {
+    "MOVED_AWAY_FROM_INGREDIENT": "{product} moved away from {ingredient}",
+    "MOVED_AWAY_FROM_COFFEE_TEA": "{product} moved away from coffee/tea",
+    "MOVED_TO_MEAL": "{product} moved to a meal",
+    "MOVED_TO_MORNING": "{product} moved to the morning",
+    "MOVED_TO_EVENING": "{product} moved to the evening",
+    "MOVED_TO_BEDTIME": "{product} moved to bedtime"
+  },
+  "reason": {
+    "short": {
+      "WITH_FOOD": "Take with food",
+      "WITHOUT_FOOD": "Take without food",
+      "WITH_FAT": "Take with a meal that contains some fat",
+      "MORNING": "Morning dose",
+      "EVENING": "Evening dose",
+      "BEDTIME": "Bedtime dose",
+      "SEPARATE_FROM_CALCIUM": "Take separately from calcium",
+      "SEPARATE_FROM_IRON": "Take separately from iron",
+      "SEPARATE_FROM_COFFEE_TEA": "Avoid coffee/tea around this dose",
+      "TAKE_WITH_WATER": "Take with water",
+      "REFRIGERATE": "Keep refrigerated"
+    },
+    "separatedBy": "Separated by {hours} h from {ingredient}"
+  }
+}

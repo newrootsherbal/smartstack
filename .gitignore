@@ -24,3 +24,6 @@ worker-configuration.d.ts
 .DS_Store
 Thumbs.db
 *.log
+
+# CSV importer output (reviewed by hand, then merged into data/)
+packages/engine/data/import/

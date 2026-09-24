@@ -1,0 +1,21 @@
+[
+  { "id": "iron", "name": { "en": "Iron", "fr": "Fer" }, "unit": "mg" },
+  { "id": "calcium", "name": { "en": "Calcium", "fr": "Calcium" }, "unit": "mg" },
+  { "id": "magnesium", "name": { "en": "Magnesium", "fr": "Magnésium" }, "unit": "mg" },
+  { "id": "vitamin-d", "name": { "en": "Vitamin D", "fr": "Vitamine D" }, "unit": "mcg" },
+  { "id": "zinc", "name": { "en": "Zinc", "fr": "Zinc" }, "unit": "mg" },
+  { "id": "vitamin-c", "name": { "en": "Vitamin C", "fr": "Vitamine C" }, "unit": "mg" },
+  {
+    "id": "fish-oil",
+    "name": { "en": "Fish oil (EPA + DHA)", "fr": "Huile de poisson (AEP + ADH)" },
+    "unit": "mg"
+  },
+  {
+    "id": "probiotic",
+    "name": { "en": "Probiotic cultures", "fr": "Cultures probiotiques" },
+    "unit": "CFU"
+  },
+  { "id": "vitamin-b6", "name": { "en": "Vitamin B6", "fr": "Vitamine B6" }, "unit": "mg" },
+  { "id": "vitamin-b12", "name": { "en": "Vitamin B12", "fr": "Vitamine B12" }, "unit": "mcg" },
+  { "id": "folate", "name": { "en": "Folate", "fr": "Folate" }, "unit": "mcg" }
+]

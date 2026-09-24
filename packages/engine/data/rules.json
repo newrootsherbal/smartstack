@@ -1,0 +1,132 @@
+[
+  {
+    "id": "rule-multi-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": { "productId": "sample-multi" },
+    "severity": "consideration",
+    "explanation": { "en": "Taking this with food may be preferable." },
+    "evidenceUrl": null,
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-multi-morning",
+    "attribute": "MORNING",
+    "appliesTo": { "productId": "sample-multi" },
+    "severity": "consideration",
+    "explanation": { "en": "Scheduled with breakfast based on your routine." },
+    "evidenceUrl": null,
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-iron-water",
+    "attribute": "TAKE_WITH_WATER",
+    "appliesTo": { "ingredientId": "iron" },
+    "severity": "informational",
+    "explanation": { "en": "Take with a glass of water." },
+    "evidenceUrl": null,
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-iron-separate-calcium",
+    "attribute": "SEPARATE_FROM_CALCIUM",
+    "appliesTo": { "ingredientId": "iron" },
+    "severity": "timing_conflict",
+    "separationMinutes": 120,
+    "explanation": {
+      "en": "Calcium may interfere with iron absorption. We've scheduled these at different times."
+    },
+    "evidenceUrl": "https://ods.od.nih.gov/factsheets/Iron-HealthProfessional/",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-iron-separate-coffee",
+    "attribute": "SEPARATE_FROM_COFFEE_TEA",
+    "appliesTo": { "ingredientId": "iron" },
+    "severity": "consideration",
+    "separationMinutes": 120,
+    "explanation": {
+      "en": "Coffee and tea may reduce iron absorption. This dose is scheduled away from your coffee."
+    },
+    "evidenceUrl": "https://ods.od.nih.gov/factsheets/Iron-HealthProfessional/",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-calcium-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": { "ingredientId": "calcium" },
+    "severity": "consideration",
+    "explanation": { "en": "Taking this with food may be preferable." },
+    "evidenceUrl": "https://ods.od.nih.gov/factsheets/Calcium-HealthProfessional/",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-calcium-evening",
+    "attribute": "EVENING",
+    "appliesTo": { "ingredientId": "calcium" },
+    "severity": "consideration",
+    "explanation": { "en": "Scheduled with your evening meal based on your routine." },
+    "evidenceUrl": null,
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-magnesium-bedtime",
+    "attribute": "BEDTIME",
+    "appliesTo": { "ingredientId": "magnesium" },
+    "severity": "consideration",
+    "explanation": { "en": "Scheduled at bedtime based on your selected routine." },
+    "evidenceUrl": null,
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-fish-oil-with-fat",
+    "attribute": "WITH_FAT",
+    "appliesTo": { "ingredientId": "fish-oil" },
+    "severity": "consideration",
+    "preferredAnchors": ["lunch", "dinner", "breakfast"],
+    "explanation": { "en": "Taking this with a meal that contains some fat may be preferable." },
+    "evidenceUrl": "https://ods.od.nih.gov/factsheets/Omega3FattyAcids-HealthProfessional/",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-probiotic-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": { "ingredientId": "probiotic" },
+    "severity": "informational",
+    "preferredAnchors": ["lunch"],
+    "explanation": { "en": "Scheduled with a meal based on your routine." },
+    "evidenceUrl": "https://ods.od.nih.gov/factsheets/Probiotics-HealthProfessional/",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-vitamin-d-with-fat",
+    "attribute": "WITH_FAT",
+    "appliesTo": { "ingredientId": "vitamin-d" },
+    "severity": "consideration",
+    "preferredAnchors": ["breakfast", "lunch", "dinner"],
+    "explanation": { "en": "Taking this with a meal that contains some fat may be preferable." },
+    "evidenceUrl": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  }
+]

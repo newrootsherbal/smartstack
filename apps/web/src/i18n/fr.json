@@ -1,0 +1,68 @@
+{
+  "app": {
+    "name": "",
+    "tagline": ""
+  },
+  "banner": {
+    "sample": ""
+  },
+  "nav": {
+    "today": "",
+    "stack": "",
+    "add": "",
+    "reminders": "",
+    "settings": ""
+  },
+  "severity": {
+    "important": {
+      "label": "",
+      "sub": ""
+    },
+    "timing_conflict": {
+      "label": "",
+      "sub": ""
+    },
+    "consideration": {
+      "label": "",
+      "sub": ""
+    },
+    "product_instruction": {
+      "label": "",
+      "sub": ""
+    },
+    "informational": {
+      "label": "",
+      "sub": ""
+    }
+  },
+  "anchor": {
+    "breakfast": "",
+    "lunch": "",
+    "dinner": "",
+    "bedtime": ""
+  },
+  "adjustment": {
+    "MOVED_AWAY_FROM_INGREDIENT": "",
+    "MOVED_AWAY_FROM_COFFEE_TEA": "",
+    "MOVED_TO_MEAL": "",
+    "MOVED_TO_MORNING": "",
+    "MOVED_TO_EVENING": "",
+    "MOVED_TO_BEDTIME": ""
+  },
+  "reason": {
+    "short": {
+      "WITH_FOOD": "",
+      "WITHOUT_FOOD": "",
+      "WITH_FAT": "",
+      "MORNING": "",
+      "EVENING": "",
+      "BEDTIME": "",
+      "SEPARATE_FROM_CALCIUM": "",
+      "SEPARATE_FROM_IRON": "",
+      "SEPARATE_FROM_COFFEE_TEA": "",
+      "TAKE_WITH_WATER": "",
+      "REFRIGERATE": ""
+    },
+    "separatedBy": ""
+  }
+}
