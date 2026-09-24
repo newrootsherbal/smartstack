@@ -88,3 +88,29 @@ describe('imported New Roots Herbal catalogue', () => {
     expect(searchProducts('').length).toBe(catalogue.products.length)
   })
 })
+
+describe('label "with food" versus ingredient anchors', () => {
+  it('keeps a calcium product at dinner even though its label only says "with food"', () => {
+    const schedule = buildSchedule(
+      {
+        wake: '06:30',
+        coffee: null,
+        breakfast: '07:30',
+        lunch: '12:00',
+        dinner: '18:00',
+        exercise: null,
+        bedtime: '22:00',
+      },
+      [{ productId: 'calcium-citrate-and-vitamin-d3', dosesPerDay: 1 }],
+    )
+    expect(schedule.placements.map((p) => [p.time, p.anchor])).toEqual([['18:00', 'dinner']])
+    expect(schedule.adjustments.map((a) => a.code)).toEqual(['MOVED_TO_EVENING'])
+  })
+
+  it('lets a label bedtime statement beat an ingredient rule', () => {
+    const melatonin = catalogue.products.find((p) => p.id === 'melatonin-3-mg')
+    if (!melatonin) return
+    const attrs = rulesForProduct(melatonin).map((r) => r.attribute)
+    expect(attrs).toContain('BEDTIME')
+  })
+})

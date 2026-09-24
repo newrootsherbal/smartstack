@@ -121,19 +121,35 @@ function pickFixedAnchor(
   rules: readonly TimingRule[],
   available: ReadonlySet<MealAnchor>,
 ): FixedAnchor | null {
-  // What the label says (product-level rules) beats what an ingredient implies.
+  // A time the label states (bedtime, morning, a meal preference) beats what an
+  // ingredient implies; a plain "with food" names no time, so it only decides
+  // when nothing else does (and an evening calcium dose is still "with food").
   const productLevel = rules.filter((r) => 'productId' in r.appliesTo)
   const ingredientLevel = rules.filter((r) => !('productId' in r.appliesTo))
   return (
-    pickFixedAnchorFrom(productLevel, available) ?? pickFixedAnchorFrom(ingredientLevel, available)
+    pickFixedAnchorFrom(productLevel, available, false) ??
+    pickFixedAnchorFrom(ingredientLevel, available, false) ??
+    pickFixedAnchorFrom(rules, available, true)
   )
 }
 
 function pickFixedAnchorFrom(
   rules: readonly TimingRule[],
   available: ReadonlySet<MealAnchor>,
+  plainWithFood: boolean,
 ): FixedAnchor | null {
   const byAttr = (attr: TimingRule['attribute']) => rules.find((r) => r.attribute === attr)
+  if (plainWithFood) {
+    const withFood = byAttr('WITH_FOOD') ?? byAttr('WITH_FAT')
+    if (withFood) {
+      return {
+        anchor: resolveMeal(['breakfast'], available),
+        rule: withFood,
+        code: 'MOVED_TO_MEAL',
+      }
+    }
+    return null
+  }
 
   const bedtime = byAttr('BEDTIME')
   if (bedtime) return { anchor: 'bedtime', rule: bedtime, code: 'MOVED_TO_BEDTIME' }
@@ -161,11 +177,6 @@ function pickFixedAnchorFrom(
       rule: withPreference,
       code: 'MOVED_TO_MEAL',
     }
-  }
-
-  const withFood = byAttr('WITH_FOOD') ?? byAttr('WITH_FAT')
-  if (withFood) {
-    return { anchor: resolveMeal(['breakfast'], available), rule: withFood, code: 'MOVED_TO_MEAL' }
   }
 
   return null
