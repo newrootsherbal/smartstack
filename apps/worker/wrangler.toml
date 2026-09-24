@@ -1,0 +1,29 @@
+# New Roots SmartStack — one Worker on the Cloudflare free plan.
+# Serves apps/web/dist as static assets, handles /api/*, and (from the Worker
+# milestone) runs a Cron Trigger every minute to send Web Push reminders.
+name = "smartstack"
+main = "src/index.ts"
+compatibility_date = "2026-09-01"
+
+[assets]
+directory = "../web/dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+# API requests must always reach the Worker, never the SPA fallback.
+run_worker_first = ["/api/*"]
+
+[observability]
+enabled = true
+
+[vars]
+# Public VAPID key (the private half is a secret: `wrangler secret put VAPID_PRIVATE_KEY`).
+VAPID_PUBLIC_KEY = ""
+# Replace with the real mailto: address before the employee beta.
+VAPID_SUBJECT = "mailto:smartstack@example.com"
+# Start at 20; raise toward 45 only after Workers Logs show a full batch under ~6 ms CPU.
+MAX_PUSHES_PER_TICK = "20"
+# Must match VITE_BETA_KEY in apps/web/.env. A speed bump, not security.
+BETA_KEY = "qEjK2x-cvUwSsn4qF-1RsKhd"
+
+# D1 binding and the every-minute cron are added in the Worker milestone
+# (after `wrangler d1 create smartstack` has produced a real database_id).

@@ -1,0 +1,17 @@
+{
+  "name": "@smartstack/engine",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Deterministic, zone-free supplement scheduling rules engine (pure TypeScript)",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "data:validate": "node --experimental-strip-types scripts/validate-data.ts"
+  },
+  "dependencies": {
+    "@smartstack/shared": "*"
+  }
+}

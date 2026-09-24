@@ -1,0 +1,23 @@
+{
+  "name": "@smartstack/worker",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cloudflare Worker: serves the web app, /api/*, and the every-minute reminder cron",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --test-scheduled",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc -p tsconfig.json",
+    "db:migrate:local": "wrangler d1 migrations apply smartstack --local",
+    "db:migrate:remote": "wrangler d1 migrations apply smartstack --remote"
+  },
+  "dependencies": {
+    "@smartstack/shared": "*",
+    "hono": "^4.13.9",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260924.1",
+    "wrangler": "^4.138.0"
+  }
+}

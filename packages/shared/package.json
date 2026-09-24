@@ -1,0 +1,16 @@
+{
+  "name": "@smartstack/shared",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Types and zod schemas shared by the engine, the web app and the Worker",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "zod": "^4.6.5"
+  }
+}

@@ -1,0 +1,477 @@
+New Roots SmartStack – ROOTED - RootStack 
+ 
+New Roots SmartStack Pitch 
+Your supplements. Your schedule. Smarter timing. 
+1. Executive Summary 
+New Roots Herbal has an opportunity to turn its extensive supplement portfolio into a 
+personalized digital experience that helps consumers understand not only what 
+supplements to take, but when to take them — and why. 
+New Roots SmartStack would be a mobile app that allows users to: 
+• Scan a New Roots product barcode  
+• Automatically identify the exact product and formulation 
+• Build their personal supplement "stack" 
+• Enter and schedule the number of capsules/doses they take 
+• Choose their normal meal, coffee, workout and bedtime schedule 
+• Automatically generate a personalized daily supplement schedule 
+• Receive reminders 
+• Identify potential timing conflicts between supplements 
+• Identify ingredients that may compete for absorption 
+• Flag relevant food/beverage interactions 
+• Flag relevant medication interactions 
+• Explain the reason behind each timing recommendation 
+• Adjust the schedule when the user's daily routine changes 
+Instead of simply saying: 
+"Take your iron at 8:00 AM. " 
+the app could say: 
+Iron — 8:00 AM 
+
+Take with water. 
+Avoid taking at the same time as calcium. 
+Your schedule has moved your calcium supplement to 12:00 PM to help separate the two. 
+Coffee reminder: Your morning coffee is at 7:30 AM. We've scheduled your iron for 9:30 
+AM. 
+This transforms New Roots from simply being a supplement manufacturer into a company 
+providing a digital supplement-management ecosystem. 
+ 
+2. The Problem with Regular Consumers 
+Consumers are increasingly taking multiple supplements at the same time. 
+The problem is that supplement routines become complicated very quickly. 
+Someone might take: 
+• A multivitamin 
+• Magnesium 
+• Calcium 
+• Iron 
+• Vitamin D 
+• Fish oil 
+• Probiotics 
+• Zinc 
+• An herbal formula 
+• A protein supplement 
+• Prescription medications 
+The consumer is then left to figure out: 
+• What should I take with food? 
+• What should I take without food? 
+• What should I take in the morning? 
+
+• What should I take at night? 
+• Can I take these together? 
+• Should I separate these? 
+• Can I take this with coffee? 
+• Can I take this with my medication? 
+• Do I need to take this every day? 
+• Which products already contain the same nutrients? 
+• Am I accidentally doubling up on something? 
+Even New Roots' own product directions can contain timing instructions. For example, the 
+current Multi product says that people taking other medications should take the product a 
+few hours before or after them. 
+Health Canada also specifically recommends that consumers tell healthcare professionals 
+about the natural health products and medications they use to prevent interactions. 
+The information exists. 
+The problem is that consumers don't have an easy way to organize it. 
+ 
+3. The Solution 
+New Roots SmartStack 
+A personalized supplement scheduling engine. 
+The consumer enters their products once. 
+The system does the complicated work behind the scenes. 
+Step 1 — Scan 
+The consumer opens the app and scans: 
+"Add Supplement" → Scan Barcode 
+The system recognizes: 
+
+New Roots Herbal 
+Iron Bisglycinate 
+NPN XXXXXXXX 
+It automatically retrieves the product information. 
+Health Canada's Licensed Natural Health Products Database contains information 
+including NPN, medicinal ingredients, dosage form, recommended use and risk 
+information, creating an important Canadian regulatory data source for validating product 
+information. 
+For New Roots products specifically, the company could maintain its own authoritative 
+product database. 
+ 
+4. The Product Database 
+This is arguably the most valuable part of the entire project. 
+Every product would have a structured digital profile. 
+Product information 
+• Product name 
+• SKU 
+• UPC/barcode 
+• NPN 
+• Dosage form 
+• Serving size 
+• Recommended dose 
+• Medicinal ingredients 
+• Amount per dose 
+• Forms of nutrients 
+• Non-medicinal ingredients 
+• Allergens 
+• Warnings 
+
+• Contraindications 
+• Recommended use 
+• Storage requirements 
+• Current label 
+• Product status 
+• Version/revision date 
+Timing information 
+Each ingredient/product could also have structured attributes such as: 
+WITH FOOD 
+WITHOUT FOOD 
+WITH FAT 
+MORNING 
+EVENING 
+BEDTIME 
+SEPARATE FROM CALCIUM 
+SEPARATE FROM IRON 
+SEPARATE FROM SPECIFIC MEDICATIONS 
+SEPARATE FROM COFFEE/TEA 
+TAKE WITH WATER 
+REFRIGERATE 
+etc. 
+Importantly, these shouldn't be generated casually by AI. 
+They should come from a reviewed rules database supported by scientific literature, 
+product labels, Health Canada information and review by appropriately qualified 
+professionals. 
+ 
+5. The "Smart" Part 
+
+The app would have a Supplement Scheduling Engine. 
+Think of it as a rules engine rather than simply an AI chatbot. 
+For example: 
+User selects: 
+7:00 AM — Coffee 
+7:30 AM — Breakfast 
+12:00 PM — Lunch 
+6:00 PM — Dinner 
+10:00 PM — Bed 
+And enters: 
+• Iron 
+• Calcium 
+• Magnesium 
+• Multivitamin 
+• Fish oil 
+• Probiotic 
+The system evaluates the entire stack. 
+Instead of scheduling everything at 7:30 AM, it might create something like: 
+7:30 AM — Breakfast 
+Multivitamin 
+Take with breakfast. 
+9:30 AM 
+Iron 
+Scheduled separately from calcium-containing supplements. 
+Special note: Avoid taking with coffee/tea when applicable according to the validated 
+interaction rule. 
+
+12:00 PM — Lunch 
+Fish Oil 
+Take with a meal. 
+6:00 PM — Dinner 
+Calcium 
+Take with food. 
+10:00 PM 
+Magnesium 
+Scheduled at bedtime based on the user's selected routine. 
+The exact rules would need to be determined and medically/regulatorily reviewed rather 
+than assumed. 
+For example, NIH guidance specifically notes that calcium can interfere with iron 
+absorption and that taking the two at different times may help avoid that problem. 
+ 
+6. The App Should Explain Its Recommendations 
+This is extremely important. 
+Instead of simply moving supplements around invisibly, the user should be able to tap: 
+"Why?" 
+And see: 
+Why are these separated? 
+Calcium may interfere with iron absorption. We've scheduled these at different times. 
+Then: 
+Learn more 
+→ Evidence/source 
+→ Product information 
+→ Last reviewed 
+→ Reviewed by 
+
+This creates transparency and consumer trust. 
+ 
+7. Interaction Severity System 
+Not every interaction is equally important. 
+The app should distinguish between: 
+    Important 
+Potentially significant medication/supplement interaction. 
+Action required 
+Do not combine without speaking with your healthcare professional. 
+    Timing conflict 
+Taking these together may interfere with absorption/effectiveness. 
+Action recommended 
+We've separated these by X hours. 
+    Consideration 
+Timing may be preferable but isn't necessarily critical. 
+Taking this with food may be preferable. 
+    Product instruction 
+Directly based on the product label. 
+New Roots recommends taking this product with food. 
+    Informational 
+General educational information. 
+This prevents the app from making every interaction look like an emergency. 
+ 
+8. Personalized Schedule Creation 
+During onboarding, the app asks: 
+
+What time do you normally wake up? 
+7:00 AM 
+When do you drink coffee? 
+7:30 AM 
+Breakfast? 
+8:00 AM 
+Lunch? 
+12:00 PM 
+Dinner? 
+6:00 PM 
+Bedtime? 
+10:30 PM 
+Exercise? 
+5:30 PM 
+Then: 
+"Build My Schedule" 
+The engine creates the best-fit schedule within those constraints. 
+The user doesn't have to understand supplement timing themselves. 
+ 
+9. The Schedule Should Be Flexible 
+Real life isn't a fixed schedule. 
+The app should have: 
+"I'm running late" 
+Tap: 
+My morning changed 
+The app recalculates the day's schedule. 
+
+Or: 
+"I missed my 8 AM dose. " 
+The app can provide the appropriate next-step information based on the product's 
+validated rules. 
+This makes it much more useful than a standard reminder app. 
+ 
+10. Barcode + Label Scanning 
+There should be two ways to add a product. 
+Option A — Barcode 
+Scan UPC. 
+Option B — Label/photo 
+User photographs the Supplement Facts panel. 
+OCR identifies: 
+• Product 
+• Ingredients 
+• Dosage 
+• Strength 
+The user confirms the information before saving. 
+Existing supplement apps already demonstrate that barcode and label scanning are 
+technically feasible. 
+The New Roots opportunity is to make the underlying product information and timing 
+engine substantially more authoritative and brand-specific. 
+ 
+11. The Killer Feature: "Optimize My Stack" 
+The user presses: 
+OPTIMIZE MY STACK 
+The app analyzes: 
+
+Products 
++ 
+Ingredients 
++ 
+Dosages 
++ 
+Food 
++ 
+Coffee/tea 
++ 
+Medication 
++ 
+User schedule 
+And produces: 
+Your Personalized Schedule 
+7:30 AM 
+Breakfast supplements 
+9:30 AM 
+Iron 
+12:00 PM 
+Lunch supplements 
+6:00 PM 
+Dinner supplements 
+10:00 PM 
+Bedtime supplements 
+Then: 
+"3 adjustments were made" 
+1. Iron moved away from calcium. 
+2. Fish oil moved to a meal. 
+3. Magnesium moved to bedtime. 
+That is the feature I'd build the entire pitch around. 
+
+ 
+12. Duplicate Ingredient Detection 
+This is another major opportunity. 
+Suppose someone takes: 
+New Roots Multi 
+• Cal-Mag 
+• Zinc 
+• Vitamin D 
+The app could say: 
+"Your stack contains overlapping nutrients. " 
+For example: 
+Vitamin D 
+• Multi: X 
+• Cal-Mag: X 
+• Separate Vitamin D: X 
+• Total: X 
+Then show: 
+"Your total daily intake from these products is X. " 
+The app should not independently tell someone that a dose is unsafe unless the underlying 
+rule and regulatory/clinical review support that conclusion. 
+Instead it could flag: 
+Review recommended 
+You're taking multiple products containing this nutrient. Consider discussing your total 
+intake with a healthcare professional. 
+ 
+13. The Consumer Experience 
+The home screen could be extremely simple. 
+
+TODAY 
+ 
+     MORNING 
+7:30 AM 
+○ Multivitamin 
+○ Vitamin D 
+○ Fish Oil 
+ 
+           9:30 AM 
+○ Iron 
+        Take separately from calcium 
+        Avoid coffee/tea around this dose 
+ 
+       LUNCH 
+12:00 PM 
+○ Probiotic 
+ 
+     EVENING 
+7:00 PM 
+○ Calcium 
+ 
+     BEDTIME 
+10:00 PM 
+○ Magnesium 
+ 
+
+14. "Why Am I Taking This?" 
+Each product could have: 
+What it is 
+Benefits  
+How to take it 
+Timing 
+Interactions 
+Warnings 
+Ingredients 
+ 
+Link to the website for more information  
+ 
+This turns the app into an educational tool rather than just a reminder. 
+ 
+15. New Roots' Competitive Advantage 
+This is where the business case becomes particularly interesting. 
+A generic supplement app has to figure out what products exist. 
+New Roots already has: 
+• The products 
+• The formulations 
+• The labels 
+• NPN information 
+• Product experts 
+• Scientific resources 
+• Regulatory resources 
+• Ingredient information 
+• Customer questions 
+
+• Consumer feedback 
+• A large existing product catalogue 
+• An established consumer brand 
+New Roots could create the authoritative digital layer around its own products. 
+The current New Roots website already contains extensive structured product information, 
+including categories, ingredients, dosage directions and NPNs. 
+ 
+16. Phase 1 — Internal MVP 
+Phase 1 
+Build the New Roots product database. 
+Potentially start with the top 50–100 products. 
+For each product: 
+• SKU 
+• UPC 
+• NPN 
+• Ingredients 
+• Dose 
+• Directions 
+• Warnings 
+• Timing rules 
+• Known interaction rules 
+• Evidence sources 
+• Last reviewed 
+• Reviewer 
+Then build a simple web application. 
+MVP experience: 
+
+Scan product → Add to stack → Enter schedule → Generate schedule 
+That's enough to prove the concept. 
+ 
+17. Phase 2 — Employee Beta 
+Give it to: 
+• New Roots employees 
+• Customer service 
+• Sales reps 
+• Health professionals 
+• Select retailers 
+Collect feedback. 
+Questions: 
+• Did the schedule make sense? 
+• Were instructions understandable? 
+• Were there too many warnings? 
+• Were the reminders useful? 
+• Did people actually follow the schedule? 
+• Which products create the most complicated routines? 
+ 
+18. Phase 3 — Consumer Beta 
+Release to a limited group of New Roots consumers. 
+Potentially make it: 
+Free with New Roots products. 
+That creates an ecosystem: 
+Buy New Roots → Scan → Build your stack → Get personalized schedule. 
+ 
+
+19. Phase 4 — Full Consumer App 
+Eventually expand beyond New Roots products. 
+The user could add: 
+New Roots 
+•  
+Other supplement brands 
+•  
+Medications 
+And SmartStack becomes a broader supplement-management platform. 
+New Roots would still have a significant advantage because its own products would have 
+the deepest integration. 
+ 
+20. Business Model 
+$4.99–$9.99/month 
+Customer retention 
+The more products someone has inside their SmartStack, the more embedded New Roots 
+becomes in their routine. 
+Cross-selling 
+Example: 
+"You already take X. Here's another New Roots product that could fit your routine. " 
+Any recommendations would need to be carefully separated from the safety engine and 
+comply with applicable advertising rules. 
+Health Canada regulates advertising of natural health products in Canada, so promotional 
+recommendations would need regulatory review. 
+Product discovery 
+Someone buys one product. 
+The app helps them discover other products that fit their needs. 
+
+Education 
+Customers better understand how to use the products. 
+Customer service reduction 
+Instead of contacting New Roots asking: 
+"Can I take these together?" 
+the customer could receive validated product information directly. 
+ 

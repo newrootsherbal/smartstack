@@ -1,0 +1,4 @@
+# Copy to apps/worker/.dev.vars (gitignored) for local `wrangler dev`.
+# The PRIVATE half of the pair from `npx web-push generate-vapid-keys`.
+# Never commit it, never paste it in chat. Production: `wrangler secret put VAPID_PRIVATE_KEY`.
+VAPID_PRIVATE_KEY=
