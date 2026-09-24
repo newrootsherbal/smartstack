@@ -12,6 +12,7 @@
     "db:migrate:remote": "wrangler d1 migrations apply smartstack --remote"
   },
   "dependencies": {
+    "@block65/webcrypto-web-push": "^2.0.0",
     "@smartstack/shared": "*",
     "hono": "^4.13.9",
     "zod": "^4.6.5"

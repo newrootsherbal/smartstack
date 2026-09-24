@@ -338,6 +338,13 @@ export const PutScheduleBody = z.object({
 })
 export type PutScheduleBody = z.infer<typeof PutScheduleBody>
 
+/** Optional text for the test reminder (composed in the browser from en.json). */
+export const TestReminderBody = z.object({
+  title: z.string().min(1).max(MAX_TITLE_LENGTH).optional(),
+  body: z.string().min(1).max(MAX_BODY_LENGTH).optional(),
+})
+export type TestReminderBody = z.infer<typeof TestReminderBody>
+
 export const ApiError = z.object({
   error: z.string(),
   detail: z.unknown().optional(),

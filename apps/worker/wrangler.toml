@@ -1,6 +1,6 @@
 # New Roots SmartStack — one Worker on the Cloudflare free plan.
-# Serves apps/web/dist as static assets, handles /api/*, and (from the Worker
-# milestone) runs a Cron Trigger every minute to send Web Push reminders.
+# Serves apps/web/dist as static assets, handles /api/*, and runs a Cron
+# Trigger every minute to send Web Push reminders from D1.
 name = "smartstack"
 main = "src/index.ts"
 compatibility_date = "2026-09-01"
@@ -10,20 +10,31 @@ directory = "../web/dist"
 binding = "ASSETS"
 not_found_handling = "single-page-application"
 # API requests must always reach the Worker, never the SPA fallback.
-run_worker_first = ["/api/*"]
+# /__scheduled: `wrangler dev --test-scheduled` fires the cron through the Worker; harmless in prod.
+run_worker_first = ["/api/*", "/__scheduled"]
 
 [observability]
 enabled = true
 
+[triggers]
+# Every minute. Cron invocations count toward the 100k/day request limit (1,440/day).
+crons = ["* * * * *"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "smartstack"
+# Placeholder until `wrangler d1 create smartstack` has run (works for local dev).
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "migrations"
+
 [vars]
-# Public VAPID key (the private half is a secret: `wrangler secret put VAPID_PRIVATE_KEY`).
+# Public VAPID key (base64url). The private half is a secret:
+#   local: apps/worker/.dev.vars    prod: `wrangler secret put VAPID_PRIVATE_KEY`
 VAPID_PUBLIC_KEY = ""
 # Replace with the real mailto: address before the employee beta.
 VAPID_SUBJECT = "mailto:smartstack@example.com"
-# Start at 20; raise toward 45 only after Workers Logs show a full batch under ~6 ms CPU.
+# Reminders claimed per cron tick. Start at 20; raise toward 45 only after
+# Workers Logs show a full batch under ~6 ms CPU.
 MAX_PUSHES_PER_TICK = "20"
 # Must match VITE_BETA_KEY in apps/web/.env. A speed bump, not security.
 BETA_KEY = "qEjK2x-cvUwSsn4qF-1RsKhd"
-
-# D1 binding and the every-minute cron are added in the Worker milestone
-# (after `wrangler d1 create smartstack` has produced a real database_id).
