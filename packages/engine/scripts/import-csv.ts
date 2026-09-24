@@ -31,7 +31,7 @@ export function parseCsv(text: string): string[][] {
   let row: string[] = []
   let field = ''
   let quoted = false
-  const src = text.replace(/^﻿/, '')
+  const src = text.charCodeAt(0) === 0xfeff ? text.slice(1) : text // strip a UTF-8 BOM
   for (let i = 0; i < src.length; i++) {
     const ch = src[i]!
     if (quoted) {
