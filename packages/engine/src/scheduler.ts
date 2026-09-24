@@ -113,10 +113,23 @@ interface FixedAnchor {
 }
 
 /**
- * Step 2 — fixed-anchor rules. Priority when several apply to one product:
+ * Step 2 — fixed-anchor rules. Product-level (label) rules are considered before
+ * ingredient-level ones; within a level the priority is
  * BEDTIME > EVENING > MORNING > preferredAnchors (WITH_FAT / WITH_FOOD) > plain WITH_FOOD.
  */
 function pickFixedAnchor(
+  rules: readonly TimingRule[],
+  available: ReadonlySet<MealAnchor>,
+): FixedAnchor | null {
+  // What the label says (product-level rules) beats what an ingredient implies.
+  const productLevel = rules.filter((r) => 'productId' in r.appliesTo)
+  const ingredientLevel = rules.filter((r) => !('productId' in r.appliesTo))
+  return (
+    pickFixedAnchorFrom(productLevel, available) ?? pickFixedAnchorFrom(ingredientLevel, available)
+  )
+}
+
+function pickFixedAnchorFrom(
   rules: readonly TimingRule[],
   available: ReadonlySet<MealAnchor>,
 ): FixedAnchor | null {

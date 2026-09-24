@@ -3,15 +3,18 @@
 // No DOM, no Cloudflare, no user-facing strings (the UI renders rule ids and
 // adjustment codes through i18n).
 
-export const ENGINE_VERSION = '0.1.0'
+export const ENGINE_VERSION = '0.2.0'
 
 export {
   barcodesMatch,
   ean13CheckDigit,
   isValidEan13,
+  isValidRetailBarcode,
+  isValidUpcA,
   normalizeBarcode,
   sampleEan13,
   SAMPLE_EAN13_PREFIX,
+  upcaCheckDigit,
 } from './barcode'
 export {
   catalogue,
@@ -20,11 +23,15 @@ export {
   getProduct,
   getRule,
   listProducts,
+  productBarcodes,
   productContainsIngredient,
   rulesForProduct,
+  searchProducts,
 } from './catalogue'
 export { findDuplicateIngredients } from './duplicates'
+export { sampleCatalogue } from './sample'
 export { buildSchedule, type BuildScheduleOptions } from './scheduler'
 export { shiftRoutine } from './shift'
+export { loadProductText, productText, type ProductText } from './text'
 export { formatHHMM, MINUTES_PER_DAY, parseHHMM, roundUpTo } from './time'
 export { validateCatalogue, type ValidationResult } from './validate'

@@ -1,0 +1,386 @@
+[
+  {
+    "id": "sample-iron",
+    "sku": "SAMPLE-0001",
+    "upc": "2000000000008",
+    "npn": "SAMPLE-NPN-0001",
+    "brand": "Sample",
+    "name": {
+      "en": "Iron Bisglycinate (sample)",
+      "fr": "Fer bisglycinate (échantillon)"
+    },
+    "shortName": {
+      "en": "Iron",
+      "fr": "Fer"
+    },
+    "form": "capsule",
+    "servingSize": "1 capsule",
+    "dosesPerDayDefault": 1,
+    "directions": {
+      "en": "Sample directions — replace with label text."
+    },
+    "warnings": {
+      "en": "Sample warnings — replace with label text."
+    },
+    "status": "sample",
+    "labelVersion": "sample-1",
+    "ingredients": [
+      {
+        "ingredientId": "iron",
+        "amountPerDose": 20
+      }
+    ],
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "sample-calmag",
+    "sku": "SAMPLE-0002",
+    "upc": "2000000000015",
+    "npn": "SAMPLE-NPN-0002",
+    "brand": "Sample",
+    "name": {
+      "en": "Calcium-Magnesium (sample)",
+      "fr": "Calcium-Magnésium (échantillon)"
+    },
+    "shortName": {
+      "en": "Calcium",
+      "fr": "Calcium"
+    },
+    "form": "tablet",
+    "servingSize": "1 tablet",
+    "dosesPerDayDefault": 1,
+    "directions": {
+      "en": "Sample directions — replace with label text."
+    },
+    "warnings": {
+      "en": "Sample warnings — replace with label text."
+    },
+    "status": "sample",
+    "labelVersion": "sample-1",
+    "ingredients": [
+      {
+        "ingredientId": "calcium",
+        "amountPerDose": 300
+      },
+      {
+        "ingredientId": "magnesium",
+        "amountPerDose": 150
+      }
+    ],
+    "ruleOverrides": {
+      "disable": ["rule-magnesium-bedtime"]
+    },
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "sample-magnesium",
+    "sku": "SAMPLE-0003",
+    "upc": "2000000000022",
+    "npn": "SAMPLE-NPN-0003",
+    "brand": "Sample",
+    "name": {
+      "en": "Magnesium Bisglycinate (sample)",
+      "fr": "Magnésium bisglycinate (échantillon)"
+    },
+    "shortName": {
+      "en": "Magnesium",
+      "fr": "Magnésium"
+    },
+    "form": "capsule",
+    "servingSize": "1 capsule",
+    "dosesPerDayDefault": 1,
+    "directions": {
+      "en": "Sample directions — replace with label text."
+    },
+    "warnings": {
+      "en": "Sample warnings — replace with label text."
+    },
+    "status": "sample",
+    "labelVersion": "sample-1",
+    "ingredients": [
+      {
+        "ingredientId": "magnesium",
+        "amountPerDose": 200
+      }
+    ],
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "sample-multi",
+    "sku": "SAMPLE-0004",
+    "upc": "2000000000039",
+    "npn": "SAMPLE-NPN-0004",
+    "brand": "Sample",
+    "name": {
+      "en": "Multivitamin (sample)",
+      "fr": "Multivitamine (échantillon)"
+    },
+    "shortName": {
+      "en": "Multivitamin",
+      "fr": "Multivitamine"
+    },
+    "form": "tablet",
+    "servingSize": "1 tablet",
+    "dosesPerDayDefault": 1,
+    "directions": {
+      "en": "Sample directions — replace with label text."
+    },
+    "warnings": {
+      "en": "Sample warnings — replace with label text."
+    },
+    "status": "sample",
+    "labelVersion": "sample-1",
+    "ingredients": [
+      {
+        "ingredientId": "calcium",
+        "amountPerDose": 100
+      },
+      {
+        "ingredientId": "vitamin-d",
+        "amountPerDose": 10
+      },
+      {
+        "ingredientId": "zinc",
+        "amountPerDose": 5
+      },
+      {
+        "ingredientId": "vitamin-c",
+        "amountPerDose": 60
+      },
+      {
+        "ingredientId": "vitamin-b12",
+        "amountPerDose": 5
+      }
+    ],
+    "ruleOverrides": {
+      "disable": ["rule-calcium-evening"]
+    },
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "sample-vitamin-d3",
+    "sku": "SAMPLE-0005",
+    "upc": "2000000000046",
+    "npn": "SAMPLE-NPN-0005",
+    "brand": "Sample",
+    "name": {
+      "en": "Vitamin D3 (sample)",
+      "fr": "Vitamine D3 (échantillon)"
+    },
+    "shortName": {
+      "en": "Vitamin D",
+      "fr": "Vitamine D"
+    },
+    "form": "softgel",
+    "servingSize": "1 softgel",
+    "dosesPerDayDefault": 1,
+    "directions": {
+      "en": "Sample directions — replace with label text."
+    },
+    "warnings": {
+      "en": "Sample warnings — replace with label text."
+    },
+    "status": "sample",
+    "labelVersion": "sample-1",
+    "ingredients": [
+      {
+        "ingredientId": "vitamin-d",
+        "amountPerDose": 25
+      }
+    ],
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "sample-omega-3",
+    "sku": "SAMPLE-0006",
+    "upc": "2000000000053",
+    "npn": "SAMPLE-NPN-0006",
+    "brand": "Sample",
+    "name": {
+      "en": "Omega-3 Fish Oil (sample)",
+      "fr": "Huile de poisson oméga-3 (échantillon)"
+    },
+    "shortName": {
+      "en": "Fish oil",
+      "fr": "Huile de poisson"
+    },
+    "form": "softgel",
+    "servingSize": "1 softgel",
+    "dosesPerDayDefault": 1,
+    "directions": {
+      "en": "Sample directions — replace with label text."
+    },
+    "warnings": {
+      "en": "Sample warnings — replace with label text."
+    },
+    "status": "sample",
+    "labelVersion": "sample-1",
+    "ingredients": [
+      {
+        "ingredientId": "fish-oil",
+        "amountPerDose": 1000
+      }
+    ],
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "sample-probiotic",
+    "sku": "SAMPLE-0007",
+    "upc": "2000000000060",
+    "npn": "SAMPLE-NPN-0007",
+    "brand": "Sample",
+    "name": {
+      "en": "Probiotic (sample)",
+      "fr": "Probiotique (échantillon)"
+    },
+    "shortName": {
+      "en": "Probiotic",
+      "fr": "Probiotique"
+    },
+    "form": "capsule",
+    "servingSize": "1 capsule",
+    "dosesPerDayDefault": 1,
+    "directions": {
+      "en": "Sample directions — replace with label text."
+    },
+    "warnings": {
+      "en": "Sample warnings — replace with label text."
+    },
+    "status": "sample",
+    "labelVersion": "sample-1",
+    "ingredients": [
+      {
+        "ingredientId": "probiotic",
+        "amountPerDose": 10000000000
+      }
+    ],
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "sample-zinc",
+    "sku": "SAMPLE-0008",
+    "upc": "2000000000077",
+    "npn": "SAMPLE-NPN-0008",
+    "brand": "Sample",
+    "name": {
+      "en": "Zinc (sample)",
+      "fr": "Zinc (échantillon)"
+    },
+    "shortName": {
+      "en": "Zinc",
+      "fr": "Zinc"
+    },
+    "form": "capsule",
+    "servingSize": "1 capsule",
+    "dosesPerDayDefault": 1,
+    "directions": {
+      "en": "Sample directions — replace with label text."
+    },
+    "warnings": {
+      "en": "Sample warnings — replace with label text."
+    },
+    "status": "sample",
+    "labelVersion": "sample-1",
+    "ingredients": [
+      {
+        "ingredientId": "zinc",
+        "amountPerDose": 15
+      }
+    ],
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "sample-vitamin-c",
+    "sku": "SAMPLE-0009",
+    "upc": "2000000000084",
+    "npn": "SAMPLE-NPN-0009",
+    "brand": "Sample",
+    "name": {
+      "en": "Vitamin C (sample)",
+      "fr": "Vitamine C (échantillon)"
+    },
+    "shortName": {
+      "en": "Vitamin C",
+      "fr": "Vitamine C"
+    },
+    "form": "tablet",
+    "servingSize": "1 tablet",
+    "dosesPerDayDefault": 1,
+    "directions": {
+      "en": "Sample directions — replace with label text."
+    },
+    "warnings": {
+      "en": "Sample warnings — replace with label text."
+    },
+    "status": "sample",
+    "labelVersion": "sample-1",
+    "ingredients": [
+      {
+        "ingredientId": "vitamin-c",
+        "amountPerDose": 500
+      }
+    ],
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "sample-b-complex",
+    "sku": "SAMPLE-0010",
+    "upc": "2000000000091",
+    "npn": "SAMPLE-NPN-0010",
+    "brand": "Sample",
+    "name": {
+      "en": "B-Complex (sample)",
+      "fr": "Complexe B (échantillon)"
+    },
+    "shortName": {
+      "en": "B-Complex",
+      "fr": "Complexe B"
+    },
+    "form": "capsule",
+    "servingSize": "1 capsule",
+    "dosesPerDayDefault": 1,
+    "directions": {
+      "en": "Sample directions — replace with label text."
+    },
+    "warnings": {
+      "en": "Sample warnings — replace with label text."
+    },
+    "status": "sample",
+    "labelVersion": "sample-1",
+    "ingredients": [
+      {
+        "ingredientId": "vitamin-b6",
+        "amountPerDose": 10
+      },
+      {
+        "ingredientId": "vitamin-b12",
+        "amountPerDose": 100
+      },
+      {
+        "ingredientId": "folate",
+        "amountPerDose": 200
+      }
+    ],
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  }
+]

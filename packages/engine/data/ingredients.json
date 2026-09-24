@@ -1,21 +1,3199 @@
 [
-  { "id": "iron", "name": { "en": "Iron", "fr": "Fer" }, "unit": "mg" },
-  { "id": "calcium", "name": { "en": "Calcium", "fr": "Calcium" }, "unit": "mg" },
-  { "id": "magnesium", "name": { "en": "Magnesium", "fr": "Magnésium" }, "unit": "mg" },
-  { "id": "vitamin-d", "name": { "en": "Vitamin D", "fr": "Vitamine D" }, "unit": "mcg" },
-  { "id": "zinc", "name": { "en": "Zinc", "fr": "Zinc" }, "unit": "mg" },
-  { "id": "vitamin-c", "name": { "en": "Vitamin C", "fr": "Vitamine C" }, "unit": "mg" },
+  {
+    "id": "100-of-the-rda-of-the-following-vitamin-b3",
+    "name": {
+      "en": "*100% of the RDA of the following: Vitamin B3"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "5-hydroxytryptophan",
+    "name": {
+      "en": "ʟ‑5‑Hydroxytryptophan"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "acetyl-carnitine-hydrochloride",
+    "name": {
+      "en": "Acetyl-ʟ‑carnitine hydrochloride"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "acetyl-carnitine-hydrochloride-providing",
+    "name": {
+      "en": "Acetyl‒ʟ‒carnitine hydrochloride, providing"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "adrenal-gland-3-1-concentrate",
+    "name": {
+      "en": "Adrenal gland 3:1 concentrate"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "alanine",
+    "name": {
+      "en": "ʟ‑Alanine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "allicin-potential-per-capsule",
+    "name": {
+      "en": "allicin potential per capsule"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "aloe-leaf",
+    "name": {
+      "en": "Aloe leaf"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "alpha-linolenic-acid",
+    "name": {
+      "en": "alpha-Linolenic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "alpha-linolenic-acid-omega-3-fatty-acids",
+    "name": {
+      "en": "alpha‑Linolenic acid omega‑3 fatty acids"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "alpha-lipoic-acid",
+    "name": {
+      "en": "ᴅʟ‑alpha‑Lipoic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "andrographis-aerial-part-extract-30-andrographolides-iii-and-iv",
+    "name": {
+      "en": "Andrographis aerial part extract, 30% andrographolides III and IV"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "andrographis-herb-top-extract-30-andrographolide",
+    "name": {
+      "en": "Andrographis herb top extract, 30% andrographolide"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "apple-fruit-extract-5-proanthocyanidins-b",
+    "name": {
+      "en": "Apple fruit extract, 5% proanthocyanidins B"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "approx-1-tbsp-servings-per-container-16-calories-48-daily-value-fat",
+    "name": {
+      "en": "approx. 1 Tbsp. Servings per container: 16 Calories 48 % Daily Value* Fat"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "arabinogalactan",
+    "name": {
+      "en": "Arabinogalactan"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "arginine",
+    "name": {
+      "en": "ʟ‑Arginine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "artichoke-leaf-extract-5-cynarin",
+    "name": {
+      "en": "Artichoke leaf extract, 5% cynarin"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "ashwagandha-root-extract-2-5-withanolides",
+    "name": {
+      "en": "Ashwagandha root extract, 2.5% withanolides"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "ashwagandha-root-extract-5-withanolides",
+    "name": {
+      "en": "Ashwagandha root extract, 5% withanolides"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "asparagus-shoot",
+    "name": {
+      "en": "Asparagus shoot"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "aspartic-acid",
+    "name": {
+      "en": "ʟ‑Aspartic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "astaxanthin",
+    "name": {
+      "en": "Astaxanthin"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "astaxanthin-1-5-from",
+    "name": {
+      "en": "Astaxanthin 1.5%, from"
+    },
+    "unit": "mcg"
+  },
+  {
+    "id": "astaxanthin-from-haematococcus-pluvialis-extract",
+    "name": {
+      "en": "Astaxanthin , from Haematococcus pluvialis extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "astragalus-root-extract-16-polysaccharides",
+    "name": {
+      "en": "Astragalus root extract, 16% polysaccharides"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "astragalus-root-extract-3-astragalosides",
+    "name": {
+      "en": "Astragalus root extract, 3% astragalosides"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "bacopa-25-1-extract-45-bacosides",
+    "name": {
+      "en": "Bacopa 25:1 extract, 45% bacosides"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "banaba-leaf-extract-1-corosolic-acid",
+    "name": {
+      "en": "Banaba leaf extract, 1% corosolic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "bee-pollen",
+    "name": {
+      "en": "Bee pollen"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "benfotiamine",
+    "name": {
+      "en": "Benfotiamine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "berberine",
+    "name": {
+      "en": "Berberine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "berberine-hydrochloride",
+    "name": {
+      "en": "Berberine hydrochloride"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "beta-sitosterol",
+    "name": {
+      "en": "beta-Sitosterol"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "beta-sitosterols",
+    "name": {
+      "en": "beta-Sitosterols"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "betaine",
+    "name": {
+      "en": "Betaine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "betaine-hydrochloride",
+    "name": {
+      "en": "Betaine hydrochloride"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "bilberry-european-fruit-extract-25-anthocyanosides",
+    "name": {
+      "en": "Bilberry European fruit extract, 25% anthocyanosides"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "bilberry-fruit",
+    "name": {
+      "en": "Bilberry fruit"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "bilberry-fruit-extract",
+    "name": {
+      "en": "Bilberry fruit extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "biotin",
+    "name": {
+      "en": "Biotin",
+      "fr": "Biotine"
+    },
+    "unit": "mcg"
+  },
+  {
+    "id": "birch-leaf",
+    "name": {
+      "en": "Birch leaf"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "bitter-melon-fruit-extract",
+    "name": {
+      "en": "Bitter melon fruit extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "black-cohosh-root",
+    "name": {
+      "en": "Black cohosh root"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "black-cohosh-root-extract-2-5-triterpene-glycosides",
+    "name": {
+      "en": "Black cohosh root extract, 2.5% triterpene glycosides"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "black-cohosh-root-extract-2-5-triterpenes",
+    "name": {
+      "en": "Black cohosh root extract, 2.5% triterpenes"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "black-pepper-fruit-extract-95-piperin",
+    "name": {
+      "en": "Black pepper fruit extract, 95% piperin"
+    },
+    "unit": "mcg"
+  },
+  {
+    "id": "black-pepper-fruit-extract-95-piperine",
+    "name": {
+      "en": "Black pepper fruit extract, 95% piperine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "black-spanish-radish-root",
+    "name": {
+      "en": "Black Spanish radish root"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "black-walnut-green-hull",
+    "name": {
+      "en": "Black walnut green hull"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "black-walnut-hull-4-1-extract",
+    "name": {
+      "en": "Black walnut hull 4:1 extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "black-walnut-hull-and-leaf",
+    "name": {
+      "en": "Black walnut hull and leaf"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "black-walnut-hulls",
+    "name": {
+      "en": "Black walnut hulls"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "black-walnut-leaf",
+    "name": {
+      "en": "Black walnut leaf"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "blend-of-berry-and-fruit-extracts-20-anthocyanidins",
+    "name": {
+      "en": "Blend of berry and fruit extracts, 20% anthocyanidins"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "blend-of-berry-extracts-20-multianthocyanidins",
+    "name": {
+      "en": "Blend of berry extracts, 20% multianthocyanidins"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "blend-of-berry-extracts-20-multianthocyanidins-from-bilberry-and-grape",
+    "name": {
+      "en": "Blend of berry extracts, 20% multianthocyanidins, from bilberry and grape"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "blessed-thistle-herb-top-5-1-extract",
+    "name": {
+      "en": "Blessed thistle herb top 5:1 extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "boron",
+    "name": {
+      "en": "Boron",
+      "fr": "Bore"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "boswellia-oleogum-resin-70-organic-acid-providing-35-boswellic-acid",
+    "name": {
+      "en": "Boswellia oleogum resin, 70% organic acid providing 35% boswellic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "bovine-colostrum",
+    "name": {
+      "en": "Bovine colostrum"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "broken-cell-organic-deep-green-chlorella",
+    "name": {
+      "en": "Broken-cell, organic, deep-green chlorella"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "broken-cell-organic-deep-green-nonirradiated-chlorella",
+    "name": {
+      "en": "Broken-cell, organic, deep-green, nonirradiated chlorella"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "bromelain",
+    "name": {
+      "en": "Bromelain"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "bromelain-2400-gdu-g",
+    "name": {
+      "en": "Bromelain , 2400 GDU/g"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "buchu-leaf",
+    "name": {
+      "en": "Buchu leaf"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "burdock-root",
+    "name": {
+      "en": "Burdock root"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "butternut-bark",
+    "name": {
+      "en": "Butternut bark"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "butternut-squash-seed-4-1-extract",
+    "name": {
+      "en": "Butternut squash seed 4:1 extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "calcium",
+    "name": {
+      "en": "Calcium",
+      "fr": "Calcium"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "campesterol",
+    "name": {
+      "en": "Campesterol"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "campesterols",
+    "name": {
+      "en": "Campesterols"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "caprylic-acid",
+    "name": {
+      "en": "Caprylic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "carnitine",
+    "name": {
+      "en": "ʟ‑Carnitine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "carnitine-tartrate",
+    "name": {
+      "en": "ʟ‑Carnitine tartrate"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "carnosine",
+    "name": {
+      "en": "ʟ‑Carnosine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "cascara-sagrada-aged-bark",
+    "name": {
+      "en": "Cascara sagrada aged bark"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "cascara-sagrada-aged-bark-4-1-extract",
+    "name": {
+      "en": "Cascara sagrada aged bark 4:1 extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "cassia-cinnamon-bark-extract",
+    "name": {
+      "en": "Cassia cinnamon bark extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "cassia-cinnamon-bark-extract-10-polyphenols",
+    "name": {
+      "en": "Cassia cinnamon bark extract, 10% polyphenols"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "cat-s-whiskers-herb-4-1-extract",
+    "name": {
+      "en": "Cat’s whiskers herb 4:1 extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "catalase",
+    "name": {
+      "en": "Catalase"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "catnip-herb-top",
+    "name": {
+      "en": "Catnip herb top"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "cayenne-fruit",
+    "name": {
+      "en": "Cayenne fruit"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "celery-seed",
+    "name": {
+      "en": "Celery seed"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "certified-organic-borage-seed-oil",
+    "name": {
+      "en": "Certified organic borage seed oil"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "certified-organic-evening-primrose-seed-oil",
+    "name": {
+      "en": "Certified organic evening primrose seed oil"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "certified-organic-passion-flower-herb-top",
+    "name": {
+      "en": "Certified organic passion flower herb top"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "certified-organic-pumpkin-seed-oil",
+    "name": {
+      "en": "Certified organic pumpkin seed oil"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "chaga-mushroom-extract-standardized-to-40-polysaccharides",
+    "name": {
+      "en": "Chaga mushroom extract standardized to 40% polysaccharides"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "chamomile-flower-extract-5-flavonoids",
+    "name": {
+      "en": "Chamomile flower extract, 5% flavonoids"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "chanca-piedra-10-1-extractequivalent-to",
+    "name": {
+      "en": "Chanca piedra 10:1 extractEquivalent to"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "chanca-piedra-extract",
+    "name": {
+      "en": "Chanca piedra extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "chaste-tree-fruit-extract-0-5-agnuside",
+    "name": {
+      "en": "Chaste tree fruit extract, 0.5% agnuside"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "chaste-tree-fruit-extract-0-5-agnusides",
+    "name": {
+      "en": "Chaste tree fruit extract, 0.5% agnusides"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "chinese-jujube-fruit",
+    "name": {
+      "en": "Chinese jujube fruit"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "chinese-rhubarb-root",
+    "name": {
+      "en": "Chinese rhubarb root"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "choline",
+    "name": {
+      "en": "Choline",
+      "fr": "Choline"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "chondroitin-sulfate-from-bovine-cartilage",
+    "name": {
+      "en": "Chondroitin sulfate from bovine cartilage"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "chromium",
+    "name": {
+      "en": "Chromium",
+      "fr": "Chrome"
+    },
+    "unit": "mcg"
+  },
+  {
+    "id": "ci-li-fruit-extract",
+    "name": {
+      "en": "Ci li fruit extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "cili-fruit-extract",
+    "name": {
+      "en": "Cili fruit extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "citicoline",
+    "name": {
+      "en": "Citicoline"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "citrus-bioflavonoids-50-hesperidin",
+    "name": {
+      "en": "Citrus bioflavonoids , 50% hesperidin"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "clove-flower-bud",
+    "name": {
+      "en": "Clove flower bud"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "coenzyme-q10",
+    "name": {
+      "en": "Coenzyme Q10",
+      "fr": "Coenzyme Q10"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "coleus-forskohlii-root-extract-10-forskolin",
+    "name": {
+      "en": "Coleus forskohlii root extract, 10% forskolin"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "copper",
+    "name": {
+      "en": "Copper",
+      "fr": "Cuivre"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "cordyceps-mushroom-extract",
+    "name": {
+      "en": "Cordyceps mushroom extract*"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "cordyceps-mushroom-extract-standardized-to-40-polysaccharides-20-beta-glucans",
+    "name": {
+      "en": "Cordyceps mushroom extract standardized to 40% polysaccharides, 20% beta‑glucans"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "coriolus-mushroom-extract",
+    "name": {
+      "en": "Coriolus mushroom extract*"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "corn-silk-4-1-extract",
+    "name": {
+      "en": "Corn silk 4:1 extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "cramp-bark-4-1-extract",
+    "name": {
+      "en": "Cramp bark 4:1 extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "cranberry-fruit-concentrate",
+    "name": {
+      "en": "Cranberry fruit concentrate"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "creatine-monohydrate",
+    "name": {
+      "en": "Creatine monohydrate"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "curcurouge-providing",
+    "name": {
+      "en": "curcuRouge , providing"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "cysteine-hydrochloride",
+    "name": {
+      "en": "ʟ‑Cysteine hydrochloride"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "cysteine-hydrochloride-monohydrate",
+    "name": {
+      "en": "ʟ‑Cysteine hydrochloride monohydrate"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "cystine",
+    "name": {
+      "en": "ʟ‑Cystine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "d-mannose",
+    "name": {
+      "en": "D-Mannose"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "dandelion-root",
+    "name": {
+      "en": "Dandelion root"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "dandelion-root-extract-3-flavonoids",
+    "name": {
+      "en": "Dandelion root extract, 3% flavonoids"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "devil-s-claw-secondary-tuber",
+    "name": {
+      "en": "Devil’s claw secondary tuber"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "devil-s-claw-secondary-tuber-5-harpagosides",
+    "name": {
+      "en": "Devil’s claw secondary tuber, 5% harpagosides"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "devil-s-claw-secondary-tuber-extract-5-harpagosides",
+    "name": {
+      "en": "Devil’s claw secondary tuber extract, 5% harpagosides"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "dha",
+    "name": {
+      "en": "DHA (omega-3)",
+      "fr": "ADH (oméga-3)"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "dl-alpha-lipoic-acid",
+    "name": {
+      "en": "dl‑alpha‑Lipoic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "docosahexaoenoic-acid",
+    "name": {
+      "en": "Docosahexaoenoic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "dong-quai-root",
+    "name": {
+      "en": "Dong quai root"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "dong-quai-root-extract-1-z-ligustilide",
+    "name": {
+      "en": "Dong quai root extract, 1% Z-ligustilide"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "e-from-sunflower",
+    "name": {
+      "en": "E from sunflower"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "echinacea-root",
+    "name": {
+      "en": "Echinacea root"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "echinacea-root-extract-4-polyphenols",
+    "name": {
+      "en": "Echinacea root extract, 4% polyphenols"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "egcg",
+    "name": {
+      "en": "EGCG"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "elderberry-fruit",
+    "name": {
+      "en": "Elderberry fruit"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "elemental-magnesium",
+    "name": {
+      "en": "Elemental magnesium"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "elemental-magnesium-from-a-magnesium-bisglycinate-blend",
+    "name": {
+      "en": "Elemental magnesium from a magnesium bisglycinate blend"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "elemental-zinc",
+    "name": {
+      "en": "Elemental zinc"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "epa",
+    "name": {
+      "en": "EPA (omega-3)",
+      "fr": "AEP (oméga-3)"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "european-elderberry-fruit",
+    "name": {
+      "en": "European elderberry fruit"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "european-elderberry-fruit-extract-6-anthocyanosides",
+    "name": {
+      "en": "European elderberry fruit extract, 6% anthocyanosides"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "fennel-seed",
+    "name": {
+      "en": "Fennel seed"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "fenugreek-seed-5-1-extract",
+    "name": {
+      "en": "Fenugreek seed 5:1 extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "fenugreek-seed-extract-50-saponins",
+    "name": {
+      "en": "Fenugreek seed extract, 50% saponins"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "field-horsetail",
+    "name": {
+      "en": "Field horsetail"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "field-horsetail-7-silica",
+    "name": {
+      "en": "Field horsetail , 7% silica"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "field-horsetail-aerial-part-extract-7-silica",
+    "name": {
+      "en": "Field horsetail aerial part extract, 7% silica"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "field-horsetail-extract-7-silica",
+    "name": {
+      "en": "Field horsetail extract, 7% silica"
+    },
+    "unit": "mg"
+  },
   {
     "id": "fish-oil",
-    "name": { "en": "Fish oil (EPA + DHA)", "fr": "Huile de poisson (AEP + ADH)" },
+    "name": {
+      "en": "Fish oil",
+      "fr": "Huile de poisson"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "flax-seed-extract-40-secoisolariciresinol-diglucoside",
+    "name": {
+      "en": "Flax seed extract, 40% secoisolariciresinol diglucoside"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "folate",
+    "name": {
+      "en": "Folate",
+      "fr": "Folate"
+    },
+    "unit": "mcg"
+  },
+  {
+    "id": "free-plant-sterols",
+    "name": {
+      "en": "Free plant sterols"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "fruit-blend-20-multianthocyanidins",
+    "name": {
+      "en": "Fruit blend, 20% multianthocyanidins *"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "fully-reacted-magnesium-orotate",
+    "name": {
+      "en": "Fully reacted magnesium orotate"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "galacto-arabinan",
+    "name": {
+      "en": "ᴅ‑Galacto-ʟ‑arabinan"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "gamma-aminobutyric-acid",
+    "name": {
+      "en": "gamma-Aminobutyric acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "gamma-linolenic-acid",
+    "name": {
+      "en": "gamma‑Linolenic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "garlic-distilled-oil",
+    "name": {
+      "en": "Garlic distilled oil"
+    },
+    "unit": "mcg"
+  },
+  {
+    "id": "ginger-rhizome",
+    "name": {
+      "en": "Ginger rhizome"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "ginger-rhizome-10-1-extract",
+    "name": {
+      "en": "Ginger rhizome 10:1 extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "ginger-rhizome-20-1-extract-10-gingerols",
+    "name": {
+      "en": "Ginger rhizome 20:1 extract, 10% gingerols"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "ginger-rhizome-extract",
+    "name": {
+      "en": "Ginger rhizome extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "ginkgo-leaf",
+    "name": {
+      "en": "Ginkgo leaf"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "ginkgo-leaf-extract-24-flavonoid-glycosides-and-6-terpene-lactones",
+    "name": {
+      "en": "Ginkgo leaf extract, 24% flavonoid glycosides and 6% terpene lactones"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "glandular-thymus",
+    "name": {
+      "en": "Glandular thymus"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "glucosamine-hydrochloride",
+    "name": {
+      "en": "Glucosamine hydrochloride"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "glucosamine-sulfate-potassium-chloride-sodium-free",
+    "name": {
+      "en": "Glucosamine sulfate potassium chloride , sodium-free"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "glucosamine-sulfate-sodium-free",
+    "name": {
+      "en": "Glucosamine sulfate , sodium-free"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "glutamic-acid",
+    "name": {
+      "en": "ʟ‑Glutamic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "glutamic-acid-hydrochloride",
+    "name": {
+      "en": "ʟ‑Glutamic acid hydrochloride"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "glutamine",
+    "name": {
+      "en": "ʟ‑Glutamine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "glutathione",
+    "name": {
+      "en": "ʟ‑Glutathione"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "glycine",
+    "name": {
+      "en": "ʟ‑Glycine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "goji-fruit-extract-30-polysaccharides",
+    "name": {
+      "en": "Goji fruit extract, 30% polysaccharides"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "golden-rod-leaf",
+    "name": {
+      "en": "Golden rod leaf"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "grape-seed-extract-80-oligomeric-proanthocyanidins",
+    "name": {
+      "en": "Grape seed extract, 80% oligomeric proanthocyanidins"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "grape-seed-extract-95-proanthocyanidins",
+    "name": {
+      "en": "Grape seed extract, 95% proanthocyanidins"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "grape-skin-extract-25-polyphenols",
+    "name": {
+      "en": "Grape skin extract, 25% polyphenols"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "grapefruit-seed-extract",
+    "name": {
+      "en": "Grapefruit seed extract*"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "green-tea-leaf-extract",
+    "name": {
+      "en": "Green tea leaf extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "green-tea-leaf-extract-50-polyphenols",
+    "name": {
+      "en": "Green tea leaf extract, 50% polyphenols"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "green-tea-leaf-extract-6-caffeine",
+    "name": {
+      "en": "Green tea leaf extract, 6% caffeine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "green-tea-leaf-extract-75-epigallocatechin-3-gallate",
+    "name": {
+      "en": "Green tea leaf extract, 75% epigallocatechin-3-gallate"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "guduchi-extract",
+    "name": {
+      "en": "Guduchi extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "guggul-gum-resin-extract-3-5-guggulsterone",
+    "name": {
+      "en": "Guggul gum-resin extract, 3.5% guggulsterone"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "gymnema-sylvestre-leaf-extract-25-gymnemic-acid",
+    "name": {
+      "en": "Gymnema sylvestre leaf extract, 25% gymnemic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "gymnema-sylvestre-leaf-extract-25-gymnemic-acids",
+    "name": {
+      "en": "Gymnema sylvestre leaf extract, 25% gymnemic acids"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "h-goat-weed-extract-20-icariin",
+    "name": {
+      "en": "H. goat weed extract, 20% icariin"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "haematococcus-pluvialis",
+    "name": {
+      "en": "Haematococcus pluvialis"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "haematococcus-pluvialis-extract-2-astaxanthin",
+    "name": {
+      "en": "Haematococcus pluvialis extract, 2% astaxanthin"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "hawthorn-berry",
+    "name": {
+      "en": "Hawthorn berry"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "hawthorn-berry-extract-3-5-proanthocyanidins",
+    "name": {
+      "en": "Hawthorn berry extract, 3.5% proanthocyanidins"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "hesperidin",
+    "name": {
+      "en": "Hesperidin"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "histidine",
+    "name": {
+      "en": "ʟ‑Histidine*"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "holy-basil-leaf-extract-10-0-ursolic-acid",
+    "name": {
+      "en": "Holy basil leaf extract, 10.0% ursolic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "holy-basil-leaf-extract-10-ursolic-acid",
+    "name": {
+      "en": "Holy basil leaf extract, 10% ursolic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "hops-strobile-extract-3-5-flavonoids",
+    "name": {
+      "en": "Hops strobile extract, 3.5% flavonoids"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "huperzine-a-from-toothed-club-moss",
+    "name": {
+      "en": "Huperzine A, from toothed club-moss"
+    },
+    "unit": "mcg"
+  },
+  {
+    "id": "hyaluronic-acid",
+    "name": {
+      "en": "Hyaluronic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "hydrolyzed-alpha-lactalbumin",
+    "name": {
+      "en": "Hydrolyzed alpha-lactalbumin"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "hydrolyzed-collagen-type-i-6-elastin",
+    "name": {
+      "en": "Hydrolyzed collagen—type I, 6% elastin"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "hydrolyzed-collagen-types-i-and-iii-bioactive-peptides",
+    "name": {
+      "en": "Hydrolyzed collagen—types I and III bioactive peptides"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "hydrolyzed-collagen-types-i-ii-and-iii",
+    "name": {
+      "en": "Hydrolyzed collagen—types I, II, and III"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "indian-gooseberry-fruit-extract",
+    "name": {
+      "en": "Indian gooseberry fruit extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "indole-3-carbinol",
+    "name": {
+      "en": "Indole-3-carbinol"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "inositol",
+    "name": {
+      "en": "Inositol",
+      "fr": "Inositol"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "inulin",
+    "name": {
+      "en": "Inulin"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "iodine",
+    "name": {
+      "en": "Iodine",
+      "fr": "Iode"
+    },
+    "unit": "mcg"
+  },
+  {
+    "id": "iron",
+    "name": {
+      "en": "Iron",
+      "fr": "Fer"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "isoleucine",
+    "name": {
+      "en": "ʟ‑Isoleucine *"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "japanese-knotweed-50-resveratrol",
+    "name": {
+      "en": "Japanese knotweed , 50% resveratrol"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "japanese-knotweed-root-50-resveratrol",
+    "name": {
+      "en": "Japanese knotweed root, 50% resveratrol"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "japanese-knotweed-root-extract",
+    "name": {
+      "en": "Japanese knotweed root extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "japanese-knotweed-root-extract-50-resveratrol",
+    "name": {
+      "en": "Japanese knotweed root extract, 50% resveratrol"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "juniper-berry",
+    "name": {
+      "en": "Juniper berry"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "kava-kava-root-extract-30-kavalactones",
+    "name": {
+      "en": "Kava kava root extract, 30% kavalactones"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "kidney",
+    "name": {
+      "en": "Kidney"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "kola-nut-extract-10-caffeine",
+    "name": {
+      "en": "Kola nut extract, 10% caffeine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "l-alanine",
+    "name": {
+      "en": "l-Alanine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "l-glutamic-acid-hydrochloride",
+    "name": {
+      "en": "l-Glutamic acid hydrochloride"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "l-glycine",
+    "name": {
+      "en": "l-Glycine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "lecithin",
+    "name": {
+      "en": "Lecithin"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "lemon-balm-10-1-extract",
+    "name": {
+      "en": "Lemon balm 10:1 extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "leucine",
+    "name": {
+      "en": "ʟ‑Leucine *"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "licorice-root",
+    "name": {
+      "en": "Licorice root"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "linoleic-acid",
+    "name": {
+      "en": "Linoleic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "lion-s-mane-mushroom-extract",
+    "name": {
+      "en": "Lion’s mane mushroom extract*"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "liver-organ-from-bovine-source",
+    "name": {
+      "en": "Liver organ, from bovine source *"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "lutein",
+    "name": {
+      "en": "Lutein"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "lutein-from-marigold-flower-extract",
+    "name": {
+      "en": "Lutein from marigold flower extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "lycopene",
+    "name": {
+      "en": "Lycopene"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "lycopene-from-tomato-flesh-extract",
+    "name": {
+      "en": "Lycopene , from tomato flesh extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "lysine",
+    "name": {
+      "en": "ʟ‑Lysine*"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "magnesium",
+    "name": {
+      "en": "Magnesium",
+      "fr": "Magnésium"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "magnolia-bark-50-1-extract-80-honokiol-magnolol",
+    "name": {
+      "en": "Magnolia bark 50:1 extract, 80% honokiol + magnolol"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "magnolia-bark-50-1-extract-80-magnolol-honokiol",
+    "name": {
+      "en": "Magnolia bark 50:1 extract, 80% magnolol + honokiol"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "maitake-extract-40-polysaccharides-30-beta-glucans",
+    "name": {
+      "en": "Maitake extract, 40% polysaccharides, 30% beta‑glucans"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "maitake-mushroom-extract",
+    "name": {
+      "en": "Maitake mushroom extract*"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "maitake-mushroom-extract-standardized-to-40-polysaccharides-30-beta-glucans",
+    "name": {
+      "en": "Maitake mushroom extract, standardized to 40% polysaccharides, 30% beta‑glucans"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "malabar-tamarind-fruit-extract-60-hydroxycitric-acid",
+    "name": {
+      "en": "Malabar tamarind fruit extract, 60% hydroxycitric acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "manganese",
+    "name": {
+      "en": "Manganese",
+      "fr": "Manganèse"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "mannose",
+    "name": {
+      "en": "ᴅ‑Mannose"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "marigold-flower-extract-15-lutein",
+    "name": {
+      "en": "Marigold flower extract, 15% lutein"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "marshmallow-root",
+    "name": {
+      "en": "Marshmallow root"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "medicinal-ingredients-per",
+    "name": {
+      "en": "Medicinal ingredients per"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "medium-chain-triglycerides-providing-60-caprylic-acid-and-40-capric-acid",
+    "name": {
+      "en": "Medium-chain triglycerides providing 60% caprylic acid and 40% capric acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "melatonin",
+    "name": {
+      "en": "Melatonin",
+      "fr": "Mélatonine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "methionine",
+    "name": {
+      "en": "ʟ‑Methionine*"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "methylsulfonylmethane",
+    "name": {
+      "en": "Methylsulfonylmethane"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "methylsulfonylmethane-100-pure",
+    "name": {
+      "en": "Methylsulfonylmethane , 100% pure"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "microcrystalline-hydroxyapatite",
+    "name": {
+      "en": "Microcrystalline hydroxyapatite *"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "micronized-palmitoylethanolamide",
+    "name": {
+      "en": "Micronized palmitoylethanolamide"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "milk-thistle-30-1-seed-extract",
+    "name": {
+      "en": "Milk thistle 30:1 seed extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "milk-thistle-seed-extract-80-silymarin",
+    "name": {
+      "en": "Milk thistle seed extract, 80% silymarin"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "mix-of",
+    "name": {
+      "en": "Mix of"
+    },
+    "unit": "CFU"
+  },
+  {
+    "id": "modified-citrus-pectin-from-lemon-fruit-peel",
+    "name": {
+      "en": "Modified citrus pectin, from lemon fruit peel"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "molybdenum",
+    "name": {
+      "en": "Molybdenum",
+      "fr": "Molybdène"
+    },
+    "unit": "mcg"
+  },
+  {
+    "id": "myrrh",
+    "name": {
+      "en": "Myrrh"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "myrrh-resin",
+    "name": {
+      "en": "Myrrh resin"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "myrtle",
+    "name": {
+      "en": "Myrtle"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "n-acetyl-cysteine",
+    "name": {
+      "en": "N-Acetyl-ʟ-cysteine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "n-n-dimethylglycine",
+    "name": {
+      "en": "N,N-Dimethylglycine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "n-n-dimethylglycine-hydrochloride",
+    "name": {
+      "en": "N,N-Dimethylglycine hydrochloride"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "natural-vitamin-e",
+    "name": {
+      "en": "Natural vitamin E"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "neem-leaf",
+    "name": {
+      "en": "Neem leaf"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "nem-powder",
+    "name": {
+      "en": "NEM powder"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "norwegian-kelp-0-1-iodine",
+    "name": {
+      "en": "Norwegian kelp , 0.1% iodine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "oat-10-1-extract",
+    "name": {
+      "en": "Oat 10:1 extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "odourless-garlic-bulb",
+    "name": {
+      "en": "Odourless garlic bulb"
+    },
+    "unit": "mcg"
+  },
+  {
+    "id": "odourless-garlic-bulb-1-allicin",
+    "name": {
+      "en": "Odourless garlic bulb, 1% allicin"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "odourless-garlic-bulb-extract-1-allicin",
+    "name": {
+      "en": "Odourless garlic bulb extract, 1% allicin"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "of-acetyl-carnitine",
+    "name": {
+      "en": "of acetyl‒ʟ‒carnitine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "of-beta-sitosterol",
+    "name": {
+      "en": "of beta-sitosterol"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "of-campesterol-and",
+    "name": {
+      "en": "of campesterol, and"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "of-curcumin",
+    "name": {
+      "en": "of curcumin"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "of-dried-herb",
+    "name": {
+      "en": "of dried herb"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "of-haematococcus-pluvialis",
+    "name": {
+      "en": "of Haematococcus pluvialis"
+    },
+    "unit": "mcg"
+  },
+  {
+    "id": "of-silicon",
+    "name": {
+      "en": "of silicon"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "oleic-acid",
+    "name": {
+      "en": "Oleic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "olive-leaf-extract-20-oleuropein",
+    "name": {
+      "en": "Olive leaf extract, 20% oleuropein"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "oregano-leaf-extract-30-carvacrol",
+    "name": {
+      "en": "Oregano leaf extract, 30% carvacrol"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "oregano-oil-75-85-carvacrol",
+    "name": {
+      "en": "Oregano oil, 75–85% carvacrol"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "oregon-grape-root",
+    "name": {
+      "en": "Oregon-grape root"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-alfalfa-herb",
+    "name": {
+      "en": "Organic alfalfa herb"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-astragalus-root",
+    "name": {
+      "en": "Organic astragalus root"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-bilberry-fruit",
+    "name": {
+      "en": "Organic bilberry fruit"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-bilberry-leaf",
+    "name": {
+      "en": "Organic bilberry leaf"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-black-cumin-seed-oil-50-linoleic-acid-20-oleic-acid-hexane-free",
+    "name": {
+      "en": "Organic black cumin seed oil, 50% linoleic acid, 20% oleic acid, hexane-free"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-black-walnut-fruit-green-hull",
+    "name": {
+      "en": "Organic black walnut fruit green hull"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-blackberry-fruit",
+    "name": {
+      "en": "Organic blackberry fruit"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-blessed-thistle-herb-top",
+    "name": {
+      "en": "Organic blessed thistle herb top"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-borage-seed-oil-24-gamma-linolenic-acid",
+    "name": {
+      "en": "Organic borage seed oil, 24% gamma‑linolenic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-broken-cell-chlorella",
+    "name": {
+      "en": "Organic broken-cell chlorella"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-burdock-root",
+    "name": {
+      "en": "Organic burdock root"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-cayenne-fruit",
+    "name": {
+      "en": "Organic cayenne fruit"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-coriolus",
+    "name": {
+      "en": "Organic coriolus"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-echinacea-root",
+    "name": {
+      "en": "Organic echinacea root"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-european-elderflower",
+    "name": {
+      "en": "Organic European elderflower"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-european-mistletoe-leaf",
+    "name": {
+      "en": "Organic European mistletoe leaf"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-evening-primrose-seed-oil-hexane-free",
+    "name": {
+      "en": "Organic evening primrose seed oil, hexane-free"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-flax-seed-oil",
+    "name": {
+      "en": "Organic flax seed oil"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-garlic-bulb",
+    "name": {
+      "en": "Organic garlic bulb"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-goji-fruit",
+    "name": {
+      "en": "Organic goji fruit"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-goji-seed-oil",
+    "name": {
+      "en": "Organic goji seed oil"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-hawthorn-fruit",
+    "name": {
+      "en": "Organic hawthorn fruit"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-hawthorn-leaf-and-flower",
+    "name": {
+      "en": "Organic hawthorn leaf and flower"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-lavender-essential-oil-hexane-free",
+    "name": {
+      "en": "Organic lavender essential oil, hexane-free"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-lion-s-mane",
+    "name": {
+      "en": "Organic lion’s mane"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-lobelia-herb-top",
+    "name": {
+      "en": "Organic lobelia herb top"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-maca-root",
+    "name": {
+      "en": "Organic maca root"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-milk-thistle-seed",
+    "name": {
+      "en": "Organic milk thistle seed"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-motherwort-herb-top",
+    "name": {
+      "en": "Organic motherwort herb top"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-plantain-leaf",
+    "name": {
+      "en": "Organic plantain leaf"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-pomegranate-fruit",
+    "name": {
+      "en": "Organic pomegranate fruit"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-red-clover-herb",
+    "name": {
+      "en": "Organic red clover herb"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-red-raspberry-fruit",
+    "name": {
+      "en": "Organic red raspberry fruit"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-rhubarb-root",
+    "name": {
+      "en": "Organic rhubarb root"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-sea-buckthorn-fruit",
+    "name": {
+      "en": "Organic sea-buckthorn fruit"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-sheep-sorrel-herb-top",
+    "name": {
+      "en": "Organic sheep sorrel herb top"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-slippery-elm-bark",
+    "name": {
+      "en": "Organic slippery elm bark"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-sour-cherry-fruit",
+    "name": {
+      "en": "Organic sour cherry fruit"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-spirulina",
+    "name": {
+      "en": "Organic spirulina"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-strawberry",
+    "name": {
+      "en": "Organic strawberry"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-valerian-root",
+    "name": {
+      "en": "Organic valerian root"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-watercress-herb",
+    "name": {
+      "en": "Organic watercress herb"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-white-willow-bark",
+    "name": {
+      "en": "Organic white willow bark"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "organic-wild-valerian-root",
+    "name": {
+      "en": "Organic/wild valerian root"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "orotic-acid",
+    "name": {
+      "en": "Orotic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "other-omega-3s",
+    "name": {
+      "en": "Other omega-3s"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "ox-bile-45-cholic-acids",
+    "name": {
+      "en": "Ox bile , 45% cholic acids"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "ox-bile-from-bovine-source-45-cholic-acid",
+    "name": {
+      "en": "Ox bile, from bovine source , 45% cholic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "pancreas-organ",
+    "name": {
+      "en": "Pancreas organ *"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "pancreatic-enzymes-4-4-concentrate",
+    "name": {
+      "en": "Pancreatic enzymes 4× 4× concentrate"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "pancreatic-enzymes-4-concentrate",
+    "name": {
+      "en": "Pancreatic enzymes 4× concentrate"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "papain",
+    "name": {
+      "en": "Papain"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "para-aminobenzoic-acid",
+    "name": {
+      "en": "para‑Aminobenzoic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "parsley-leaf",
+    "name": {
+      "en": "Parsley leaf"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "passionflower-extract-4-flavonoids",
+    "name": {
+      "en": "Passionflower extract, 4% flavonoids"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "passionflower-flower-extract-4-flavonoids",
+    "name": {
+      "en": "Passionflower flower extract, 4% flavonoids"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "pau-d-arco-inner-bark",
+    "name": {
+      "en": "Pau d’arco inner bark"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "pelapower",
+    "name": {
+      "en": "PelaPower"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "pepsin-a",
+    "name": {
+      "en": "Pepsin A"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "phellodendron-bark-extract-0-1-berberine",
+    "name": {
+      "en": "Phellodendron bark extract, 0.1% berberine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "phellodendron-bark-extract-1-berberine",
+    "name": {
+      "en": "Phellodendron bark extract, 1% berberine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "phenylalanine",
+    "name": {
+      "en": "ʟ‑Phenylalanine*"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "phosphorus",
+    "name": {
+      "en": "Phosphorus"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "plant-digestive-enzymes",
+    "name": {
+      "en": "Plant digestive enzymes"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "plant-sterol-esters",
+    "name": {
+      "en": "Plant sterol esters"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "potassium",
+    "name": {
+      "en": "Potassium",
+      "fr": "Potassium"
+    },
     "unit": "mg"
   },
   {
     "id": "probiotic",
-    "name": { "en": "Probiotic cultures", "fr": "Cultures probiotiques" },
+    "name": {
+      "en": "Probiotic cultures",
+      "fr": "Cultures probiotiques"
+    },
     "unit": "CFU"
   },
-  { "id": "vitamin-b6", "name": { "en": "Vitamin B6", "fr": "Vitamine B6" }, "unit": "mg" },
-  { "id": "vitamin-b12", "name": { "en": "Vitamin B12", "fr": "Vitamine B12" }, "unit": "mcg" },
-  { "id": "folate", "name": { "en": "Folate", "fr": "Folate" }, "unit": "mcg" }
+  {
+    "id": "probiotics",
+    "name": {
+      "en": "probiotics"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "proline",
+    "name": {
+      "en": "ʟ‑Proline"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "protease-amylase-lipase-betaine-hydrochloride",
+    "name": {
+      "en": "Protease Amylase Lipase Betaine hydrochloride †"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "protease-amylase-lipase-bromelain-2-400-gdu-g",
+    "name": {
+      "en": "Protease Amylase Lipase Bromelain , 2,400 GDU/g"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "protein",
+    "name": {
+      "en": "Protein"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "providing",
+    "name": {
+      "en": "Providing"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "psyllium-husk",
+    "name": {
+      "en": "Psyllium husk"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "pure-nmn",
+    "name": {
+      "en": "Pure NMN"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "qiye-shen-an-pian-leaf-extract",
+    "name": {
+      "en": "Qiye Shen’an Pian leaf extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "quassia-stem-wood",
+    "name": {
+      "en": "Quassia stem wood"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "quercetin",
+    "name": {
+      "en": "Quercetin"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "r-alpha-lipoic-acid",
+    "name": {
+      "en": "R –alpha-Lipoic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "red-beet-root",
+    "name": {
+      "en": "Red beet root"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "red-clover-flower-extract-8-isoflavones",
+    "name": {
+      "en": "Red clover flower extract, 8% isoflavones"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "red-clover-flower-top-extract-40-isoflavones",
+    "name": {
+      "en": "Red clover flower top extract, 40% isoflavones"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "red-clover-flowering-tip",
+    "name": {
+      "en": "Red clover flowering tip"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "red-ginseng-leaf-and-root-extract-20-ginsenosides",
+    "name": {
+      "en": "Red ginseng leaf and root extract, 20% ginsenosides"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "red-raspberry-leaf",
+    "name": {
+      "en": "Red raspberry leaf"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "red-yeast-rice-extract-0-5-lovastatin",
+    "name": {
+      "en": "Red yeast rice extract, 0.5% lovastatin"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "reishi-extract-40-polysaccharides-30-beta-glucans",
+    "name": {
+      "en": "Reishi extract, 40% polysaccharides, 30% beta‑glucans"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "reishi-mushroom-extract",
+    "name": {
+      "en": "Reishi mushroom extract*"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "reishi-mushroom-extract-40-polysaccharides-providing-30-beta-glucans",
+    "name": {
+      "en": "Reishi mushroom extract, 40% polysaccharides, providing 30% beta‑glucans"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "reishi-spores",
+    "name": {
+      "en": "Reishi spores"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "rhodiola-root-extract-5-rosavins",
+    "name": {
+      "en": "Rhodiola root extract, 5% rosavins"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "ribose",
+    "name": {
+      "en": "ᴅ‑Ribose"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "rose-hips",
+    "name": {
+      "en": "Rose hips"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "roselle",
+    "name": {
+      "en": "Roselle"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "roselle-flower",
+    "name": {
+      "en": "Roselle flower"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "rosemary-leaf-extract-5-carnosic-acid",
+    "name": {
+      "en": "Rosemary leaf extract, 5% carnosic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "roseroot-root-extract-5-rosavins",
+    "name": {
+      "en": "Roseroot root extract, 5% rosavins"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "rutin",
+    "name": {
+      "en": "Rutin"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "rye-flower-pollen-extract",
+    "name": {
+      "en": "Rye flower pollen extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "s-acetylglutathione",
+    "name": {
+      "en": "S-Acetylglutathione"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "sage-leaf",
+    "name": {
+      "en": "Sage leaf"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "san-qi-ginseng-leaf-15-1-extract",
+    "name": {
+      "en": "San‑qi ginseng leaf 15:1 extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "schizandra-fruit-extract-9-schisandrins",
+    "name": {
+      "en": "Schizandra fruit extract, 9% schisandrins"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "sea-buckthorn-fruit-juice",
+    "name": {
+      "en": "Sea buckthorn fruit juice"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "selenium",
+    "name": {
+      "en": "Selenium",
+      "fr": "Sélénium"
+    },
+    "unit": "mcg"
+  },
+  {
+    "id": "serine",
+    "name": {
+      "en": "ʟ‑Serine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "serratiopeptidase",
+    "name": {
+      "en": "Serratiopeptidase"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "shiitake-extract-40-polysaccharides-25-beta-glucans",
+    "name": {
+      "en": "Shiitake extract, 40% polysaccharides, 25% beta‑glucans"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "shiitake-mushroom-extract",
+    "name": {
+      "en": "Shiitake mushroom extract*"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "siberian-ginseng-root-extract",
+    "name": {
+      "en": "Siberian ginseng root extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "siberian-ginseng-root-extract-0-8-eleutherosides",
+    "name": {
+      "en": "Siberian ginseng root extract, 0.8% eleutherosides"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "silicic-acid-providing",
+    "name": {
+      "en": "Silicic acid providing"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "silicon",
+    "name": {
+      "en": "Silicon",
+      "fr": "Silicium"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "sodium",
+    "name": {
+      "en": "Sodium"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "spirulina",
+    "name": {
+      "en": "Spirulina"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "spleen-from-bovine-source",
+    "name": {
+      "en": "Spleen , from bovine source *"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "squalene-hexane-free",
+    "name": {
+      "en": "Squalene , hexane-free"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "st-john-s-wort-aerial-part-8-1-extract",
+    "name": {
+      "en": "St. John’s wort aerial part 8:1 extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "stigmasterol",
+    "name": {
+      "en": "Stigmasterol"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "stigmasterol-tocotrienols",
+    "name": {
+      "en": "stigmasterol Tocotrienols"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "stigmasterols",
+    "name": {
+      "en": "Stigmasterols"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "stinging-nettle-root-and-herb-top-extract-5-silicic-acid",
+    "name": {
+      "en": "Stinging nettle root and herb top extract, 5% silicic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "strontium",
+    "name": {
+      "en": "Strontium"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "suma-root",
+    "name": {
+      "en": "Suma root"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "sweet-fennel-seed",
+    "name": {
+      "en": "Sweet fennel seed"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "sweet-orange-crystals",
+    "name": {
+      "en": "Sweet orange crystals"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "sweet-wormwood-extract-10-artemisinin",
+    "name": {
+      "en": "Sweet wormwood extract, 10% artemisinin"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "taurine",
+    "name": {
+      "en": "Taurine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "tauroursodeoxycholic-acid",
+    "name": {
+      "en": "Tauroursodeoxycholic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "theanine",
+    "name": {
+      "en": "ʟ‑Theanine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "threonine",
+    "name": {
+      "en": "ʟ‑Threonine*"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "tocotrienols",
+    "name": {
+      "en": "Tocotrienols"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "tomato-flesh-extract-10-lycopene",
+    "name": {
+      "en": "Tomato flesh extract, 10% lycopene"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "trans-resveratrol",
+    "name": {
+      "en": "trans-Resveratrol"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "tribulus-terrestris-fruit-extract-40-saponins",
+    "name": {
+      "en": "Tribulus terrestris fruit extract, 40% saponins"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "trypsin",
+    "name": {
+      "en": "Trypsin"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "tryptophan",
+    "name": {
+      "en": "ʟ‑Tryptophan*"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "tyrosine",
+    "name": {
+      "en": "ʟ‑Tyrosine"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "uva-ursi-leaf",
+    "name": {
+      "en": "Uva ursi leaf"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "uva-ursi-leaf-2-5-1-extract",
+    "name": {
+      "en": "Uva ursi leaf 2.5:1 extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "valine",
+    "name": {
+      "en": "ʟ‑Valine *"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "vanadium",
+    "name": {
+      "en": "Vanadium"
+    },
+    "unit": "mcg"
+  },
+  {
+    "id": "vanadyl-sulfate",
+    "name": {
+      "en": "Vanadyl sulfate"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "vitamin-b1",
+    "name": {
+      "en": "Vitamin B1 (thiamine)",
+      "fr": "Vitamine B1 (thiamine)"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "vitamin-b12",
+    "name": {
+      "en": "Vitamin B12",
+      "fr": "Vitamine B12"
+    },
+    "unit": "mcg"
+  },
+  {
+    "id": "vitamin-b2",
+    "name": {
+      "en": "Vitamin B2 (riboflavin)",
+      "fr": "Vitamine B2 (riboflavine)"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "vitamin-b3",
+    "name": {
+      "en": "Vitamin B3 (niacin)",
+      "fr": "Vitamine B3 (niacine)"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "vitamin-b5",
+    "name": {
+      "en": "Vitamin B5 (pantothenic acid)",
+      "fr": "Vitamine B5 (acide pantothénique)"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "vitamin-b6",
+    "name": {
+      "en": "Vitamin B6",
+      "fr": "Vitamine B6"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "vitamin-c",
+    "name": {
+      "en": "Vitamin C",
+      "fr": "Vitamine C"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "vitamin-d",
+    "name": {
+      "en": "Vitamin D",
+      "fr": "Vitamine D"
+    },
+    "unit": "mcg"
+  },
+  {
+    "id": "vitamin-e",
+    "name": {
+      "en": "Vitamin E",
+      "fr": "Vitamine E"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "vitamin-k",
+    "name": {
+      "en": "Vitamin K",
+      "fr": "Vitamine K"
+    },
+    "unit": "mcg"
+  },
+  {
+    "id": "white-willow-bark",
+    "name": {
+      "en": "White willow bark"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "whole-bacopa-25-1-extract-45-bacosides",
+    "name": {
+      "en": "Whole bacopa 25:1 extract, 45% bacosides"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "whole-gotu-kola",
+    "name": {
+      "en": "Whole gotu kola"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "whole-iris-moss",
+    "name": {
+      "en": "Whole Iris moss"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "whole-skullcap-extract-12-5-flavonoids",
+    "name": {
+      "en": "Whole skullcap extract, 12.5% flavonoids"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "whole-stinging-nettle-extract-1-silicic-acid",
+    "name": {
+      "en": "Whole stinging nettle extract, 1% silicic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "whole-wormwood",
+    "name": {
+      "en": "Whole wormwood"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "wild-crafted-saw-palmetto-fruit-liposterolic-extract-95-fatty-acids",
+    "name": {
+      "en": "Wild-crafted saw palmetto fruit liposterolic extract, 95% fatty acids"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "wild-harvested-saw-palmetto-fruit-extract-95-purified",
+    "name": {
+      "en": "Wild-harvested saw palmetto fruit extract, 95% purified"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "wild-yam-rhizome-8-1-extract-16-diosgenin",
+    "name": {
+      "en": "Wild yam rhizome 8:1 extract, 16% diosgenin"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "wormwood-aerial-part",
+    "name": {
+      "en": "Wormwood aerial part"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "wormwood-herb",
+    "name": {
+      "en": "Wormwood herb"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "zeaxanthin",
+    "name": {
+      "en": "Zeaxanthin"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "zeaxanthin-esters-from-marigold-flower-extract",
+    "name": {
+      "en": "Zeaxanthin esters from marigold flower extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "zeaxanthin-from-marigold-extract",
+    "name": {
+      "en": "Zeaxanthin , from marigold extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "zinc",
+    "name": {
+      "en": "Zinc",
+      "fr": "Zinc"
+    },
+    "unit": "mg"
+  }
 ]

@@ -1,24 +1,29 @@
 import type { Catalogue, Ingredient, Product, TimingRule } from '@smartstack/shared'
 import ingredientsJson from '../data/ingredients.json'
 import productsJson from '../data/products.json'
-import rulesJson from '../data/rules.json'
+import generatedRulesJson from '../data/rules.generated.json'
+import curatedRulesJson from '../data/rules.json'
 import { barcodesMatch } from './barcode'
 import { validateCatalogue } from './validate'
 
-function loadSeedCatalogue(): Catalogue {
+function loadCatalogue(): Catalogue {
   const result = validateCatalogue({
     ingredients: ingredientsJson,
     products: productsJson,
-    rules: rulesJson,
+    // Curated ingredient-level rules first, then the label-derived product rules.
+    rules: [...curatedRulesJson, ...generatedRulesJson],
   })
   if (!result.ok) {
-    throw new Error(`Invalid seed catalogue:\n${result.errors.join('\n')}`)
+    throw new Error(`Invalid catalogue:\n${result.errors.join('\n')}`)
   }
   return result.catalogue
 }
 
-/** The Phase 1 sample catalogue, bundled with the app (never fetched). */
-export const catalogue: Catalogue = loadSeedCatalogue()
+/**
+ * The catalogue bundled with the app: New Roots Herbal products imported from
+ * newrootsherbal.com (`npm run data:import:website`), never fetched at runtime.
+ */
+export const catalogue: Catalogue = loadCatalogue()
 
 // ---------------------------------------------------------------------------
 // Lookups
@@ -40,11 +45,30 @@ export function getRule(id: string, cat: Catalogue = catalogue): TimingRule | un
   return cat.rules.find((r) => r.id === id)
 }
 
+/** Every barcode that identifies the product (primary + all variants). */
+export function productBarcodes(product: Product): string[] {
+  const codes = [product.upc, ...(product.variants ?? []).map((v) => v.upc)]
+  return [...new Set(codes)]
+}
+
 export function findProductByBarcode(
   code: string,
   cat: Catalogue = catalogue,
 ): Product | undefined {
-  return cat.products.find((p) => barcodesMatch(p.upc, code))
+  return cat.products.find((p) => productBarcodes(p).some((upc) => barcodesMatch(upc, code)))
+}
+
+/** Case-insensitive name search (EN and FR), for the browse list. */
+export function searchProducts(query: string, cat: Catalogue = catalogue): Product[] {
+  const q = query.trim().toLowerCase()
+  if (!q) return cat.products
+  return cat.products.filter(
+    (p) =>
+      p.name.en.toLowerCase().includes(q) ||
+      (p.name.fr?.toLowerCase().includes(q) ?? false) ||
+      p.sku === q ||
+      productBarcodes(p).includes(q),
+  )
 }
 
 export function productContainsIngredient(product: Product, ingredientId: string): boolean {
@@ -55,7 +79,7 @@ export function productContainsIngredient(product: Product, ingredientId: string
  * Rules that apply to a product: ingredient-level rules for every ingredient it
  * contains, plus product-level rules, minus `ruleOverrides.disable`. When two
  * rules share an attribute, the product-level one wins; otherwise the first in
- * rules.json order. Result is in rules.json order.
+ * rules order. Result is in rules order.
  */
 export function rulesForProduct(product: Product, cat: Catalogue = catalogue): TimingRule[] {
   const disabled = new Set(product.ruleOverrides?.disable ?? [])

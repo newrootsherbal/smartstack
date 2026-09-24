@@ -1,4 +1,4 @@
-import { buildSchedule } from '@smartstack/engine'
+import { buildSchedule, getProduct } from '@smartstack/engine'
 import type { Routine, Schedule, Stack } from '@smartstack/shared'
 import { useMemo } from 'react'
 import { localDateKey } from './dates'
@@ -20,8 +20,12 @@ export function scheduleForDay(
   override: TodayOverride | null,
   dateKey: string,
 ): Schedule | null {
-  if (!routine || stack.length === 0) return null
-  return buildSchedule(routineForDay(routine, override, dateKey), stack)
+  if (!routine) return null
+  // A product can leave the catalogue between imports; it is shown on the Stack
+  // screen as "no longer in the catalogue" and left out of the schedule.
+  const known = stack.filter((item) => getProduct(item.productId) !== undefined)
+  if (known.length === 0) return null
+  return buildSchedule(routineForDay(routine, override, dateKey), known)
 }
 
 /** Today's schedule, recomputed whenever routine, stack or the override change. */

@@ -114,7 +114,9 @@ export function Reminders() {
           <p className="notice notice--error" role="alert">
             {r.testStatus === 'failed' && r.error
               ? t('reminders.testFailed', { error: r.error })
-              : t('reminders.syncFailed', { error: r.error ?? sync.error ?? '' })}
+              : r.errorKind === 'push' && r.error
+                ? t('reminders.pushServiceFailed', { error: r.error })
+                : t('reminders.syncFailed', { error: r.error ?? sync.error ?? '' })}
           </p>
         )}
       </section>

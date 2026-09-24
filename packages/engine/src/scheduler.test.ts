@@ -1,6 +1,11 @@
 import type { Routine, Stack } from '@smartstack/shared'
 import { describe, expect, it } from 'vitest'
-import { buildSchedule } from './scheduler'
+import { sampleCatalogue } from './sample'
+import { buildSchedule as buildScheduleWith } from './scheduler'
+
+// Every test runs against the stable sample fixture, not the imported catalogue.
+const buildSchedule = (routine: Routine, stack: Stack) =>
+  buildScheduleWith(routine, stack, { catalogue: sampleCatalogue })
 
 const one = (...ids: string[]): Stack => ids.map((productId) => ({ productId, dosesPerDay: 1 }))
 

@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import { findDuplicateIngredients } from './duplicates'
+import type { Stack } from '@smartstack/shared'
+import { findDuplicateIngredients as find } from './duplicates'
+import { sampleCatalogue } from './sample'
+
+const findDuplicateIngredients = (stack: Stack) => find(stack, sampleCatalogue)
 
 describe('findDuplicateIngredients', () => {
   it('lists ingredients present in two or more products with daily amounts and the total', () => {

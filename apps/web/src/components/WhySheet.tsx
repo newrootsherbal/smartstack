@@ -1,5 +1,6 @@
 import { getProduct, getRule } from '@smartstack/engine'
 import type { Reason } from '@smartstack/shared'
+import { useProductText } from '../hooks/useProductText'
 import { t, tl } from '../i18n'
 import { SeverityBadge } from './SeverityBadge'
 import { Sheet } from './Sheet'
@@ -15,6 +16,7 @@ export function WhySheet({ reasons, onClose }: WhySheetProps) {
   const open = reasons !== null && reasons.length > 0
   const first = reasons?.[0]
   const product = first ? getProduct(first.productId) : undefined
+  const text = useProductText(product)
   const title = product ? `${t('why.title')} ${tl(product.shortName)}` : t('why.title')
 
   return (
@@ -44,18 +46,27 @@ export function WhySheet({ reasons, onClose }: WhySheetProps) {
                 <dd>
                   {product ? (
                     <div className="stack-v">
-                      {product.status === 'sample' && (
+                      {product.status === 'sample' ? (
                         <p className="small muted">
                           <span className="tag tag--sample">{t('common.sample')}</span>{' '}
                           {t('why.sampleNote')}
                         </p>
+                      ) : (
+                        <p className="small muted">{t('why.draftNote')}</p>
                       )}
                       <p>
-                        <strong>{t('why.directions')}:</strong> {tl(product.directions)}
+                        <strong>{t('why.directions')}:</strong>{' '}
+                        {text ? (text.directions ? tl(text.directions) : '—') : t('common.loading')}
                       </p>
                       <p>
-                        <strong>{t('why.warnings')}:</strong> {tl(product.warnings)}
+                        <strong>{t('why.warnings')}:</strong>{' '}
+                        {text ? (text.warnings ? tl(text.warnings) : '—') : t('common.loading')}
                       </p>
+                      {product.sourceUrl && (
+                        <a href={product.sourceUrl} target="_blank" rel="noopener noreferrer">
+                          {t('why.productPage')}
+                        </a>
+                      )}
                     </div>
                   ) : (
                     <span className="muted">—</span>

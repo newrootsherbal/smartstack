@@ -4,7 +4,7 @@
     "tagline": "Your supplements. Your schedule. Smarter timing."
   },
   "banner": {
-    "sample": "Sample data — not reviewed, not medical advice. Rules and product details are placeholders for testing. Talk to a healthcare professional about your supplements."
+    "sample": "Product details come from newrootsherbal.com. Timing rules are not yet reviewed and are not medical advice. Talk to a healthcare professional about your supplements."
   },
   "nav": {
     "today": "Today",
@@ -14,11 +14,26 @@
     "settings": "Settings"
   },
   "severity": {
-    "important": { "label": "Important", "sub": "Action required" },
-    "timing_conflict": { "label": "Timing conflict", "sub": "Action recommended" },
-    "consideration": { "label": "Consideration", "sub": "" },
-    "product_instruction": { "label": "Product instruction", "sub": "" },
-    "informational": { "label": "Informational", "sub": "" }
+    "important": {
+      "label": "Important",
+      "sub": "Action required"
+    },
+    "timing_conflict": {
+      "label": "Timing conflict",
+      "sub": "Action recommended"
+    },
+    "consideration": {
+      "label": "Consideration",
+      "sub": ""
+    },
+    "product_instruction": {
+      "label": "Product instruction",
+      "sub": ""
+    },
+    "informational": {
+      "label": "Informational",
+      "sub": ""
+    }
   },
   "anchor": {
     "breakfast": "Morning",
@@ -53,6 +68,38 @@
   "push": {
     "several": "{count} supplements"
   },
+  "form": {
+    "capsule": {
+      "one": "capsule",
+      "other": "capsules"
+    },
+    "tablet": {
+      "one": "tablet",
+      "other": "tablets"
+    },
+    "softgel": {
+      "one": "softgel",
+      "other": "softgels"
+    },
+    "powder": {
+      "one": "serving",
+      "other": "servings"
+    },
+    "liquid": {
+      "one": "dose",
+      "other": "doses"
+    },
+    "other": {
+      "one": "dose",
+      "other": "doses"
+    }
+  },
+  "times": {
+    "1": "Once a day",
+    "2": "Twice a day",
+    "3": "3 times a day",
+    "4": "4 times a day"
+  },
   "common": {
     "back": "Back",
     "cancel": "Cancel",
@@ -65,9 +112,11 @@
     "notYetReviewed": "Not yet reviewed",
     "sourceToBeAdded": "Source: to be added",
     "sample": "Sample",
-    "dosesPerDay": "Doses per day",
-    "perDay": "{n} per day",
-    "loading": "Loading…"
+    "draft": "Not reviewed",
+    "timesPerDay": "Times per day",
+    "fromLabel": "from the label",
+    "loading": "Loading…",
+    "andMore": "and {count} more"
   },
   "install": {
     "iosTitle": "Add SmartStack to your Home Screen",
@@ -105,37 +154,48 @@
     "title": "Add a supplement",
     "scan": "Scan barcode",
     "manual": "Enter UPC",
-    "list": "Sample list",
+    "browse": "Browse",
     "scanHint": "Point the camera at the barcode on the bottle.",
     "scanStarting": "Starting camera…",
-    "cameraUnavailable": "Camera unavailable. Enter the UPC below or pick from the sample list.",
-    "cameraDenied": "Camera access was denied. Allow it in your browser settings or enter the UPC below.",
+    "cameraUnavailable": "Camera unavailable. Enter the UPC or browse the products instead.",
+    "cameraDenied": "Camera access was denied. Allow it in your browser settings or enter the UPC instead.",
     "engine": "Scanner: {engine}",
     "upcLabel": "UPC / EAN",
-    "upcPlaceholder": "2000000000008",
+    "upcPlaceholder": "628747118989",
     "lookup": "Look up",
-    "notFound": "Product not found — sample catalogue only.",
-    "notFoundHint": "In Phase 1 only the sample barcodes are recognized. Open /dev/barcodes on another screen to scan them.",
+    "notFound": "Product not found.",
+    "notFoundHint": "Only New Roots Herbal natural health products are recognized. Check the code or browse the list.",
+    "searchPlaceholder": "Search by name, SKU or UPC",
+    "results": "{count} products",
+    "noResults": "No product matches “{query}”.",
     "confirmTitle": "Add to my stack?",
+    "suggestedUse": "Suggested use",
+    "labelDefault": "{times} · {units} {form}",
+    "labelDefaultNoUnits": "{times}",
+    "adjust": "Adjust",
     "addToStack": "Add to my stack",
-    "alreadyInStack": "Already in your stack — this updates the doses per day.",
+    "alreadyInStack": "Already in your stack — this updates how often you take it.",
     "added": "{product} added to your stack.",
-    "ingredients": "Ingredients per dose",
+    "ingredients": "Medicinal ingredients per {serving}",
+    "sizes": "Sizes: {sizes}",
     "viewToday": "View today's schedule",
     "addAnother": "Add another"
   },
   "stack": {
     "title": "My stack",
     "empty": "Your stack is empty.",
-    "emptyHint": "Scan a product or pick one from the sample list to get started.",
+    "emptyHint": "Scan a product or browse the list to get started.",
     "addFirst": "Add a supplement",
     "count": "{count} products",
     "removeConfirm": "Remove {product} from your stack?",
+    "labelSays": "Label: {times}",
     "overlapTitle": "Your stack contains overlapping nutrients.",
     "overlapTotal": "Your total daily intake from these products is {total}.",
     "reviewTitle": "Review recommended",
     "reviewBody": "You're taking multiple products containing this nutrient. Consider discussing your total intake with a healthcare professional.",
-    "perDay": "{amount} × {doses}/day"
+    "perDay": "{amount} × {doses}/day",
+    "unknownProduct": "No longer in the catalogue",
+    "unknownHint": "This product is not in the current catalogue, so it is left out of your schedule."
   },
   "today": {
     "title": "Today",
@@ -163,10 +223,13 @@
     "productInfo": "Product information",
     "lastReviewed": "Last reviewed",
     "reviewedBy": "Reviewed by",
-    "directions": "Directions",
+    "directions": "Suggested use",
     "warnings": "Warnings",
+    "facts": "Medicinal ingredients",
     "sampleNote": "Sample product — directions and warnings are placeholders.",
-    "openSource": "Open source"
+    "draftNote": "Label text from newrootsherbal.com; timing rules not yet reviewed.",
+    "openSource": "Open source",
+    "productPage": "Product page"
   },
   "reminders": {
     "title": "Reminders",
@@ -181,6 +244,7 @@
     "deniedAndroid": "Re-enable them in Chrome: tap the lock icon in the address bar → Permissions → Notifications.",
     "deniedDesktop": "Re-enable them in your browser's site settings for this page.",
     "unsupported": "This browser can't deliver reminders. On iPhone, add SmartStack to your Home Screen and open it from there.",
+    "pushServiceFailed": "Your browser could not register with its push service (the message was “{error}”). Office networks often block this channel; try a phone on mobile data or a home network. Nothing was sent to the server.",
     "test": "Send me a test reminder in 2–3 minutes",
     "testSent": "Test reminder scheduled. Lock your phone and wait.",
     "testFailed": "Could not schedule the test: {error}",
@@ -207,14 +271,15 @@
     "deleteFailedServer": "The server could not be reached; local data was deleted anyway. Server rows expire on their own within 7 days.",
     "privacy": "Privacy",
     "privacyBody": "SmartStack stores your routine and stack only on this device. If you turn on reminders, the server keeps an anonymous id, your time zone, your push subscription and the next 7 days of reminder times with product names. Sent reminders are deleted after 7 days. Nothing is shared with third parties and there are no analytics.",
+    "catalogue": "Catalogue: {count} New Roots Herbal products imported from newrootsherbal.com",
     "version": "Version {version}",
     "dev": "Developer",
-    "devBarcodes": "Sample barcodes",
+    "devBarcodes": "Barcodes",
     "devStyleguide": "Style guide"
   },
   "dev": {
-    "barcodesTitle": "Sample barcodes",
-    "barcodesIntro": "Scan these off your screen. GS1 prefix 200 is reserved for internal use and never appears on retail products.",
+    "barcodesTitle": "Barcodes",
+    "barcodesIntro": "Search a product and scan its barcode off the screen. Real products render as UPC-A; sample codes use GS1 prefix 200.",
     "styleguideTitle": "Style guide"
   }
 }

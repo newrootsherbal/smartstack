@@ -5,6 +5,7 @@ import { Link } from 'react-router'
 import { Sheet } from '../components/Sheet'
 import { WhySheet } from '../components/WhySheet'
 import { formatClock, formatLongDate, minutesOfDay } from '../dates'
+import { formatUnits } from '../format'
 import { t, tl } from '../i18n'
 import { renderAdjustment, renderReasonShort } from '../i18n/render'
 import { useTodaySchedule } from '../schedule'
@@ -190,6 +191,12 @@ function PlacementSection({ placement, today, checks, onToggle, onWhy }: Placeme
                 />
                 <span className={checked ? styles.done : ''}>
                   {product ? tl(product.shortName) : dose.productId}
+                  {product?.unitsPerDose && (
+                    <span className="muted small">
+                      {' '}
+                      · {formatUnits(product.unitsPerDose, product.form)}
+                    </span>
+                  )}
                   {hasMultipleDoses && (
                     <span className="muted small">
                       {' '}

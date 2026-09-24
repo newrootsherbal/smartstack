@@ -27,3 +27,4 @@ Thumbs.db
 
 # CSV importer output (reviewed by hand, then merged into data/)
 packages/engine/data/import/
+packages/engine/data/.cache/

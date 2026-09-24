@@ -94,26 +94,50 @@ export type RuleOverrides = z.infer<typeof RuleOverrides>
 
 export const MAX_DOSES_PER_DAY = 4
 
+/** One retail size of a product. All variants share the recipe, NPN and rules. */
+export const ProductVariant = z.object({
+  sku: z.string().min(1),
+  /** Digits only: 12-digit UPC-A or 13-digit EAN-13. */
+  upc: z.string().regex(/^\d{12,13}$/),
+  size: LocalizedText.optional(),
+  format: LocalizedText.optional(),
+})
+export type ProductVariant = z.infer<typeof ProductVariant>
+
 export const Product = z
   .object({
     id: z.string().min(1),
+    /** Primary SKU (first variant). */
     sku: z.string().min(1),
-    /** Barcode as printed: 12-digit UPC-A or 13-digit EAN-13. */
+    /** Primary barcode as printed: 12-digit UPC-A or 13-digit EAN-13. */
     upc: z.string().regex(/^\d{12,13}$/),
     npn: z.string().min(1),
     brand: z.string().min(1),
     name: LocalizedText,
     /** Short label for schedule rows, push titles and adjustment sentences, e.g. "Iron". */
     shortName: LocalizedText,
+    /** Label subtitle, e.g. "35 mg Elemental Iron". */
+    subtitle: LocalizedText.optional(),
     form: z.enum(['capsule', 'tablet', 'softgel', 'powder', 'liquid', 'other']),
     servingSize: z.string().min(1),
+    /** Times per day suggested on the label (occasions, not units). */
     dosesPerDayDefault: z.number().int().min(1).max(MAX_DOSES_PER_DAY),
-    directions: LocalizedText,
-    warnings: LocalizedText,
+    /** Units per occasion suggested on the label, e.g. 2 (capsules). */
+    unitsPerDose: z.number().positive().optional(),
+    /**
+     * Label text. Inline for small catalogues (sample fixtures, CSV imports); the
+     * website import keeps it in a separate, lazily loaded file to keep the bundle small.
+     */
+    directions: LocalizedText.optional(),
+    warnings: LocalizedText.optional(),
     status: ProductStatus,
     labelVersion: z.string().min(1),
     ingredients: z.array(ProductIngredient).min(1),
+    variants: z.array(ProductVariant).optional(),
     ruleOverrides: RuleOverrides.optional(),
+    /** Public product page the data was imported from. */
+    sourceUrl: z.url().optional(),
+    sourceUpdatedAt: z.string().optional(),
   })
   .extend(ReviewFields.shape)
 export type Product = z.infer<typeof Product>

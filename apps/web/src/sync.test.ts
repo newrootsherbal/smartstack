@@ -16,8 +16,8 @@ const routine: Routine = {
 describe('computeReminderWindow', () => {
   const now = new Date(2026, 8, 24, 11, 0) // 2026-09-24 11:00 local
   const stack = [
-    { productId: 'sample-multi', dosesPerDay: 1 },
-    { productId: 'sample-magnesium', dosesPerDay: 1 },
+    { productId: 'multi', dosesPerDay: 1 },
+    { productId: 'magnesium-bisglycinate', dosesPerDay: 1 },
   ]
 
   it('covers seven local calendar days and omits what is already past', () => {
@@ -87,19 +87,19 @@ describe('composeNotification', () => {
       time: '09:30',
       minutes: 570,
       anchor: null,
-      productIds: ['sample-iron'],
-      doses: [{ productId: 'sample-iron', doseIndex: 0 }],
+      productIds: ['iron-bisglycinate'],
+      doses: [{ productId: 'iron-bisglycinate', doseIndex: 0 }],
       reasons: [
         {
           ruleId: 'rule-iron-separate-calcium',
           attribute: 'SEPARATE_FROM_CALCIUM',
           severity: 'timing_conflict',
-          productId: 'sample-iron',
+          productId: 'iron-bisglycinate',
           params: {},
         },
       ],
     })
-    expect(title).toMatch(/^Iron — 9:30/)
-    expect(body).toBe('Iron · Take separately from calcium')
+    expect(title).toMatch(/^Iron Bisglycinate — 9:30/)
+    expect(body).toBe('Iron Bisglycinate · Take separately from calcium')
   })
 })

@@ -1,5 +1,5 @@
 import { Catalogue as CatalogueSchema, SEED_SEVERITIES, type Catalogue } from '@smartstack/shared'
-import { isValidEan13, SAMPLE_EAN13_PREFIX } from './barcode'
+import { isValidRetailBarcode, SAMPLE_EAN13_PREFIX } from './barcode'
 
 export type ValidationResult = { ok: true; catalogue: Catalogue } | { ok: false; errors: string[] }
 
@@ -11,9 +11,9 @@ export const SEPARATION_ATTRIBUTES: ReadonlySet<string> = new Set([
 const ANCHOR_PREFERENCE_ATTRIBUTES: ReadonlySet<string> = new Set(['WITH_FOOD', 'WITH_FAT'])
 
 /**
- * Validate raw catalogue data: zod shape first, then referential integrity and
- * the Phase 1 sample-data rules. Used by tests, `npm run data:validate` and when
- * the seed catalogue is loaded.
+ * Validate raw catalogue data: zod shape first, then referential integrity, the
+ * sample-data rules and the real-product rules. Used by tests, the importers and
+ * when a catalogue is loaded.
  */
 export function validateCatalogue(raw: unknown): ValidationResult {
   const parsed = CatalogueSchema.safeParse(raw)
@@ -39,16 +39,24 @@ export function validateCatalogue(raw: unknown): ValidationResult {
   }
 
   const productIds = new Set<string>()
-  const upcs = new Set<string>()
+  const barcodes = new Map<string, string>()
   for (const p of cat.products) {
     const where = `products.${p.id}`
     if (productIds.has(p.id)) errors.push(`${where}: duplicate id`)
     productIds.add(p.id)
-    if (upcs.has(p.upc)) errors.push(`${where}: duplicate upc ${p.upc}`)
-    upcs.add(p.upc)
-    if (p.upc.length === 13 && !isValidEan13(p.upc)) {
-      errors.push(`${where}: upc ${p.upc} has a bad EAN-13 check digit`)
+
+    const codes = [p.upc, ...(p.variants ?? []).map((v) => v.upc)]
+    for (const code of codes) {
+      if (!isValidRetailBarcode(code))
+        errors.push(`${where}: barcode ${code} has a bad check digit`)
+      const owner = barcodes.get(code)
+      if (owner && owner !== p.id) errors.push(`${where}: barcode ${code} also belongs to ${owner}`)
+      barcodes.set(code, p.id)
     }
+    if (p.variants && !p.variants.some((v) => v.upc === p.upc)) {
+      errors.push(`${where}: primary upc ${p.upc} is not one of the variants`)
+    }
+
     const seen = new Set<string>()
     for (const pi of p.ingredients) {
       if (!ingredientIds.has(pi.ingredientId)) {
@@ -77,8 +85,14 @@ export function validateCatalogue(raw: unknown): ValidationResult {
       }
       if (p.reviewStatus !== 'unreviewed')
         errors.push(`${where}: sample products must be unreviewed`)
-    } else if (p.npn.startsWith('SAMPLE-') || p.brand === 'Sample') {
-      errors.push(`${where}: only status "sample" products may use the sample brand / NPN`)
+    } else {
+      if (p.npn.startsWith('SAMPLE-') || p.brand === 'Sample') {
+        errors.push(`${where}: only status "sample" products may use the sample brand / NPN`)
+      }
+      if (!/^\d{8}$/.test(p.npn)) errors.push(`${where}: NPN must be 8 digits (got ${p.npn})`)
+      if (p.upc.startsWith(SAMPLE_EAN13_PREFIX) && p.upc.length === 13) {
+        errors.push(`${where}: real products cannot use the GS1 200 sample range`)
+      }
     }
   }
 

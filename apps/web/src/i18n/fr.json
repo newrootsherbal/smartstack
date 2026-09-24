@@ -68,6 +68,38 @@
   "push": {
     "several": ""
   },
+  "form": {
+    "capsule": {
+      "one": "",
+      "other": ""
+    },
+    "tablet": {
+      "one": "",
+      "other": ""
+    },
+    "softgel": {
+      "one": "",
+      "other": ""
+    },
+    "powder": {
+      "one": "",
+      "other": ""
+    },
+    "liquid": {
+      "one": "",
+      "other": ""
+    },
+    "other": {
+      "one": "",
+      "other": ""
+    }
+  },
+  "times": {
+    "1": "",
+    "2": "",
+    "3": "",
+    "4": ""
+  },
   "common": {
     "back": "",
     "cancel": "",
@@ -80,9 +112,11 @@
     "notYetReviewed": "",
     "sourceToBeAdded": "",
     "sample": "",
-    "dosesPerDay": "",
-    "perDay": "",
-    "loading": ""
+    "draft": "",
+    "timesPerDay": "",
+    "fromLabel": "",
+    "loading": "",
+    "andMore": ""
   },
   "install": {
     "iosTitle": "",
@@ -120,7 +154,7 @@
     "title": "",
     "scan": "",
     "manual": "",
-    "list": "",
+    "browse": "",
     "scanHint": "",
     "scanStarting": "",
     "cameraUnavailable": "",
@@ -131,11 +165,19 @@
     "lookup": "",
     "notFound": "",
     "notFoundHint": "",
+    "searchPlaceholder": "",
+    "results": "",
+    "noResults": "",
     "confirmTitle": "",
+    "suggestedUse": "",
+    "labelDefault": "",
+    "labelDefaultNoUnits": "",
+    "adjust": "",
     "addToStack": "",
     "alreadyInStack": "",
     "added": "",
     "ingredients": "",
+    "sizes": "",
     "viewToday": "",
     "addAnother": ""
   },
@@ -146,11 +188,14 @@
     "addFirst": "",
     "count": "",
     "removeConfirm": "",
+    "labelSays": "",
     "overlapTitle": "",
     "overlapTotal": "",
     "reviewTitle": "",
     "reviewBody": "",
-    "perDay": ""
+    "perDay": "",
+    "unknownProduct": "",
+    "unknownHint": ""
   },
   "today": {
     "title": "",
@@ -180,8 +225,11 @@
     "reviewedBy": "",
     "directions": "",
     "warnings": "",
+    "facts": "",
     "sampleNote": "",
-    "openSource": ""
+    "draftNote": "",
+    "openSource": "",
+    "productPage": ""
   },
   "reminders": {
     "title": "",
@@ -196,6 +244,7 @@
     "deniedAndroid": "",
     "deniedDesktop": "",
     "unsupported": "",
+    "pushServiceFailed": "",
     "test": "",
     "testSent": "",
     "testFailed": "",
@@ -222,6 +271,7 @@
     "deleteFailedServer": "",
     "privacy": "",
     "privacyBody": "",
+    "catalogue": "",
     "version": "",
     "dev": "",
     "devBarcodes": "",

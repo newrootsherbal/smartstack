@@ -15,7 +15,7 @@ const read = (name: string): unknown =>
 const result = validateCatalogue({
   ingredients: read('ingredients.json'),
   products: read('products.json'),
-  rules: read('rules.json'),
+  rules: [...(read('rules.json') as unknown[]), ...(read('rules.generated.json') as unknown[])],
 })
 
 if (!result.ok) {

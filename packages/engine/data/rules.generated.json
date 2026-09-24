@@ -1,0 +1,2507 @@
+[
+  {
+    "id": "rule-acetyl-l-carnitine-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "acetyl-l-carnitine"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Take with food.”",
+      "fr": "Usage suggéré sur l’étiquette : « Prendre avec de la nourriture. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/acetyl-l-carnitine",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-acidophilus-ultra-15-billion-take-with-water",
+    "attribute": "TAKE_WITH_WATER",
+    "appliesTo": {
+      "productId": "acidophilus-ultra-15-billion"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults, adolescents, and children ≥ 6 years old: Take 1–2 capsules daily with water or juice, or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes, adolescents, et enfants ≥ 6 ans : Prendre 1–2 capsules par jour avec de l’eau ou du jus, ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/acidophilus-ultra-15-billion",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-acidophilus-ultra-15-billion-refrigerate",
+    "attribute": "REFRIGERATE",
+    "appliesTo": {
+      "productId": "acidophilus-ultra-15-billion"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "This product is kept refrigerated.",
+      "fr": "Ce produit se conserve au réfrigérateur."
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/acidophilus-ultra-15-billion",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-acidophilus-ultra-11-billion-refrigerate",
+    "attribute": "REFRIGERATE",
+    "appliesTo": {
+      "productId": "acidophilus-ultra-11-billion"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "This product is kept refrigerated.",
+      "fr": "Ce produit se conserve au réfrigérateur."
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/acidophilus-ultra-11-billion",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-active-folate-tablets-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "active-folate-tablets"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 tablet daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 comprimé par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/active-folate-tablets",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-ageless-telomeres-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "ageless-telomeres"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule daily with a meal providing protein or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule par jour avec un repas fournissant des protéines ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/ageless-telomeres",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-alpha-lipoic-125-mg-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "alpha-lipoic-125-mg"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: As a dietary supplement, take 1–2 capsules twice daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Comme supplément alimentaire, prendre 1–2 capsules deux fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/alpha-lipoic-125-mg",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-alpha-lipoic-250-mg-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "alpha-lipoic-250-mg"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: As a dietary supplement, take 1–2 capsules daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Comme supplément alimentaire, prendre 1–2 capsules par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/alpha-lipoic-250-mg",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-anti-inflamma-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "anti-inflamma"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 2 capsules three times daily with meals or as directed by your health-care practitioner.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/anti-inflamma",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-bifido-builder-42-billion-take-with-water",
+    "attribute": "TAKE_WITH_WATER",
+    "appliesTo": {
+      "productId": "bifido-builder-42-billion"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults, adolescents, and children ≥ 6 years old: Take 1 capsule daily with water or juice or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes, adolescents, et enfants ≥ 6 ans : Prendre 1 capsule par jour avec de l’eau ou du jus ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/bifido-builder-42-billion",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-bifido-builder-42-billion-refrigerate",
+    "attribute": "REFRIGERATE",
+    "appliesTo": {
+      "productId": "bifido-builder-42-billion"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "This product is kept refrigerated.",
+      "fr": "Ce produit se conserve au réfrigérateur."
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/bifido-builder-42-billion",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-bifido-infantis-5-billion-take-with-water",
+    "attribute": "TAKE_WITH_WATER",
+    "appliesTo": {
+      "productId": "bifido-infantis-5-billion"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults, adolescents, and children ≥ 6 years old: Take 1 capsule daily with water or juice or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes, adolescents, et enfants ≥ 6 ans : Prendre 1 capsule par jour avec de l’eau ou du jus ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/bifido-infantis-5-billion",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-black-cumin-seed-oil-softgels-500-mg-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "black-cumin-seed-oil-softgels-500-mg"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 2 softgels three times daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 2 gélules trois fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/black-cumin-seed-oil-softgels-500-mg",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-black-cumin-seed-oil-1000-mg-extra-strength-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "black-cumin-seed-oil-1000-mg-extra-strength"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Take with food.”",
+      "fr": "Usage suggéré sur l’étiquette : « Prendre avec de la nourriture. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/black-cumin-seed-oil-1000-mg-extra-strength",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-black-cumin-seed-oil-1000-mg-extra-strength-without-food",
+    "attribute": "WITHOUT_FOOD",
+    "appliesTo": {
+      "productId": "black-cumin-seed-oil-1000-mg-extra-strength"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults Take 1 softgel three times daily before a meal or as directed by your health-care practitioner.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/black-cumin-seed-oil-1000-mg-extra-strength",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-blood-sugar-balance-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "blood-sugar-balance"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/blood-sugar-balance",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-bronchio-buster-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "bronchio-buster"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Take with food/meal to avoid digestive upset.”",
+      "fr": "Usage suggéré sur l’étiquette : « Prendre avec de la nourriture/un repas pour éviter les troubles digestifs. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/bronchio-buster",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-cal-mag-citrate-with-zinc-potassium-selenium-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "cal-mag-citrate-with-zinc-potassium-selenium"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 2 capsules twice daily with meals or as directed by your health-care practitioner.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/cal-mag-citrate-with-zinc-potassium-selenium",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-cal-mag-citrates-vitamin-d-zinc-silica-and-boron-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "cal-mag-citrates-vitamin-d-zinc-silica-and-boron"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 2 capsules three times daily with meals.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 2 capsules trois fois par jour avec les repas. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/cal-mag-citrates-vitamin-d-zinc-silica-and-boron",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-calcium-citrate-and-vitamin-d3-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "calcium-citrate-and-vitamin-d3"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1–4 capsules daily with a meal or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1–4 capsules par jour avec un repas ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/calcium-citrate-and-vitamin-d3",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-candida-stop-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "candida-stop"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 2 capsules three times daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 2 capsules trois fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/candida-stop",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-caprylic-acid-plus-without-food",
+    "attribute": "WITHOUT_FOOD",
+    "appliesTo": {
+      "productId": "caprylic-acid-plus"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 3 capsules in the morning and 2 capsules in the evening with water, before meals.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 3 capsules le matin et 2 capsules le soir avec de l’eau, avant les repas. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/caprylic-acid-plus",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-caprylic-acid-plus-morning",
+    "attribute": "MORNING",
+    "appliesTo": {
+      "productId": "caprylic-acid-plus"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 3 capsules in the morning and 2 capsules in the evening with water, before meals.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 3 capsules le matin et 2 capsules le soir avec de l’eau, avant les repas. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/caprylic-acid-plus",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-caprylic-acid-plus-take-with-water",
+    "attribute": "TAKE_WITH_WATER",
+    "appliesTo": {
+      "productId": "caprylic-acid-plus"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 3 capsules in the morning and 2 capsules in the evening with water, before meals.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 3 capsules le matin et 2 capsules le soir avec de l’eau, avant les repas. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/caprylic-acid-plus",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-cardio-flow-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "cardio-flow"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule three times daily with food.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule trois fois par jour avec de la nourriture. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/cardio-flow",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-cascara-sagrada-bedtime",
+    "attribute": "BEDTIME",
+    "appliesTo": {
+      "productId": "cascara-sagrada"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Take a single dose at bedtime.”",
+      "fr": "Usage suggéré sur l’étiquette : « Prendre une seule dose au coucher. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/cascara-sagrada",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-childrens-omega-3-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "childrens-omega-3"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Children and adolescents 3–18 years old: Chew 1 softgel four times daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Enfants et adolescents 3–18 ans : Croquer 1 gélule quatre fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/childrens-omega-3",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-childrens-probiotic-10-billion-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "childrens-probiotic-10-billion"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Children 1–12 years: MIX POWDER WITH FOOD BEFORE INGESTING.”",
+      "fr": "Usage suggéré sur l’étiquette : « Enfants 1 à 12 ans : MÉLANGER LA POUDRE AVEC DE LA NOURRITURE AVANT D’INGÉRER. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/childrens-probiotic-10-billion",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-childrens-probiotic-10-billion-refrigerate",
+    "attribute": "REFRIGERATE",
+    "appliesTo": {
+      "productId": "childrens-probiotic-10-billion"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "This product is kept refrigerated.",
+      "fr": "Ce produit se conserve au réfrigérateur."
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/childrens-probiotic-10-billion",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-chlorella-capsules-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "chlorella-capsules"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1–2 capsules twice daily with food or as directed by your health-care practitioner.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/chlorella-capsules",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-chlorella-powder-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "chlorella-powder"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 teaspoon (2.5 g) twice daily mixed in with water or juice with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 cuillerée à thé (2,5 g) deux fois par jour mélangée à de l’eau ou du jus avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/chlorella-powder",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-chlorella-powder-take-with-water",
+    "attribute": "TAKE_WITH_WATER",
+    "appliesTo": {
+      "productId": "chlorella-powder"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 teaspoon (2.5 g) twice daily mixed in with water or juice with food or as directed by your health-care practitioner.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/chlorella-powder",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-cho-less-terin-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "cho-less-terin"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 2 softgels twice daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 2 gélules deux fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/cho-less-terin",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-chromium-picolinate-200-mcg-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "chromium-picolinate-200-mcg"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1–2 capsules daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1–2 capsules par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/chromium-picolinate-200-mcg",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-chromium-picolinate-500-mcg-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "chromium-picolinate-500-mcg"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/chromium-picolinate-500-mcg",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-clarity-mag-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "clarity-mag"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule three times daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule trois fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/clarity-mag",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-cold-flu-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "cold-flu"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule daily with food, beginning at the onset of cold symptoms, or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule par jour avec de la nourriture, dès le début des symptômes du rhume, ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/cold-flu",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-colostrum-without-food",
+    "attribute": "WITHOUT_FOOD",
+    "appliesTo": {
+      "productId": "colostrum"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 2 capsules twice daily with 8 oz. (250 ml) of water on an empty stomach.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 2 capsules deux fois par jour avec 8 oz (250 ml) d’eau à jeun. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/colostrum",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-cordyceps-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "cordyceps"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1–2 capsules daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1–2 capsules par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/cordyceps",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-d-mannose-cranberry-refrigerate",
+    "attribute": "REFRIGERATE",
+    "appliesTo": {
+      "productId": "d-mannose-cranberry"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "This product is kept refrigerated.",
+      "fr": "Ce produit se conserve au réfrigérateur."
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/d-mannose-cranberry",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-d-stress-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "d-stress"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 softgel daily with food and a full glass of water or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 gélule par jour avec de la nourriture et un grand verre d’eau ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/d-stress",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-digestive-enzymes-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "digestive-enzymes"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1–4 capsules daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1–4 capsules par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/digestive-enzymes",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-digestive-enzymes-without-food",
+    "attribute": "WITHOUT_FOOD",
+    "appliesTo": {
+      "productId": "digestive-enzymes"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Take with or immediately before a meal/food.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/digestive-enzymes",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-eyesurance-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "eyesurance"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 softgel daily with a meal containing oil/fat, or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 gélule par jour avec un repas contenant de l’huile / du gras, ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/eyesurance",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-femina-flora-10-billion-bedtime",
+    "attribute": "BEDTIME",
+    "appliesTo": {
+      "productId": "femina-flora-10-billion"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adult women: Insert 1 ovule intravaginally daily before bed for 10 days or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Femmes adultes : Insérer 1 ovule intravaginalement par jour avant le coucher pendant 10 jours ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/femina-flora-10-billion",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-femina-flora-10-billion-refrigerate",
+    "attribute": "REFRIGERATE",
+    "appliesTo": {
+      "productId": "femina-flora-10-billion"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "This product is kept refrigerated.",
+      "fr": "Ce produit se conserve au réfrigérateur."
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/femina-flora-10-billion",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-femina-flora-oral-55-billion-take-with-water",
+    "attribute": "TAKE_WITH_WATER",
+    "appliesTo": {
+      "productId": "femina-flora-oral-55-billion"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults and adolescents: Take 1–2 capsules daily with water or juice, or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes et adolescents : Prendre 1–2 capsules par jour avec de l’eau ou du jus, ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/femina-flora-oral-55-billion",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-femina-flora-oral-55-billion-refrigerate",
+    "attribute": "REFRIGERATE",
+    "appliesTo": {
+      "productId": "femina-flora-oral-55-billion"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "This product is kept refrigerated.",
+      "fr": "Ce produit se conserve au réfrigérateur."
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/femina-flora-oral-55-billion",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-forsight-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "forsight"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule twice daily with a meal containing oil/fat or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule deux fois par jour avec un repas contenant de l’huile ou du gras ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/forsight",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-garcinia-cambogia-without-food",
+    "attribute": "WITHOUT_FOOD",
+    "appliesTo": {
+      "productId": "garcinia-cambogia"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule three times daily before meals or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule trois fois par jour avant les repas ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/garcinia-cambogia",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-ginger-475-mg-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "ginger-475-mg"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults, adolescents, and children ≥ 6 years: Take 1–2 capsules twice daily with meals or as directed by your health-care practitioner.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/ginger-475-mg",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-glucose-align-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "glucose-align"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults ≥ 19 years old: Take 2 capsules daily with a meal or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes ≥ 19 ans : Prendre 2 capsules par jour avec un repas ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/glucose-align",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-grass-fed-lamb-pancreas-without-food",
+    "attribute": "WITHOUT_FOOD",
+    "appliesTo": {
+      "productId": "grass-fed-lamb-pancreas"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 tablet daily immediately before a meal/food or as directed by your health-care practitioner.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/grass-fed-lamb-pancreas",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-hair-scalp-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "hair-scalp"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 2 softgels daily with meals or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 2 gélules par jour avec des repas ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/hair-scalp",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-hawthorn-berry-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "hawthorn-berry"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1–2 capsules twice daily with a meal or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1–2 capsules deux fois par jour avec un repas ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/hawthorn-berry",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-heart-smart-extra-virgin-organic-olive-oil-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "heart-smart-extra-virgin-organic-olive-oil"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 3 tablespoons daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 3 cuillerées à soupe par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/heart-smart-extra-virgin-organic-olive-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-heavy-metal-detox-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "heavy-metal-detox"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule one to three times daily with meals providing protein or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule une à trois fois par jour avec des repas fournissant des protéines ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/heavy-metal-detox",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-heme-iron-without-food",
+    "attribute": "WITHOUT_FOOD",
+    "appliesTo": {
+      "productId": "heme-iron"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 3 capsules once daily with a full glass of water, with or without food, or as directed by your health-care practitioner.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/heme-iron",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-heme-iron-take-with-water",
+    "attribute": "TAKE_WITH_WATER",
+    "appliesTo": {
+      "productId": "heme-iron"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 3 capsules once daily with a full glass of water, with or without food, or as directed by your health-care practitioner.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/heme-iron",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-heme-iron-bovine-without-food",
+    "attribute": "WITHOUT_FOOD",
+    "appliesTo": {
+      "productId": "heme-iron-bovine"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 3 capsules once daily with a full glass of water, with or without food, or as directed by your health-care practitioner.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/heme-iron-bovine",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-heme-iron-bovine-take-with-water",
+    "attribute": "TAKE_WITH_WATER",
+    "appliesTo": {
+      "productId": "heme-iron-bovine"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 3 capsules once daily with a full glass of water, with or without food, or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 3 capsules une fois par jour avec un grand verre d’eau, avec ou sans nourriture, ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/heme-iron-bovine",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-homocysteine-reduce-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "homocysteine-reduce"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 2 scoops daily with food.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 2 dosettes combles par jour avec de la nourriture. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/homocysteine-reduce",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-hospital-bacteria-defense-10-billion-refrigerate",
+    "attribute": "REFRIGERATE",
+    "appliesTo": {
+      "productId": "hospital-bacteria-defense-10-billion"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "This product is kept refrigerated.",
+      "fr": "Ce produit se conserve au réfrigérateur."
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/hospital-bacteria-defense-10-billion",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-human-probiotics-42-billion-refrigerate",
+    "attribute": "REFRIGERATE",
+    "appliesTo": {
+      "productId": "human-probiotics-42-billion"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "This product is kept refrigerated.",
+      "fr": "Ce produit se conserve au réfrigérateur."
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/human-probiotics-42-billion",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-ibs-urgency-10-billion-refrigerate",
+    "attribute": "REFRIGERATE",
+    "appliesTo": {
+      "productId": "ibs-urgency-10-billion"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "This product is kept refrigerated.",
+      "fr": "Ce produit se conserve au réfrigérateur."
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/ibs-urgency-10-billion",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-indole-3-carbinol-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "indole-3-carbinol"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 2 capsules once daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 2 capsules une fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/indole-3-carbinol",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-infla-heal-plus-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "infla-heal-plus"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule two to four times daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule de deux à quatre fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/infla-heal-plus",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-iron-bisglycinate-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "iron-bisglycinate"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/iron-bisglycinate",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-kelp-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "kelp"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1–2 tablets daily with meals or as directed by your health-care practitioner.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/kelp",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-kidney-clean-flow-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "kidney-clean-flow"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Take with meal or shortly after following a meal.”",
+      "fr": "Usage suggéré sur l’étiquette : « Prendre avec un repas ou peu de temps après le repas. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/kidney-clean-flow",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-l-arginine-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "l-arginine"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 4 capsules three times daily with meals or as directed by your health-care practitioner.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/l-arginine",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-l-carnitine-tartrate-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "l-carnitine-tartrate"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Start with 1 capsule twice daily with food and gradually increase to 2 capsules twice daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Commencer par 1 capsule deux fois par jour avec de la nourriture et augmenter graduellement à 2 capsules deux fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/l-carnitine-tartrate",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-l-glutamine-capsules-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "l-glutamine-capsules"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 4 capsules three times daily with a meal or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 4 capsules trois fois par jour avec un repas ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/l-glutamine-capsules",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-l-lysine-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "l-lysine"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: For cold sores, take 2 capsules three times daily with meals.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/l-lysine",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-l-methionine-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "l-methionine"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: As a dietary supplement, take 1 capsule once or twice daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Comme supplément alimentaire, prendre 1 capsule une ou deux fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/l-methionine",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-l-tyrosine-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "l-tyrosine"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Take 2 capsules per day with meals or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Prendre 2 capsules par jour avec un repas ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/l-tyrosine",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-liquid-melatonin-bedtime",
+    "attribute": "BEDTIME",
+    "appliesTo": {
+      "productId": "liquid-melatonin"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Take once a day, at or before bedtime.”",
+      "fr": "Usage suggéré sur l’étiquette : « Prendre une fois par jour, au coucher ou avant. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/liquid-melatonin",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-liver-protection-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "liver-protection"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule three times daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule trois fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/liver-protection",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-magnesium-bisglycinate-capsules-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "magnesium-bisglycinate-capsules"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/magnesium-bisglycinate-capsules",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-maitake-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "maitake"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 2 capsules daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 2 capsules par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/maitake",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-male-fertility-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "male-fertility"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adult men: Take 3 capsules twice daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Hommes adultes : Prendre 3 capsules deux fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/male-fertility",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-melatonin-10-mg-bedtime",
+    "attribute": "BEDTIME",
+    "appliesTo": {
+      "productId": "melatonin-10-mg"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Take once a day, at or before bedtime.”",
+      "fr": "Usage suggéré sur l’étiquette : « Prendre une fois par jour, seulement au coucher ou avant. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/melatonin-10-mg",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-melatonin-3-mg-bedtime",
+    "attribute": "BEDTIME",
+    "appliesTo": {
+      "productId": "melatonin-3-mg"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1–3 tablets daily, only at or before bedtime, or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1–3 comprimés par jour, seulement au coucher ou avant, ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/melatonin-3-mg",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-melatonin-5-mg-bedtime",
+    "attribute": "BEDTIME",
+    "appliesTo": {
+      "productId": "melatonin-5-mg"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Take as needed, 30 to 60 minutes before bedtime.”",
+      "fr": "Usage suggéré sur l’étiquette : « Prendre au besoin, 30 à 60 minutes avant le coucher. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/melatonin-5-mg",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-merry-mind-omega-3-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "merry-mind-omega-3"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 softgel daily with a meal or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 gélule par jour avec un repas ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/merry-mind-omega-3",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-msm-capsules-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "msm-capsules"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 2 capsules two or three times daily with food or as directed by your health-care practitioner.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/msm-capsules",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-msm-capsules-bedtime",
+    "attribute": "BEDTIME",
+    "appliesTo": {
+      "productId": "msm-capsules"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Avoid taking at bedtime.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/msm-capsules",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-multi-max-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "multi-max"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 2 capsules one to four times daily with meals or as directed by your health-care practitioner.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/multi-max",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-multi-max-immune-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "multi-max-immune"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 2 capsules two to four times daily with meals or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 2 capsules deux à quatre fois par jour avec des repas ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/multi-max-immune",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-n-acetylcysteine-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "n-acetylcysteine"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule daily twice with a meal or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule deux fois par jour avec un repas ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/n-acetylcysteine",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-new-roots-essence-morning",
+    "attribute": "MORNING",
+    "appliesTo": {
+      "productId": "new-roots-essence"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 3 tablespoons in the morning and 4 tablespoons in the evening or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 3 cuillerées à soupe le matin et 4 cuillerées à soupe le soir ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/new-roots-essence",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-new-roots-herbal-chill-pills-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "new-roots-herbal-chill-pills"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 2 capsules at once daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 2 capsules en une prise par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/new-roots-herbal-chill-pills",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-new-roots-herbal-chill-pills-bedtime",
+    "attribute": "BEDTIME",
+    "appliesTo": {
+      "productId": "new-roots-herbal-chill-pills"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Not to be taken immediately before bedtime.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/new-roots-herbal-chill-pills",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-niacinamide-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "niacinamide"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take one capsule 1–2 times per day with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre une capsule 1–2 fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/niacinamide",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-organic-cardiac-health-tincture-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "organic-cardiac-health-tincture"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults ≥ 19 y.o.: Take 1–2.5 ml (approximately 35–88 drops) one to three times daily with food or as recommended by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes 19 ans et plus : Prendre 1–2,5 ml (approximativement 35–88 gouttes) une à trois fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/organic-cardiac-health-tincture",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-pancreatin-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "pancreatin"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule two to four times daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule deux à quatre fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/pancreatin",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-pancreatin-without-food",
+    "attribute": "WITHOUT_FOOD",
+    "appliesTo": {
+      "productId": "pancreatin"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Take with or immediately before a meal/food.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/pancreatin",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-plant-sterols-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "plant-sterols"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take ½ teaspoon (1.2 g) once or twice daily with food (sprinkle into your shakes, smoothies, soups, stews, and sauces) or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre ½ cuillerée à thé (1,2 g) de une à deux fois par jour avec de la nourriture (saupoudrer dans vos shakes, smoothies, soupes, ragouts, et sauces) ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/plant-sterols",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-prenatal-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "prenatal"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 3 capsules daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 3 capsules par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/prenatal",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-prevent-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "prevent"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/prevent",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-probiotic-intensity-20-billion-refrigerate",
+    "attribute": "REFRIGERATE",
+    "appliesTo": {
+      "productId": "probiotic-intensity-20-billion"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "This product is kept refrigerated.",
+      "fr": "Ce produit se conserve au réfrigérateur."
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/probiotic-intensity-20-billion",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-probiotics-recovery-120-billion-refrigerate",
+    "attribute": "REFRIGERATE",
+    "appliesTo": {
+      "productId": "probiotics-recovery-120-billion"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "This product is kept refrigerated.",
+      "fr": "Ce produit se conserve au réfrigérateur."
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/probiotics-recovery-120-billion",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-probiotics-urgency-50-billion-take-with-water",
+    "attribute": "TAKE_WITH_WATER",
+    "appliesTo": {
+      "productId": "probiotics-urgency-50-billion"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults, adolescents, and children ≥ 6 years old: Take 1–2 capsules daily with water or juice, or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes, adolescents, et enfants ≥ 6 ans : Prendre 1–2 capsules par jour avec de l’eau ou du jus, ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/probiotics-urgency-50-billion",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-probiotics-urgency-50-billion-refrigerate",
+    "attribute": "REFRIGERATE",
+    "appliesTo": {
+      "productId": "probiotics-urgency-50-billion"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "This product is kept refrigerated.",
+      "fr": "Ce produit se conserve au réfrigérateur."
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/probiotics-urgency-50-billion",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-prostate-perform-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "prostate-perform"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adult men: Take 2 softgels daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Hommes adultes : Prendre 2 gélules par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/prostate-perform",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-pure-magnesium-bisglycinate-115-mg-taurine-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "pure-magnesium-bisglycinate-115-mg-taurine"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule three times daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule trois fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/pure-magnesium-bisglycinate-115-mg-taurine",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-purge-parasitis-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "purge-parasitis"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 9 capsules daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 9 capsules par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/purge-parasitis",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-quercetin-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "quercetin"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Blood-Vessel Protectant: Take 1 capsule twice daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Protecteur des vaisseaux sanguins : Prendre 1 capsule deux fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/quercetin",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-quercetin-bioflavonoid-complex-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "quercetin-bioflavonoid-complex"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults ≥ 19 years old: Take 1 capsule daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes ≥ 19 ans : Prendre 1 capsule par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/quercetin-bioflavonoid-complex",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-red-beet-root-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "red-beet-root"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 2 capsules three times daily with meals or as directed by your health-care practitioner.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/red-beet-root",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-reishi-spores-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "reishi-spores"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “To avoid digestive upset, take with food/meal.”",
+      "fr": "Usage suggéré sur l’étiquette : « Pour éviter les troubles digestifs, prendre avec de la nourriture / un repas. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/reishi-spores",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-resilience-mushroom-extract-blend-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "resilience-mushroom-extract-blend"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Take with a meal if gastrointestinal upset occurs.”",
+      "fr": "Usage suggéré sur l’étiquette : « Prendre avec un repas si des troubles gastro-intestinaux se produisent. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/resilience-mushroom-extract-blend",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-rhodiola-bedtime",
+    "attribute": "BEDTIME",
+    "appliesTo": {
+      "productId": "rhodiola"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Not to be taken immediately before bedtime.”",
+      "fr": "Usage suggéré sur l’étiquette : « Ne doit pas être pris immédiatement avant le coucher. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/rhodiola",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-sod-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "sod"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Take with a meal providing protein.”",
+      "fr": "Usage suggéré sur l’étiquette : « Prendre avec un repas fournissant des protéines. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/sod",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-silica-liquid-refrigerate",
+    "attribute": "REFRIGERATE",
+    "appliesTo": {
+      "productId": "silica-liquid"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "This product is kept refrigerated.",
+      "fr": "Ce produit se conserve au réfrigérateur."
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/silica-liquid",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-sleep8-bedtime",
+    "attribute": "BEDTIME",
+    "appliesTo": {
+      "productId": "sleep8"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1–4 capsules at or before bedtime, or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre de 1 à 4 capsules au coucher ou avant, ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/sleep8",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-sleep8-plus-bedtime",
+    "attribute": "BEDTIME",
+    "appliesTo": {
+      "productId": "sleep8-plus"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule daily at or before bedtime or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule par jour au coucher ou avant ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/sleep8-plus",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-sleep8-ultra-bedtime",
+    "attribute": "BEDTIME",
+    "appliesTo": {
+      "productId": "sleep8-ultra"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “For jet lag: Take once daily at bedtime while travelling or at destination, until adapted to the new time zone or daily pattern (but do not exceed maximum daily dose of 1 capsule in total).”",
+      "fr": "Usage suggéré sur l’étiquette : « Pour le décalage horaire : Prendre une fois par jour au coucher pendant le voyage ou à destination, jusqu’à adaptation au nouveau fuseau horaire ou au nouveau schéma quotidien (mais ne pas dépasser la dose quotidienne maximale de 1 capsule au total). »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/sleep8-ultra",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-slimmer-system-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "slimmer-system"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 2 capsules three times daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 2 capsules trois fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/slimmer-system",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-smart-ginkgo-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "smart-ginkgo"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/smart-ginkgo",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-spirulina-chlorella-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "spirulina-chlorella"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 4 capsules three times daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 4 capsules trois fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/spirulina-chlorella",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-sterols-sterolins-cholesterol-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "sterols-sterolins-cholesterol"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 3 softgels daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 3 gélules par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/sterols-sterolins-cholesterol",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-sterols-sterolins-with-arabinogalactan-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "sterols-sterolins-with-arabinogalactan"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 4 capsules three times daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 4 capsules trois fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/sterols-sterolins-with-arabinogalactan",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-strong-bones-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "strong-bones"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 2 capsules one to three times daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 2 capsules de une à trois fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/strong-bones",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-strong-bones-boron-free-formula-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "strong-bones-boron-free-formula"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 2 capsules one to three times daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 2 capsules de une à trois fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/strong-bones-boron-free-formula",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-super-immune-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "super-immune"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 4 capsules daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 4 capsules par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/super-immune",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-super-iron-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "super-iron"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule daily with a meal or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule par jour avec un repas ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/super-iron",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-travelers-probiotic-21-billion-refrigerate",
+    "attribute": "REFRIGERATE",
+    "appliesTo": {
+      "productId": "travelers-probiotic-21-billion"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "This product is kept refrigerated.",
+      "fr": "Ce produit se conserve au réfrigérateur."
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/travelers-probiotic-21-billion",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-ultimate-bromelain-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "ultimate-bromelain"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule one to three times daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule de une à trois fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/ultimate-bromelain",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-ultra-b-complex-100-mg-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "ultra-b-complex-100-mg"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule daily with a meal or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule par jour avec un repas ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/ultra-b-complex-100-mg",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-ultra-b-complex-50-mg-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "ultra-b-complex-50-mg"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule daily with a meal or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule par jour avec un repas ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/ultra-b-complex-50-mg",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-ultra-iron-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "ultra-iron"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule daily with a meal or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule par jour avec un repas ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/ultra-iron",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-ultra-max-36-billion-refrigerate",
+    "attribute": "REFRIGERATE",
+    "appliesTo": {
+      "productId": "ultra-max-36-billion"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "This product is kept refrigerated.",
+      "fr": "Ce produit se conserve au réfrigérateur."
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/ultra-max-36-billion",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-ultra-stress-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "ultra-stress"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule daily with a meal or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule par jour avec un repas ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/ultra-stress",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-ultra-zinc-30-mg-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "ultra-zinc-30-mg"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/ultra-zinc-30-mg",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-ultra-zinc-50-mg-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "ultra-zinc-50-mg"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule per day with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/ultra-zinc-50-mg",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-uva-ursi-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "uva-ursi"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 3 capsules twice daily with meals.”",
+      "fr": "Usage suggéré sur l’étiquette : « Ne pas prendre avec de la nourriture fortement acide (p. ex. agrumes ou jus d’agrumes) ou avec des médicaments qui pourraient augmenter l’acidité de l’urine. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/uva-ursi",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-valerian-root-capsules-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "valerian-root-capsules"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 2 capsules one to three times daily with meals or as directed by your health-care practitioner.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/valerian-root-capsules",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-vegetarian-strong-bones-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "vegetarian-strong-bones"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 3 capsules one to three times daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 3 capsules une à trois fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/vegetarian-strong-bones",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-vitamin-b1-thiamine-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "vitamin-b1-thiamine"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/vitamin-b1-thiamine",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-vitamin-b12-methylcobalamin-1000mcg-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "vitamin-b12-methylcobalamin-1000mcg"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/vitamin-b12-methylcobalamin-1000mcg",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-vitamin-b12-methylcobalamin-500-mcg-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "vitamin-b12-methylcobalamin-500-mcg"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/vitamin-b12-methylcobalamin-500-mcg",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-vitamin-b3-niacin-100-mg-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "vitamin-b3-niacin-100-mg"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/vitamin-b3-niacin-100-mg",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-vitamin-b3-niacin-500-mg-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "vitamin-b3-niacin-500-mg"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/vitamin-b3-niacin-500-mg",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-vitamin-b5-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "vitamin-b5"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults and children ≥ 6 years old: Take 1 capsule daily with a meal or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes et enfants ≥ 6 ans : Prendre 1 capsule par jour avec un repas ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/vitamin-b5",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-vitamin-b5-synergistic-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "vitamin-b5-synergistic"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule twice daily with a meal or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule deux fois par jour avec un repas ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/vitamin-b5-synergistic",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-vitamin-b6-synergistic-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "vitamin-b6-synergistic"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule daily with food or a meal, or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule par jour avec de la nourriture ou un repas, ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/vitamin-b6-synergistic",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-vitamin-c8-capsules-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "vitamin-c8-capsules"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule twice daily (in divided doses) with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule deux fois par jour (en doses fractionnées) avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/vitamin-c8-capsules",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-vitamin-c8-powder-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "vitamin-c8-powder"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Take once a day with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Utiliser une fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/vitamin-c8-powder",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-vitamin-e8-200-iu-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "vitamin-e8-200-iu"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1–4 softgels daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1–4 gélules par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/vitamin-e8-200-iu",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-vitamin-e8-400-iu-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "vitamin-e8-400-iu"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 2 softgels daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 2 gélules par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/vitamin-e8-400-iu",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-wild-omega-3-180-mg-epa-120-mg-dha-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "wild-omega-3-180-mg-epa-120-mg-dha"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 2 softgels twice daily with meals or as directed by your health-care practitioner.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/wild-omega-3-180-mg-epa-120-mg-dha",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-wild-omega-3-epa-330-mg-dha-165-mg-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "wild-omega-3-epa-330-mg-dha-165-mg"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 2 softgels twice daily with meals or as directed by your health-care practitioner.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/wild-omega-3-epa-330-mg-dha-165-mg",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-wild-oregano-c93-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "wild-oregano-c93"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Take with food.”",
+      "fr": "Usage suggéré sur l’étiquette : « Prendre avec de la nourriture. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/wild-oregano-c93",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-wild-oregano-c93-extra-strong-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "wild-oregano-c93-extra-strong"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Take with food.”",
+      "fr": "Usage suggéré sur l’étiquette : « Prendre avec de la nourriture. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/wild-oregano-c93-extra-strong",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-wormwood-tincture-without-food",
+    "attribute": "WITHOUT_FOOD",
+    "appliesTo": {
+      "productId": "wormwood-tincture"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “For use as a vermifuge for children: Take on an empty stomach.”",
+      "fr": "Usage suggéré sur l’étiquette : « Pour utilisation comme vermifuge chez les enfants : Prendre à jeun. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/wormwood-tincture",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-zinc-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "zinc"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule once or twice daily with a meal or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule une ou deux fois par jour avec un repas ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/zinc",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-zinc-l-carnosine-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "zinc-l-carnosine"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule once or twice daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule une ou deux fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/zinc-l-carnosine",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  }
+]

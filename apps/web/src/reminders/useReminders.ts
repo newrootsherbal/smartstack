@@ -18,6 +18,7 @@ export function useReminders() {
   const { state, dispatch } = useAppState()
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [errorKind, setErrorKind] = useState<'push' | 'server' | null>(null)
   const [testStatus, setTestStatus] = useState<'idle' | 'sent' | 'failed'>('idle')
   const [permission, setPermission] = useState(permissionState())
 
@@ -51,7 +52,15 @@ export function useReminders() {
           })
           return
         }
-        const sub = await subscribe(VAPID_PUBLIC_KEY)
+        let sub: PushSubscription
+        try {
+          sub = await subscribe(VAPID_PUBLIC_KEY)
+        } catch (err) {
+          // Chrome/Safari could not register with their push service: nothing reached our server.
+          setErrorKind('push')
+          setError(describeError(err))
+          return
+        }
         const body = toSubscriptionBody(sub)
         // First network calls of the app's life: create the user, then the subscription.
         await api.putMe(state.userId, { tz: state.tz, platform: platformName() })
@@ -67,6 +76,7 @@ export function useReminders() {
         dispatch({ type: 'SET_PUSH_STATE', pushState: next.pushState })
         await syncSchedule(next, dispatch, { force: true })
       } catch (err) {
+        setErrorKind('server')
         setError(describeError(err))
       } finally {
         setBusy(false)
@@ -114,6 +124,7 @@ export function useReminders() {
     lastSync: state.lastSync,
     busy,
     error,
+    errorKind,
     testStatus,
     vapidConfigured: VAPID_PUBLIC_KEY.length > 0,
     enable,

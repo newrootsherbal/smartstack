@@ -6,7 +6,10 @@ import {
   normalizeBarcode,
   sampleEan13,
 } from './barcode'
-import { catalogue, findProductByBarcode } from './catalogue'
+import { findProductByBarcode as find } from './catalogue'
+import { sampleCatalogue } from './sample'
+
+const findProductByBarcode = (code: string) => find(code, sampleCatalogue)
 
 describe('EAN-13', () => {
   it('computes the check digit', () => {
@@ -41,7 +44,7 @@ describe('normalizeBarcode', () => {
   })
 })
 
-describe('findProductByBarcode', () => {
+describe('findProductByBarcode (sample fixture)', () => {
   it('finds sample products by their EAN-13', () => {
     expect(findProductByBarcode('2000000000008')?.id).toBe('sample-iron')
     expect(findProductByBarcode('2000000000039')?.id).toBe('sample-multi')
@@ -53,7 +56,7 @@ describe('findProductByBarcode', () => {
   })
 
   it('every seed UPC is a valid EAN-13 with the sample prefix', () => {
-    for (const p of catalogue.products) {
+    for (const p of sampleCatalogue.products) {
       expect(isValidEan13(p.upc)).toBe(true)
       expect(p.upc.startsWith('200')).toBe(true)
     }

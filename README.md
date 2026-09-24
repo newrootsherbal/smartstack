@@ -38,7 +38,7 @@ harder (device features live behind `apps/web/src/platform/*`).
 | Hosting + API | **One Cloudflare Worker** (free plan): serves `apps/web/dist` as static assets, handles `/api/*`, runs a Cron Trigger every minute |
 | Database      | Cloudflare D1 (free). Delivery mirror only: users, push subscriptions, reminder rows                                               |
 | Push          | Standard Web Push with VAPID, sent from the Worker with `@block65/webcrypto-web-push`                                              |
-| Catalogue     | Static JSON in `packages/engine/data/` (products, ingredients, rules), bundled into the web app, never fetched                     |
+| Catalogue     | Static JSON in `packages/engine/data/`, generated from newrootsherbal.com by `npm run data:import:website`, bundled, never fetched |
 | Scanner       | Native `BarcodeDetector` when it supports our formats (Android Chrome), else the ZXing WASM ponyfill served from our origin        |
 
 One origin for the app and the API, so there is no CORS. In development Vite (5173)
@@ -126,14 +126,43 @@ Regenerate icons (from `apps/web/public/icon.svg`) and the placeholder manifest 
 npm run assets -w apps/web
 ```
 
+### Product data
+
+The app ships the real New Roots Herbal catalogue, generated from the website's public,
+price-free AI catalog (`https://newrootsherbal.com/llms.txt`):
+
+```bash
+npm run data:import:website              # uses packages/engine/data/.cache/website, fetches what is missing
+npm run data:import:website -- --refresh # re-downloads every record
+```
+
+The importer (`packages/engine/scripts/import-website.ts`, parsers in
+`packages/engine/src/import/`) keeps only licensed natural health products (8-digit NPN) with a
+valid barcode and parsable supplement facts, then writes:
+
+- `data/products.json`: one product per website record with EN/FR name, subtitle, suggested
+  use, warnings, every variant's SKU and UPC, canonical ingredient amounts, the label's default
+  times per day and units per dose, `status: 'draft'` and `reviewStatus: 'unreviewed'`.
+- `data/ingredients.json`: canonical nutrient ids (`iron`, `vitamin-d`, `epa`, `probiotic`…)
+  with fixed units. Vitamin D given in IU is converted to mcg; probiotic strains are summed as CFU.
+- `data/rules.generated.json`: product-level rules read from the label's suggested use ("with
+  food", "at bedtime", "with water"…) and the refrigeration flag, each quoting the label sentence
+  and linking the product page as its source.
+
+Hand-curated ingredient-level rules stay in `data/rules.json`. The importer report lists skipped
+records (essential oils, foods, a few products whose facts it cannot parse) and parser warnings;
+nothing is written if the merged catalogue fails validation. The original ten-product sample
+catalogue lives in `data/sample/` as a test fixture. `docs/data-template.md` remains for
+products the website does not list.
+
 ### Developer pages
 
-- `/dev/barcodes` renders every sample EAN-13 large enough to scan off a monitor. The codes use
-  GS1 prefix `200` (restricted circulation), never assigned to retail products.
+- `/dev/barcodes` renders any product's UPC-A (one per size) large enough to scan off a monitor,
+  plus the sample fixtures' EAN-13 codes (GS1 prefix `200`, never assigned to retail products).
 - `/dev/styleguide` shows the five severity badges, buttons, notices, inputs and tokens.
 
-Both are reachable from Settings → Developer. Scanning any barcode outside the sample
-catalogue shows "Product not found — sample catalogue only."
+Both are reachable from Settings → Developer. Scanning a barcode that is not a New Roots
+Herbal natural health product shows "Product not found."
 
 ### Environment
 
@@ -242,8 +271,8 @@ or every phone will have to re-subscribe.
   is opened. If it is not opened for 7 days, reminders stop. Tapping a notification opens the
   app, which refreshes the window. Later the Worker can run `packages/engine` to roll the window
   server-side.
-- Sample catalogue only; unknown barcodes are rejected. Real data arrives through
-  `docs/data-template.md`.
+- Product data is imported from the website and marked _draft / not reviewed_; timing rules
+  derived from label text are heuristics until the product team reviews them.
 - English only; `fr.json` exists with empty values.
 - The manifest screenshots are generated placeholders (`apps/web/scripts/screenshots.mjs`).
 

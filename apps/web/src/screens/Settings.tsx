@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
+import { catalogue } from '@smartstack/engine'
 import { api } from '../api/client'
 import { t } from '../i18n'
 import { unsubscribe } from '../platform/reminders'
@@ -96,7 +97,11 @@ export function Settings() {
         </div>
       </section>
 
-      <p className="small muted">{t('settings.version', { version: __APP_VERSION__ })}</p>
+      <p className="small muted">
+        {t('settings.catalogue', { count: catalogue.products.length })}
+        <br />
+        {t('settings.version', { version: __APP_VERSION__ })}
+      </p>
     </main>
   )
 }

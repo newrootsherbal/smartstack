@@ -1,7 +1,7 @@
 import { findDuplicateIngredients, getIngredient, getProduct } from '@smartstack/engine'
 import { MAX_DOSES_PER_DAY } from '@smartstack/shared'
 import { Link } from 'react-router'
-import { formatAmount } from '../format'
+import { formatAmount, timesLabel } from '../format'
 import { t, tl } from '../i18n'
 import { useAppState } from '../state/context'
 import styles from './StackScreen.module.css'
@@ -39,17 +39,36 @@ export function StackScreen() {
         <ul className={`list card ${styles.list}`}>
           {state.stack.map((item) => {
             const product = getProduct(item.productId)
-            if (!product) return null
+            if (!product) {
+              return (
+                <li key={item.productId} className={styles.item}>
+                  <div className={styles.info}>
+                    <strong>{item.productId}</strong>
+                    <span className="small muted">{t('stack.unknownProduct')}</span>
+                    <span className="small muted">{t('stack.unknownHint')}</span>
+                  </div>
+                  <button
+                    type="button"
+                    className="btn btn--small btn--danger"
+                    onClick={() => dispatch({ type: 'REMOVE_PRODUCT', productId: item.productId })}
+                  >
+                    {t('common.remove')}
+                  </button>
+                </li>
+              )
+            }
             return (
               <li key={item.productId} className={styles.item}>
                 <div className={styles.info}>
                   <strong>{tl(product.name)}</strong>
                   <span className="small muted">
                     {product.brand} · {product.servingSize}
+                    {item.dosesPerDay !== product.dosesPerDayDefault &&
+                      ` · ${t('stack.labelSays', { times: timesLabel(product.dosesPerDayDefault) })}`}
                   </span>
                 </div>
                 <label className={styles.doses}>
-                  <span className="visually-hidden">{t('common.dosesPerDay')}</span>
+                  <span className="visually-hidden">{t('common.timesPerDay')}</span>
                   <select
                     className="input"
                     value={item.dosesPerDay}
@@ -63,7 +82,7 @@ export function StackScreen() {
                   >
                     {Array.from({ length: MAX_DOSES_PER_DAY }, (_, i) => i + 1).map((n) => (
                       <option key={n} value={n}>
-                        {t('common.perDay', { n })}
+                        {timesLabel(n)}
                       </option>
                     ))}
                   </select>

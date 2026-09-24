@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest'
-import ingredients from '../data/ingredients.json'
-import products from '../data/products.json'
-import rules from '../data/rules.json'
+import ingredients from '../data/sample/ingredients.json'
+import products from '../data/sample/products.json'
+import rules from '../data/sample/rules.json'
 import { rulesForProduct } from './catalogue'
 import { validateCatalogue } from './validate'
 
 const seed = { ingredients, products, rules }
 
-describe('seed catalogue', () => {
+describe('sample catalogue fixture', () => {
   it('validates', () => {
     const result = validateCatalogue(seed)
     expect(result.ok ? [] : result.errors).toEqual([])

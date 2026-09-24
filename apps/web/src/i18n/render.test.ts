@@ -1,4 +1,4 @@
-import { buildSchedule } from '@smartstack/engine'
+import { buildSchedule, sampleCatalogue } from '@smartstack/engine'
 import type { Routine } from '@smartstack/shared'
 import { afterEach, describe, expect, it } from 'vitest'
 import { en, fr, leafKeys, setLocale, t } from './index'
@@ -26,18 +26,23 @@ describe('adjustment sentences (pitch section 11)', () => {
         'sample-omega-3',
         'sample-probiotic',
       ].map((productId) => ({ productId, dosesPerDay: 1 })),
+      { catalogue: sampleCatalogue },
     )
-    const rendered = schedule.adjustments.map((a) => renderAdjustment(a))
+    const rendered = schedule.adjustments.map((a) => renderAdjustment(a, sampleCatalogue))
     expect(rendered).toContain('Iron moved away from calcium')
     expect(rendered).toContain('Fish oil moved to a meal')
     expect(rendered).toContain('Magnesium moved to bedtime')
   })
 
   it('renders the short reason lines from the pitch mock-up', () => {
-    const schedule = buildSchedule(routine, [
-      { productId: 'sample-iron', dosesPerDay: 1 },
-      { productId: 'sample-calmag', dosesPerDay: 1 },
-    ])
+    const schedule = buildSchedule(
+      routine,
+      [
+        { productId: 'sample-iron', dosesPerDay: 1 },
+        { productId: 'sample-calmag', dosesPerDay: 1 },
+      ],
+      { catalogue: sampleCatalogue },
+    )
     const iron = schedule.placements.find((p) => p.productIds.includes('sample-iron'))!
     const lines = iron.reasons.map(renderReasonShort)
     expect(lines).toContain('Take separately from calcium')
