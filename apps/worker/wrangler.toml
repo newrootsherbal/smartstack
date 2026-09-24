@@ -32,9 +32,9 @@ migrations_dir = "migrations"
 [vars]
 # Public VAPID key (base64url). The private half is a secret:
 #   local: apps/worker/.dev.vars    prod: `wrangler secret put VAPID_PRIVATE_KEY`
-VAPID_PUBLIC_KEY = "BGsy1y-Ij_6o-12aaCVTLjiXJAbRAgNBNVKWstS4bB3SYZTZN4jxaWmSm2pBUveZrs3PclxaRPK4QFVrd_ZMEf0"
-# Replace with the real mailto: address before the employee beta.
-VAPID_SUBJECT = "mailto:smartstack@example.com"
+VAPID_PUBLIC_KEY = "BProg2B-2MpQYotwZwsJOIHc_rTVBisevREVnVVZ0bPc5MggyMDxvjeVR45kW9RHKHuzKNcRzUA3-ejU3ZWWWbY"
+# Contact address sent to the push services with every VAPID token.
+VAPID_SUBJECT = "mailto:hosts@newrootsherbal.com"
 # Reminders claimed per cron tick. Start at 20; raise toward 45 only after
 # Workers Logs show a full batch under ~6 ms CPU.
 MAX_PUSHES_PER_TICK = "20"
