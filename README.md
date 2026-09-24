@@ -208,8 +208,8 @@ then from the repository root:
 npm run deploy
 ```
 
-which builds the web app and runs `wrangler deploy`. The first deploy lands on
-`smartstack.<account>.workers.dev`. **Push subscriptions are tied to the origin**: move to
+which builds the web app and runs `wrangler deploy`. The first deploy (2026-09-24) is at
+`https://smartstack.smartstack-worker.workers.dev`. **Push subscriptions are tied to the origin**: move to
 `smartstack.newrootsherbal.com` (a custom domain on the Worker) _before_ employees install,
 or every phone will have to re-subscribe.
 
@@ -282,7 +282,7 @@ This is health-adjacent personal data. Phase 1 is designed to hold as little as 
 
 Not stored on the server: name, email, routine, stack, dose counts, checkbox history.
 
-**Where:** Cloudflare D1. Sent, failed and expired reminder rows are deleted 7 days after
+**Where:** Cloudflare D1, database `smartstack` in the ENAM (Eastern North America) region. Sent, failed and expired reminder rows are deleted 7 days after
 their scheduled time by the 03:00 UTC cron tick. Logs contain counts, status codes and reminder
 ids, never a user id together with product names or notification text.
 

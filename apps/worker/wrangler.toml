@@ -4,6 +4,8 @@
 name = "smartstack"
 main = "src/index.ts"
 compatibility_date = "2026-09-01"
+# Smaller upload (zod + hono); the free plan allows 3 MB compressed either way.
+minify = true
 
 [assets]
 directory = "../web/dist"
@@ -23,8 +25,8 @@ crons = ["* * * * *"]
 [[d1_databases]]
 binding = "DB"
 database_name = "smartstack"
-# Placeholder until `wrangler d1 create smartstack` has run (works for local dev).
-database_id = "00000000-0000-0000-0000-000000000000"
+# Created 2026-09-24 with `wrangler d1 create smartstack` on the newrootsherbal account.
+database_id = "38e99127-9e06-4017-8853-52186ae5b389"
 migrations_dir = "migrations"
 
 [vars]
