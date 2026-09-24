@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Neutral placeholder icon: two stacked capsules on a rounded tile. No brand assets. -->
+  <rect width="512" height="512" rx="112" fill="#1f6f5c"/>
+  <g transform="rotate(-30 256 256)">
+    <rect x="116" y="196" width="280" height="120" rx="60" fill="#ffffff"/>
+    <path d="M256 196h80a60 60 0 0 1 0 120h-80z" fill="#a9dccb"/>
+  </g>
+  <g transform="rotate(-30 256 256) translate(0 150)">
+    <rect x="156" y="196" width="200" height="90" rx="45" fill="#ffffff" opacity="0.92"/>
+    <path d="M256 196h55a45 45 0 0 1 0 90h-55z" fill="#a9dccb"/>
+  </g>
+</svg>

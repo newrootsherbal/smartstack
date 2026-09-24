@@ -1,0 +1,57 @@
+/* Design tokens — neutral placeholder palette (no New Roots branding yet). */
+:root {
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --color-bg: #f7f7f5;
+  --color-surface: #ffffff;
+  --color-surface-2: #f0f0ed;
+  --color-text: #1b1b1b;
+  --color-text-muted: #5f6368;
+  --color-border: #dfe1dc;
+  --color-primary: #1f6f5c;
+  --color-primary-strong: #175447;
+  --color-primary-soft: #e3f1ec;
+  --color-on-primary: #ffffff;
+  --color-danger: #b3261e;
+  --color-danger-soft: #fbe9e7;
+  --color-focus: #2b7fff;
+
+  /* Severity levels — exactly the pitch document's five. */
+  --sev-important: #c62828; /* red — Action required */
+  --sev-important-soft: #fde8e8;
+  --sev-timing: #ef6c00; /* orange — Action recommended */
+  --sev-timing-soft: #ffefe0;
+  --sev-consideration: #f9a825; /* yellow */
+  --sev-consideration-soft: #fff6dc;
+  --sev-product: #1565c0; /* blue — from the product label */
+  --sev-product-soft: #e3eefb;
+  --sev-info: #5f6368; /* outline */
+
+  --radius-s: 8px;
+  --radius-m: 12px;
+  --radius-l: 20px;
+  --radius-pill: 999px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 6%), 0 1px 6px rgb(0 0 0 / 6%);
+  --shadow-sheet: 0 -8px 32px rgb(0 0 0 / 18%);
+
+  --text-xs: 0.75rem;
+  --text-s: 0.875rem;
+  --text-m: 1rem;
+  --text-l: 1.125rem;
+  --text-xl: 1.5rem;
+  --text-xxl: 2rem;
+
+  --nav-height: 60px;
+  --banner-height: 0px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-top: env(safe-area-inset-top, 0px);
+}

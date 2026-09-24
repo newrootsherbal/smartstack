@@ -1,0 +1,20 @@
+.gate {
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.icon {
+  border-radius: 22px;
+  box-shadow: var(--shadow-1);
+}
+
+.steps {
+  text-align: left;
+  margin: 0;
+  padding-left: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}

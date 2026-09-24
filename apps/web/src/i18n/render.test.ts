@@ -64,3 +64,10 @@ describe('i18n dictionaries', () => {
     expect(t('reason.separatedBy', { hours: 2 })).toBe('Separated by 2 h from {ingredient}')
   })
 })
+
+describe('empty values', () => {
+  it('returns an empty string for severities without a sub-label, never the key', () => {
+    expect(t('severity.consideration.sub')).toBe('')
+    expect(t('severity.timing_conflict.sub')).toBe('Action recommended')
+  })
+})

@@ -39,7 +39,10 @@ function lookup(dict: unknown, key: string): string | undefined {
  * when the French value is missing or empty, and to the key itself as a last resort.
  */
 export function t(key: MessageKey, params?: Record<string, string | number>): string {
-  const raw = (current === 'fr' ? lookup(fr, key) : undefined) || lookup(en, key) || key
+  // An empty string is a real value (e.g. a severity with no sub-label); only a
+  // missing key falls back to English, then to the key itself.
+  const localized = current === 'fr' ? lookup(fr, key) : undefined
+  const raw = localized ? localized : (lookup(en, key) ?? key)
   if (!params) return raw
   return raw.replace(/\{(\w+)\}/g, (match, name: string) =>
     name in params ? String(params[name]) : match,

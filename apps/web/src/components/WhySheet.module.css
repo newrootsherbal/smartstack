@@ -1,0 +1,43 @@
+.reason {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.reason:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.explanation {
+  font-size: var(--text-l);
+  line-height: 1.4;
+}
+
+.details summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.dl {
+  margin: var(--space-3) 0 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-1) 0;
+}
+
+.dl dt {
+  margin-top: var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+}
+
+.dl dd {
+  margin: 0;
+}

@@ -1,0 +1,118 @@
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+}
+
+.past {
+  opacity: 0.8;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.sectionHeader h2 {
+  font-size: var(--text-s);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+}
+
+.time {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.rows {
+  padding: 0 var(--space-4);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    'check why'
+    'reasons why';
+  align-items: start;
+  gap: var(--space-1) var(--space-3);
+  padding: var(--space-3) 0;
+}
+
+.check {
+  grid-area: check;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 28px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.check input {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  accent-color: var(--color-primary);
+}
+
+.done {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+}
+
+.reasons {
+  grid-area: reasons;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 calc(22px + var(--space-3));
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: var(--text-s);
+  color: var(--color-text-muted);
+}
+
+.reasons li::before {
+  content: '↳ ';
+  color: var(--sev-timing);
+}
+
+.why {
+  grid-area: why;
+  align-self: center;
+}
+
+.lateButtons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+.adjustments {
+  margin: 0;
+  padding-left: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.adjustments li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
