@@ -5,6 +5,12 @@ import fr from './fr.json'
 export type Locale = 'en' | 'fr'
 export const LOCALES: readonly Locale[] = ['en', 'fr']
 
+/**
+ * BCP 47 tags handed to Intl. English keeps the pitch's "9:30 AM" clock; French is
+ * Quebec French ("9 h 30", "637,5 mg", "jeudi 24 septembre").
+ */
+export const INTL_LOCALE: Record<Locale, string> = { en: 'en-US', fr: 'fr-CA' }
+
 type Messages = typeof en
 
 type Join<K, P> = K extends string ? (P extends string ? `${K}.${P}` : never) : never
@@ -25,6 +31,34 @@ export function getLocale(): Locale {
   return current
 }
 
+/** The Intl tag for the current locale. */
+export function intlLocale(): string {
+  return INTL_LOCALE[current]
+}
+
+/**
+ * The language a new user starts in: the first of the browser's preferred languages
+ * that the app speaks, English when none does. Stored afterwards, so a change made in
+ * Settings sticks.
+ */
+export function detectLocale(preferred: readonly string[] = browserLanguages()): Locale {
+  for (const tag of preferred) {
+    const language = tag.toLowerCase().split('-')[0]
+    if (language === 'fr') return 'fr'
+    if (language === 'en') return 'en'
+  }
+  return 'en'
+}
+
+function browserLanguages(): readonly string[] {
+  if (typeof navigator === 'undefined') return []
+  const list =
+    navigator.languages && navigator.languages.length > 0
+      ? navigator.languages
+      : [navigator.language]
+  return list.filter((tag): tag is string => typeof tag === 'string' && tag.length > 0)
+}
+
 function lookup(dict: unknown, key: string): string | undefined {
   let node: unknown = dict
   for (const part of key.split('.')) {
@@ -35,14 +69,23 @@ function lookup(dict: unknown, key: string): string | undefined {
 }
 
 /**
- * Translate a key, interpolating `{name}` placeholders. Falls back to English
- * when the French value is missing or empty, and to the key itself as a last resort.
+ * The message for a key in the current locale: English when the French value is missing
+ * or empty, undefined when neither dictionary has the key. For vocabulary looked up by
+ * data-driven keys (unit words, serving phrases), where absence is expected.
+ */
+export function lookupMessage(key: string): string | undefined {
+  const localized = current === 'fr' ? lookup(fr, key) : undefined
+  return localized ? localized : lookup(en, key)
+}
+
+/**
+ * Translate a key, interpolating `{name}` placeholders. Falls back to English when the
+ * French value is missing or empty, and to the key itself as a last resort.
  */
 export function t(key: MessageKey, params?: Record<string, string | number>): string {
-  // An empty string is a real value (e.g. a severity with no sub-label); only a
-  // missing key falls back to English, then to the key itself.
-  const localized = current === 'fr' ? lookup(fr, key) : undefined
-  const raw = localized ? localized : (lookup(en, key) ?? key)
+  // An empty string is a real value (e.g. a severity with no sub-label) when English is
+  // empty too; the key itself only ever shows for a key missing from both dictionaries.
+  const raw = lookupMessage(key) ?? key
   if (!params) return raw
   return raw.replace(/\{(\w+)\}/g, (match, name: string) =>
     name in params ? String(params[name]) : match,

@@ -31,7 +31,11 @@ interface PushPayload {
   url?: string
 }
 
-const FALLBACK_TITLE = 'SmartStack reminder'
+// Payloads are composed in the app's language; this only covers a malformed one, and the
+// worker cannot read the app's setting, so the browser's language is the best guess.
+const FALLBACK_TITLE = /^fr\b/i.test(self.navigator.language)
+  ? 'Rappel SmartStack'
+  : 'SmartStack reminder'
 
 // Every push MUST show a visible notification. Three silent pushes and Safari
 // revokes permission, so we notify even when the payload is missing or malformed.

@@ -1,6 +1,7 @@
 import type { Routine } from '@smartstack/shared'
 import { describe, expect, it } from 'vitest'
 import { addDays, localDateKey, localDateTimeToEpoch } from './dates'
+import { setLocale } from './i18n'
 import { composeNotification, computeReminderWindow, hashWindow, WINDOW_DAYS } from './sync'
 
 const routine: Routine = {
@@ -102,5 +103,33 @@ describe('composeNotification', () => {
     })
     expect(title).toMatch(/^Iron Bisglycinate — 9:30/)
     expect(body).toBe('Iron Bisglycinate · Take separately from calcium')
+  })
+
+  it('composes in French when the app language is French', () => {
+    setLocale('fr')
+    try {
+      const { title, body } = composeNotification({
+        time: '09:30',
+        minutes: 570,
+        anchor: null,
+        productIds: ['iron-bisglycinate'],
+        doses: [{ productId: 'iron-bisglycinate', doseIndex: 0 }],
+        reasons: [
+          {
+            ruleId: 'rule-iron-separate-calcium',
+            attribute: 'SEPARATE_FROM_CALCIUM',
+            severity: 'timing_conflict',
+            productId: 'iron-bisglycinate',
+            doseIndex: 0,
+            params: {},
+          },
+        ],
+      })
+      // The French short name is "Fer"; the clock reads "9 h 30" (spacing is up to ICU).
+      expect(title.replace(/\s/g, '')).toMatch(/^Fer—9h30/)
+      expect(body).toBe('Fer · Prendre à distance du calcium')
+    } finally {
+      setLocale('en')
+    }
   })
 })

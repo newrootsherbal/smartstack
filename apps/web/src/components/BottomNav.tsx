@@ -20,7 +20,7 @@ const items = [
 
 export function BottomNav() {
   return (
-    <nav className={styles.nav} aria-label="Main">
+    <nav className={styles.nav} aria-label={t('nav.label')}>
       {items.map((item) => (
         <NavLink
           key={item.to}

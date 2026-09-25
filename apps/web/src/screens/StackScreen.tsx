@@ -1,7 +1,7 @@
 import { findDuplicateIngredients, getIngredient, getProduct } from '@smartstack/engine'
 import { MAX_DOSES_PER_DAY } from '@smartstack/shared'
 import { Link } from 'react-router'
-import { formatAmount, timesLabel } from '../format'
+import { formatAmount, formatServingSize, timesLabel } from '../format'
 import { t, tl } from '../i18n'
 import { useAppState } from '../state/context'
 import styles from './StackScreen.module.css'
@@ -62,7 +62,7 @@ export function StackScreen() {
                 <div className={styles.info}>
                   <strong>{tl(product.name)}</strong>
                   <span className="small muted">
-                    {product.brand} · {product.servingSize}
+                    {product.brand} · {formatServingSize(product.servingSize)}
                     {item.dosesPerDay !== product.dosesPerDayDefault &&
                       ` · ${t('stack.labelSays', { times: timesLabel(product.dosesPerDayDefault) })}`}
                   </span>

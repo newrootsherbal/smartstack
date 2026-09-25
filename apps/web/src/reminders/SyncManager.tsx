@@ -25,11 +25,13 @@ export function SyncManager() {
     return () => document.removeEventListener('visibilitychange', onVisible)
   }, [dispatch])
 
-  const { routine, stack, todayOverride } = state
+  // Notification titles and bodies are composed in the app's language, so a language
+  // change re-sends the window like any other change.
+  const { routine, stack, todayOverride, locale } = state
   const pushStatus = state.pushState.status
   useEffect(() => {
     void syncSchedule(stateRef.current, dispatch)
-  }, [routine, stack, todayOverride, pushStatus, dispatch])
+  }, [routine, stack, todayOverride, locale, pushStatus, dispatch])
 
   return null
 }

@@ -20,8 +20,10 @@ personalized daily schedule with reminders and a tappable "Why?" for every place
    **Product instruction** (blue), **Informational** (outline). Seed rules use only the middle
    three. All five are shown on `/dev/styleguide`.
 4. No accounts, no analytics, no third-party scripts, no third-party CDN loads.
-5. English first, French-ready: no user-facing string lives in the engine; all copy is in
-   `apps/web/src/i18n/en.json` (with `fr.json` mirroring the keys).
+5. Bilingual: no user-facing string lives in the engine; all copy is in
+   `apps/web/src/i18n/en.json` and `fr.json` (same keys, checked by a test), catalogue text
+   carries `{ en, fr }`, and Settings switches the language (picked from the browser's
+   preferred languages on first launch).
 
 ## Architecture
 
@@ -316,7 +318,9 @@ employees install.
 - A Worker custom domain needs the zone's DNS on Cloudflare. `newrootsherbal.com` stays on
   the company VPS, so the app lives at `schedule.flourishbodyandmind.com`. Changing the origin
   later means every phone re-subscribes to push.
-- English only; `fr.json` exists with empty values.
+- French covers the interface, label text, rule explanations and notifications. Ingredient
+  names outside the canonical nutrient list (`packages/engine/src/import/ingredients.ts`) fall
+  back to English until the importer aligns the French supplement facts.
 - The manifest screenshots are generated placeholders (`apps/web/scripts/screenshots.mjs`).
 
 ## Device checklist

@@ -5,6 +5,7 @@
 import { Routine, Stack } from '@smartstack/shared'
 import { z } from 'zod'
 import { currentTimeZone, localDateKey } from './dates'
+import { detectLocale } from './i18n'
 
 export const STORAGE_KEY = 'smartstack:v1'
 
@@ -59,7 +60,8 @@ export function defaultState(userId = newUserId()): PersistedState {
     lastSync: null,
     lastSyncHash: null,
     tz: currentTimeZone(),
-    locale: 'en',
+    // A new user starts in the browser's language when the app speaks it.
+    locale: detectLocale(),
   }
 }
 

@@ -1,7 +1,7 @@
 import { getIngredient } from '@smartstack/engine'
 import type { Product } from '@smartstack/shared'
 import { useState } from 'react'
-import { formatAmount } from '../format'
+import { formatAmount, formatServingSize } from '../format'
 import { t, tl } from '../i18n'
 import styles from './ProductCard.module.css'
 
@@ -22,7 +22,7 @@ export function ProductCard({ product }: { product: Product }) {
           <h3>{tl(product.name)}</h3>
           {product.subtitle && <p className="small">{tl(product.subtitle)}</p>}
           <p className="small muted">
-            {product.brand} · {product.servingSize}
+            {product.brand} · {formatServingSize(product.servingSize)}
           </p>
         </div>
         {product.status === 'sample' ? (
@@ -37,7 +37,7 @@ export function ProductCard({ product }: { product: Product }) {
       </p>
       <div>
         <p className="small" style={{ fontWeight: 600 }}>
-          {t('add.ingredients', { serving: product.servingSize })}
+          {t('add.ingredients', { serving: formatServingSize(product.servingSize) })}
         </p>
         <ul className={styles.ingredients}>
           {rows.map((pi) => {
