@@ -37,6 +37,10 @@ export function Today() {
   }
 
   const totalDoses = schedule?.placements.reduce((n, p) => n + p.doses.length, 0) ?? 0
+  const doseTotals = new Map<string, number>()
+  for (const p of schedule?.placements ?? []) {
+    for (const d of p.doses) doseTotals.set(d.productId, (doseTotals.get(d.productId) ?? 0) + 1)
+  }
   const doneDoses =
     schedule?.placements.reduce(
       (n, p) =>
@@ -100,6 +104,7 @@ export function Today() {
               placement={placement}
               today={today}
               checks={state.checks}
+              doseTotals={doseTotals}
               onToggle={(productId, doseIndex) =>
                 dispatch({ type: 'TOGGLE_CHECK', date: today, productId, doseIndex })
               }
@@ -159,11 +164,20 @@ interface PlacementSectionProps {
   placement: Placement
   today: string
   checks: Record<string, true>
+  /** Doses per product across the whole day, to label "Dose 2 of 4". */
+  doseTotals: ReadonlyMap<string, number>
   onToggle: (productId: string, doseIndex: number) => void
   onWhy: (reasons: Reason[]) => void
 }
 
-function PlacementSection({ placement, today, checks, onToggle, onWhy }: PlacementSectionProps) {
+function PlacementSection({
+  placement,
+  today,
+  checks,
+  doseTotals,
+  onToggle,
+  onWhy,
+}: PlacementSectionProps) {
   const heading = placement.anchor ? t(`anchor.${placement.anchor}`) : formatClock(placement.time)
   const past = parseHHMM(placement.time) < minutesOfDay()
   return (
@@ -175,12 +189,13 @@ function PlacementSection({ placement, today, checks, onToggle, onWhy }: Placeme
       <ul className={`list ${styles.rows}`}>
         {placement.doses.map((dose) => {
           const product = getProduct(dose.productId)
-          const reasons = placement.reasons.filter((r) => r.productId === dose.productId)
+          // Only this dose's reasons: another dose of the same product may share the slot.
+          const reasons = placement.reasons.filter(
+            (r) => r.productId === dose.productId && r.doseIndex === dose.doseIndex,
+          )
           const key = checkKey(today, dose.productId, dose.doseIndex)
           const checked = checks[key] === true
-          const hasMultipleDoses =
-            placement.doses.filter((d) => d.productId === dose.productId).length > 1 ||
-            dose.doseIndex > 0
+          const total = doseTotals.get(dose.productId) ?? 1
           return (
             <li key={key} className={styles.row}>
               <label className={styles.check}>
@@ -197,10 +212,10 @@ function PlacementSection({ placement, today, checks, onToggle, onWhy }: Placeme
                       · {formatUnits(product.unitsPerDose, product.form)}
                     </span>
                   )}
-                  {hasMultipleDoses && (
+                  {total > 1 && (
                     <span className="muted small">
                       {' '}
-                      · {t('today.doseN', { n: dose.doseIndex + 1 })}
+                      · {t('today.doseOf', { n: dose.doseIndex + 1, total })}
                     </span>
                   )}
                 </span>

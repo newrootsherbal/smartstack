@@ -215,7 +215,8 @@
     "adjustmentsNone": "No adjustments were needed",
     "adjustmentsIntro": "Your schedule was rebuilt from your stack and routine.",
     "doseN": "Dose {n}",
-    "dosesTaken": "{done} of {total} taken"
+    "dosesTaken": "{done} of {total} taken",
+    "doseOf": "Dose {n} of {total}"
   },
   "why": {
     "title": "Why?",

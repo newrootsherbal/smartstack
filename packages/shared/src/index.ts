@@ -270,12 +270,14 @@ export interface Reason {
   attribute: RuleAttribute
   severity: Severity
   productId: string
+  /** The dose this reason belongs to (a placement can hold several doses of one product). */
+  doseIndex: number
   params: ReasonParams
 }
 
 export interface PlacedDose {
   productId: string
-  /** 0-based index of this dose within the product's dosesPerDay. */
+  /** 0-based index of this dose within the product's day, in time order. */
   doseIndex: number
 }
 

@@ -130,8 +130,9 @@ describe('buildSchedule — multiple doses per day', () => {
       { productId: 'sample-calmag', dosesPerDay: 2 },
     ])
     expect(schedule.placements.map((p) => [p.time, p.anchor, p.doses])).toEqual([
-      ['12:00', 'lunch', [{ productId: 'sample-calmag', doseIndex: 1 }]],
-      ['18:00', 'dinner', [{ productId: 'sample-calmag', doseIndex: 0 }]],
+      // Doses are numbered in time order: the label's first dose of the day is dose 0.
+      ['12:00', 'lunch', [{ productId: 'sample-calmag', doseIndex: 0 }]],
+      ['18:00', 'dinner', [{ productId: 'sample-calmag', doseIndex: 1 }]],
     ])
   })
 
@@ -190,5 +191,46 @@ describe('buildSchedule — routine fallbacks', () => {
       'sample-vitamin-c',
       'sample-b-complex',
     ])
+  })
+})
+
+describe('buildSchedule — many doses, few anchors', () => {
+  it('never puts two doses of one product at the same time, even with only two meals', () => {
+    const routine: Routine = { ...section5Routine, coffee: null, lunch: null }
+    const schedule = buildSchedule(routine, [{ productId: 'sample-zinc', dosesPerDay: 4 }])
+    const times = schedule.placements.map((p) => p.time)
+    expect(new Set(times).size).toBe(4)
+    // breakfast, dinner, bedtime, then the middle of the widest gap (07:30–18:00 → 12:45)
+    expect(times).toEqual(['07:30', '12:45', '18:00', '22:00'])
+    expect(schedule.placements.map((p) => p.anchor)).toEqual([
+      'breakfast',
+      null,
+      'dinner',
+      'bedtime',
+    ])
+  })
+
+  it('numbers doses chronologically and keeps reasons per dose', () => {
+    const routine: Routine = { ...section5Routine, coffee: null, lunch: null }
+    const schedule = buildSchedule(routine, [{ productId: 'sample-calmag', dosesPerDay: 4 }])
+    const doses = schedule.placements.flatMap((p) => p.doses.map((d) => [p.time, d.doseIndex]))
+    expect(doses).toEqual([
+      ['07:30', 0],
+      ['12:45', 1],
+      ['18:00', 2],
+      ['22:00', 3],
+    ])
+    for (const p of schedule.placements) {
+      for (const reason of p.reasons) {
+        expect(p.doses.some((d) => d.doseIndex === reason.doseIndex)).toBe(true)
+      }
+    }
+  })
+
+  it('splits the widest remaining gap for a fifth dose only when capped', () => {
+    const routine: Routine = { ...section5Routine, coffee: null }
+    const schedule = buildSchedule(routine, [{ productId: 'sample-zinc', dosesPerDay: 4 }])
+    // Three meals + bedtime: no gap splitting needed.
+    expect(schedule.placements.map((p) => p.time)).toEqual(['07:30', '12:00', '18:00', '22:00'])
   })
 })

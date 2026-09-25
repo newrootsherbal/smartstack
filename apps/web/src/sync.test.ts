@@ -95,6 +95,7 @@ describe('composeNotification', () => {
           attribute: 'SEPARATE_FROM_CALCIUM',
           severity: 'timing_conflict',
           productId: 'iron-bisglycinate',
+          doseIndex: 0,
           params: {},
         },
       ],

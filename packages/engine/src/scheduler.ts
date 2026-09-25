@@ -182,12 +182,35 @@ function pickFixedAnchorFrom(
   return null
 }
 
-function nextExtraAnchor(used: ReadonlySet<Anchor>, available: ReadonlySet<MealAnchor>): Anchor {
+/**
+ * Where an extra dose of a product goes: the next preferred meal (dinner, lunch,
+ * breakfast) it does not already use, then bedtime, then the middle of the widest
+ * gap in its day. Two doses of one product never share a time.
+ */
+function extraDoseSlot(
+  used: ReadonlySet<Anchor>,
+  assigned: readonly number[],
+  r: RoutineMinutes,
+  available: ReadonlySet<MealAnchor>,
+): { anchor: Anchor | null; minutes: number } {
   const meal = EXTRA_DOSE_ORDER.find((a) => available.has(a) && !used.has(a))
-  if (meal) return meal
-  if (!used.has('bedtime')) return 'bedtime'
-  // Every anchor already used: reuse meals in the same order.
-  return EXTRA_DOSE_ORDER.find((a) => available.has(a)) ?? 'bedtime'
+  if (meal) return { anchor: meal, minutes: anchorMinutes(r, meal) }
+  if (!used.has('bedtime')) return { anchor: 'bedtime', minutes: r.bedtime }
+
+  const points = [...new Set([r.wake, ...assigned, r.bedtime])].sort((a, b) => a - b)
+  let start = points[0]!
+  let end = points[0]!
+  for (let i = 1; i < points.length; i++) {
+    if (points[i]! - points[i - 1]! > end - start) {
+      start = points[i - 1]!
+      end = points[i]!
+    }
+  }
+  let minutes = roundUpTo((start + end) / 2, ROUNDING_STEP_MINUTES)
+  while (assigned.includes(minutes) && minutes < MINUTES_PER_DAY - ROUNDING_STEP_MINUTES) {
+    minutes += ROUNDING_STEP_MINUTES
+  }
+  return { anchor: null, minutes }
 }
 
 const FIXED_ANCHOR_ATTRIBUTES = new Set(['MORNING', 'EVENING', 'BEDTIME'])
@@ -221,6 +244,7 @@ function baseReasons(dose: DoseState, rules: readonly TimingRule[]): Reason[] {
       attribute: rule.attribute,
       severity: rule.severity,
       productId: dose.productId,
+      doseIndex: dose.doseIndex,
       params,
     })
   }
@@ -285,6 +309,7 @@ function applySeparation(dose: DoseState, constraints: SeparationConstraint[]): 
       attribute: c.rule.attribute,
       severity: c.rule.severity,
       productId: dose.productId,
+      doseIndex: dose.doseIndex,
       params: {
         separationMinutes: c.separation,
         ...(c.otherIngredientId ? { otherIngredientId: c.otherIngredientId } : {}),
@@ -378,17 +403,18 @@ export function buildSchedule(
     doses.push(first)
 
     const used = new Set<Anchor>([firstAnchor])
+    const assigned = [first.minutes]
     const count = Math.min(item.dosesPerDay, MAX_DOSES_PER_DAY)
     for (let i = 1; i < count; i++) {
-      const anchor = nextExtraAnchor(used, available)
-      used.add(anchor)
-      const minutes = anchorMinutes(r, anchor)
+      const slot = extraDoseSlot(used, assigned, r, available)
+      if (slot.anchor) used.add(slot.anchor)
+      assigned.push(slot.minutes)
       doses.push({
         productId: product.id,
         doseIndex: i,
-        baselineMinutes: minutes,
-        minutes,
-        anchor,
+        baselineMinutes: slot.minutes,
+        minutes: slot.minutes,
+        anchor: slot.anchor,
         movedBy: null,
         reasons: [],
       })
@@ -422,6 +448,22 @@ export function buildSchedule(
         from: formatHHMM(dose.baselineMinutes),
         to: formatHHMM(dose.minutes),
       },
+    })
+  }
+
+  // Number each product's doses in time order, so "four times daily" reads Dose 1…4
+  // across the day (checkbox keys and reasons follow the same numbering).
+  const byProduct = new Map<string, DoseState[]>()
+  for (const dose of doses) {
+    const list = byProduct.get(dose.productId) ?? []
+    list.push(dose)
+    byProduct.set(dose.productId, list)
+  }
+  for (const list of byProduct.values()) {
+    const ordered = [...list].sort((a, b) => a.minutes - b.minutes || a.doseIndex - b.doseIndex)
+    ordered.forEach((dose, i) => {
+      dose.doseIndex = i
+      for (const reason of dose.reasons) reason.doseIndex = i
     })
   }
 
