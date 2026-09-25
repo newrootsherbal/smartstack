@@ -307,6 +307,14 @@ or every phone will have to re-subscribe.
   server-side.
 - Product data is imported from the website and marked _draft / not reviewed_; timing rules
   derived from label text are heuristics until the product team reviews them.
+- No accounts: routine, stack and check marks live only in that browser or installed app.
+  They never expire, but clearing site data, removing the app (on iOS, deleting the Home Screen
+  icon) or switching devices starts over. The app asks for persistent storage so the browser
+  does not evict it under disk pressure. Accounts and server-side storage are a later phase
+  and need the privacy review first.
+- A custom domain on the Worker requires the zone's DNS to be hosted on Cloudflare;
+  `newrootsherbal.com` is not, so the beta runs on the `workers.dev` URL (a `CNAME` to
+  `workers.dev` does not work). Moving to a real domain later means every phone re-subscribes.
 - English only; `fr.json` exists with empty values.
 - The manifest screenshots are generated placeholders (`apps/web/scripts/screenshots.mjs`).
 
