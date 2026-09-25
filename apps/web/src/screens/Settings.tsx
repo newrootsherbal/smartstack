@@ -6,6 +6,8 @@ import { t, type Locale, type MessageKey } from '../i18n'
 import { unsubscribe } from '../platform/reminders'
 import { useAppState } from '../state/context'
 import { clearState, defaultState } from '../storage'
+import { THEMES } from '../themes'
+import styles from './Settings.module.css'
 
 /** Each language names itself, whatever the current one is. */
 const LANGUAGES: { locale: Locale; label: MessageKey }[] = [
@@ -33,7 +35,7 @@ export function Settings() {
       await unsubscribe().catch(() => undefined)
     } finally {
       clearState()
-      dispatch({ type: 'RESET', state: defaultState() })
+      dispatch({ type: 'RESET', state: { ...defaultState(), theme: state.theme } })
       setBusy(false)
       if (serverFailed) {
         setNotice(t('settings.deleteFailedServer'))
@@ -76,6 +78,43 @@ export function Settings() {
               {t(label)}
             </button>
           ))}
+        </div>
+      </section>
+
+      <section className="card stack-v">
+        <h2>{t('settings.theme')}</h2>
+        <p className="small muted">{t('settings.themeHint')}</p>
+        <div className={styles.themes} role="radiogroup" aria-label={t('settings.theme')}>
+          {THEMES.map(({ id, emoji }) => {
+            const selected = state.theme === id
+            return (
+              <button
+                key={id}
+                type="button"
+                role="radio"
+                aria-checked={selected}
+                className={`${styles.theme} ${selected ? styles.themeSelected : ''}`}
+                onClick={() => dispatch({ type: 'SET_THEME', theme: id })}
+              >
+                <span className={styles.preview} data-theme={id} aria-hidden="true">
+                  <span className={styles.previewCard}>
+                    <span className={styles.previewHeader} />
+                    <span className={styles.previewRow} />
+                    <span className={styles.previewRow} />
+                  </span>
+                  <span className={styles.previewButtons}>
+                    <span className={styles.previewPrimary} />
+                    <span className={styles.previewAccent} />
+                  </span>
+                </span>
+                <span className={styles.themeName}>
+                  <span aria-hidden="true">{emoji} </span>
+                  {t(`theme.${id}.name`)}
+                </span>
+                <span className={styles.themeTagline}>{t(`theme.${id}.tagline`)}</span>
+              </button>
+            )
+          })}
         </div>
       </section>
 

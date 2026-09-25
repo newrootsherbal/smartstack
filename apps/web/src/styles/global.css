@@ -1,4 +1,5 @@
 @import './tokens.css';
+@import './themes.css';
 
 *,
 *::before,
@@ -53,7 +54,7 @@ h3 {
 }
 
 a {
-  color: var(--color-primary);
+  color: var(--color-accent);
 }
 
 button,
@@ -182,7 +183,7 @@ button {
 .btn--link {
   background: none;
   border: none;
-  color: var(--color-primary);
+  color: var(--color-accent);
   min-height: 32px;
   padding: 0 var(--space-2);
   font-weight: 600;
@@ -226,21 +227,21 @@ input[type='time'].input {
 }
 
 .tag--sample {
-  background: var(--sev-consideration-soft);
-  color: #7a5a00;
+  background: var(--color-warn-soft);
+  color: var(--color-warn);
 }
 
 .notice {
   padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-m);
   background: var(--color-primary-soft);
-  color: var(--color-primary-strong);
+  color: var(--color-on-primary-soft);
   font-size: var(--text-s);
 }
 
 .notice--warn {
-  background: var(--sev-consideration-soft);
-  color: #6b4d00;
+  background: var(--color-warn-soft);
+  color: var(--color-warn);
 }
 
 .notice--error {

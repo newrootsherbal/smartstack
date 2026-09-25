@@ -1,0 +1,174 @@
+/*
+ * Colour themes, chosen in Settings. `data-theme` on <html> selects one; on any other
+ * element it previews that theme inside the current one (the swatches in Settings).
+ * Rooted doubles as `:root`, so a document without the attribute paints the default.
+ * Severity colours stay in tokens.css: they are semantic, not decorative.
+ *
+ * Tokens: bg (screen), surface (containers), surface-2 (section headers, secondary fills),
+ * primary (the "Optimize" button), accent ("Why?" links, active nav), warn (sample banner
+ * and warning notices). Every text/background pair here meets WCAG AA (4.5:1).
+ */
+
+/* Rooted: earthy & natural: cream, sage containers, deep green. */
+:root,
+[data-theme='rooted'] {
+  color-scheme: light;
+  --color-bg: #f4efe4;
+  --color-surface: #d3ddca;
+  --color-surface-2: #b5c4aa;
+  --color-text: #1e2a1c;
+  --color-text-muted: #414c3e;
+  --color-border: #a7b79d;
+  --color-primary: #2f5d4a;
+  --color-primary-strong: #254b3b;
+  --color-primary-soft: #e2ead9;
+  --color-on-primary: #ffffff;
+  --color-on-primary-soft: #254b3b;
+  --color-accent: #2f5d4a;
+  --color-danger: #a3352c;
+  --color-danger-soft: #f6e0dc;
+  --color-warn: #6b4d00;
+  --color-warn-soft: #fff6dc;
+  --color-warn-border: #f0d78a;
+  --color-focus: #2b7fff;
+}
+
+/* Fresh: clean & minimal: sand, white containers, sky blue. */
+[data-theme='fresh'] {
+  color-scheme: light;
+  --color-bg: #f3eee4;
+  --color-surface: #ffffff;
+  --color-surface-2: #ede7da;
+  --color-text: #1f1d18;
+  --color-text-muted: #63605a;
+  --color-border: #e0d9cb;
+  --color-primary: #3a75b8;
+  --color-primary-strong: #2f629c;
+  --color-primary-soft: #e3edf8;
+  --color-on-primary: #ffffff;
+  --color-on-primary-soft: #2f629c;
+  --color-accent: #2c7554;
+  --color-danger: #b3261e;
+  --color-danger-soft: #fbe9e7;
+  --color-warn: #6b4d00;
+  --color-warn-soft: #fff6dc;
+  --color-warn-border: #f0d78a;
+  --color-focus: #2b7fff;
+}
+
+/* Blush: soft & feminine: cream, pink containers, dusty rose. */
+[data-theme='blush'] {
+  color-scheme: light;
+  --color-bg: #f8efe4;
+  --color-surface: #fadfe3;
+  --color-surface-2: #efcbc7;
+  --color-text: #3a2326;
+  --color-text-muted: #6d4b4f;
+  --color-border: #e8c6ca;
+  --color-primary: #a5646c;
+  --color-primary-strong: #8e535a;
+  --color-primary-soft: #f7e3e5;
+  --color-on-primary: #ffffff;
+  --color-on-primary-soft: #8e535a;
+  --color-accent: #993b45;
+  --color-danger: #b3261e;
+  --color-danger-soft: #fbe9e7;
+  --color-warn: #6b4d00;
+  --color-warn-soft: #fff6dc;
+  --color-warn-border: #f0d78a;
+  --color-focus: #2b7fff;
+}
+
+/* Bold: dark & powerful: near-black, deep green. */
+[data-theme='bold'] {
+  color-scheme: dark;
+  --color-bg: #0f1512;
+  --color-surface: #1b2420;
+  --color-surface-2: #26322b;
+  --color-text: #eef2ee;
+  --color-text-muted: #a9b5ad;
+  --color-border: #35423b;
+  --color-primary: #2e7d5b;
+  --color-primary-strong: #276a4e;
+  --color-primary-soft: #1d3a2d;
+  --color-on-primary: #ffffff;
+  --color-on-primary-soft: #bfe6d0;
+  --color-accent: #7fd1a7;
+  --color-danger: #ff8a80;
+  --color-danger-soft: #3a1f1d;
+  --color-warn: #f3dc9a;
+  --color-warn-soft: #3a2f10;
+  --color-warn-border: #5a4a1c;
+  --color-focus: #7ab8ff;
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 30%), 0 1px 6px rgb(0 0 0 / 30%);
+}
+
+/* Ice: cool & crisp: blue tones, navy. */
+[data-theme='ice'] {
+  color-scheme: light;
+  --color-bg: #d6e6f5;
+  --color-surface: #eef4fb;
+  --color-surface-2: #c6dbef;
+  --color-text: #142033;
+  --color-text-muted: #4d5f78;
+  --color-border: #b7cde4;
+  --color-primary: #2c4f8f;
+  --color-primary-strong: #223f75;
+  --color-primary-soft: #dbe7f7;
+  --color-on-primary: #ffffff;
+  --color-on-primary-soft: #223f75;
+  --color-accent: #2c4f8f;
+  --color-danger: #b3261e;
+  --color-danger-soft: #fbe9e7;
+  --color-warn: #6b4d00;
+  --color-warn-soft: #fff6dc;
+  --color-warn-border: #f0d78a;
+  --color-focus: #2b7fff;
+}
+
+/* Energy: bright & playful: peach, tangerine. */
+[data-theme='energy'] {
+  color-scheme: light;
+  --color-bg: #ffe0c2;
+  --color-surface: #fff2e5;
+  --color-surface-2: #ffd2aa;
+  --color-text: #33200f;
+  --color-text-muted: #77563a;
+  --color-border: #f4c69b;
+  --color-primary: #f28c28;
+  --color-primary-strong: #e37a14;
+  --color-primary-soft: #ffe7d0;
+  --color-on-primary: #2b1a0c;
+  --color-on-primary-soft: #7a3d00;
+  --color-accent: #266a4b;
+  --color-danger: #b3261e;
+  --color-danger-soft: #fbe9e7;
+  --color-warn: #6b4d00;
+  --color-warn-soft: #fff6dc;
+  --color-warn-border: #f0d78a;
+  --color-focus: #2b5fbf;
+}
+
+/* Wild: earthy & cozy: brown and earth tones, forest green. */
+[data-theme='wild'] {
+  color-scheme: dark;
+  --color-bg: #7a5a3c;
+  --color-surface: #5a3d2a;
+  --color-surface-2: #48301f;
+  --color-text: #f7eedf;
+  --color-text-muted: #e8dac6;
+  --color-border: #6e4f39;
+  --color-primary: #367a59;
+  --color-primary-strong: #2f6b4f;
+  --color-primary-soft: #3d5243;
+  --color-on-primary: #ffffff;
+  --color-on-primary-soft: #d8ecdc;
+  --color-accent: #bfe4c9;
+  --color-danger: #ffb4a8;
+  --color-danger-soft: #5a2a24;
+  --color-warn: #f6e2a6;
+  --color-warn-soft: #4a3a18;
+  --color-warn-border: #6b5524;
+  --color-focus: #9ec9ff;
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 30%), 0 1px 6px rgb(0 0 0 / 30%);
+}

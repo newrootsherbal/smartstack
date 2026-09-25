@@ -1,5 +1,6 @@
 import type { Routine, Stack } from '@smartstack/shared'
 import { checkKey, type PersistedState, type PushState, type TodayOverride } from '../storage'
+import type { ThemeId } from '../themes'
 
 export type Action =
   | { type: 'SET_ROUTINE'; routine: Routine }
@@ -12,6 +13,7 @@ export type Action =
   | { type: 'SET_SYNC'; lastSync: number | null; lastSyncHash: string | null }
   | { type: 'SET_TZ'; tz: string }
   | { type: 'SET_LOCALE'; locale: 'en' | 'fr' }
+  | { type: 'SET_THEME'; theme: ThemeId }
   | { type: 'RESET'; state: PersistedState }
 
 export function reducer(state: PersistedState, action: Action): PersistedState {
@@ -59,6 +61,8 @@ export function reducer(state: PersistedState, action: Action): PersistedState {
       return { ...state, tz: action.tz }
     case 'SET_LOCALE':
       return { ...state, locale: action.locale }
+    case 'SET_THEME':
+      return { ...state, theme: action.theme }
     case 'RESET':
       return action.state
   }

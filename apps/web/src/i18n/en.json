@@ -308,6 +308,8 @@
     "language": "Language",
     "english": "English",
     "french": "Français",
+    "theme": "Theme",
+    "themeHint": "Pick the look you like. The choice stays on this device.",
     "data": "Your data",
     "delete": "Delete my data",
     "deleteConfirm": "Delete your stack, routine and reminders on this device and on the server? This can't be undone.",
@@ -319,6 +321,15 @@
     "dev": "Developer",
     "devBarcodes": "Barcodes",
     "devStyleguide": "Style guide"
+  },
+  "theme": {
+    "rooted": { "name": "Rooted", "tagline": "Earthy & natural" },
+    "fresh": { "name": "Fresh", "tagline": "Clean & minimal" },
+    "blush": { "name": "Blush", "tagline": "Soft & feminine" },
+    "bold": { "name": "Bold", "tagline": "Dark & powerful" },
+    "ice": { "name": "Ice", "tagline": "Cool & crisp" },
+    "energy": { "name": "Energy", "tagline": "Bright & playful" },
+    "wild": { "name": "Wild", "tagline": "Earthy & cozy" }
   },
   "dev": {
     "barcodesTitle": "Barcodes",

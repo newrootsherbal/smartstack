@@ -1,6 +1,7 @@
-import { Fragment, useEffect, useMemo, useReducer, type ReactNode } from 'react'
+import { Fragment, useEffect, useLayoutEffect, useMemo, useReducer, type ReactNode } from 'react'
 import { setLocale } from '../i18n'
 import { loadState, saveState } from '../storage'
+import { applyTheme } from '../themes'
 import { AppStateContext } from './context'
 import { reducer } from './reducer'
 
@@ -21,6 +22,11 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     document.documentElement.lang = state.locale
   }, [state.locale])
+
+  // Before paint, so a theme change never shows a frame of the old colours.
+  useLayoutEffect(() => {
+    applyTheme(state.theme)
+  }, [state.theme])
 
   // Ask the browser not to evict this origin's storage under disk pressure. Chrome and
   // Firefox grant it silently for installed apps or sites with notification permission;
