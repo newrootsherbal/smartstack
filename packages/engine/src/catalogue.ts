@@ -58,14 +58,22 @@ export function findProductByBarcode(
   return cat.products.find((p) => productBarcodes(p).some((upc) => barcodesMatch(upc, code)))
 }
 
-/** Case-insensitive name search (EN and FR), for the browse list. */
+// Combining diacritical marks, built from char codes so no bare accent sits in the source.
+const DIACRITICS = new RegExp(`[${String.fromCharCode(0x300)}-${String.fromCharCode(0x36f)}]`, 'g')
+
+/** Lowercase without accents, so "echinacee" finds "Échinacée" and "acetyl" finds "Acétyl". */
+function fold(text: string): string {
+  return text.normalize('NFD').replace(DIACRITICS, '').toLowerCase()
+}
+
+/** Case- and accent-insensitive name search (EN and FR), for the browse list. */
 export function searchProducts(query: string, cat: Catalogue = catalogue): Product[] {
-  const q = query.trim().toLowerCase()
+  const q = fold(query.trim())
   if (!q) return cat.products
   return cat.products.filter(
     (p) =>
-      p.name.en.toLowerCase().includes(q) ||
-      (p.name.fr?.toLowerCase().includes(q) ?? false) ||
+      fold(p.name.en).includes(q) ||
+      (p.name.fr ? fold(p.name.fr).includes(q) : false) ||
       p.sku === q ||
       productBarcodes(p).includes(q),
   )
