@@ -114,9 +114,16 @@ export function canonicalIngredientId(baseName: string): string {
   return slugify(name) || 'unknown'
 }
 
-/** Display names for an id: canonical when known, otherwise the label's own words. */
-export function ingredientNames(id: string, baseName: string): { en: string; fr?: string } {
+/**
+ * Display names for an id: canonical when known, otherwise the label's own words, with
+ * the French label's words when the French facts lined up with the English ones.
+ */
+export function ingredientNames(
+  id: string,
+  baseName: string,
+  frenchName?: string,
+): { en: string; fr?: string } {
   const known = CANONICAL[id]
   if (known) return { en: known.en, fr: known.fr }
-  return { en: baseName.trim() }
+  return { en: baseName.trim(), ...(frenchName ? { fr: frenchName } : {}) }
 }

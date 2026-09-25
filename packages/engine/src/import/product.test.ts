@@ -133,6 +133,35 @@ describe('convertWebsiteProduct', () => {
     expect(product?.unitsPerDose).toBe(1)
   })
 
+  it('takes French names for label ingredients when the French facts line up', () => {
+    const c = ctx()
+    const herbal: WebsiteProduct = {
+      ...iron,
+      languages: {
+        en: {
+          name: 'Anti-Inflamma',
+          slug: 'anti-inflamma',
+          recipe:
+            'Each vegetable capsule contains: Quercetin100 mg Bromelain (from pineapple [Ananas comosus] stem), 2400 GDU/g 50 mg Iron (from iron bisglycinate)5 mg Other ingredients: cellulose.',
+        },
+        fr: {
+          name: 'Anti-Inflamma',
+          slug: 'anti-inflamma',
+          recipe:
+            'Chaque capsule végétale contient : Quercétine100 mg Broméline (de tige d’ananas [Ananas comosus]), 2400 UDG/g50 mg Fer (de diglycinate de fer)5 mg Autres ingrédients : cellulose.',
+        },
+      },
+    }
+    const { frenchFacts } = convertWebsiteProduct(herbal, c)
+    expect(frenchFacts).toBe('aligned')
+    expect(c.ingredients.get('quercetin')?.name).toEqual({ en: 'Quercetin', fr: 'Quercétine' })
+    expect(c.ingredients.get('bromelain-2400-gdu-g')?.name.fr).toBe('Broméline, 2400 UDG/g')
+    // Canonical nutrients keep their fixed names.
+    expect(c.ingredients.get('iron')?.name).toEqual({ en: 'Iron', fr: 'Fer' })
+    // The iron fixture's French facts list one item for two English ones: no French taken.
+    expect(convertWebsiteProduct(iron, ctx()).frenchFacts).toBe('mismatch')
+  })
+
   it('sums repeated nutrients and converts vitamin D IU to mcg', () => {
     const d: WebsiteProduct = {
       ...iron,
