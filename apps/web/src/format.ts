@@ -1,5 +1,5 @@
 import type { Product } from '@smartstack/shared'
-import { t } from './i18n'
+import { getLocale, t } from './i18n'
 
 /** "10000000000 CFU" → "10 billion CFU"; "300 mg" stays "300 mg". */
 export function formatAmount(amount: number, unit: string): string {
@@ -22,9 +22,20 @@ export function timesLabel(n: number): string {
   return t(`times.${key}`)
 }
 
-/** "2 capsules", "1 softgel", "½ dose" */
-export function formatUnits(units: number, form: Product['form']): string {
-  const word = t(`form.${form}.${units === 1 ? 'one' : 'other'}`)
+/**
+ * "2 capsules", "4 drops", "½ teaspoon". Uses the label's own unit word when the
+ * importer found one (English only), otherwise the generic word for the form.
+ */
+export function formatUnits(
+  units: number,
+  form: Product['form'],
+  unitLabel?: string | undefined,
+): string {
   const n = units === 0.5 ? '½' : units.toLocaleString('en-CA')
+  if (unitLabel && getLocale() === 'en') {
+    const word = units === 1 || unitLabel === 'ml' ? unitLabel : `${unitLabel}s`
+    return `${n} ${word}`
+  }
+  const word = t(`form.${form}.${units === 1 ? 'one' : 'other'}`)
   return `${n} ${word}`
 }

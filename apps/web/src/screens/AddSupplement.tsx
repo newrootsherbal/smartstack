@@ -122,52 +122,73 @@ export function AddSupplement() {
             </p>
           </div>
 
+          {candidate.ingredients.length === 0 && text?.facts && (
+            <div className="card stack-v">
+              <p className="small" style={{ fontWeight: 600 }}>
+                {t('add.labelFacts')}
+              </p>
+              <p className="small">{tl(text.facts)}</p>
+            </div>
+          )}
+
+          {candidate.kind === 'topical' && (
+            <p className="notice notice--warn" role="alert">
+              {t('add.topicalNotice')}
+            </p>
+          )}
           {inStack && <p className="notice">{t('add.alreadyInStack')}</p>}
 
-          <div className={`card ${styles.doseCard}`}>
-            <div>
-              <p className="small muted">{t('common.timesPerDay')}</p>
-              <p>
-                <strong>{timesLabel(doses)}</strong>
-                {candidate.unitsPerDose && (
-                  <span className="muted">
-                    {' '}
-                    · {formatUnits(candidate.unitsPerDose, candidate.form)}
-                  </span>
-                )}
-                {doses === candidate.dosesPerDayDefault && (
-                  <span className="small muted"> ({t('common.fromLabel')})</span>
-                )}
-              </p>
-            </div>
-            {adjusting ? (
-              <label className="field">
-                <span className="visually-hidden">{t('common.timesPerDay')}</span>
-                <select
-                  className="input"
-                  value={doses}
-                  onChange={(e) => setDoses(Number(e.target.value))}
+          {candidate.kind !== 'topical' && (
+            <div className={`card ${styles.doseCard}`}>
+              <div>
+                <p className="small muted">{t('common.timesPerDay')}</p>
+                <p>
+                  <strong>{timesLabel(doses)}</strong>
+                  {candidate.unitsPerDose && (
+                    <span className="muted">
+                      {' '}
+                      · {formatUnits(candidate.unitsPerDose, candidate.form, candidate.unitLabel)}
+                    </span>
+                  )}
+                  {doses === candidate.dosesPerDayDefault && (
+                    <span className="small muted"> ({t('common.fromLabel')})</span>
+                  )}
+                </p>
+              </div>
+              {adjusting ? (
+                <label className="field">
+                  <span className="visually-hidden">{t('common.timesPerDay')}</span>
+                  <select
+                    className="input"
+                    value={doses}
+                    onChange={(e) => setDoses(Number(e.target.value))}
+                  >
+                    {Array.from({ length: MAX_DOSES_PER_DAY }, (_, i) => i + 1).map((n) => (
+                      <option key={n} value={n}>
+                        {timesLabel(n)}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              ) : (
+                <button
+                  type="button"
+                  className="btn btn--small btn--outline"
+                  onClick={() => setAdjusting(true)}
                 >
-                  {Array.from({ length: MAX_DOSES_PER_DAY }, (_, i) => i + 1).map((n) => (
-                    <option key={n} value={n}>
-                      {timesLabel(n)}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            ) : (
-              <button
-                type="button"
-                className="btn btn--small btn--outline"
-                onClick={() => setAdjusting(true)}
-              >
-                {t('add.adjust')}
-              </button>
-            )}
-          </div>
+                  {t('add.adjust')}
+                </button>
+              )}
+            </div>
+          )}
 
           <div className="row">
-            <button type="button" className="btn btn--primary" onClick={confirm}>
+            <button
+              type="button"
+              className="btn btn--primary"
+              onClick={confirm}
+              disabled={candidate.kind === 'topical'}
+            >
               {t('add.addToStack')}
             </button>
             <button type="button" className="btn btn--outline" onClick={() => setCandidate(null)}>

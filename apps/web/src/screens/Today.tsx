@@ -209,7 +209,7 @@ function PlacementSection({
                   {product?.unitsPerDose && (
                     <span className="muted small">
                       {' '}
-                      · {formatUnits(product.unitsPerDose, product.form)}
+                      · {formatUnits(product.unitsPerDose, product.form, product.unitLabel)}
                     </span>
                   )}
                   {total > 1 && (

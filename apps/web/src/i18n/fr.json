@@ -116,7 +116,12 @@
     "timesPerDay": "",
     "fromLabel": "",
     "loading": "",
-    "andMore": ""
+    "andMore": "",
+    "kind": {
+      "nhp": "",
+      "food": "",
+      "topical": ""
+    }
   },
   "install": {
     "iosTitle": "",
@@ -179,7 +184,9 @@
     "ingredients": "",
     "sizes": "",
     "viewToday": "",
-    "addAnother": ""
+    "addAnother": "",
+    "topicalNotice": "",
+    "labelFacts": ""
   },
   "stack": {
     "title": "",

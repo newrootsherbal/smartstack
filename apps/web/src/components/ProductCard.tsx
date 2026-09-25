@@ -32,34 +32,36 @@ export function ProductCard({ product }: { product: Product }) {
         )}
       </div>
       <p className="small muted">
-        NPN {product.npn} · SKU {product.sku}
+        {product.npn ? `NPN ${product.npn}` : t(`common.kind.${product.kind}`)} · SKU {product.sku}
         {sizes.length > 0 && <> · {t('add.sizes', { sizes: sizes.join(', ') })}</>}
       </p>
-      <div>
-        <p className="small" style={{ fontWeight: 600 }}>
-          {t('add.ingredients', { serving: product.servingSize })}
-        </p>
-        <ul className={styles.ingredients}>
-          {rows.map((pi) => {
-            const ing = getIngredient(pi.ingredientId)
-            return (
-              <li key={pi.ingredientId}>
-                <span>{ing ? tl(ing.name) : pi.ingredientId}</span>
-                <span className="muted">{formatAmount(pi.amountPerDose, ing?.unit ?? '')}</span>
-              </li>
-            )
-          })}
-        </ul>
-        {hidden > 0 && (
-          <button
-            type="button"
-            className="btn btn--link btn--small"
-            onClick={() => setExpanded(true)}
-          >
-            {t('common.andMore', { count: hidden })}
-          </button>
-        )}
-      </div>
+      {product.ingredients.length > 0 && (
+        <div>
+          <p className="small" style={{ fontWeight: 600 }}>
+            {t('add.ingredients', { serving: product.servingSize })}
+          </p>
+          <ul className={styles.ingredients}>
+            {rows.map((pi) => {
+              const ing = getIngredient(pi.ingredientId)
+              return (
+                <li key={pi.ingredientId}>
+                  <span>{ing ? tl(ing.name) : pi.ingredientId}</span>
+                  <span className="muted">{formatAmount(pi.amountPerDose, ing?.unit ?? '')}</span>
+                </li>
+              )
+            })}
+          </ul>
+          {hidden > 0 && (
+            <button
+              type="button"
+              className="btn btn--link btn--small"
+              onClick={() => setExpanded(true)}
+            >
+              {t('common.andMore', { count: hidden })}
+            </button>
+          )}
+        </div>
+      )}
     </div>
   )
 }

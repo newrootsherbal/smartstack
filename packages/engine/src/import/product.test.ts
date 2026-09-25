@@ -105,8 +105,12 @@ describe('convertWebsiteProduct', () => {
     })
   })
 
-  it('skips products without an NPN and disables anchor rules that do not fit', () => {
-    expect(convertWebsiteProduct({ ...iron, identifiers: {} }, ctx()).skipped).toMatch(/NPN/)
+  it('keeps products without an NPN as foods and disables anchor rules that do not fit', () => {
+    const food = convertWebsiteProduct({ ...iron, identifiers: {} }, ctx())
+    expect(food.skipped).toBeNull()
+    expect(food.product?.kind).toBe('food')
+    expect(food.product?.npn).toBeUndefined()
+    expect(convertWebsiteProduct(iron, ctx()).product?.kind).toBe('nhp')
     const multi: WebsiteProduct = {
       ...iron,
       identifiers: { npn: '80035202', revision: 'R10' },
@@ -174,5 +178,19 @@ describe('helpers', () => {
     expect(canonicalIngredientId('Lactobacillus rhamnosus R0011')).toBe('probiotic')
     expect(canonicalIngredientId('Eicosapentaenoic acid')).toBe('epa')
     expect(canonicalIngredientId('Curcumin')).toBe('curcumin')
+  })
+})
+
+describe('canonical ids for minerals written the long way', () => {
+  it('maps elemental / salt / fully-reacted forms to the element', () => {
+    expect(canonicalIngredientId('Elemental magnesium from a magnesium bisglycinate blend')).toBe(
+      'magnesium',
+    )
+    expect(canonicalIngredientId('Fully reacted magnesium orotate')).toBe('magnesium')
+    expect(canonicalIngredientId('Elemental iron')).toBe('iron')
+    expect(canonicalIngredientId('Potassium iodide')).toBe('iodine')
+    expect(canonicalIngredientId('Calcium ascorbate')).toBe('vitamin-c')
+    expect(canonicalIngredientId('Calcium d-pantothenate')).toBe('vitamin-b5')
+    expect(canonicalIngredientId('Calcium citrate')).toBe('calcium')
   })
 })
