@@ -7,6 +7,11 @@ compatibility_date = "2026-09-01"
 # Smaller upload (zod + hono); the free plan allows 3 MB compressed either way.
 minify = true
 
+# Production origin. The zone is on Cloudflare in the same account, so wrangler creates
+# the DNS record and certificate on deploy. Push subscriptions are tied to this origin:
+# changing it means every phone re-subscribes.
+routes = [{ pattern = "schedule.flourishbodyandmind.com", custom_domain = true }]
+
 [assets]
 directory = "../web/dist"
 binding = "ASSETS"

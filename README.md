@@ -271,10 +271,11 @@ then from the repository root:
 npm run deploy
 ```
 
-which builds the web app and runs `wrangler deploy`. The first deploy (2026-09-24) is at
-`https://smartstack.smartstack-worker.workers.dev`. **Push subscriptions are tied to the origin**: move to
-`smartstack.newrootsherbal.com` (a custom domain on the Worker) _before_ employees install,
-or every phone will have to re-subscribe.
+which builds the web app and runs `wrangler deploy`. Production is
+`https://schedule.flourishbodyandmind.com`, a Worker custom domain declared in `wrangler.toml`
+(the zone is on Cloudflare in the same account; wrangler manages the DNS record and the
+certificate, and switches the `workers.dev` URL off). **Push subscriptions are tied to the origin**, so keep the custom domain stable once
+employees install.
 
 ## Web Push facts baked into the code
 
@@ -312,9 +313,9 @@ or every phone will have to re-subscribe.
   icon) or switching devices starts over. The app asks for persistent storage so the browser
   does not evict it under disk pressure. Accounts and server-side storage are a later phase
   and need the privacy review first.
-- A custom domain on the Worker requires the zone's DNS to be hosted on Cloudflare;
-  `newrootsherbal.com` is not, so the beta runs on the `workers.dev` URL (a `CNAME` to
-  `workers.dev` does not work). Moving to a real domain later means every phone re-subscribes.
+- A Worker custom domain needs the zone's DNS on Cloudflare. `newrootsherbal.com` stays on
+  the company VPS, so the app lives at `schedule.flourishbodyandmind.com`. Changing the origin
+  later means every phone re-subscribes to push.
 - English only; `fr.json` exists with empty values.
 - The manifest screenshots are generated placeholders (`apps/web/scripts/screenshots.mjs`).
 
