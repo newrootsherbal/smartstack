@@ -1,0 +1,65 @@
+# Weekly catalogue refresh: re-imports every product record from newrootsherbal.com,
+# validates, tests and builds with the new data, and opens (or updates) a pull
+# request when anything changed. Merging the PR deploys it (see deploy.yml).
+name: Refresh catalogue
+
+on:
+  schedule:
+    # Mondays 10:00 UTC = 06:00 Montreal (EDT) / 05:00 (EST). GitHub runs schedules
+    # in UTC and may delay them a few minutes in busy periods.
+    - cron: '0 10 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: refresh-catalogue
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: Import the catalogue from newrootsherbal.com
+        run: npm run data:refresh
+
+      - name: Validate, test and build with the new data
+        run: |
+          npm run data:validate
+          npm run check
+          npm run build
+
+      - name: Open or update the pull request when the catalogue changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- packages/engine/data; then
+            echo "Catalogue unchanged; nothing to do."
+            exit 0
+          fi
+          branch="catalogue/refresh"
+          title="Catalogue refresh $(date -u +%Y-%m-%d)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$branch"
+          git add packages/engine/data
+          git commit -m "Catalogue: weekly refresh from newrootsherbal.com"
+          git push --force -u origin "$branch"
+          existing="$(gh pr list --head "$branch" --state open --json number --jq '.[0].number // empty')"
+          if [ -n "$existing" ]; then
+            gh pr edit "$existing" --title "$title" --body-file packages/engine/data/import-report.md
+            echo "Updated pull request #$existing"
+          else
+            gh pr create --base main --head "$branch" --title "$title" \
+              --body-file packages/engine/data/import-report.md
+          fi

@@ -145,8 +145,36 @@ async function main() {
   write('ingredients.json', ingredients)
   write('rules.generated.json', generatedRules)
   write('product-text.json', text)
+  // Deterministic report (no timestamp) so an unchanged catalogue leaves the tree clean;
+  // the weekly refresh workflow uses it as the pull-request body.
+  const newest = records
+    .map((r) => r.updated_at ?? '')
+    .sort()
+    .at(-1)
+  const report = [
+    '# Catalogue import report',
+    '',
+    `Source: https://newrootsherbal.com/ai-catalog (newest record updated ${newest || 'unknown'})`,
+    '',
+    `- Records: ${records.length}`,
+    `- Products imported: ${products.length}`,
+    `- Skipped: ${skipped.length}`,
+    `- Ingredients: ${ingredients.length}`,
+    `- Label-derived rules: ${generatedRules.length} (curated: ${curatedRules.length})`,
+    `- Parser warnings: ${warnings.length}`,
+    '',
+    '## Skipped',
+    '',
+    ...skipped.map((s) => `- ${s}`),
+    '',
+    '## Warnings',
+    '',
+    ...warnings.map((w) => `- ${w}`),
+    '',
+  ].join('\n')
+  writeFileSync(resolve(dataDir, 'import-report.md'), report)
   console.log(
-    '✓ wrote data/products.json, data/ingredients.json, data/rules.generated.json, data/product-text.json',
+    '✓ wrote data/products.json, data/ingredients.json, data/rules.generated.json, data/product-text.json, data/import-report.md',
   )
 }
 

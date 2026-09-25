@@ -24,7 +24,9 @@
     "typecheck": "npm run typecheck --workspaces --if-present",
     "data:validate": "npm run data:validate -w packages/engine",
     "check": "npm run typecheck && npm run lint && npm run format:check && npm test",
-    "deploy": "npm run build && npm run deploy -w apps/worker"
+    "deploy": "npm run build && npm run deploy -w apps/worker",
+    "data:refresh": "npm run data:import:website -w packages/engine -- --refresh",
+    "data:import:website": "npm run data:import:website -w packages/engine"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.0",

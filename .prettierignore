@@ -12,3 +12,4 @@ packages/engine/data/products.json
 packages/engine/data/ingredients.json
 packages/engine/data/rules.generated.json
 packages/engine/data/product-text.json
+packages/engine/data/import-report.md
