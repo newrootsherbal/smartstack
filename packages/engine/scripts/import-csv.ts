@@ -228,6 +228,8 @@ export function importRows(rows: Row[], ingredients: Ingredient[]): ImportResult
         sku: row.sku.trim(),
         upc: row.upc.replace(/\s+/g, ''),
         npn: row.npn.trim(),
+        // The product-team template only describes licensed products.
+        kind: 'nhp',
         brand: row.brand.trim(),
         name: localized(row.name_en.trim(), row.name_fr.trim()),
         shortName: localized(

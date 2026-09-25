@@ -149,7 +149,12 @@
     "timesPerDay": "Times per day",
     "fromLabel": "from the label",
     "loading": "Loading…",
-    "andMore": "and {count} more"
+    "andMore": "and {count} more",
+    "kind": {
+      "nhp": "Natural health product",
+      "food": "Food product (no NPN)",
+      "topical": "For external use (no NPN)"
+    }
   },
   "install": {
     "iosTitle": "Add SmartStack to your Home Screen",
@@ -212,7 +217,9 @@
     "ingredients": "Medicinal ingredients per {serving}",
     "sizes": "Sizes: {sizes}",
     "viewToday": "View today's schedule",
-    "addAnother": "Add another"
+    "addAnother": "Add another",
+    "topicalNotice": "This product is applied to the skin or diffused, so it is not something to take on a schedule. You can still look it up here.",
+    "labelFacts": "Label facts"
   },
   "stack": {
     "title": "My stack",

@@ -191,6 +191,22 @@
     "reviewedBy": null
   },
   {
+    "id": "rule-black-cumin-seed-oil-liquid-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "black-cumin-seed-oil-liquid"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take ½ teaspoon twice daily with food to avoid digestive upset or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre ½ cuillerée à thé deux fois par jour, avec de la nourriture pour éviter les troubles digestifs, ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/black-cumin-seed-oil-liquid",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "rule-black-cumin-seed-oil-softgels-500-mg-with-food",
     "attribute": "WITH_FOOD",
     "appliesTo": {
@@ -413,6 +429,22 @@
     "reviewedBy": null
   },
   {
+    "id": "rule-childrens-elderberry-juice-powder-take-with-water",
+    "attribute": "TAKE_WITH_WATER",
+    "appliesTo": {
+      "productId": "childrens-elderberry-juice-powder"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "Suggested use on the label: “Mix with water for a refreshing beverage with a little tang.”",
+      "fr": "Usage suggéré sur l’étiquette : « Mélanger avec de l’eau pour une boisson rafraichissante avec une saveur riche. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/childrens-elderberry-juice-powder",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "rule-childrens-omega-3-with-food",
     "attribute": "WITH_FOOD",
     "appliesTo": {
@@ -619,6 +651,22 @@
     "reviewedBy": null
   },
   {
+    "id": "rule-cordyceps-militaris-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "cordyceps-militaris"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule twice daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule deux fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/cordyceps-militaris",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "rule-d-mannose-cranberry-refrigerate",
     "attribute": "REFRIGERATE",
     "appliesTo": {
@@ -677,6 +725,37 @@
       "en": "Suggested use on the label: “Take with or immediately before a meal/food.”"
     },
     "evidenceUrl": "https://newrootsherbal.com/shop/digestive-enzymes",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-dmso-liquid-take-with-water",
+    "attribute": "TAKE_WITH_WATER",
+    "appliesTo": {
+      "productId": "dmso-liquid"
+    },
+    "severity": "informational",
+    "explanation": {
+      "en": "Suggested use on the label: “Avoid contact with eyes and mucous membranes; if this happens, rinse thoroughly with water.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/dmso-liquid",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-exotic-oils-gift-set-english-version-bedtime",
+    "attribute": "BEDTIME",
+    "appliesTo": {
+      "productId": "exotic-oils-gift-set-english-version"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Best applied on moist skin, such as following a shower or bath, at bedtime.”",
+      "fr": "Usage suggéré sur l’étiquette : « Appliquer de préférence sur une peau légèrement humide, après la douche ou le bain au coucher. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/exotic-oils-gift-set-english-version",
     "reviewStatus": "unreviewed",
     "lastReviewed": null,
     "reviewedBy": null
@@ -820,6 +899,22 @@
       "fr": "Usage suggéré sur l’étiquette : « Adultes ≥ 19 ans : Prendre 2 capsules par jour avec un repas ou tel qu’indiqué par votre praticien de soins de santé. »"
     },
     "evidenceUrl": "https://newrootsherbal.com/shop/glucose-align",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-goji-seed-oil-bedtime",
+    "attribute": "BEDTIME",
+    "appliesTo": {
+      "productId": "goji-seed-oil"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Best applied on moist skin, such as following a shower or bath, before bedtime.”",
+      "fr": "Usage suggéré sur l’étiquette : « Appliquer de préférence sur une peau légèrement humide au coucher. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/goji-seed-oil",
     "reviewStatus": "unreviewed",
     "lastReviewed": null,
     "reviewedBy": null
@@ -1202,6 +1297,22 @@
     "reviewedBy": null
   },
   {
+    "id": "rule-lions-mane-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "lions-mane"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “To avoid digestive upset, take with food/meal.”",
+      "fr": "Usage suggéré sur l’étiquette : « Pour éviter les troubles digestifs, prendre avec de la nourriture / un repas. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/lions-mane",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "rule-liquid-melatonin-bedtime",
     "attribute": "BEDTIME",
     "appliesTo": {
@@ -1376,6 +1487,22 @@
     "reviewedBy": null
   },
   {
+    "id": "rule-msm-powder-without-food",
+    "attribute": "WITHOUT_FOOD",
+    "appliesTo": {
+      "productId": "msm-powder"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take ½ teaspoon (1,000 mg) before meals three times daily.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre ½ cuillerée à thé (1 000 mg) avant les repas trois fois par jour. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/msm-powder",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "rule-multi-max-with-food",
     "attribute": "WITH_FOOD",
     "appliesTo": {
@@ -1486,6 +1613,22 @@
     "reviewedBy": null
   },
   {
+    "id": "rule-olive-leaf-extract-liquid-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "olive-leaf-extract-liquid"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 16 ml (approx. 1 tbsp.) once daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 16 ml (environ 1 c. à soupe) une fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/olive-leaf-extract-liquid",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "rule-organic-cardiac-health-tincture-with-food",
     "attribute": "WITH_FOOD",
     "appliesTo": {
@@ -1497,6 +1640,22 @@
       "fr": "Usage suggéré sur l’étiquette : « Adultes 19 ans et plus : Prendre 1–2,5 ml (approximativement 35–88 gouttes) une à trois fois par jour avec de la nourriture ou tel qu’indiqué par votre praticien de soins de santé. »"
     },
     "evidenceUrl": "https://newrootsherbal.com/shop/organic-cardiac-health-tincture",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-panax-ginseng-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "panax-ginseng"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 2 capsules daily with meals or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 2 capsules par jour avec un repas ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/panax-ginseng",
     "reviewStatus": "unreviewed",
     "lastReviewed": null,
     "reviewedBy": null
@@ -1528,6 +1687,22 @@
       "en": "Suggested use on the label: “Take with or immediately before a meal/food.”"
     },
     "evidenceUrl": "https://newrootsherbal.com/shop/pancreatin",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-plant-digestive-enzymes-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "plant-digestive-enzymes"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule three times daily with a meal or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Adultes : Prendre 1 capsule trois fois par jour avec un repas ou tel qu’indiqué par votre praticien de soins de santé. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/plant-digestive-enzymes",
     "reviewStatus": "unreviewed",
     "lastReviewed": null,
     "reviewedBy": null
@@ -1693,6 +1868,22 @@
     "reviewedBy": null
   },
   {
+    "id": "rule-purge-parasitis-program-1-without-food",
+    "attribute": "WITHOUT_FOOD",
+    "appliesTo": {
+      "productId": "purge-parasitis-program-1"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Morning before meal: Take 2 capsules of PurgeParasitis, 1 capsule of BlackWalnut Green Hulls, 1 capsule of Wormwood and 1 capsule of Cloves.”",
+      "fr": "Usage suggéré sur l’étiquette : « Le matin avant le repas : Prendre 2 capsules de Purge Parasites, 1 capsule d’écale Verte de Noyer Noir, 1 capsule d’Absinthe, et 1 capsule de Clou de Girofle. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/purge-parasitis-program-1",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "rule-quercetin-with-food",
     "attribute": "WITH_FOOD",
     "appliesTo": {
@@ -1735,6 +1926,22 @@
       "en": "Suggested use on the label: “Adults: Take 2 capsules three times daily with meals or as directed by your health-care practitioner.”"
     },
     "evidenceUrl": "https://newrootsherbal.com/shop/red-beet-root",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-reishi-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "reishi"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 3 capsules daily with food or as directed by your health-care practitioner.”",
+      "fr": "Usage suggéré sur l’étiquette : « Pour éviter les troubles digestifs, prendre avec de la nourriture / un repas. »"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/reishi",
     "reviewStatus": "unreviewed",
     "lastReviewed": null,
     "reviewedBy": null
@@ -1799,6 +2006,21 @@
       "fr": "Usage suggéré sur l’étiquette : « Prendre avec un repas fournissant des protéines. »"
     },
     "evidenceUrl": "https://newrootsherbal.com/shop/sod",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-shiitake-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "shiitake"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule three times daily with food or as directed by your health-care practitioner.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/shiitake",
     "reviewStatus": "unreviewed",
     "lastReviewed": null,
     "reviewedBy": null
@@ -2023,6 +2245,21 @@
       "fr": "Ce produit se conserve au réfrigérateur."
     },
     "evidenceUrl": "https://newrootsherbal.com/shop/travelers-probiotic-21-billion",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rule-turkey-tail-with-food",
+    "attribute": "WITH_FOOD",
+    "appliesTo": {
+      "productId": "turkey-tail"
+    },
+    "severity": "consideration",
+    "explanation": {
+      "en": "Suggested use on the label: “Adults: Take 1 capsule three times daily with food or as directed by your health-care practitioner.”"
+    },
+    "evidenceUrl": "https://newrootsherbal.com/shop/turkey-tail",
     "reviewStatus": "unreviewed",
     "lastReviewed": null,
     "reviewedBy": null

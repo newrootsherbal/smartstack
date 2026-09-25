@@ -7,8 +7,9 @@
  *   npm run data:import:website -- --refresh     # re-downloads every product record
  *   npm run data:import:website -- --allow-shrink  # accept a catalogue >10% smaller than committed
  *
- * Only licensed natural health products (8-digit NPN) with a barcode and parsable
- * supplement facts are imported. Curated ingredient-level rules stay in data/rules.json.
+ * Every product with a valid barcode is imported: licensed products (kind "nhp", 8-digit
+ * NPN), foods ("food": protein, MCT oil, sweeteners) and topicals ("topical": essential
+ * and skin oils, never scheduled). Curated ingredient-level rules stay in data/rules.json.
  * Built for unattended runs: any download failure aborts, output is deterministic for
  * identical input, and only the allow-listed origin is ever fetched.
  */

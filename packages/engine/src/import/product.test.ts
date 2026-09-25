@@ -105,8 +105,12 @@ describe('convertWebsiteProduct', () => {
     })
   })
 
-  it('skips products without an NPN and disables anchor rules that do not fit', () => {
-    expect(convertWebsiteProduct({ ...iron, identifiers: {} }, ctx()).skipped).toMatch(/NPN/)
+  it('keeps products without an NPN as foods and disables anchor rules that do not fit', () => {
+    const food = convertWebsiteProduct({ ...iron, identifiers: {} }, ctx())
+    expect(food.skipped).toBeNull()
+    expect(food.product?.kind).toBe('food')
+    expect(food.product?.npn).toBeUndefined()
+    expect(convertWebsiteProduct(iron, ctx()).product?.kind).toBe('nhp')
     const multi: WebsiteProduct = {
       ...iron,
       identifiers: { npn: '80035202', revision: 'R10' },

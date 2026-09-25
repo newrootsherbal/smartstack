@@ -111,7 +111,13 @@ export const Product = z
     sku: z.string().min(1),
     /** Primary barcode as printed: 12-digit UPC-A or 13-digit EAN-13. */
     upc: z.string().regex(/^\d{12,13}$/),
-    npn: z.string().min(1),
+    /** Natural Product Number; absent for foods, sweeteners, essential and skin oils. */
+    npn: z.string().min(1).optional(),
+    /**
+     * nhp: licensed natural health product · food: ingested but not licensed (protein,
+     * MCT oil, sweeteners) · topical: essential and skin oils, never scheduled.
+     */
+    kind: z.enum(['nhp', 'food', 'topical']).default('nhp'),
     brand: z.string().min(1),
     name: LocalizedText,
     /** Short label for schedule rows, push titles and adjustment sentences, e.g. "Iron". */
@@ -134,7 +140,8 @@ export const Product = z
     warnings: LocalizedText.optional(),
     status: ProductStatus,
     labelVersion: z.string().min(1),
-    ingredients: z.array(ProductIngredient).min(1),
+    /** May be empty when the label lists no medicinal ingredient the importer can read. */
+    ingredients: z.array(ProductIngredient),
     variants: z.array(ProductVariant).optional(),
     ruleOverrides: RuleOverrides.optional(),
     /** Public product page the data was imported from. */

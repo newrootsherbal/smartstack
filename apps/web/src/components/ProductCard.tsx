@@ -32,7 +32,7 @@ export function ProductCard({ product }: { product: Product }) {
         )}
       </div>
       <p className="small muted">
-        NPN {product.npn} · SKU {product.sku}
+        {product.npn ? `NPN ${product.npn}` : t(`common.kind.${product.kind}`)} · SKU {product.sku}
         {sizes.length > 0 && <> · {t('add.sizes', { sizes: sizes.join(', ') })}</>}
       </p>
       <div>

@@ -116,11 +116,84 @@ describe('parseRecipe — two-column tables and junk', () => {
     expect(r.unparsed).toEqual([])
   })
 
-  it('refuses sentences and stray tokens as ingredient names', () => {
+  it('reads "contains 600 mg of vitamin C" and refuses the surrounding sentences', () => {
     const r = parseRecipe(
       '100% pure vitamin C (ascorbic acid). Each ⅛ teaspoon contains 600 mg of vitamin C. No fillers or excipients.',
     )
+    expect(r.items.map((i) => [i.name, i.amount, i.unit])).toEqual([['Vitamin C', 600, 'mg']])
+    expect(r.unparsed).toEqual(['No fillers or excipients'])
+  })
+
+  it('drops a preamble sentence in front of the ingredient', () => {
+    const r = parseRecipe(
+      'Each softgel contains: 100% natural mixed carotenoids from red palm fruit. beta-Carotene (provitamin A) (15 mg) 25,000 IU Also contains alpha-carotene.',
+    )
+    expect(r.items.map((i) => [i.name, i.amount, i.unit])).toEqual([['beta-Carotene', 25000, 'IU']])
+  })
+
+  it('trims standardization qualifiers so long extract names still parse', () => {
+    const r = parseRecipe(
+      'Each vegetable capsule contains: Reishi (Ganoderma lucidum) fruiting body extract, standardized to 40% polysaccharides, providing 30% beta-glucans500 mg Hot-water extraction Other ingredients: Vegetable magnesium stearate.',
+    )
+    expect(r.items.map((i) => [i.name, i.amount, i.unit])).toEqual([
+      ['Reishi fruiting body extract', 500, 'mg'],
+    ])
+    expect(r.unparsed).toEqual(['Hot-water extraction'])
+  })
+
+  it('recovers from a parenthesis that never closes', () => {
+    const r = parseRecipe(
+      'Each teaspoon contains: Fish oil (from wild, deep-sea whole anchovies (Engraulidae) and/or whole sardines (Clupeidae)4,500 mg Providing: Eicosapentaenoic acid (EPA)900 mg Docosahexaenoic acid (DHA)600 mg Other ingredients: Natural lemon flavour.',
+    )
+    expect(r.servingSize).toBe('1 teaspoon')
+    expect(r.items.map((i) => [i.name, i.amount])).toEqual([
+      ['Fish oil', 4500],
+      ['Eicosapentaenoic acid', 900],
+      ['Docosahexaenoic acid', 600],
+    ])
+  })
+
+  it('drops a footnote glued to the first item and its asterisks', () => {
+    const r = parseRecipe(
+      'Each vegetable capsule contains: * Each mushroom extract is standardized to 40% polysaccharides Chaga (Inonotus obliquus) mushroom extract*68 mg Coriolus (Trametes versicolor) mushroom extract*68 mg Other ingredients: cellulose.',
+    )
+    expect(r.items.map((i) => [i.name, i.amount])).toEqual([
+      ['Chaga mushroom extract', 68],
+      ['Coriolus mushroom extract', 68],
+    ])
+    expect(r.unparsed).toEqual([])
+  })
+
+  it('drops a labelled group heading glued to its first item', () => {
+    const r = parseRecipe(
+      'Each capsule contains: Kola nut (Cola acuminata) extract, 10% caffeine510 mg *100% of the RDA of the following: Vitamin B3 (niacinamide)20 mg Vitamin B6 (pyridoxine hydrochloride)2 mg Other ingredients: cellulose.',
+    )
+    expect(r.items.map((i) => [i.name, i.amount])).toEqual([
+      ['Kola nut extract, 10% caffeine', 510],
+      ['Vitamin B3', 20],
+      ['Vitamin B6', 2],
+    ])
+  })
+})
+
+describe('parseRecipe — foods', () => {
+  it('reads only the serving size from a Nutrition Facts table', () => {
+    const r = parseRecipe(
+      'Grass-fed beef bone broth protein powder. Nutrition Facts Per 3 rounded tbsp. (30 g) Calories 110 % Daily Value* Fat 0 g0 % Saturated 0 g0 % + Trans 0 g Carbohydrate 1 g0 % Fibre 1 g4 % Sugars 0 g Protein 27 g Cholesterol 0 mg Sodium 300 mg13 % Vitamin B12 0.9 ug 38 %',
+    )
+    expect(r.nutritionFacts).toBe(true)
+    expect(r.servingSize).toBe('3 rounded tbsp. (30 g)')
     expect(r.items).toEqual([])
-    expect(r.unparsed.length).toBeGreaterThan(0)
+    expect(r.unparsed).toEqual([])
+  })
+
+  it('still reads a medicinal list that follows a Nutrition Facts table', () => {
+    const r = parseRecipe(
+      'Nutrition Facts Serving size: approx. 1 Tbsp. (16 ml)Servings per container: 16 Calories 48 Fat 0 g Medicinal ingredients: Olive (Olea europaea) leaf extract 500 mg Other ingredients: Water.',
+    )
+    expect(r.servingSize).toBe('1 Tbsp. (16 ml)')
+    expect(r.items.map((i) => [i.name, i.amount, i.unit])).toEqual([
+      ['Olive leaf extract', 500, 'mg'],
+    ])
   })
 })

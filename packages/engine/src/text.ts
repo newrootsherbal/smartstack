@@ -8,6 +8,8 @@ import type { LocalizedText, Product } from '@smartstack/shared'
 export interface ProductText {
   directions?: LocalizedText
   warnings?: LocalizedText
+  /** Raw label facts, present only when no ingredient could be parsed from them. */
+  facts?: LocalizedText
 }
 
 let cache: Promise<Record<string, ProductText>> | null = null
