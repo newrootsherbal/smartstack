@@ -250,8 +250,9 @@ export function convertWebsiteProduct(w: WebsiteProduct, ctx: ImportContext): Co
         : {}),
     })),
     ...(disable.length ? { ruleOverrides: { disable } } : {}),
+    // `updated_at` is rewritten nightly on the website, so it is not copied: the
+    // generated files must only change when label data changes.
     sourceUrl: productPage,
-    ...(w.updated_at ? { sourceUpdatedAt: w.updated_at } : {}),
     ...review,
   }
   const text: ProductText = {

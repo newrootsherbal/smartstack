@@ -1,14 +1,26 @@
 # Weekly catalogue refresh: re-imports every product record from newrootsherbal.com,
 # validates, tests and builds with the new data, and opens (or updates) a pull
 # request when anything changed. Merging the PR deploys it (see deploy.yml).
+#
+# Repository settings required once:
+#   - Actions > General > Workflow permissions > "Allow GitHub Actions to create and
+#     approve pull requests"
+#   - a branch protection rule on main (this job's token can push; keep main guarded)
 name: Refresh catalogue
 
 on:
   schedule:
-    # Mondays 10:00 UTC = 06:00 Montreal (EDT) / 05:00 (EST). GitHub runs schedules
-    # in UTC and may delay them a few minutes in busy periods.
-    - cron: '0 10 * * 1'
+    # Mondays 05:17 Montreal time. GitHub applies the IANA time zone (DST included)
+    # and may delay schedules in busy periods; an off-the-hour minute avoids the
+    # busiest slot. Run it by hand from the Actions tab whenever needed.
+    - cron: '17 5 * * 1'
+      timezone: 'America/Toronto'
   workflow_dispatch:
+    inputs:
+      allow_shrink:
+        description: 'Accept a catalogue more than 10% smaller than the committed one'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -21,18 +33,27 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+        with:
+          # Do not leave the write token in .git while npm scripts, the importer
+          # (third-party data) and the build run; the last step passes it explicitly.
+          persist-credentials: false
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
       - run: npm ci
 
       - name: Import the catalogue from newrootsherbal.com
-        run: npm run data:refresh
+        run: npm run data:refresh -- ${{ inputs.allow_shrink && '--allow-shrink' || '' }}
 
       - name: Validate, test and build with the new data
+        id: verify
+        # A website change can legitimately break a data-pinning test; still open
+        # the PR (flagged) so the diff and the failure are visible to a human.
+        continue-on-error: true
         run: |
           npm run data:validate
           npm run check
@@ -41,25 +62,49 @@ jobs:
       - name: Open or update the pull request when the catalogue changed
         env:
           GH_TOKEN: ${{ github.token }}
+          VERIFY_OUTCOME: ${{ steps.verify.outcome }}
         run: |
           set -euo pipefail
-          if git diff --quiet -- packages/engine/data; then
+          # Stage first so a brand-new output file counts as a change too.
+          git add -A -- packages/engine/data
+          if git diff --cached --quiet -- packages/engine/data; then
             echo "Catalogue unchanged; nothing to do."
             exit 0
           fi
           branch="catalogue/refresh"
-          title="Catalogue refresh $(date -u +%Y-%m-%d)"
+          remote="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          # Never overwrite commits a person added to the open catalogue PR.
+          if git fetch --no-tags "$remote" "$branch" 2>/dev/null; then
+            others="$(git log --format=%ae FETCH_HEAD --not HEAD | grep -v 'github-actions\[bot\]' || true)"
+            if [ -n "$others" ]; then
+              echo "::error::$branch has commits by $others; merge or close the open PR first."
+              exit 1
+            fi
+          fi
+          date="$(date -u +%Y-%m-%d)"
+          if [ "$VERIFY_OUTCOME" = "success" ]; then
+            title="Catalogue refresh $date"
+            note=""
+          else
+            title="Catalogue refresh $date (checks failed, review before merging)"
+            note="> **Checks failed on the imported data.** See this run's logs; a data-pinning test or the build needs attention before merging."$'\n\n'
+          fi
+          { printf '%s' "$note"; head -c 60000 packages/engine/data/import-report.md; } > "$RUNNER_TEMP/pr-body.md"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -B "$branch"
-          git add packages/engine/data
-          git commit -m "Catalogue: weekly refresh from newrootsherbal.com"
-          git push --force -u origin "$branch"
+          git commit -m "Catalogue: weekly refresh from newrootsherbal.com ($date)"
+          git push --force "$remote" "$branch"
           existing="$(gh pr list --head "$branch" --state open --json number --jq '.[0].number // empty')"
           if [ -n "$existing" ]; then
-            gh pr edit "$existing" --title "$title" --body-file packages/engine/data/import-report.md
+            gh pr edit "$existing" --title "$title" --body-file "$RUNNER_TEMP/pr-body.md"
             echo "Updated pull request #$existing"
           else
-            gh pr create --base main --head "$branch" --title "$title" \
-              --body-file packages/engine/data/import-report.md
+            gh pr create --base main --head "$branch" --title "$title" --body-file "$RUNNER_TEMP/pr-body.md"
           fi
+
+      - name: Fail the run when the checks failed
+        if: steps.verify.outcome == 'failure'
+        run: |
+          echo "::error::Validation, tests or build failed on the imported catalogue (see the verify step)."
+          exit 1

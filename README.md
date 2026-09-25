@@ -149,11 +149,45 @@ valid barcode and parsable supplement facts, then writes:
   food", "at bedtime", "with water"…) and the refrigeration flag, each quoting the label sentence
   and linking the product page as its source.
 
-Hand-curated ingredient-level rules stay in `data/rules.json`. The importer report lists skipped
-records (essential oils, foods, a few products whose facts it cannot parse) and parser warnings;
-nothing is written if the merged catalogue fails validation. The original ten-product sample
+Hand-curated ingredient-level rules stay in `data/rules.json`. The importer writes
+`data/import-report.md` (skipped records such as essential oils and foods, parser warnings) and
+writes nothing if the merged catalogue fails validation. The original ten-product sample
 catalogue lives in `data/sample/` as a test fixture. `docs/data-template.md` remains for
 products the website does not list.
+
+#### Keeping the catalogue current
+
+The catalogue is bundled at build time, so it changes only when the importer runs and the app
+is redeployed. Three GitHub Actions workflows in `.github/workflows/` take care of that:
+
+- `ci.yml`: typecheck, lint, format, tests and build on every push to `main` and on every
+  pull request.
+- `refresh-catalogue.yml`: every Monday at 05:17 Montreal time (and on demand from the Actions
+  tab) re-downloads every product record, runs the importer, validates, tests and builds with
+  the new data, then opens or updates a pull request on the `catalogue/refresh` branch with
+  `data/import-report.md` as its description. When nothing changed it does nothing. If the
+  checks fail on the new data (a test pins a product fact that the website changed), the pull
+  request is still opened, flagged "checks failed", and the run goes red. The importer refuses a
+  catalogue more than 10% smaller than the committed one unless the manual run is started with
+  the `allow_shrink` input; it also refuses a partial download. GitHub may delay scheduled runs
+  by minutes or, rarely, hours; a manual run is always available.
+- `deploy.yml`: on every push to `main` (so merging that pull request ships the data) runs the
+  checks, builds and runs `wrangler deploy`.
+
+One-time setup, all in the GitHub repository settings once the code is pushed there:
+
+1. Actions → General → Workflow permissions: tick "Allow GitHub Actions to create and approve
+   pull requests" (otherwise `gh pr create` is refused). Add a branch protection rule on `main`
+   (require a pull request), since the refresh job holds a token that can push.
+2. Secrets and variables → Actions: add `CLOUDFLARE_API_TOKEN` (an API token with
+   Account → Workers Scripts → Edit on the newrootsherbal account; the "Edit Cloudflare
+   Workers" template also works but grants more) and `CLOUDFLARE_ACCOUNT_ID` (shown by
+   `wrangler whoami`).
+
+Because the pull request is opened with the workflow's own token, GitHub holds `ci.yml` on it
+until someone clicks "Approve and run"; the refresh job runs the same full check before opening
+it, so the data is validated either way. In a public repository GitHub disables schedules after
+60 days without commits (private repositories are not affected); a manual run re-enables them.
 
 ### Developer pages
 

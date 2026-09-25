@@ -1,9 +1,11 @@
 # Deploys the Worker (and the web app it serves) on every push to main, so merging
 # the weekly catalogue PR ships the new data. Needs two repository secrets:
-#   CLOUDFLARE_API_TOKEN  — API token from the "Edit Cloudflare Workers" template
+#   CLOUDFLARE_API_TOKEN  — an API token with Account > Workers Scripts > Edit on the
+#                           newrootsherbal account (the "Edit Cloudflare Workers"
+#                           template works too; it grants more than needed)
 #   CLOUDFLARE_ACCOUNT_ID — the account id shown by `wrangler whoami`
-# D1 migrations are NOT applied here; run `npm run db:migrate:remote -w apps/worker`
-# by hand when a migration is added.
+# Deploying needs no D1 permission (the binding has its database_id). Migrations are
+# NOT applied here; run `npm run db:migrate:remote -w apps/worker` by hand when one is added.
 name: Deploy
 
 on:
@@ -21,16 +23,22 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
       - run: npm ci
       - run: npm run check
-      - name: Build and deploy
-        run: npm run deploy
+      - name: Build the web app
+        run: npm run build
+      - name: Deploy the Worker
+        # Only this step sees the Cloudflare credentials.
+        run: npm run deploy -w apps/worker
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

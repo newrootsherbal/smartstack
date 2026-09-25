@@ -1,12 +1,16 @@
 /**
- * Website importer — builds packages/engine/data/{products,ingredients,rules.generated}.json
- * from newrootsherbal.com's public, price-free AI catalog (see https://newrootsherbal.com/llms.txt).
+ * Website importer — builds packages/engine/data/{products,ingredients,rules.generated,
+ * product-text}.json and import-report.md from newrootsherbal.com's public, price-free AI
+ * catalog (see https://newrootsherbal.com/llms.txt).
  *
- *   npm run data:import:website            # uses data/.cache/website, fetches what is missing
- *   npm run data:import:website -- --refresh   # re-downloads every product record
+ *   npm run data:import:website                  # uses data/.cache/website, fetches what is missing
+ *   npm run data:import:website -- --refresh     # re-downloads every product record
+ *   npm run data:import:website -- --allow-shrink  # accept a catalogue >10% smaller than committed
  *
  * Only licensed natural health products (8-digit NPN) with a barcode and parsable
  * supplement facts are imported. Curated ingredient-level rules stay in data/rules.json.
+ * Built for unattended runs: any download failure aborts, output is deterministic for
+ * identical input, and only the allow-listed origin is ever fetched.
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
@@ -20,14 +24,19 @@ import {
 } from '../src/import/product'
 import { validateCatalogue } from '../src/validate'
 
-const INDEX_URL = 'https://newrootsherbal.com/ai-catalog/products-index-en.json'
+const ORIGIN = 'https://newrootsherbal.com'
+const INDEX_URL = `${ORIGIN}/ai-catalog/products-index-en.json`
 const USER_AGENT = 'Mozilla/5.0 SmartStack-importer (+https://newrootsherbal.com)'
-const CONCURRENCY = 6
+const CONCURRENCY = 4
+const ATTEMPTS = 4
+const TIMEOUT_MS = 20_000
+const SLUG_RE = /^[a-z0-9][a-z0-9-]*$/i
 
 const engineRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const dataDir = resolve(engineRoot, 'data')
 const cacheDir = resolve(dataDir, '.cache', 'website')
 const refresh = process.argv.includes('--refresh')
+const allowShrink = process.argv.includes('--allow-shrink')
 
 interface IndexEntry {
   name: string
@@ -35,42 +44,99 @@ interface IndexEntry {
   catalog_url: string
 }
 
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
+
+/** GET a JSON document from the catalogue origin, with retries; returns the raw text. */
 async function fetchJson(url: string): Promise<string> {
-  const res = await fetch(url, { headers: { 'user-agent': USER_AGENT } })
-  if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`)
-  return res.text()
+  if (new URL(url).origin !== ORIGIN) throw new Error(`refusing to fetch ${url}: not ${ORIGIN}`)
+  let lastError: unknown
+  for (let attempt = 1; attempt <= ATTEMPTS; attempt++) {
+    try {
+      const res = await fetch(url, {
+        headers: { 'user-agent': USER_AGENT, accept: 'application/json' },
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+        redirect: 'follow',
+      })
+      if (new URL(res.url || url).origin !== ORIGIN) {
+        throw new Error(`redirected off ${ORIGIN}: ${res.url}`)
+      }
+      if (res.status === 429 || res.status >= 500) throw new Error(`HTTP ${res.status}`)
+      if (!res.ok) throw Object.assign(new Error(`HTTP ${res.status}`), { fatal: true })
+      const type = res.headers.get('content-type') ?? ''
+      if (!/json/i.test(type)) throw Object.assign(new Error(`not JSON: ${type}`), { fatal: true })
+      const text = await res.text()
+      JSON.parse(text) // never cache something that does not parse
+      return text
+    } catch (err) {
+      lastError = err
+      if ((err as { fatal?: boolean }).fatal || attempt === ATTEMPTS) break
+      await sleep(500 * 2 ** (attempt - 1) + Math.floor(Math.random() * 250))
+    }
+  }
+  throw new Error(`${url}: ${lastError instanceof Error ? lastError.message : String(lastError)}`)
 }
 
 async function loadIndex(): Promise<IndexEntry[]> {
   const file = resolve(cacheDir, 'index-en.json')
   if (refresh || !existsSync(file)) writeFileSync(file, await fetchJson(INDEX_URL))
-  return (JSON.parse(readFileSync(file, 'utf8')) as { data: IndexEntry[] }).data
+  const entries = (JSON.parse(readFileSync(file, 'utf8')) as { data: IndexEntry[] }).data
+  for (const e of entries) {
+    if (typeof e.slug !== 'string' || !SLUG_RE.test(e.slug)) {
+      throw new Error(`index entry with an unusable slug: ${JSON.stringify(e).slice(0, 120)}`)
+    }
+    if (new URL(e.catalog_url).origin !== ORIGIN) {
+      throw new Error(`index entry ${e.slug} points off ${ORIGIN}: ${e.catalog_url}`)
+    }
+  }
+  return entries
+}
+
+function checkRecord(entry: IndexEntry, record: unknown): WebsiteProduct {
+  const r = record as WebsiteProduct
+  const en = r?.languages?.en
+  if (!en || typeof en.name !== 'string' || typeof en.slug !== 'string' || !SLUG_RE.test(en.slug)) {
+    throw new Error(`${entry.slug}: record is missing languages.en.name/slug (shape changed?)`)
+  }
+  if (!r.identifiers || !Array.isArray(r.variants)) {
+    throw new Error(`${entry.slug}: record is missing identifiers/variants (shape changed?)`)
+  }
+  return r
 }
 
 async function loadDetails(entries: IndexEntry[]): Promise<WebsiteProduct[]> {
-  const queue = [...entries]
-  const out: WebsiteProduct[] = []
+  const out: (WebsiteProduct | undefined)[] = new Array<WebsiteProduct | undefined>(entries.length)
   const failures: string[] = []
+  let next = 0
   let fetched = 0
   const worker = async () => {
-    while (queue.length) {
-      const entry = queue.shift()!
+    while (next < entries.length) {
+      const index = next++
+      const entry = entries[index]!
       const file = resolve(cacheDir, `${entry.slug}.json`)
       try {
         if (refresh || !existsSync(file)) {
           writeFileSync(file, await fetchJson(entry.catalog_url))
           fetched++
         }
-        out.push(JSON.parse(readFileSync(file, 'utf8')) as WebsiteProduct)
+        out[index] = checkRecord(entry, JSON.parse(readFileSync(file, 'utf8')))
       } catch (err) {
         failures.push(`${entry.slug}: ${err instanceof Error ? err.message : String(err)}`)
       }
     }
   }
   await Promise.all(Array.from({ length: CONCURRENCY }, worker))
-  console.log(`records: ${out.length} (${fetched} downloaded, ${out.length - fetched} from cache)`)
-  for (const f of failures) console.warn(`  ! ${f}`)
-  return out
+  const records = out.filter((r): r is WebsiteProduct => r !== undefined)
+  console.log(
+    `records: ${records.length} (${fetched} downloaded, ${records.length - fetched} from cache)`,
+  )
+  if (failures.length) {
+    for (const f of failures) console.error(`  ! ${f}`)
+    // Unattended runs must not turn a flaky download into a PR that deletes products.
+    throw new Error(
+      `${failures.length} product record(s) could not be downloaded or read; aborting so nothing is dropped by mistake`,
+    )
+  }
+  return records
 }
 
 async function main() {
@@ -85,7 +151,16 @@ async function main() {
   }
 
   const records = await loadDetails(await loadIndex())
-  records.sort((a, b) => a.languages.en.name.localeCompare(b.languages.en.name, 'en'))
+  // Deterministic order regardless of download order: name, then the unique slug.
+  records.sort(
+    (a, b) =>
+      a.languages.en.name.localeCompare(b.languages.en.name, 'en') ||
+      (a.languages.en.slug < b.languages.en.slug
+        ? -1
+        : a.languages.en.slug > b.languages.en.slug
+          ? 1
+          : 0),
+  )
 
   const products: Product[] = []
   const generatedRules: TimingRule[] = []
@@ -105,6 +180,17 @@ async function main() {
   }
 
   const ingredients = [...ctx.ingredients.values()].sort((a, b) => a.id.localeCompare(b.id))
+
+  // A website hiccup or a changed JSON shape must not shrink the catalogue unnoticed.
+  const previousFile = resolve(dataDir, 'products.json')
+  if (existsSync(previousFile) && !allowShrink) {
+    const previous = (JSON.parse(readFileSync(previousFile, 'utf8')) as unknown[]).length
+    if (products.length < Math.floor(previous * 0.9)) {
+      throw new Error(
+        `only ${products.length} products imported versus ${previous} committed (more than 10% fewer); aborting. Re-run with --allow-shrink if this is expected.`,
+      )
+    }
+  }
 
   // Curated rules must point at ingredients that exist after this import.
   for (const rule of curatedRules) {
@@ -145,16 +231,14 @@ async function main() {
   write('ingredients.json', ingredients)
   write('rules.generated.json', generatedRules)
   write('product-text.json', text)
-  // Deterministic report (no timestamp) so an unchanged catalogue leaves the tree clean;
-  // the weekly refresh workflow uses it as the pull-request body.
-  const newest = records
-    .map((r) => r.updated_at ?? '')
-    .sort()
-    .at(-1)
+  // Deterministic report (no dates, nothing that changes without a data change) so an
+  // unchanged catalogue leaves the tree clean; the weekly workflow posts it as the PR body.
+  // Lists are fenced so website text cannot render as links or mentions there.
+  const fence = (lines: string[]) => (lines.length ? ['```', ...lines, '```'] : ['(none)'])
   const report = [
     '# Catalogue import report',
     '',
-    `Source: https://newrootsherbal.com/ai-catalog (newest record updated ${newest || 'unknown'})`,
+    `Source: ${ORIGIN}/ai-catalog`,
     '',
     `- Records: ${records.length}`,
     `- Products imported: ${products.length}`,
@@ -165,11 +249,11 @@ async function main() {
     '',
     '## Skipped',
     '',
-    ...skipped.map((s) => `- ${s}`),
+    ...fence(skipped),
     '',
     '## Warnings',
     '',
-    ...warnings.map((w) => `- ${w}`),
+    ...fence(warnings),
     '',
   ].join('\n')
   writeFileSync(resolve(dataDir, 'import-report.md'), report)
@@ -179,6 +263,6 @@ async function main() {
 }
 
 main().catch((err) => {
-  console.error(err)
+  console.error(err instanceof Error ? err.message : err)
   process.exit(1)
 })
