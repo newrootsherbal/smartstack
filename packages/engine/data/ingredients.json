@@ -953,27 +953,6 @@
     "unit": "mg"
   },
   {
-    "id": "elemental-magnesium",
-    "name": {
-      "en": "Elemental magnesium"
-    },
-    "unit": "mg"
-  },
-  {
-    "id": "elemental-magnesium-from-a-magnesium-bisglycinate-blend",
-    "name": {
-      "en": "Elemental magnesium from a magnesium bisglycinate blend"
-    },
-    "unit": "mg"
-  },
-  {
-    "id": "elemental-zinc",
-    "name": {
-      "en": "Elemental zinc"
-    },
-    "unit": "mg"
-  },
-  {
     "id": "epa",
     "name": {
       "en": "EPA (omega-3)",
@@ -1024,27 +1003,6 @@
     "unit": "mg"
   },
   {
-    "id": "field-horsetail-7-silica",
-    "name": {
-      "en": "Field horsetail , 7% silica"
-    },
-    "unit": "mg"
-  },
-  {
-    "id": "field-horsetail-aerial-part-extract-7-silica",
-    "name": {
-      "en": "Field horsetail aerial part extract, 7% silica"
-    },
-    "unit": "mg"
-  },
-  {
-    "id": "field-horsetail-extract-7-silica",
-    "name": {
-      "en": "Field horsetail extract, 7% silica"
-    },
-    "unit": "mg"
-  },
-  {
     "id": "fish-oil",
     "name": {
       "en": "Fish oil",
@@ -1078,13 +1036,6 @@
     "id": "fruit-blend-20-multianthocyanidins",
     "name": {
       "en": "Fruit blend, 20% multianthocyanidins *"
-    },
-    "unit": "mg"
-  },
-  {
-    "id": "fully-reacted-magnesium-orotate",
-    "name": {
-      "en": "Fully reacted magnesium orotate"
     },
     "unit": "mg"
   },
@@ -1169,13 +1120,6 @@
     "id": "glucosamine-hydrochloride",
     "name": {
       "en": "Glucosamine hydrochloride"
-    },
-    "unit": "mg"
-  },
-  {
-    "id": "glucosamine-sulfate-potassium-chloride-sodium-free",
-    "name": {
-      "en": "Glucosamine sulfate potassium chloride , sodium-free"
     },
     "unit": "mg"
   },
@@ -1880,13 +1824,6 @@
     "unit": "mg"
   },
   {
-    "id": "norwegian-kelp-0-1-iodine",
-    "name": {
-      "en": "Norwegian kelp , 0.1% iodine"
-    },
-    "unit": "mg"
-  },
-  {
     "id": "oat-10-1-extract",
     "name": {
       "en": "Oat 10:1 extract"
@@ -1955,13 +1892,6 @@
       "en": "of Haematococcus pluvialis"
     },
     "unit": "mcg"
-  },
-  {
-    "id": "of-silicon",
-    "name": {
-      "en": "of silicon"
-    },
-    "unit": "mg"
   },
   {
     "id": "oleic-acid",

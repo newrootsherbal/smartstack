@@ -176,3 +176,17 @@ describe('helpers', () => {
     expect(canonicalIngredientId('Curcumin')).toBe('curcumin')
   })
 })
+
+describe('canonical ids for minerals written the long way', () => {
+  it('maps elemental / salt / fully-reacted forms to the element', () => {
+    expect(canonicalIngredientId('Elemental magnesium from a magnesium bisglycinate blend')).toBe(
+      'magnesium',
+    )
+    expect(canonicalIngredientId('Fully reacted magnesium orotate')).toBe('magnesium')
+    expect(canonicalIngredientId('Elemental iron')).toBe('iron')
+    expect(canonicalIngredientId('Potassium iodide')).toBe('iodine')
+    expect(canonicalIngredientId('Calcium ascorbate')).toBe('vitamin-c')
+    expect(canonicalIngredientId('Calcium d-pantothenate')).toBe('vitamin-b5')
+    expect(canonicalIngredientId('Calcium citrate')).toBe('calcium')
+  })
+})

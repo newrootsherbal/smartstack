@@ -115,3 +115,29 @@ describe('label "with food" versus ingredient anchors', () => {
     expect(attrs).toContain('BEDTIME')
   })
 })
+
+describe('magnesium products', () => {
+  it('all magnesium products carry the bedtime rule and land at bedtime', () => {
+    const mags = catalogue.products.filter((p) => /magnes/i.test(p.name.en))
+    expect(mags.length).toBeGreaterThan(4)
+    for (const p of mags) {
+      expect(
+        p.ingredients.map((i) => i.ingredientId),
+        p.id,
+      ).toContain('magnesium')
+      const schedule = buildSchedule(
+        {
+          wake: '06:30',
+          coffee: null,
+          breakfast: '07:30',
+          lunch: '12:00',
+          dinner: '18:00',
+          exercise: null,
+          bedtime: '22:00',
+        },
+        [{ productId: p.id, dosesPerDay: 1 }],
+      )
+      expect(schedule.placements[0]?.anchor, p.id).toBe('bedtime')
+    }
+  })
+})

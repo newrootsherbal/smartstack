@@ -236,6 +236,7 @@ export function convertWebsiteProduct(w: WebsiteProduct, ctx: ImportContext): Co
     servingSize,
     dosesPerDayDefault: use.dosesPerDay,
     ...(use.unitsPerDose ? { unitsPerDose: use.unitsPerDose } : {}),
+    ...(use.unitLabel ? { unitLabel: use.unitLabel } : {}),
     // Suggested use and warnings go to product-text.json (see ConvertResult.text); the raw
     // supplement-facts text is not shipped at all, the parsed ingredient list stands in for it.
     status: 'draft',

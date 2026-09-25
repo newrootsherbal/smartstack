@@ -132,7 +132,7 @@ export function AddSupplement() {
                 {candidate.unitsPerDose && (
                   <span className="muted">
                     {' '}
-                    · {formatUnits(candidate.unitsPerDose, candidate.form)}
+                    · {formatUnits(candidate.unitsPerDose, candidate.form, candidate.unitLabel)}
                   </span>
                 )}
                 {doses === candidate.dosesPerDayDefault && (

@@ -5,7 +5,7 @@ Source: https://newrootsherbal.com/ai-catalog
 - Records: 392
 - Products imported: 317
 - Skipped: 75
-- Ingredients: 452
+- Ingredients: 442
 - Label-derived rules: 158 (curated: 10)
 - Parser warnings: 117
 

@@ -124,6 +124,8 @@ export const Product = z
     dosesPerDayDefault: z.number().int().min(1).max(MAX_DOSES_PER_DAY),
     /** Units per occasion suggested on the label, e.g. 2 (capsules). */
     unitsPerDose: z.number().positive().optional(),
+    /** The label's own unit word for one dose, singular, e.g. "drop", "teaspoon". */
+    unitLabel: z.string().min(1).optional(),
     /**
      * Label text. Inline for small catalogues (sample fixtures, CSV imports); the
      * website import keeps it in a separate, lazily loaded file to keep the bundle small.
