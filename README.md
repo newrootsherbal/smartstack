@@ -145,7 +145,9 @@ The importer (`packages/engine/scripts/import-website.ts`, parsers in
   use, warnings, every variant's SKU and UPC, canonical ingredient amounts, the label's default
   times per day and units per dose, `status: 'draft'` and `reviewStatus: 'unreviewed'`.
 - `data/ingredients.json`: canonical nutrient ids (`iron`, `vitamin-d`, `epa`, `probiotic`…)
-  with fixed units. Vitamin D given in IU is converted to mcg; probiotic strains are summed as CFU.
+  with fixed units and EN/FR names; other ingredients keep the label's own words, with the
+  French words when the French facts line up. Vitamin D given in IU is converted to mcg;
+  probiotic strains are summed as CFU.
 - `data/rules.generated.json`: product-level rules read from the label's suggested use ("with
   food", "at bedtime", "with water"…) and the refrigeration flag, each quoting the label sentence
   and linking the product page as its source.
@@ -317,9 +319,12 @@ employees install.
 - A Worker custom domain needs the zone's DNS on Cloudflare. `newrootsherbal.com` stays on
   the company VPS, so the app lives at `schedule.flourishbodyandmind.com`. Changing the origin
   later means every phone re-subscribes to push.
-- French covers the interface, label text, rule explanations and notifications. Ingredient
-  names outside the canonical nutrient list (`packages/engine/src/import/ingredients.ts`) fall
-  back to English until the importer aligns the French supplement facts.
+- French covers the interface, label text, rule explanations, notifications and most
+  ingredient names. Canonical nutrients have fixed French names
+  (`packages/engine/src/import/ingredients.ts`); the other ingredients take theirs from the
+  French supplement facts when those list the same amounts as the English ones
+  (`packages/engine/src/import/french-facts.ts`), and stay English otherwise. The import
+  report counts both.
 - The manifest screenshots are generated placeholders (`apps/web/scripts/screenshots.mjs`).
 
 ## Device checklist

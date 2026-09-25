@@ -168,9 +168,11 @@ async function main() {
   const text: Record<string, ProductText> = {}
   const skipped: string[] = []
   const warnings: string[] = []
+  const frenchFacts = { aligned: 0, mismatch: 0 }
   for (const record of records) {
     const result = convertWebsiteProduct(record, ctx)
     warnings.push(...result.warnings)
+    if (result.frenchFacts !== 'none') frenchFacts[result.frenchFacts]++
     if (!result.product) {
       skipped.push(`${record.languages.en.name}: ${result.skipped}`)
       continue
@@ -181,6 +183,7 @@ async function main() {
   }
 
   const ingredients = [...ctx.ingredients.values()].sort((a, b) => a.id.localeCompare(b.id))
+  const frenchNamed = ingredients.filter((i) => i.name.fr).length
 
   // A website hiccup or a changed JSON shape must not shrink the catalogue unnoticed.
   const previousFile = resolve(dataDir, 'products.json')
@@ -211,6 +214,9 @@ async function main() {
   console.log(`products: ${products.length} imported, ${skipped.length} skipped`)
   console.log(
     `ingredients: ${ingredients.length} · label rules: ${generatedRules.length} · curated rules: ${curatedRules.length}`,
+  )
+  console.log(
+    `French ingredient names: ${frenchNamed} of ${ingredients.length} (French facts lined up for ${frenchFacts.aligned} products, differed for ${frenchFacts.mismatch})`,
   )
   if (skipped.length) {
     console.log('skipped:')
@@ -246,6 +252,7 @@ async function main() {
     `- Skipped: ${skipped.length}`,
     `- Ingredients: ${ingredients.length}`,
     `- Label-derived rules: ${generatedRules.length} (curated: ${curatedRules.length})`,
+    `- Ingredients with a French name: ${frenchNamed} (French facts lined up for ${frenchFacts.aligned} products, differed for ${frenchFacts.mismatch})`,
     `- Parser warnings: ${warnings.length}`,
     '',
     '## Skipped',

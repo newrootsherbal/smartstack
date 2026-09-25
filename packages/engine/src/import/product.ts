@@ -4,6 +4,7 @@
  */
 import type { Ingredient, LocalizedText, Product, TimingRule, Unit } from '@smartstack/shared'
 import { isValidRetailBarcode } from '../barcode'
+import { alignFrenchNames } from './french-facts'
 import { CANONICAL, canonicalIngredientId, ingredientNames } from './ingredients'
 import { parseRecipe, type RawUnit } from './recipe'
 import { frenchSentenceFor, parseSuggestedUse, type TimingAttribute } from './suggested-use'
@@ -60,6 +61,11 @@ export interface ConvertResult {
   text: ProductText
   skipped: string | null
   warnings: string[]
+  /**
+   * Whether the French facts lined up with the English items (so French ingredient
+   * names could be read), did not, or were not published.
+   */
+  frenchFacts: 'aligned' | 'mismatch' | 'none'
 }
 
 export const BRAND = 'New Roots Herbal'
@@ -140,17 +146,34 @@ export function convertWebsiteProduct(w: WebsiteProduct, ctx: ImportContext): Co
     )
     return false
   })
-  if (variants.length === 0)
-    return { product: null, rules: [], text: {}, skipped: 'no variant with a UPC', warnings }
+  if (variants.length === 0) {
+    return {
+      product: null,
+      rules: [],
+      text: {},
+      skipped: 'no variant with a UPC',
+      warnings,
+      frenchFacts: 'none',
+    }
+  }
 
   const id = en.slug
   const recipe = parseRecipe(en.recipe ?? '')
   if (!en.recipe) warnings.push(`${id}: no supplement facts on the product page`)
   for (const u of recipe.unparsed) warnings.push(`${id}: unparsed "${u.slice(0, 60)}"`)
+  // French label names, one per English item, only when the two texts line up.
+  const frNames = alignFrenchNames(recipe.items, fr?.recipe)
+  const frenchFacts: ConvertResult['frenchFacts'] =
+    !fr?.recipe || recipe.items.length === 0
+      ? 'none'
+      : frNames.some(Boolean)
+        ? 'aligned'
+        : 'mismatch'
 
   // Ingredients: canonical ids, unit reconciliation, per-product sums.
   const amounts = new Map<string, number>()
-  for (const item of recipe.items) {
+  for (const [index, item] of recipe.items.entries()) {
+    const frName = frNames[index]
     let ingId = canonicalIngredientId(item.name)
     const rawUnit: RawUnit = item.unit
     let unit: Unit =
@@ -164,9 +187,13 @@ export function convertWebsiteProduct(w: WebsiteProduct, ctx: ImportContext): Co
       warnings.push(`${id}: ${item.name} given in ${rawUnit}; stored as ${ingId}`)
     }
     if (!ctx.units.has(ingId)) ctx.units.set(ingId, unit)
-    if (!ctx.ingredients.has(ingId)) {
-      const names = ingredientNames(ingId.replace(/-(mg|mcg|iu|cfu)$/, ''), item.name)
+    const registered = ctx.ingredients.get(ingId)
+    if (!registered) {
+      const names = ingredientNames(ingId.replace(/-(mg|mcg|iu|cfu)$/, ''), item.name, frName)
       ctx.ingredients.set(ingId, { id: ingId, name: names, unit })
+    } else if (frName && !registered.name.fr) {
+      // First product whose French facts lined up names it (products are converted in a fixed order).
+      registered.name = { ...registered.name, fr: frName }
     }
     amounts.set(ingId, (amounts.get(ingId) ?? 0) + amount)
   }
@@ -289,7 +316,7 @@ export function convertWebsiteProduct(w: WebsiteProduct, ctx: ImportContext): Co
       ? { facts: { en: en.recipe.trim(), ...(fr?.recipe ? { fr: fr.recipe.trim() } : {}) } }
       : {}),
   }
-  return { product, rules, text, skipped: null, warnings }
+  return { product, rules, text, skipped: null, warnings, frenchFacts }
 }
 
 function round(n: number): number {

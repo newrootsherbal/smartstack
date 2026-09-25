@@ -9,14 +9,16 @@
   {
     "id": "acetyl-carnitine-hydrochloride",
     "name": {
-      "en": "Acetyl‒ʟ‒carnitine hydrochloride"
+      "en": "Acetyl‒ʟ‒carnitine hydrochloride",
+      "fr": "Chlorhydrate d’acétyl‒ʟ‒carnitine"
     },
     "unit": "mg"
   },
   {
     "id": "adrenal-gland-3-1-concentrate",
     "name": {
-      "en": "Adrenal gland 3:1 concentrate"
+      "en": "Adrenal gland 3:1 concentrate",
+      "fr": "Concentré 3:1 de surrénale"
     },
     "unit": "mg"
   },
@@ -30,7 +32,8 @@
   {
     "id": "allicin-potential-per-capsule",
     "name": {
-      "en": "allicin potential per capsule"
+      "en": "allicin potential per capsule",
+      "fr": "Par capsule"
     },
     "unit": "mg"
   },
@@ -44,7 +47,8 @@
   {
     "id": "alpha-linolenic-acid",
     "name": {
-      "en": "alpha-Linolenic acid"
+      "en": "alpha-Linolenic acid",
+      "fr": "Acide alpha-linolénique"
     },
     "unit": "mg"
   },
@@ -58,14 +62,16 @@
   {
     "id": "alpha-lipoic-acid",
     "name": {
-      "en": "ᴅʟ‑alpha‑Lipoic acid"
+      "en": "ᴅʟ‑alpha‑Lipoic acid",
+      "fr": "Acide ᴅʟ‑alpha‑lipoïque"
     },
     "unit": "mg"
   },
   {
     "id": "andrographis-aerial-part-extract-30-andrographolides-iii-and-iv",
     "name": {
-      "en": "Andrographis aerial part extract, 30% andrographolides III and IV"
+      "en": "Andrographis aerial part extract, 30% andrographolides III and IV",
+      "fr": "Extrait de partie aérienne d’andrographie, 30 % d’andrographolides III et IV"
     },
     "unit": "mg"
   },
@@ -86,42 +92,48 @@
   {
     "id": "arabinogalactan",
     "name": {
-      "en": "Arabinogalactan"
+      "en": "Arabinogalactan",
+      "fr": "Arabinogalactane"
     },
     "unit": "mg"
   },
   {
     "id": "arginine",
     "name": {
-      "en": "ʟ‑Arginine"
+      "en": "ʟ‑Arginine",
+      "fr": "ʟ‑Arginine"
     },
     "unit": "mg"
   },
   {
     "id": "artichoke-leaf-extract-5-cynarin",
     "name": {
-      "en": "Artichoke leaf extract, 5% cynarin"
+      "en": "Artichoke leaf extract, 5% cynarin",
+      "fr": "Extrait de feuille d’artichaut, 5 % de cynarine"
     },
     "unit": "mg"
   },
   {
     "id": "ashwagandha-root-extract-2-5-withanolides",
     "name": {
-      "en": "Ashwagandha root extract, 2.5% withanolides"
+      "en": "Ashwagandha root extract, 2.5% withanolides",
+      "fr": "Extrait de racine d’ashwagandha, 2,5 % de withanolides"
     },
     "unit": "mg"
   },
   {
     "id": "ashwagandha-root-extract-5-withanolides",
     "name": {
-      "en": "Ashwagandha root extract, 5% withanolides"
+      "en": "Ashwagandha root extract, 5% withanolides",
+      "fr": "Extrait de racine d’ashwagandha, 5% de withanolides"
     },
     "unit": "mg"
   },
   {
     "id": "asparagus-shoot",
     "name": {
-      "en": "Asparagus shoot"
+      "en": "Asparagus shoot",
+      "fr": "Pousse d’asperge"
     },
     "unit": "mg"
   },
@@ -135,7 +147,8 @@
   {
     "id": "astaxanthin",
     "name": {
-      "en": "Astaxanthin"
+      "en": "Astaxanthin",
+      "fr": "Astaxanthine"
     },
     "unit": "mg"
   },
@@ -149,84 +162,96 @@
   {
     "id": "astaxanthin-from-haematococcus-pluvialis-extract",
     "name": {
-      "en": "Astaxanthin, from Haematococcus pluvialis extract"
+      "en": "Astaxanthin, from Haematococcus pluvialis extract",
+      "fr": "Astaxanthine, d’extrait d’Haematococcus pluvialis"
     },
     "unit": "mg"
   },
   {
     "id": "astragalus-root-extract-16-polysaccharides",
     "name": {
-      "en": "Astragalus root extract, 16% polysaccharides"
+      "en": "Astragalus root extract, 16% polysaccharides",
+      "fr": "Extrait de racine d’astragale, 16 % de polysaccharides"
     },
     "unit": "mg"
   },
   {
     "id": "astragalus-root-extract-3-astragalosides",
     "name": {
-      "en": "Astragalus root extract, 3% astragalosides"
+      "en": "Astragalus root extract, 3% astragalosides",
+      "fr": "Extrait de racine d’astragale, 3 % d’astragalosides"
     },
     "unit": "mg"
   },
   {
     "id": "bacopa-25-1-extract-45-bacosides",
     "name": {
-      "en": "Bacopa 25:1 extract, 45% bacosides"
+      "en": "Bacopa 25:1 extract, 45% bacosides",
+      "fr": "Extrait 25:1 de bacopa, 45 % de bacosides"
     },
     "unit": "mg"
   },
   {
     "id": "banaba-leaf-extract-1-corosolic-acid",
     "name": {
-      "en": "Banaba leaf extract, 1% corosolic acid"
+      "en": "Banaba leaf extract, 1% corosolic acid",
+      "fr": "Extrait de feuille de lilas des Indes, 1 % d’acide corosolique"
     },
     "unit": "mg"
   },
   {
     "id": "bee-pollen",
     "name": {
-      "en": "Bee pollen"
+      "en": "Bee pollen",
+      "fr": "Pollen d’abeille"
     },
     "unit": "mg"
   },
   {
     "id": "benfotiamine",
     "name": {
-      "en": "Benfotiamine"
+      "en": "Benfotiamine",
+      "fr": "Benfotiamine"
     },
     "unit": "mg"
   },
   {
     "id": "berberine",
     "name": {
-      "en": "Berberine"
+      "en": "Berberine",
+      "fr": "Berbérine"
     },
     "unit": "mg"
   },
   {
     "id": "berberine-hydrochloride",
     "name": {
-      "en": "Berberine hydrochloride"
+      "en": "Berberine hydrochloride",
+      "fr": "Chlorhydrate de berbérine"
     },
     "unit": "mg"
   },
   {
     "id": "beta-sitosterol",
     "name": {
-      "en": "beta-Sitosterol"
+      "en": "beta-Sitosterol",
+      "fr": "Bêta-Sitostérol"
     },
     "unit": "mg"
   },
   {
     "id": "beta-sitosterols",
     "name": {
-      "en": "beta-Sitosterols"
+      "en": "beta-Sitosterols",
+      "fr": "Bêta-Sitostérol"
     },
     "unit": "mg"
   },
   {
     "id": "betaine",
     "name": {
-      "en": "Betaine"
+      "en": "Betaine",
+      "fr": "Bétaine"
     },
     "unit": "mg"
   },
@@ -240,21 +265,24 @@
   {
     "id": "bilberry-european-fruit-extract-25-anthocyanosides",
     "name": {
-      "en": "Bilberry European fruit extract, 25% anthocyanosides"
+      "en": "Bilberry European fruit extract, 25% anthocyanosides",
+      "fr": "Extrait européen de fruit de myrtillier, 25 % d’anthocyanosides"
     },
     "unit": "mg"
   },
   {
     "id": "bilberry-fruit",
     "name": {
-      "en": "Bilberry fruit"
+      "en": "Bilberry fruit",
+      "fr": "Fruit de myrtillier"
     },
     "unit": "mg"
   },
   {
     "id": "bilberry-fruit-extract",
     "name": {
-      "en": "Bilberry fruit extract"
+      "en": "Bilberry fruit extract",
+      "fr": "Extrait de fruit de myrtillier"
     },
     "unit": "mg"
   },
@@ -283,21 +311,24 @@
   {
     "id": "black-cohosh-root",
     "name": {
-      "en": "Black cohosh root"
+      "en": "Black cohosh root",
+      "fr": "Racine d’actée à grappes noires"
     },
     "unit": "mg"
   },
   {
     "id": "black-cohosh-root-extract-2-5-triterpene-glycosides",
     "name": {
-      "en": "Black cohosh root extract, 2.5% triterpene glycosides"
+      "en": "Black cohosh root extract, 2.5% triterpene glycosides",
+      "fr": "Extrait de racine d’actée à grappes noires, 2,5 % de glycosides triterpéniques"
     },
     "unit": "mg"
   },
   {
     "id": "black-cohosh-root-extract-2-5-triterpenes",
     "name": {
-      "en": "Black cohosh root extract, 2.5% triterpenes"
+      "en": "Black cohosh root extract, 2.5% triterpenes",
+      "fr": "Racine d’actée à grappes noires, 2,5 % de triterpènes"
     },
     "unit": "mg"
   },
@@ -311,7 +342,8 @@
   {
     "id": "black-pepper-fruit-extract-95-piperine",
     "name": {
-      "en": "Black pepper fruit extract, 95% piperine"
+      "en": "Black pepper fruit extract, 95% piperine",
+      "fr": "Extrait de fruit de poivre noir, 95 % de pipérine"
     },
     "unit": "mg"
   },
@@ -325,49 +357,56 @@
   {
     "id": "black-walnut-green-hull",
     "name": {
-      "en": "Black walnut green hull"
+      "en": "Black walnut green hull",
+      "fr": "Écale verte de noyer noir"
     },
     "unit": "mg"
   },
   {
     "id": "black-walnut-hull-4-1-extract",
     "name": {
-      "en": "Black walnut hull 4:1 extract"
+      "en": "Black walnut hull 4:1 extract",
+      "fr": "Extrait 4:1 d’écale de noyer noir"
     },
     "unit": "mg"
   },
   {
     "id": "black-walnut-hull-and-leaf",
     "name": {
-      "en": "Black walnut hull and leaf"
+      "en": "Black walnut hull and leaf",
+      "fr": "Écale et feuille de noyer noir"
     },
     "unit": "mg"
   },
   {
     "id": "black-walnut-hulls",
     "name": {
-      "en": "Black walnut hulls"
+      "en": "Black walnut hulls",
+      "fr": "Écales de noyer noir"
     },
     "unit": "mg"
   },
   {
     "id": "black-walnut-leaf",
     "name": {
-      "en": "Black walnut leaf"
+      "en": "Black walnut leaf",
+      "fr": "Feuille de noyer noir"
     },
     "unit": "mg"
   },
   {
     "id": "blend-of-berry-and-fruit-extracts-20-anthocyanidins",
     "name": {
-      "en": "Blend of berry and fruit extracts, 20% anthocyanidins"
+      "en": "Blend of berry and fruit extracts, 20% anthocyanidins",
+      "fr": "Mélange d’extraits de baies et de fruits, 20 % d’anthocyanidines"
     },
     "unit": "mg"
   },
   {
     "id": "blend-of-berry-extracts-20-multianthocyanidins",
     "name": {
-      "en": "Blend of berry extracts, 20% multianthocyanidins"
+      "en": "Blend of berry extracts, 20% multianthocyanidins",
+      "fr": "Mélange d’extraits de baies, 20 % de multianthocyanidines"
     },
     "unit": "mg"
   },
@@ -396,14 +435,16 @@
   {
     "id": "boswellia-oleogum-resin-70-organic-acid",
     "name": {
-      "en": "Boswellia oleogum resin, 70% organic acid"
+      "en": "Boswellia oleogum resin, 70% organic acid",
+      "fr": "Gommo-oléorésine de boswellia, 70 % d’acide organique"
     },
     "unit": "mg"
   },
   {
     "id": "bovine-colostrum",
     "name": {
-      "en": "Bovine colostrum"
+      "en": "Bovine colostrum",
+      "fr": "Colostrum bovin"
     },
     "unit": "mg"
   },
@@ -417,28 +458,32 @@
   {
     "id": "broken-cell-organic-deep-green-chlorella",
     "name": {
-      "en": "Broken-cell, organic, deep-green chlorella"
+      "en": "Broken-cell, organic, deep-green chlorella",
+      "fr": "Chlorelle biologique vert foncé à cellules brisées"
     },
     "unit": "mg"
   },
   {
     "id": "broken-cell-organic-deep-green-nonirradiated-chlorella",
     "name": {
-      "en": "Broken-cell, organic, deep-green, nonirradiated chlorella"
+      "en": "Broken-cell, organic, deep-green, nonirradiated chlorella",
+      "fr": "Chlorelle biologique vert foncé à cellules brisées, non irradiée"
     },
     "unit": "mg"
   },
   {
     "id": "bromelain",
     "name": {
-      "en": "Bromelain"
+      "en": "Bromelain",
+      "fr": "Broméline"
     },
     "unit": "mg"
   },
   {
     "id": "bromelain-2400-gdu-g",
     "name": {
-      "en": "Bromelain, 2400 GDU/g"
+      "en": "Bromelain, 2400 GDU/g",
+      "fr": "Broméline, 2400 UDG/g"
     },
     "unit": "mg"
   },
@@ -459,14 +504,16 @@
   {
     "id": "butternut-bark",
     "name": {
-      "en": "Butternut bark"
+      "en": "Butternut bark",
+      "fr": "Écorce de noyer cendré"
     },
     "unit": "mg"
   },
   {
     "id": "butternut-squash-seed-4-1-extract",
     "name": {
-      "en": "Butternut squash seed 4:1 extract"
+      "en": "Butternut squash seed 4:1 extract",
+      "fr": "Extrait 4:1 de pépin de courge musquée"
     },
     "unit": "mg"
   },
@@ -488,56 +535,64 @@
   {
     "id": "campesterols",
     "name": {
-      "en": "Campesterols"
+      "en": "Campesterols",
+      "fr": "Campestérols"
     },
     "unit": "mg"
   },
   {
     "id": "caprylic-acid",
     "name": {
-      "en": "Caprylic acid"
+      "en": "Caprylic acid",
+      "fr": "Acide caprylique"
     },
     "unit": "mg"
   },
   {
     "id": "carnitine",
     "name": {
-      "en": "ʟ‑Carnitine"
+      "en": "ʟ‑Carnitine",
+      "fr": "ʟ‑Carnitine"
     },
     "unit": "mg"
   },
   {
     "id": "carnitine-tartrate",
     "name": {
-      "en": "ʟ‑Carnitine tartrate"
+      "en": "ʟ‑Carnitine tartrate",
+      "fr": "Tartrate de ʟ‑carnitine"
     },
     "unit": "mg"
   },
   {
     "id": "carnosine",
     "name": {
-      "en": "ʟ‑Carnosine"
+      "en": "ʟ‑Carnosine",
+      "fr": "ʟ‑Carnosine"
     },
     "unit": "mg"
   },
   {
     "id": "cascara-sagrada-aged-bark",
     "name": {
-      "en": "Cascara sagrada aged bark"
+      "en": "Cascara sagrada aged bark",
+      "fr": "Écorce vieillie de cascara sagrada"
     },
     "unit": "mg"
   },
   {
     "id": "cascara-sagrada-aged-bark-4-1-extract",
     "name": {
-      "en": "Cascara sagrada aged bark 4:1 extract"
+      "en": "Cascara sagrada aged bark 4:1 extract",
+      "fr": "Extrait 4:1 d’écorce vieillie de cascara sagrada"
     },
     "unit": "mg"
   },
   {
     "id": "cassia-cinnamon-bark-extract",
     "name": {
-      "en": "Cassia cinnamon bark extract"
+      "en": "Cassia cinnamon bark extract",
+      "fr": "Extrait de cannelle casse"
     },
     "unit": "mg"
   },
@@ -551,35 +606,40 @@
   {
     "id": "cat-s-whiskers-herb-4-1-extract",
     "name": {
-      "en": "Cat’s whiskers herb 4:1 extract"
+      "en": "Cat’s whiskers herb 4:1 extract",
+      "fr": "Extrait 4:1 d’herbe de moustache de chat"
     },
     "unit": "mg"
   },
   {
     "id": "catalase",
     "name": {
-      "en": "Catalase"
+      "en": "Catalase",
+      "fr": "Catalase"
     },
     "unit": "mg"
   },
   {
     "id": "catnip-herb-top",
     "name": {
-      "en": "Catnip herb top"
+      "en": "Catnip herb top",
+      "fr": "Haut de pousse de cataire"
     },
     "unit": "mg"
   },
   {
     "id": "cayenne-fruit",
     "name": {
-      "en": "Cayenne fruit"
+      "en": "Cayenne fruit",
+      "fr": "Fruit de piment de Cayenne"
     },
     "unit": "mg"
   },
   {
     "id": "celery-seed",
     "name": {
-      "en": "Celery seed"
+      "en": "Celery seed",
+      "fr": "Graines de céleri"
     },
     "unit": "mg"
   },
@@ -600,7 +660,8 @@
   {
     "id": "certified-organic-passion-flower-herb-top",
     "name": {
-      "en": "Certified organic passion flower herb top"
+      "en": "Certified organic passion flower herb top",
+      "fr": "Sommité de passiflore certifiée biologique"
     },
     "unit": "mg"
   },
@@ -614,7 +675,8 @@
   {
     "id": "chaga-mushroom-extract",
     "name": {
-      "en": "Chaga mushroom extract"
+      "en": "Chaga mushroom extract",
+      "fr": "Extrait de champignon chaga"
     },
     "unit": "mg"
   },
@@ -628,7 +690,8 @@
   {
     "id": "chanca-piedra-10-1-extractequivalent-to",
     "name": {
-      "en": "Chanca piedra 10:1 extractEquivalent to"
+      "en": "Chanca piedra 10:1 extractEquivalent to",
+      "fr": "Extrait 10:1 de chanca piedra"
     },
     "unit": "mg"
   },
@@ -656,14 +719,16 @@
   {
     "id": "chinese-jujube-fruit",
     "name": {
-      "en": "Chinese jujube fruit"
+      "en": "Chinese jujube fruit",
+      "fr": "Fruit de jujubier commun"
     },
     "unit": "mg"
   },
   {
     "id": "chinese-rhubarb-root",
     "name": {
-      "en": "Chinese rhubarb root"
+      "en": "Chinese rhubarb root",
+      "fr": "Racine de rhubarbe chinoise"
     },
     "unit": "mg"
   },
@@ -678,7 +743,8 @@
   {
     "id": "chondroitin-sulfate-from-bovine-cartilage",
     "name": {
-      "en": "Chondroitin sulfate from bovine cartilage"
+      "en": "Chondroitin sulfate from bovine cartilage",
+      "fr": "Sulfate de chondroïtine, de cartilage bovin"
     },
     "unit": "mg"
   },
@@ -693,7 +759,8 @@
   {
     "id": "ci-li-fruit-extract",
     "name": {
-      "en": "Ci li fruit extract"
+      "en": "Ci li fruit extract",
+      "fr": "Extrait de fruit de ci li"
     },
     "unit": "mg"
   },
@@ -707,21 +774,24 @@
   {
     "id": "citicoline",
     "name": {
-      "en": "Citicoline"
+      "en": "Citicoline",
+      "fr": "Citicoline"
     },
     "unit": "mg"
   },
   {
     "id": "citrus-bioflavonoids-50-hesperidin",
     "name": {
-      "en": "Citrus bioflavonoids, 50% hesperidin"
+      "en": "Citrus bioflavonoids, 50% hesperidin",
+      "fr": "Bioflavonoïdes d’agrumes, 50 % d’hespéridine"
     },
     "unit": "mg"
   },
   {
     "id": "clove-flower-bud",
     "name": {
-      "en": "Clove flower bud"
+      "en": "Clove flower bud",
+      "fr": "Clou de girofle"
     },
     "unit": "mg"
   },
@@ -751,28 +821,32 @@
   {
     "id": "cordyceps-mushroom-extract",
     "name": {
-      "en": "Cordyceps mushroom extract"
+      "en": "Cordyceps mushroom extract",
+      "fr": "Extrait de champignon cordyceps"
     },
     "unit": "mg"
   },
   {
     "id": "cordyceps-mushroom-fruiting-body-extract",
     "name": {
-      "en": "Cordyceps mushroom fruiting body extract"
+      "en": "Cordyceps mushroom fruiting body extract",
+      "fr": "Extrait de corps fructifiant de champignon cordyceps"
     },
     "unit": "mg"
   },
   {
     "id": "coriolus-mushroom-extract",
     "name": {
-      "en": "Coriolus mushroom extract"
+      "en": "Coriolus mushroom extract",
+      "fr": "Extrait de champignon Coriolus versicolor"
     },
     "unit": "mg"
   },
   {
     "id": "corn-silk-4-1-extract",
     "name": {
-      "en": "Corn silk 4:1 extract"
+      "en": "Corn silk 4:1 extract",
+      "fr": "Extrait 4:1 de soie de maïs"
     },
     "unit": "mg"
   },
@@ -786,14 +860,16 @@
   {
     "id": "cranberry-fruit-concentrate",
     "name": {
-      "en": "Cranberry fruit concentrate"
+      "en": "Cranberry fruit concentrate",
+      "fr": "Concentré de fruit de canneberge"
     },
     "unit": "mg"
   },
   {
     "id": "creatine-monohydrate",
     "name": {
-      "en": "Creatine monohydrate"
+      "en": "Creatine monohydrate",
+      "fr": "Monohydrate de créatine"
     },
     "unit": "mg"
   },
@@ -807,7 +883,8 @@
   {
     "id": "curcurouge",
     "name": {
-      "en": "curcuRouge"
+      "en": "curcuRouge",
+      "fr": "CurcuRouge"
     },
     "unit": "mg"
   },
@@ -835,28 +912,32 @@
   {
     "id": "d-mannose",
     "name": {
-      "en": "D-Mannose"
+      "en": "D-Mannose",
+      "fr": "D-Mannose"
     },
     "unit": "mg"
   },
   {
     "id": "dandelion-root",
     "name": {
-      "en": "Dandelion root"
+      "en": "Dandelion root",
+      "fr": "Racine de pissenlit"
     },
     "unit": "mg"
   },
   {
     "id": "dandelion-root-extract-3-flavonoids",
     "name": {
-      "en": "Dandelion root extract, 3% flavonoids"
+      "en": "Dandelion root extract, 3% flavonoids",
+      "fr": "Extrait de racine de pissenlit, 3 % de flavonoïdes"
     },
     "unit": "mg"
   },
   {
     "id": "devil-s-claw-secondary-tuber",
     "name": {
-      "en": "Devil’s claw secondary tuber"
+      "en": "Devil’s claw secondary tuber",
+      "fr": "Tubercule secondaire de griffe du diable"
     },
     "unit": "mg"
   },
@@ -870,7 +951,8 @@
   {
     "id": "devil-s-claw-secondary-tuber-extract-5-harpagosides",
     "name": {
-      "en": "Devil’s claw secondary tuber extract, 5% harpagosides"
+      "en": "Devil’s claw secondary tuber extract, 5% harpagosides",
+      "fr": "Extrait de tubercule secondaire de griffe du diable, 5 % d’harpagosides"
     },
     "unit": "mg"
   },
@@ -885,21 +967,24 @@
   {
     "id": "dl-alpha-lipoic-acid",
     "name": {
-      "en": "dl‑alpha‑Lipoic acid"
+      "en": "dl‑alpha‑Lipoic acid",
+      "fr": "Acide dl‑alpha‑lipoïque"
     },
     "unit": "mg"
   },
   {
     "id": "docosahexaoenoic-acid",
     "name": {
-      "en": "Docosahexaoenoic acid"
+      "en": "Docosahexaoenoic acid",
+      "fr": "Acide docosahexaoénoïque"
     },
     "unit": "mg"
   },
   {
     "id": "dong-quai-root",
     "name": {
-      "en": "Dong quai root"
+      "en": "Dong quai root",
+      "fr": "Racine d’angélique"
     },
     "unit": "mg"
   },
@@ -913,7 +998,8 @@
   {
     "id": "e-from-sunflower",
     "name": {
-      "en": "E from sunflower"
+      "en": "E from sunflower",
+      "fr": "E de tournesol"
     },
     "unit": "mg"
   },
@@ -941,7 +1027,8 @@
   {
     "id": "elderberry-fruit",
     "name": {
-      "en": "Elderberry fruit"
+      "en": "Elderberry fruit",
+      "fr": "Fruit de sureau"
     },
     "unit": "mg"
   },
@@ -963,21 +1050,24 @@
   {
     "id": "european-elderberry-fruit-extract-6-anthocyanosides",
     "name": {
-      "en": "European elderberry fruit extract, 6% anthocyanosides"
+      "en": "European elderberry fruit extract, 6% anthocyanosides",
+      "fr": "Extrait de fruit de sureau noir, 6 % d’anthocyanosides"
     },
     "unit": "mg"
   },
   {
     "id": "fennel-seed",
     "name": {
-      "en": "Fennel seed"
+      "en": "Fennel seed",
+      "fr": "Graine de fenouil"
     },
     "unit": "mg"
   },
   {
     "id": "fenugreek-seed-5-1-extract",
     "name": {
-      "en": "Fenugreek seed 5:1 extract"
+      "en": "Fenugreek seed 5:1 extract",
+      "fr": "Extrait 5:1 de graine de fenugrec"
     },
     "unit": "mg"
   },
@@ -1021,7 +1111,8 @@
   {
     "id": "free-plant-sterols",
     "name": {
-      "en": "Free plant sterols"
+      "en": "Free plant sterols",
+      "fr": "Phytostérols libres"
     },
     "unit": "mg"
   },
@@ -1035,35 +1126,40 @@
   {
     "id": "galacto-arabinan",
     "name": {
-      "en": "ᴅ‑Galacto-ʟ‑arabinan"
+      "en": "ᴅ‑Galacto-ʟ‑arabinan",
+      "fr": "ᴅ‑Galacto-ʟ‑arabinane"
     },
     "unit": "mg"
   },
   {
     "id": "gamma-aminobutyric-acid",
     "name": {
-      "en": "gamma-Aminobutyric acid"
+      "en": "gamma-Aminobutyric acid",
+      "fr": "Acide gamma-aminobutyrique"
     },
     "unit": "mg"
   },
   {
     "id": "gamma-linolenic-acid",
     "name": {
-      "en": "gamma‑Linolenic acid"
+      "en": "gamma‑Linolenic acid",
+      "fr": "Acide gamma‑linolénique"
     },
     "unit": "mg"
   },
   {
     "id": "garlic-distilled-oil",
     "name": {
-      "en": "Garlic distilled oil"
+      "en": "Garlic distilled oil",
+      "fr": "Huile distillée d’ail"
     },
     "unit": "mcg"
   },
   {
     "id": "ginger-rhizome",
     "name": {
-      "en": "Ginger rhizome"
+      "en": "Ginger rhizome",
+      "fr": "Rhizome de gingembre"
     },
     "unit": "mg"
   },
@@ -1077,49 +1173,56 @@
   {
     "id": "ginger-rhizome-20-1-extract-10-gingerols",
     "name": {
-      "en": "Ginger rhizome 20:1 extract, 10% gingerols"
+      "en": "Ginger rhizome 20:1 extract, 10% gingerols",
+      "fr": "Extrait 20:1 de rhizome de gingembre, 10 % de gingérols"
     },
     "unit": "mg"
   },
   {
     "id": "ginger-rhizome-extract",
     "name": {
-      "en": "Ginger rhizome extract"
+      "en": "Ginger rhizome extract",
+      "fr": "Extrait de rhizome de gingembre"
     },
     "unit": "mg"
   },
   {
     "id": "ginkgo-leaf",
     "name": {
-      "en": "Ginkgo leaf"
+      "en": "Ginkgo leaf",
+      "fr": "Feuille de ginkgo"
     },
     "unit": "mg"
   },
   {
     "id": "ginkgo-leaf-extract-24-flavonoid-glycosides-and-6-terpene-lactones",
     "name": {
-      "en": "Ginkgo leaf extract, 24% flavonoid glycosides and 6% terpene lactones"
+      "en": "Ginkgo leaf extract, 24% flavonoid glycosides and 6% terpene lactones",
+      "fr": "Extrait de feuille de ginkgo, 24 % de flavoglycosides et 6 % de terpéno-lactones"
     },
     "unit": "mg"
   },
   {
     "id": "glandular-thymus",
     "name": {
-      "en": "Glandular thymus"
+      "en": "Glandular thymus",
+      "fr": "Thymus glandulaire"
     },
     "unit": "mg"
   },
   {
     "id": "glucosamine-hydrochloride",
     "name": {
-      "en": "Glucosamine hydrochloride"
+      "en": "Glucosamine hydrochloride",
+      "fr": "Chlorhydrate de glucosamine"
     },
     "unit": "mg"
   },
   {
     "id": "glucosamine-sulfate-sodium-free",
     "name": {
-      "en": "Glucosamine sulfate, sodium-free"
+      "en": "Glucosamine sulfate, sodium-free",
+      "fr": "Sulfate de glucosamine, sans sodium"
     },
     "unit": "mg"
   },
@@ -1140,14 +1243,16 @@
   {
     "id": "glutamine",
     "name": {
-      "en": "ʟ‑Glutamine"
+      "en": "ʟ‑Glutamine",
+      "fr": "ʟ‑Glutamine"
     },
     "unit": "mg"
   },
   {
     "id": "glutathione",
     "name": {
-      "en": "ʟ‑Glutathione"
+      "en": "ʟ‑Glutathione",
+      "fr": "ʟ‑Glutathion"
     },
     "unit": "mg"
   },
@@ -1161,42 +1266,48 @@
   {
     "id": "goji-fruit-extract-30-polysaccharides",
     "name": {
-      "en": "Goji fruit extract, 30% polysaccharides"
+      "en": "Goji fruit extract, 30% polysaccharides",
+      "fr": "Extrait de fruit de goji, 30 % de polysaccharides"
     },
     "unit": "mg"
   },
   {
     "id": "golden-rod-leaf",
     "name": {
-      "en": "Golden rod leaf"
+      "en": "Golden rod leaf",
+      "fr": "Feuille de solidage verge d’or"
     },
     "unit": "mg"
   },
   {
     "id": "grape-seed-extract-80-oligomeric-proanthocyanidins",
     "name": {
-      "en": "Grape seed extract, 80% oligomeric proanthocyanidins"
+      "en": "Grape seed extract, 80% oligomeric proanthocyanidins",
+      "fr": "Extrait de pépin de raisin, 80 % de proanthocyanidines oligomériques"
     },
     "unit": "mg"
   },
   {
     "id": "grape-seed-extract-95-proanthocyanidins",
     "name": {
-      "en": "Grape seed extract, 95% proanthocyanidins"
+      "en": "Grape seed extract, 95% proanthocyanidins",
+      "fr": "Extrait de pépin de raisin, 95 % de proanthocyanidines"
     },
     "unit": "mg"
   },
   {
     "id": "grape-skin-extract-25-polyphenols",
     "name": {
-      "en": "Grape skin extract, 25% polyphenols"
+      "en": "Grape skin extract, 25% polyphenols",
+      "fr": "Extrait de peau de raisin, 25 % de polyphénols"
     },
     "unit": "mg"
   },
   {
     "id": "grapefruit-seed-extract",
     "name": {
-      "en": "Grapefruit seed extract"
+      "en": "Grapefruit seed extract",
+      "fr": "Extrait de pépin de pamplemousse"
     },
     "unit": "mg"
   },
@@ -1210,28 +1321,32 @@
   {
     "id": "green-tea-leaf-extract",
     "name": {
-      "en": "Green tea leaf extract"
+      "en": "Green tea leaf extract",
+      "fr": "Extrait de feuille de thé vert"
     },
     "unit": "mg"
   },
   {
     "id": "green-tea-leaf-extract-50-polyphenols",
     "name": {
-      "en": "Green tea leaf extract, 50% polyphenols"
+      "en": "Green tea leaf extract, 50% polyphenols",
+      "fr": "Extrait de feuille de thé vert, 50 % de polyphénols"
     },
     "unit": "mg"
   },
   {
     "id": "green-tea-leaf-extract-6-caffeine",
     "name": {
-      "en": "Green tea leaf extract, 6% caffeine"
+      "en": "Green tea leaf extract, 6% caffeine",
+      "fr": "Extrait de feuille de thé vert, 6 % de caféine"
     },
     "unit": "mg"
   },
   {
     "id": "green-tea-leaf-extract-75-epigallocatechin-3-gallate",
     "name": {
-      "en": "Green tea leaf extract, 75% epigallocatechin-3-gallate"
+      "en": "Green tea leaf extract, 75% epigallocatechin-3-gallate",
+      "fr": "Extrait de feuille de thé vert, 75 % d’épigallocatéchine-3-gallate"
     },
     "unit": "mg"
   },
@@ -1245,28 +1360,32 @@
   {
     "id": "guggul-gum-resin-extract-3-5-guggulsterone",
     "name": {
-      "en": "Guggul gum-resin extract, 3.5% guggulsterone"
+      "en": "Guggul gum-resin extract, 3.5% guggulsterone",
+      "fr": "Extrait de gomme-résine de guggul, 3,5 % de guggulstérone"
     },
     "unit": "mg"
   },
   {
     "id": "gymnema-sylvestre-leaf-extract-25-gymnemic-acid",
     "name": {
-      "en": "Gymnema sylvestre leaf extract, 25% gymnemic acid"
+      "en": "Gymnema sylvestre leaf extract, 25% gymnemic acid",
+      "fr": "Extrait de feuille de gymnema sylvestre, 25 % d’acides gymnémiques"
     },
     "unit": "mg"
   },
   {
     "id": "gymnema-sylvestre-leaf-extract-25-gymnemic-acids",
     "name": {
-      "en": "Gymnema sylvestre leaf extract, 25% gymnemic acids"
+      "en": "Gymnema sylvestre leaf extract, 25% gymnemic acids",
+      "fr": "Extrait de feuille de gymnema sylvestre, 25 % d’acides gymnémiques"
     },
     "unit": "mg"
   },
   {
     "id": "h-goat-weed-extract-20-icariin",
     "name": {
-      "en": "H. goat weed extract, 20% icariin"
+      "en": "H. goat weed extract, 20% icariin",
+      "fr": "Extrait d’épimède, 20 % d’icariine"
     },
     "unit": "mg"
   },
@@ -1287,7 +1406,8 @@
   {
     "id": "hawthorn-berry",
     "name": {
-      "en": "Hawthorn berry"
+      "en": "Hawthorn berry",
+      "fr": "Baie d’aubépine"
     },
     "unit": "mg"
   },
@@ -1301,7 +1421,8 @@
   {
     "id": "hesperidin",
     "name": {
-      "en": "Hesperidin"
+      "en": "Hesperidin",
+      "fr": "Hespéridine"
     },
     "unit": "mg"
   },
@@ -1315,7 +1436,8 @@
   {
     "id": "holy-basil-leaf-extract-10-0-ursolic-acid",
     "name": {
-      "en": "Holy basil leaf extract, 10.0% ursolic acid"
+      "en": "Holy basil leaf extract, 10.0% ursolic acid",
+      "fr": "Extrait de feuille de basilic sacré, 10,0 % d’acide ursolique"
     },
     "unit": "mg"
   },
@@ -1336,14 +1458,16 @@
   {
     "id": "huperzine-a-from-toothed-club-moss",
     "name": {
-      "en": "Huperzine A, from toothed club-moss"
+      "en": "Huperzine A, from toothed club-moss",
+      "fr": "Huperzine A, d’herbe de lycopodium"
     },
     "unit": "mcg"
   },
   {
     "id": "hyaluronic-acid",
     "name": {
-      "en": "Hyaluronic acid"
+      "en": "Hyaluronic acid",
+      "fr": "Acide hyaluronique"
     },
     "unit": "mg"
   },
@@ -1357,21 +1481,24 @@
   {
     "id": "hydrolyzed-collagen-type-i-6-elastin",
     "name": {
-      "en": "Hydrolyzed collagen—type I, 6% elastin"
+      "en": "Hydrolyzed collagen—type I, 6% elastin",
+      "fr": "Collagène hydrolysé — type I, 6 % d’élastine"
     },
     "unit": "mg"
   },
   {
     "id": "hydrolyzed-collagen-types-i-and-iii-bioactive-peptides",
     "name": {
-      "en": "Hydrolyzed collagen—types I and III bioactive peptides"
+      "en": "Hydrolyzed collagen—types I and III bioactive peptides",
+      "fr": "Peptides bioactifs de collagène hydrolysé de types I et III"
     },
     "unit": "mg"
   },
   {
     "id": "hydrolyzed-collagen-types-i-ii-and-iii",
     "name": {
-      "en": "Hydrolyzed collagen—types I, II, and III"
+      "en": "Hydrolyzed collagen—types I, II, and III",
+      "fr": "Collagène hydrolysé — types I, II, et III"
     },
     "unit": "mg"
   },
@@ -1385,7 +1512,8 @@
   {
     "id": "indole-3-carbinol",
     "name": {
-      "en": "Indole-3-carbinol"
+      "en": "Indole-3-carbinol",
+      "fr": "Indole-3-carbinol"
     },
     "unit": "mg"
   },
@@ -1400,7 +1528,8 @@
   {
     "id": "inulin",
     "name": {
-      "en": "Inulin"
+      "en": "Inulin",
+      "fr": "Inuline"
     },
     "unit": "mg"
   },
@@ -1444,42 +1573,48 @@
   {
     "id": "japanese-knotweed-root-extract",
     "name": {
-      "en": "Japanese knotweed root extract"
+      "en": "Japanese knotweed root extract",
+      "fr": "Extrait de racine de renouée du Japon"
     },
     "unit": "mg"
   },
   {
     "id": "japanese-knotweed-root-extract-50-resveratrol",
     "name": {
-      "en": "Japanese knotweed root extract, 50% resveratrol"
+      "en": "Japanese knotweed root extract, 50% resveratrol",
+      "fr": "Extrait de racine de renouée japonaise, 50 % de resvératrol"
     },
     "unit": "mg"
   },
   {
     "id": "juniper-berry",
     "name": {
-      "en": "Juniper berry"
+      "en": "Juniper berry",
+      "fr": "Baie de genévrier"
     },
     "unit": "mg"
   },
   {
     "id": "kava-kava-root-extract-30-kavalactones",
     "name": {
-      "en": "Kava kava root extract, 30% kavalactones"
+      "en": "Kava kava root extract, 30% kavalactones",
+      "fr": "Extrait de racine de kava kava, 30 % de kavalactones"
     },
     "unit": "mg"
   },
   {
     "id": "kidney",
     "name": {
-      "en": "Kidney"
+      "en": "Kidney",
+      "fr": "Rein"
     },
     "unit": "mg"
   },
   {
     "id": "kola-nut-extract-10-caffeine",
     "name": {
-      "en": "Kola nut extract, 10% caffeine"
+      "en": "Kola nut extract, 10% caffeine",
+      "fr": "Extrait de noix de kola, 10 % de caféine"
     },
     "unit": "mg"
   },
@@ -1514,7 +1649,8 @@
   {
     "id": "lemon-balm-10-1-extract",
     "name": {
-      "en": "Lemon balm 10:1 extract"
+      "en": "Lemon balm 10:1 extract",
+      "fr": "Extrait 10:1 de mélisse officinale"
     },
     "unit": "mg"
   },
@@ -1535,42 +1671,48 @@
   {
     "id": "linoleic-acid",
     "name": {
-      "en": "Linoleic acid"
+      "en": "Linoleic acid",
+      "fr": "Acide linoléique"
     },
     "unit": "mg"
   },
   {
     "id": "lion-s-mane-mushroom-extract",
     "name": {
-      "en": "Lion’s mane mushroom extract"
+      "en": "Lion’s mane mushroom extract",
+      "fr": "Extrait de champignon d’hydne hérisson"
     },
     "unit": "mg"
   },
   {
     "id": "liver-organ-from-bovine-source",
     "name": {
-      "en": "Liver organ, from bovine source"
+      "en": "Liver organ, from bovine source",
+      "fr": "Foie, de source bovine"
     },
     "unit": "mg"
   },
   {
     "id": "lutein",
     "name": {
-      "en": "Lutein"
+      "en": "Lutein",
+      "fr": "Lutéine"
     },
     "unit": "mg"
   },
   {
     "id": "lutein-from-marigold-flower-extract",
     "name": {
-      "en": "Lutein from marigold flower extract"
+      "en": "Lutein from marigold flower extract",
+      "fr": "Lutéine d’extrait de fleur de souci"
     },
     "unit": "mg"
   },
   {
     "id": "lycopene",
     "name": {
-      "en": "Lycopene"
+      "en": "Lycopene",
+      "fr": "Lycopène"
     },
     "unit": "mg"
   },
@@ -1584,7 +1726,8 @@
   {
     "id": "lysine",
     "name": {
-      "en": "ʟ‑Lysine"
+      "en": "ʟ‑Lysine",
+      "fr": "ʟ‑Lysine"
     },
     "unit": "mg"
   },
@@ -1599,7 +1742,8 @@
   {
     "id": "magnolia-bark-50-1-extract-80-honokiol-magnolol",
     "name": {
-      "en": "Magnolia bark 50:1 extract, 80% honokiol + magnolol"
+      "en": "Magnolia bark 50:1 extract, 80% honokiol + magnolol",
+      "fr": "Extrait 50:1 d’écorce de magnolia, 80 % honokiol + magnolol"
     },
     "unit": "mg"
   },
@@ -1620,21 +1764,24 @@
   {
     "id": "maitake-mushroom-extract",
     "name": {
-      "en": "Maitake mushroom extract"
+      "en": "Maitake mushroom extract",
+      "fr": "Extrait de champignon maïtake"
     },
     "unit": "mg"
   },
   {
     "id": "malabar-tamarind-fruit-extract-50-hydroxycitric-acid",
     "name": {
-      "en": "Malabar tamarind fruit extract, 50% hydroxycitric acid"
+      "en": "Malabar tamarind fruit extract, 50% hydroxycitric acid",
+      "fr": "Extrait de fruit de tamarin de Malabar, 50 % d’acide hydroxycitrique"
     },
     "unit": "mg"
   },
   {
     "id": "malabar-tamarind-fruit-extract-60-hydroxycitric-acid",
     "name": {
-      "en": "Malabar tamarind fruit extract, 60% hydroxycitric acid"
+      "en": "Malabar tamarind fruit extract, 60% hydroxycitric acid",
+      "fr": "Extrait de fruit de tamarin de Malabar, 60 % d’acide hydroxycitrique"
     },
     "unit": "mg"
   },
@@ -1649,7 +1796,8 @@
   {
     "id": "mannose",
     "name": {
-      "en": "ᴅ‑Mannose"
+      "en": "ᴅ‑Mannose",
+      "fr": "ᴅ‑Mannose"
     },
     "unit": "mg"
   },
@@ -1670,14 +1818,16 @@
   {
     "id": "medicinal-ingredients-per",
     "name": {
-      "en": "Medicinal ingredients per"
+      "en": "Medicinal ingredients per",
+      "fr": "Medicinal ingredients par"
     },
     "unit": "mg"
   },
   {
     "id": "medium-chain-triglycerides",
     "name": {
-      "en": "Medium-chain triglycerides"
+      "en": "Medium-chain triglycerides",
+      "fr": "Triglycérides à chaine moyenne"
     },
     "unit": "mg"
   },
@@ -1692,7 +1842,8 @@
   {
     "id": "methionine",
     "name": {
-      "en": "ʟ‑Methionine"
+      "en": "ʟ‑Methionine",
+      "fr": "ʟ‑Méthionine"
     },
     "unit": "mg"
   },
@@ -1706,35 +1857,40 @@
   {
     "id": "methylsulfonylmethane-100-pure",
     "name": {
-      "en": "Methylsulfonylmethane, 100% pure"
+      "en": "Methylsulfonylmethane, 100% pure",
+      "fr": "Méthylsulfonylméthane, 100 % pur"
     },
     "unit": "mg"
   },
   {
     "id": "microcrystalline-hydroxyapatite",
     "name": {
-      "en": "Microcrystalline hydroxyapatite"
+      "en": "Microcrystalline hydroxyapatite",
+      "fr": "Hydroxyapatite microcristalline"
     },
     "unit": "mg"
   },
   {
     "id": "micronized-palmitoylethanolamide",
     "name": {
-      "en": "Micronized palmitoylethanolamide"
+      "en": "Micronized palmitoylethanolamide",
+      "fr": "Palmitoyléthanolamide micronisé"
     },
     "unit": "mg"
   },
   {
     "id": "milk-thistle-30-1-seed-extract",
     "name": {
-      "en": "Milk thistle 30:1 seed extract"
+      "en": "Milk thistle 30:1 seed extract",
+      "fr": "Extrait 30:1 de graine de chardon-marie"
     },
     "unit": "mg"
   },
   {
     "id": "milk-thistle-seed-extract-80-silymarin",
     "name": {
-      "en": "Milk thistle seed extract, 80% silymarin"
+      "en": "Milk thistle seed extract, 80% silymarin",
+      "fr": "Extrait de graine de chardon-marie, 80 % de silymarine"
     },
     "unit": "mg"
   },
@@ -1748,7 +1904,8 @@
   {
     "id": "modified-citrus-pectin-from-lemon-fruit-peel",
     "name": {
-      "en": "Modified citrus pectin, from lemon fruit peel"
+      "en": "Modified citrus pectin, from lemon fruit peel",
+      "fr": "Pectine d’agrume modifiée, de pelure de fruit de citronnier"
     },
     "unit": "mg"
   },
@@ -1784,42 +1941,48 @@
   {
     "id": "n-acetyl-cysteine",
     "name": {
-      "en": "N-Acetyl-ʟ-cysteine"
+      "en": "N-Acetyl-ʟ-cysteine",
+      "fr": "N-Acétyl-ʟ‑cystéine"
     },
     "unit": "mg"
   },
   {
     "id": "n-n-dimethylglycine",
     "name": {
-      "en": "N,N-Dimethylglycine"
+      "en": "N,N-Dimethylglycine",
+      "fr": "N,N-Diméthylglycine"
     },
     "unit": "mg"
   },
   {
     "id": "n-n-dimethylglycine-hydrochloride",
     "name": {
-      "en": "N,N-Dimethylglycine hydrochloride"
+      "en": "N,N-Dimethylglycine hydrochloride",
+      "fr": "Chlorhydrate de N,N-diméthylglycine"
     },
     "unit": "mg"
   },
   {
     "id": "natural-vitamin-e",
     "name": {
-      "en": "Natural vitamin E"
+      "en": "Natural vitamin E",
+      "fr": "Vitamine E naturelle"
     },
     "unit": "mg"
   },
   {
     "id": "neem-leaf",
     "name": {
-      "en": "Neem leaf"
+      "en": "Neem leaf",
+      "fr": "Feuille de margousier"
     },
     "unit": "mg"
   },
   {
     "id": "nem-powder",
     "name": {
-      "en": "NEM powder"
+      "en": "NEM powder",
+      "fr": "NEM"
     },
     "unit": "mg"
   },
@@ -1833,28 +1996,32 @@
   {
     "id": "odourless-garlic-bulb",
     "name": {
-      "en": "Odourless garlic bulb"
+      "en": "Odourless garlic bulb",
+      "fr": "Bulbe d’ail inodore, potentiel d’allicine de"
     },
     "unit": "mcg"
   },
   {
     "id": "odourless-garlic-bulb-1-allicin",
     "name": {
-      "en": "Odourless garlic bulb, 1% allicin"
+      "en": "Odourless garlic bulb, 1% allicin",
+      "fr": "Bulbe d’ail inodore, 1 % d’allicine"
     },
     "unit": "mg"
   },
   {
     "id": "odourless-garlic-bulb-extract-1-allicin",
     "name": {
-      "en": "Odourless garlic bulb extract, 1% allicin"
+      "en": "Odourless garlic bulb extract, 1% allicin",
+      "fr": "Extrait de bulbe d’ail inodore, 1 % d’allicine"
     },
     "unit": "mg"
   },
   {
     "id": "of-acetyl-carnitine",
     "name": {
-      "en": "of acetyl‒ʟ‒carnitine"
+      "en": "of acetyl‒ʟ‒carnitine",
+      "fr": "Acétyl‒ʟ‒carnitine"
     },
     "unit": "mg"
   },
@@ -1875,14 +2042,16 @@
   {
     "id": "of-curcumin",
     "name": {
-      "en": "of curcumin"
+      "en": "of curcumin",
+      "fr": "Curcumine"
     },
     "unit": "mg"
   },
   {
     "id": "of-dried-herb",
     "name": {
-      "en": "of dried herb"
+      "en": "of dried herb",
+      "fr": "Herbe séchée"
     },
     "unit": "mg"
   },
@@ -1903,42 +2072,48 @@
   {
     "id": "olive-leaf-extract-20-oleuropein",
     "name": {
-      "en": "Olive leaf extract, 20% oleuropein"
+      "en": "Olive leaf extract, 20% oleuropein",
+      "fr": "Extrait de feuille d’olivier, 20 % d’oleuropéine"
     },
     "unit": "mg"
   },
   {
     "id": "oregano-leaf-extract-30-carvacrol",
     "name": {
-      "en": "Oregano leaf extract, 30% carvacrol"
+      "en": "Oregano leaf extract, 30% carvacrol",
+      "fr": "Extrait de feuille d’origan, 30 % de carvacrol"
     },
     "unit": "mg"
   },
   {
     "id": "oregano-oil-75-85-carvacrol",
     "name": {
-      "en": "Oregano oil, 75–85% carvacrol"
+      "en": "Oregano oil, 75–85% carvacrol",
+      "fr": "Huile d’origan, 75–85 % de carvacrol"
     },
     "unit": "mg"
   },
   {
     "id": "oregon-grape-root",
     "name": {
-      "en": "Oregon-grape root"
+      "en": "Oregon-grape root",
+      "fr": "Racine de mahonia à feuilles de houx"
     },
     "unit": "mg"
   },
   {
     "id": "organic-alfalfa-herb",
     "name": {
-      "en": "Organic alfalfa herb"
+      "en": "Organic alfalfa herb",
+      "fr": "Herbe de luzerne biologique"
     },
     "unit": "mg"
   },
   {
     "id": "organic-astragalus-root",
     "name": {
-      "en": "Organic astragalus root"
+      "en": "Organic astragalus root",
+      "fr": "Racine d’astragale biologique"
     },
     "unit": "mg"
   },
@@ -1952,7 +2127,8 @@
   {
     "id": "organic-bilberry-leaf",
     "name": {
-      "en": "Organic bilberry leaf"
+      "en": "Organic bilberry leaf",
+      "fr": "Feuille de myrtille biologique"
     },
     "unit": "mg"
   },
@@ -1966,7 +2142,8 @@
   {
     "id": "organic-black-walnut-fruit-green-hull",
     "name": {
-      "en": "Organic black walnut fruit green hull"
+      "en": "Organic black walnut fruit green hull",
+      "fr": "Écale verte de fruit de noyer noir biologique"
     },
     "unit": "mg"
   },
@@ -2001,63 +2178,72 @@
   {
     "id": "organic-burdock-root",
     "name": {
-      "en": "Organic burdock root"
+      "en": "Organic burdock root",
+      "fr": "Racine de grande bardane biologique"
     },
     "unit": "mg"
   },
   {
     "id": "organic-cayenne-fruit",
     "name": {
-      "en": "Organic cayenne fruit"
+      "en": "Organic cayenne fruit",
+      "fr": "Fruit de piment de cayenne biologique"
     },
     "unit": "mg"
   },
   {
     "id": "organic-coriolus",
     "name": {
-      "en": "Organic coriolus"
+      "en": "Organic coriolus",
+      "fr": "Coriolus biologique"
     },
     "unit": "mg"
   },
   {
     "id": "organic-echinacea-root",
     "name": {
-      "en": "Organic echinacea root"
+      "en": "Organic echinacea root",
+      "fr": "Racine d’échinacée biologique"
     },
     "unit": "mg"
   },
   {
     "id": "organic-european-elderflower",
     "name": {
-      "en": "Organic European elderflower"
+      "en": "Organic European elderflower",
+      "fr": "Fleur de sureau européen"
     },
     "unit": "mg"
   },
   {
     "id": "organic-european-mistletoe-leaf",
     "name": {
-      "en": "Organic European mistletoe leaf"
+      "en": "Organic European mistletoe leaf",
+      "fr": "Feuille de gui européen biologique"
     },
     "unit": "mg"
   },
   {
     "id": "organic-evening-primrose-seed-oil-hexane-free",
     "name": {
-      "en": "Organic evening primrose seed oil, hexane-free"
+      "en": "Organic evening primrose seed oil, hexane-free",
+      "fr": "Huile de graine d’onagre biologique, sans hexane"
     },
     "unit": "mg"
   },
   {
     "id": "organic-flax-seed-oil",
     "name": {
-      "en": "Organic flax seed oil"
+      "en": "Organic flax seed oil",
+      "fr": "Huile de graine de lin biologique"
     },
     "unit": "mg"
   },
   {
     "id": "organic-garlic-bulb",
     "name": {
-      "en": "Organic garlic bulb"
+      "en": "Organic garlic bulb",
+      "fr": "Bulbe d’ail biologique"
     },
     "unit": "mg"
   },
@@ -2071,70 +2257,80 @@
   {
     "id": "organic-goji-seed-oil",
     "name": {
-      "en": "Organic goji seed oil"
+      "en": "Organic goji seed oil",
+      "fr": "Huile de graine de goji biologique"
     },
     "unit": "mg"
   },
   {
     "id": "organic-hawthorn-fruit",
     "name": {
-      "en": "Organic hawthorn fruit"
+      "en": "Organic hawthorn fruit",
+      "fr": "Fruit d’aubépine biologique"
     },
     "unit": "mg"
   },
   {
     "id": "organic-hawthorn-leaf-and-flower",
     "name": {
-      "en": "Organic hawthorn leaf and flower"
+      "en": "Organic hawthorn leaf and flower",
+      "fr": "Feuille et fleur d’aubépine biologique"
     },
     "unit": "mg"
   },
   {
     "id": "organic-lavender-essential-oil-hexane-free",
     "name": {
-      "en": "Organic lavender essential oil, hexane-free"
+      "en": "Organic lavender essential oil, hexane-free",
+      "fr": "Huile essentielle de lavande officinale biologique, sans hexane"
     },
     "unit": "mg"
   },
   {
     "id": "organic-lion-s-mane",
     "name": {
-      "en": "Organic lion’s mane"
+      "en": "Organic lion’s mane",
+      "fr": "Hydne hérisson biologique"
     },
     "unit": "mg"
   },
   {
     "id": "organic-lobelia-herb-top",
     "name": {
-      "en": "Organic lobelia herb top"
+      "en": "Organic lobelia herb top",
+      "fr": "Sommitê de lobêlie biologique"
     },
     "unit": "mg"
   },
   {
     "id": "organic-maca-root",
     "name": {
-      "en": "Organic maca root"
+      "en": "Organic maca root",
+      "fr": "Racine de maca biologique"
     },
     "unit": "mg"
   },
   {
     "id": "organic-milk-thistle-seed",
     "name": {
-      "en": "Organic milk thistle seed"
+      "en": "Organic milk thistle seed",
+      "fr": "Graine de chardon-marie biologique"
     },
     "unit": "mg"
   },
   {
     "id": "organic-motherwort-herb-top",
     "name": {
-      "en": "Organic motherwort herb top"
+      "en": "Organic motherwort herb top",
+      "fr": "Partie aérienne d’agripaume biologique"
     },
     "unit": "mg"
   },
   {
     "id": "organic-plantain-leaf",
     "name": {
-      "en": "Organic plantain leaf"
+      "en": "Organic plantain leaf",
+      "fr": "Feuille de plantain biologique"
     },
     "unit": "mg"
   },
@@ -2162,7 +2358,8 @@
   {
     "id": "organic-rhubarb-root",
     "name": {
-      "en": "Organic rhubarb root"
+      "en": "Organic rhubarb root",
+      "fr": "Racine de rhubarbe biologique"
     },
     "unit": "mg"
   },
@@ -2176,14 +2373,16 @@
   {
     "id": "organic-sheep-sorrel-herb-top",
     "name": {
-      "en": "Organic sheep sorrel herb top"
+      "en": "Organic sheep sorrel herb top",
+      "fr": "Sommité de petite oseille biologique"
     },
     "unit": "mg"
   },
   {
     "id": "organic-slippery-elm-bark",
     "name": {
-      "en": "Organic slippery elm bark"
+      "en": "Organic slippery elm bark",
+      "fr": "Écorce d’orme rouge biologique"
     },
     "unit": "mg"
   },
@@ -2197,7 +2396,8 @@
   {
     "id": "organic-spirulina",
     "name": {
-      "en": "Organic spirulina"
+      "en": "Organic spirulina",
+      "fr": "Spiruline biologique"
     },
     "unit": "mg"
   },
@@ -2211,7 +2411,8 @@
   {
     "id": "organic-valerian-root",
     "name": {
-      "en": "Organic valerian root"
+      "en": "Organic valerian root",
+      "fr": "Racine de valériane biologique"
     },
     "unit": "mg"
   },
@@ -2225,21 +2426,24 @@
   {
     "id": "organic-white-willow-bark",
     "name": {
-      "en": "Organic white willow bark"
+      "en": "Organic white willow bark",
+      "fr": "Écorce de saule blanc biologique"
     },
     "unit": "mg"
   },
   {
     "id": "organic-wild-valerian-root",
     "name": {
-      "en": "Organic/wild valerian root"
+      "en": "Organic/wild valerian root",
+      "fr": "Racine de valériane biologique ou récoltée sauvage"
     },
     "unit": "mg"
   },
   {
     "id": "orotic-acid",
     "name": {
-      "en": "Orotic acid"
+      "en": "Orotic acid",
+      "fr": "Acide orotique"
     },
     "unit": "mg"
   },
@@ -2253,56 +2457,64 @@
   {
     "id": "ox-bile-45-cholic-acids",
     "name": {
-      "en": "Ox bile, 45% cholic acids"
+      "en": "Ox bile, 45% cholic acids",
+      "fr": "Bile bovine, 45 % d’acides choliques"
     },
     "unit": "mg"
   },
   {
     "id": "ox-bile-from-bovine-source-45-cholic-acid",
     "name": {
-      "en": "Ox bile, from bovine source, 45% cholic acid"
+      "en": "Ox bile, from bovine source, 45% cholic acid",
+      "fr": "Bile de bœuf, de source bovine, 45 % d’acide cholique"
     },
     "unit": "mg"
   },
   {
     "id": "panax-ginseng-root-and-leaf-extract",
     "name": {
-      "en": "Panax ginseng root and leaf extract"
+      "en": "Panax ginseng root and leaf extract",
+      "fr": "Extrait de racine et de feuille de Panax ginseng"
     },
     "unit": "mg"
   },
   {
     "id": "pancreas-organ",
     "name": {
-      "en": "Pancreas organ"
+      "en": "Pancreas organ",
+      "fr": "Pancréas"
     },
     "unit": "mg"
   },
   {
     "id": "pancreatic-enzymes-4-4-concentrate",
     "name": {
-      "en": "Pancreatic enzymes 4× 4× concentrate"
+      "en": "Pancreatic enzymes 4× 4× concentrate",
+      "fr": "Concentré 4× d’enzymes pancréatiques"
     },
     "unit": "mg"
   },
   {
     "id": "pancreatic-enzymes-4-concentrate",
     "name": {
-      "en": "Pancreatic enzymes 4× concentrate"
+      "en": "Pancreatic enzymes 4× concentrate",
+      "fr": "Concentré 4× d’enzymes pancréatiques"
     },
     "unit": "mg"
   },
   {
     "id": "papain",
     "name": {
-      "en": "Papain"
+      "en": "Papain",
+      "fr": "Papaïne"
     },
     "unit": "mg"
   },
   {
     "id": "para-aminobenzoic-acid",
     "name": {
-      "en": "para-Aminobenzoic acid"
+      "en": "para-Aminobenzoic acid",
+      "fr": "Acide para‑aminobenzoïque"
     },
     "unit": "mg"
   },
@@ -2330,28 +2542,32 @@
   {
     "id": "pau-d-arco-inner-bark",
     "name": {
-      "en": "Pau d’arco inner bark"
+      "en": "Pau d’arco inner bark",
+      "fr": "Écorce interne de pau d’arco"
     },
     "unit": "mg"
   },
   {
     "id": "pelapower",
     "name": {
-      "en": "PelaPower"
+      "en": "PelaPower",
+      "fr": "PelaPower"
     },
     "unit": "mg"
   },
   {
     "id": "pepsin-a",
     "name": {
-      "en": "Pepsin A"
+      "en": "Pepsin A",
+      "fr": "Pepsine A"
     },
     "unit": "mg"
   },
   {
     "id": "phellodendron-bark-extract-0-1-berberine",
     "name": {
-      "en": "Phellodendron bark extract, 0.1% berberine"
+      "en": "Phellodendron bark extract, 0.1% berberine",
+      "fr": "Extrait d’écorce de phellodendron, 0,1 % de berbérine"
     },
     "unit": "mg"
   },
@@ -2372,7 +2588,8 @@
   {
     "id": "phosphorus",
     "name": {
-      "en": "Phosphorus"
+      "en": "Phosphorus",
+      "fr": "Phosphore"
     },
     "unit": "mg"
   },
@@ -2386,7 +2603,8 @@
   {
     "id": "plant-sterol-esters",
     "name": {
-      "en": "Plant sterol esters"
+      "en": "Plant sterol esters",
+      "fr": "Esters de stérols végétaux"
     },
     "unit": "mg"
   },
@@ -2423,7 +2641,8 @@
   {
     "id": "protease-amylase-lipase-betaine-hydrochloride",
     "name": {
-      "en": "Protease Amylase Lipase Betaine hydrochloride †"
+      "en": "Protease Amylase Lipase Betaine hydrochloride †",
+      "fr": "Protéase Amylase Lipase Chlorhydrate de bétaïne †"
     },
     "unit": "mg"
   },
@@ -2444,28 +2663,32 @@
   {
     "id": "providing",
     "name": {
-      "en": "Providing"
+      "en": "Providing",
+      "fr": "Providing"
     },
     "unit": "mg"
   },
   {
     "id": "psyllium-husk",
     "name": {
-      "en": "Psyllium husk"
+      "en": "Psyllium husk",
+      "fr": "Coque de psyllium"
     },
     "unit": "mg"
   },
   {
     "id": "pure-nmn",
     "name": {
-      "en": "Pure NMN"
+      "en": "Pure NMN",
+      "fr": "NMN pur"
     },
     "unit": "mg"
   },
   {
     "id": "qiye-shen-an-pian-leaf-extract",
     "name": {
-      "en": "Qiye Shen’an Pian leaf extract"
+      "en": "Qiye Shen’an Pian leaf extract",
+      "fr": "Extrait de feuille de Qiye Shen’an Pian"
     },
     "unit": "mg"
   },
@@ -2479,35 +2702,40 @@
   {
     "id": "quercetin",
     "name": {
-      "en": "Quercetin"
+      "en": "Quercetin",
+      "fr": "Quercétine"
     },
     "unit": "mg"
   },
   {
     "id": "r-alpha-lipoic-acid",
     "name": {
-      "en": "R –alpha-Lipoic acid"
+      "en": "R –alpha-Lipoic acid",
+      "fr": "Acide R ‑alpha‑lipoïque"
     },
     "unit": "mg"
   },
   {
     "id": "red-beet-root",
     "name": {
-      "en": "Red beet root"
+      "en": "Red beet root",
+      "fr": "Racine de betterave rouge"
     },
     "unit": "mg"
   },
   {
     "id": "red-clover-flower-extract-8-isoflavones",
     "name": {
-      "en": "Red clover flower extract, 8% isoflavones"
+      "en": "Red clover flower extract, 8% isoflavones",
+      "fr": "Extrait de fleur de trèfle des prés, 8 % d’isoflavones"
     },
     "unit": "mg"
   },
   {
     "id": "red-clover-flower-top-extract-40-isoflavones",
     "name": {
-      "en": "Red clover flower top extract, 40% isoflavones"
+      "en": "Red clover flower top extract, 40% isoflavones",
+      "fr": "Extrait de pointe de fleur de trèfle des prés, 40 % d’isoflavones"
     },
     "unit": "mg"
   },
@@ -2521,7 +2749,8 @@
   {
     "id": "red-ginseng-leaf-and-root-extract-20-ginsenosides",
     "name": {
-      "en": "Red ginseng leaf and root extract, 20% ginsenosides"
+      "en": "Red ginseng leaf and root extract, 20% ginsenosides",
+      "fr": "Extrait de racine et de feuille de ginseng rouge, 20 % de ginsénosides"
     },
     "unit": "mg"
   },
@@ -2535,7 +2764,8 @@
   {
     "id": "red-yeast-rice-extract-0-5-lovastatin",
     "name": {
-      "en": "Red yeast rice extract, 0.5% lovastatin"
+      "en": "Red yeast rice extract, 0.5% lovastatin",
+      "fr": "Extrait de levure de riz rouge, 0,5 % de lovastatine"
     },
     "unit": "mg"
   },
@@ -2549,7 +2779,8 @@
   {
     "id": "reishi-fruiting-body-extract",
     "name": {
-      "en": "Reishi fruiting body extract"
+      "en": "Reishi fruiting body extract",
+      "fr": "Extrait de sporophore reishi"
     },
     "unit": "mg"
   },
@@ -2570,7 +2801,8 @@
   {
     "id": "reishi-spores",
     "name": {
-      "en": "Reishi spores"
+      "en": "Reishi spores",
+      "fr": "Spores de champignon reishi"
     },
     "unit": "mg"
   },
@@ -2584,28 +2816,32 @@
   {
     "id": "ribose",
     "name": {
-      "en": "ᴅ‑Ribose"
+      "en": "ᴅ‑Ribose",
+      "fr": "ᴅ‑Ribose"
     },
     "unit": "mg"
   },
   {
     "id": "rose-hips",
     "name": {
-      "en": "Rose hips"
+      "en": "Rose hips",
+      "fr": "Cynorrhodon d’églantier"
     },
     "unit": "mg"
   },
   {
     "id": "roselle",
     "name": {
-      "en": "Roselle"
+      "en": "Roselle",
+      "fr": "Oseille de Guinée"
     },
     "unit": "mg"
   },
   {
     "id": "roselle-flower",
     "name": {
-      "en": "Roselle flower"
+      "en": "Roselle flower",
+      "fr": "Fleur d’oseille de Guinée"
     },
     "unit": "mg"
   },
@@ -2619,14 +2855,16 @@
   {
     "id": "roseroot-root-extract-5-rosavins",
     "name": {
-      "en": "Roseroot root extract, 5% rosavins"
+      "en": "Roseroot root extract, 5% rosavins",
+      "fr": "Extrait de racine de rhodiole, 5 % de rosavines"
     },
     "unit": "mg"
   },
   {
     "id": "rutin",
     "name": {
-      "en": "Rutin"
+      "en": "Rutin",
+      "fr": "Rutine"
     },
     "unit": "mg"
   },
@@ -2640,14 +2878,16 @@
   {
     "id": "s-acetylglutathione",
     "name": {
-      "en": "S-Acetylglutathione"
+      "en": "S-Acetylglutathione",
+      "fr": "S-Acétylglutathion"
     },
     "unit": "mg"
   },
   {
     "id": "saffron-stigma-extract",
     "name": {
-      "en": "Saffron stigma extract"
+      "en": "Saffron stigma extract",
+      "fr": "Extrait de stigmate de safran"
     },
     "unit": "mg"
   },
@@ -2675,7 +2915,8 @@
   {
     "id": "sea-buckthorn-fruit-juice",
     "name": {
-      "en": "Sea buckthorn fruit juice"
+      "en": "Sea buckthorn fruit juice",
+      "fr": "Jus de fruit d’argousier"
     },
     "unit": "mg"
   },
@@ -2711,28 +2952,32 @@
   {
     "id": "shiitake-mushroom-extract",
     "name": {
-      "en": "Shiitake mushroom extract"
+      "en": "Shiitake mushroom extract",
+      "fr": "Extrait de champignon shiitake"
     },
     "unit": "mg"
   },
   {
     "id": "siberian-ginseng-root-extract",
     "name": {
-      "en": "Siberian ginseng root extract"
+      "en": "Siberian ginseng root extract",
+      "fr": "Extrait de racine de ginseng sibérien"
     },
     "unit": "mg"
   },
   {
     "id": "siberian-ginseng-root-extract-0-8-eleutherosides",
     "name": {
-      "en": "Siberian ginseng root extract, 0.8% eleutherosides"
+      "en": "Siberian ginseng root extract, 0.8% eleutherosides",
+      "fr": "Extrait de racine de ginseng sibérien, 0,8 % d’éleuthérosides"
     },
     "unit": "mg"
   },
   {
     "id": "silicic-acid",
     "name": {
-      "en": "Silicic acid"
+      "en": "Silicic acid",
+      "fr": "Acide silicique"
     },
     "unit": "mg"
   },
@@ -2754,21 +2999,24 @@
   {
     "id": "spleen-from-bovine-source",
     "name": {
-      "en": "Spleen, from bovine source"
+      "en": "Spleen, from bovine source",
+      "fr": "Rate, de source bovine"
     },
     "unit": "mg"
   },
   {
     "id": "squalene-hexane-free",
     "name": {
-      "en": "Squalene, hexane-free"
+      "en": "Squalene, hexane-free",
+      "fr": "Squalène, sans hexane"
     },
     "unit": "mg"
   },
   {
     "id": "st-john-s-wort-aerial-part-8-1-extract",
     "name": {
-      "en": "St. John’s wort aerial part 8:1 extract"
+      "en": "St. John’s wort aerial part 8:1 extract",
+      "fr": "Extrait 8:1 de partie aérienne de millepertuis perforé"
     },
     "unit": "mg"
   },
@@ -2782,14 +3030,16 @@
   {
     "id": "stigmasterol-tocotrienols",
     "name": {
-      "en": "stigmasterol Tocotrienols"
+      "en": "stigmasterol Tocotrienols",
+      "fr": "Stigmastérol Tocotriénols"
     },
     "unit": "mg"
   },
   {
     "id": "stigmasterols",
     "name": {
-      "en": "Stigmasterols"
+      "en": "Stigmasterols",
+      "fr": "Stigmastérols"
     },
     "unit": "mg"
   },
@@ -2803,7 +3053,8 @@
   {
     "id": "strontium",
     "name": {
-      "en": "Strontium"
+      "en": "Strontium",
+      "fr": "Strontium"
     },
     "unit": "mg"
   },
@@ -2817,42 +3068,48 @@
   {
     "id": "sweet-fennel-seed",
     "name": {
-      "en": "Sweet fennel seed"
+      "en": "Sweet fennel seed",
+      "fr": "Graine de fenouil commun"
     },
     "unit": "mg"
   },
   {
     "id": "sweet-orange-crystals",
     "name": {
-      "en": "Sweet orange crystals"
+      "en": "Sweet orange crystals",
+      "fr": "Cristaux d’orange douce"
     },
     "unit": "mg"
   },
   {
     "id": "sweet-wormwood-extract-10-artemisinin",
     "name": {
-      "en": "Sweet wormwood extract, 10% artemisinin"
+      "en": "Sweet wormwood extract, 10% artemisinin",
+      "fr": "Extrait d’Artemisia annua, 10 % d’artémisinine"
     },
     "unit": "mg"
   },
   {
     "id": "taurine",
     "name": {
-      "en": "Taurine"
+      "en": "Taurine",
+      "fr": "Taurine"
     },
     "unit": "mg"
   },
   {
     "id": "tauroursodeoxycholic-acid",
     "name": {
-      "en": "Tauroursodeoxycholic acid"
+      "en": "Tauroursodeoxycholic acid",
+      "fr": "Acide tauroursodésoxycholique"
     },
     "unit": "mg"
   },
   {
     "id": "theanine",
     "name": {
-      "en": "ʟ‑Theanine"
+      "en": "ʟ‑Theanine",
+      "fr": "ʟ‑Théanine"
     },
     "unit": "mg"
   },
@@ -2866,14 +3123,16 @@
   {
     "id": "tocotrienols",
     "name": {
-      "en": "Tocotrienols"
+      "en": "Tocotrienols",
+      "fr": "Tocotriénols"
     },
     "unit": "mg"
   },
   {
     "id": "tomato-flesh-extract-10-lycopene",
     "name": {
-      "en": "Tomato flesh extract, 10% lycopene"
+      "en": "Tomato flesh extract, 10% lycopene",
+      "fr": "Extrait de chair de tomate, 10 % de lycopène"
     },
     "unit": "mg"
   },
@@ -2887,14 +3146,16 @@
   {
     "id": "trans-resveratrol",
     "name": {
-      "en": "trans-Resveratrol"
+      "en": "trans-Resveratrol",
+      "fr": "Trans-Resvératrol"
     },
     "unit": "mg"
   },
   {
     "id": "tribulus-terrestris-fruit-extract-40-saponins",
     "name": {
-      "en": "Tribulus terrestris fruit extract, 40% saponins"
+      "en": "Tribulus terrestris fruit extract, 40% saponins",
+      "fr": "Extrait de fruit de Tribulus terrestris, 40 % de saponines"
     },
     "unit": "mg"
   },
@@ -2908,28 +3169,32 @@
   {
     "id": "tryptophan",
     "name": {
-      "en": "ʟ‑Tryptophan"
+      "en": "ʟ‑Tryptophan",
+      "fr": "ʟ‑Tryptophane"
     },
     "unit": "mg"
   },
   {
     "id": "turmeric-root-extract-95-curcuminoids",
     "name": {
-      "en": "Turmeric root extract, 95% curcuminoids"
+      "en": "Turmeric root extract, 95% curcuminoids",
+      "fr": "Extrait de racine de curcuma, 95 % de curcuminoïdes"
     },
     "unit": "mg"
   },
   {
     "id": "tyrosine",
     "name": {
-      "en": "ʟ‑Tyrosine"
+      "en": "ʟ‑Tyrosine",
+      "fr": "ʟ‑Tyrosine"
     },
     "unit": "mg"
   },
   {
     "id": "uva-ursi-leaf",
     "name": {
-      "en": "Uva ursi leaf"
+      "en": "Uva ursi leaf",
+      "fr": "Feuille de busserole"
     },
     "unit": "mg"
   },
@@ -2950,14 +3215,16 @@
   {
     "id": "vanadium",
     "name": {
-      "en": "Vanadium"
+      "en": "Vanadium",
+      "fr": "Vanadium"
     },
     "unit": "mcg"
   },
   {
     "id": "vanadyl-sulfate",
     "name": {
-      "en": "Vanadyl sulfate"
+      "en": "Vanadyl sulfate",
+      "fr": "Sulfate de vanadyle"
     },
     "unit": "mg"
   },
@@ -3052,21 +3319,24 @@
   {
     "id": "white-willow-bark",
     "name": {
-      "en": "White willow bark"
+      "en": "White willow bark",
+      "fr": "Écorce de saule blanc"
     },
     "unit": "mg"
   },
   {
     "id": "whole-bacopa-25-1-extract-45-bacosides",
     "name": {
-      "en": "Whole bacopa 25:1 extract, 45% bacosides"
+      "en": "Whole bacopa 25:1 extract, 45% bacosides",
+      "fr": "Extrait 25:1 de bacopa entier, 45 % de bacosides"
     },
     "unit": "mg"
   },
   {
     "id": "whole-gotu-kola",
     "name": {
-      "en": "Whole gotu kola"
+      "en": "Whole gotu kola",
+      "fr": "Gotu kola entier"
     },
     "unit": "mg"
   },
@@ -3094,7 +3364,8 @@
   {
     "id": "whole-wormwood",
     "name": {
-      "en": "Whole wormwood"
+      "en": "Whole wormwood",
+      "fr": "Absinthe entière"
     },
     "unit": "mg"
   },
@@ -3108,14 +3379,16 @@
   {
     "id": "wild-harvested-saw-palmetto-fruit-extract-95-purified",
     "name": {
-      "en": "Wild-harvested saw palmetto fruit extract, 95% purified"
+      "en": "Wild-harvested saw palmetto fruit extract, 95% purified",
+      "fr": "Extrait de fruit de chou palmiste de cueillette sauvage, purifié à 95 %"
     },
     "unit": "mg"
   },
   {
     "id": "wild-yam-rhizome-8-1-extract-16-diosgenin",
     "name": {
-      "en": "Wild yam rhizome 8:1 extract, 16% diosgenin"
+      "en": "Wild yam rhizome 8:1 extract, 16% diosgenin",
+      "fr": "Extrait 8:1 de rhizome d’igname sauvage, 16 % de diosgénine"
     },
     "unit": "mg"
   },
@@ -3129,14 +3402,16 @@
   {
     "id": "wormwood-herb",
     "name": {
-      "en": "Wormwood herb"
+      "en": "Wormwood herb",
+      "fr": "Herbe d’absinthe"
     },
     "unit": "mg"
   },
   {
     "id": "zeaxanthin",
     "name": {
-      "en": "Zeaxanthin"
+      "en": "Zeaxanthin",
+      "fr": "Zéaxanthine"
     },
     "unit": "mg"
   },

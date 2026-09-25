@@ -7,6 +7,7 @@ Source: https://newrootsherbal.com/ai-catalog
 - Skipped: 0
 - Ingredients: 447
 - Label-derived rules: 173 (curated: 10)
+- Ingredients with a French name: 309 (French facts lined up for 309 products, differed for 18)
 - Parser warnings: 146
 
 ## Skipped
