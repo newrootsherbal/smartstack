@@ -11,6 +11,7 @@ import { frenchSentenceFor, parseSuggestedUse, type TimingAttribute } from './su
 export interface WebsiteLang {
   name: string
   slug: string
+  categories?: (string | { name: string; slug?: string })[]
   subtitle?: string
   subtitle2?: string
   suggested_use?: string
@@ -48,6 +49,8 @@ export interface ImportContext {
 export interface ProductText {
   directions?: LocalizedText
   warnings?: LocalizedText
+  /** Raw label facts, shipped only when no ingredient could be parsed from them. */
+  facts?: LocalizedText
 }
 
 export interface ConvertResult {
@@ -60,6 +63,24 @@ export interface ConvertResult {
 }
 
 export const BRAND = 'New Roots Herbal'
+
+const TOPICAL_CATEGORY = /essential oils?|exotic skin oils?/i
+// Wording that only appears on oils, rubs and liniments; "Skin"/"Beauty" categories are
+// not enough (collagen, biotin and silica are swallowed).
+const TOPICAL_USE =
+  /diffuser|topical application|external use|do not ingest|not for internal use|affected area|inhalation|aromatherapy|drops in your hand|massage (?:the oil|into|desired)/i
+
+/**
+ * Essential and skin oils, rubs and liniments are applied or diffused, never scheduled as
+ * doses, whether or not they carry an NPN. Everything else is a licensed natural health
+ * product when it has an NPN, otherwise a food (protein, MCT oil, sweetener…).
+ */
+export function classifyKind(npn: string | undefined, en: WebsiteLang): Product['kind'] {
+  const categories = (en.categories ?? []).map((c) => (typeof c === 'string' ? c : c.name))
+  if (categories.some((c) => TOPICAL_CATEGORY.test(c))) return 'topical'
+  if (TOPICAL_USE.test(en.suggested_use ?? '')) return 'topical'
+  return npn ? 'nhp' : 'food'
+}
 
 export function normalizeUpc(printed: string): string {
   return printed.replace(/\D/g, '')
@@ -109,9 +130,8 @@ export function convertWebsiteProduct(w: WebsiteProduct, ctx: ImportContext): Co
   const warnings: string[] = []
   const en = w.languages.en
   const fr = w.languages.fr
-  const npn = w.identifiers.npn ?? ''
-  if (!/^\d{8}$/.test(npn))
-    return { product: null, rules: [], text: {}, skipped: 'no NPN (not a licensed NHP)', warnings }
+  const npn = /^\d{8}$/.test(w.identifiers.npn ?? '') ? w.identifiers.npn : undefined
+  const kind = classifyKind(npn, en)
   const variants = (w.variants ?? []).filter((v) => {
     const upc = normalizeUpc(v.upc)
     if (/^\d{12,13}$/.test(upc) && isValidRetailBarcode(upc)) return true
@@ -122,11 +142,10 @@ export function convertWebsiteProduct(w: WebsiteProduct, ctx: ImportContext): Co
   })
   if (variants.length === 0)
     return { product: null, rules: [], text: {}, skipped: 'no variant with a UPC', warnings }
-  if (!en.recipe)
-    return { product: null, rules: [], text: {}, skipped: 'no supplement facts', warnings }
 
   const id = en.slug
-  const recipe = parseRecipe(en.recipe)
+  const recipe = parseRecipe(en.recipe ?? '')
+  if (!en.recipe) warnings.push(`${id}: no supplement facts on the product page`)
   for (const u of recipe.unparsed) warnings.push(`${id}: unparsed "${u.slice(0, 60)}"`)
 
   // Ingredients: canonical ids, unit reconciliation, per-product sums.
@@ -154,14 +173,14 @@ export function convertWebsiteProduct(w: WebsiteProduct, ctx: ImportContext): Co
   const ingredients = [...amounts.entries()]
     .filter(([, amount]) => amount > 0)
     .map(([ingredientId, amountPerDose]) => ({ ingredientId, amountPerDose: round(amountPerDose) }))
-  if (ingredients.length === 0) {
-    return {
-      product: null,
-      rules: [],
-      text: {},
-      skipped: 'no medicinal ingredient could be parsed',
-      warnings,
-    }
+  // Still worth importing: the barcode scans and the label text shows; only the
+  // duplicate-ingredient check has nothing to work with.
+  if (ingredients.length === 0 && kind !== 'topical') {
+    warnings.push(
+      recipe.nutritionFacts
+        ? `${id}: nutrition facts table (food); no medicinal ingredients`
+        : `${id}: no medicinal ingredient could be parsed from the facts`,
+    )
   }
 
   const use = parseSuggestedUse(en.suggested_use ?? '')
@@ -225,7 +244,8 @@ export function convertWebsiteProduct(w: WebsiteProduct, ctx: ImportContext): Co
     id,
     sku: primary.sku,
     upc: normalizeUpc(primary.upc),
-    npn,
+    ...(npn ? { npn } : {}),
+    kind,
     brand: BRAND,
     name: { en: en.name, ...(fr?.name ? { fr: fr.name } : {}) },
     shortName: { en: shortName(en.name), ...(fr?.name ? { fr: shortName(fr.name) } : {}) },
@@ -237,8 +257,8 @@ export function convertWebsiteProduct(w: WebsiteProduct, ctx: ImportContext): Co
     dosesPerDayDefault: use.dosesPerDay,
     ...(use.unitsPerDose ? { unitsPerDose: use.unitsPerDose } : {}),
     ...(use.unitLabel ? { unitLabel: use.unitLabel } : {}),
-    // Suggested use and warnings go to product-text.json (see ConvertResult.text); the raw
-    // supplement-facts text is not shipped at all, the parsed ingredient list stands in for it.
+    // Suggested use and warnings go to product-text.json (see ConvertResult.text); the parsed
+    // ingredient list stands in for the facts text, which ships only when nothing parsed.
     status: 'draft',
     labelVersion: w.identifiers.revision ?? 'unknown',
     ingredients,
@@ -265,6 +285,9 @@ export function convertWebsiteProduct(w: WebsiteProduct, ctx: ImportContext): Co
       en: en.warnings?.trim() || 'No warnings listed on the product page.',
       ...(fr?.warnings ? { fr: fr.warnings.trim() } : {}),
     },
+    ...(ingredients.length === 0 && en.recipe?.trim()
+      ? { facts: { en: en.recipe.trim(), ...(fr?.recipe ? { fr: fr.recipe.trim() } : {}) } }
+      : {}),
   }
   return { product, rules, text, skipped: null, warnings }
 }

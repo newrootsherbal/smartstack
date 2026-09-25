@@ -137,8 +137,7 @@ npm run data:import:website -- --refresh # re-downloads every record
 ```
 
 The importer (`packages/engine/scripts/import-website.ts`, parsers in
-`packages/engine/src/import/`) keeps only licensed natural health products (8-digit NPN) with a
-valid barcode and parsable supplement facts, then writes:
+`packages/engine/src/import/`) keeps every product that has a valid barcode, then writes:
 
 - `data/products.json`: one product per website record with EN/FR name, subtitle, suggested
   use, warnings, every variant's SKU and UPC, canonical ingredient amounts, the label's default

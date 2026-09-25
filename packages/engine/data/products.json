@@ -4,6 +4,7 @@
     "sku": "1730",
     "upc": "628747117302",
     "npn": "80039010",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Acetyl-L-Carnitine",
@@ -26,7 +27,7 @@
     "labelVersion": "R2",
     "ingredients": [
       {
-        "ingredientId": "acetyl-carnitine-hydrochloride-providing",
+        "ingredientId": "acetyl-carnitine-hydrochloride",
         "amountPerDose": 637.5
       },
       {
@@ -58,6 +59,7 @@
     "sku": "2456",
     "upc": "628747124560",
     "npn": "80086910",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Acidophilus Ultra + 15 Billion+",
@@ -120,6 +122,7 @@
     "sku": "0004",
     "upc": "628747100045",
     "npn": "80062961",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Acidophilus Ultra 11 Billion+",
@@ -206,6 +209,7 @@
     "sku": "1900",
     "upc": "628747119009",
     "npn": "80095778",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Active Folate (Capsules)",
@@ -264,6 +268,7 @@
     "sku": "2038",
     "upc": "628747120388",
     "npn": "80070154",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Active Folate (Tablets)",
@@ -322,6 +327,7 @@
     "sku": "3185",
     "upc": "628747131858",
     "npn": "80082220",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Active Mag",
@@ -385,6 +391,7 @@
     "sku": "1347",
     "upc": "628747113472",
     "npn": "80056719",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Adrenal",
@@ -451,6 +458,7 @@
     "sku": "1428",
     "upc": "628747114288",
     "npn": "80090511",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "AgeLess Telomeres",
@@ -517,6 +525,7 @@
     "sku": "0289",
     "upc": "628747102896",
     "npn": "80017722",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Alpha Lipoic 125 mg",
@@ -563,6 +572,7 @@
     "sku": "0770",
     "upc": "628747107709",
     "npn": "80017724",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Alpha Lipoic 250 mg",
@@ -609,6 +619,7 @@
     "sku": "2897",
     "upc": "628747128971",
     "npn": "80111291",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Alpha Lipoic Acid 600 mg",
@@ -659,6 +670,7 @@
     "sku": "1167",
     "upc": "628747111676",
     "npn": "80023663",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Amino-Mix",
@@ -781,6 +793,7 @@
     "sku": "1160",
     "upc": "628747111607",
     "npn": "80039209",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Anti-Inflamma",
@@ -803,7 +816,11 @@
     "labelVersion": "R7",
     "ingredients": [
       {
-        "ingredientId": "boswellia-oleogum-resin-70-organic-acid-providing-35-boswellic-acid",
+        "ingredientId": "boswellia-oleogum-resin-70-organic-acid",
+        "amountPerDose": 200
+      },
+      {
+        "ingredientId": "turmeric-root-extract-95-curcuminoids",
         "amountPerDose": 200
       },
       {
@@ -847,10 +864,66 @@
     "reviewedBy": null
   },
   {
+    "id": "argan-oil",
+    "sku": "1607",
+    "upc": "628747216074",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Argan Oil",
+      "fr": "Huile d’Argan"
+    },
+    "shortName": {
+      "en": "Argan Oil",
+      "fr": "Huile d’Argan"
+    },
+    "subtitle": {
+      "en": "Organic · Exotic Beauty Skincare Oil",
+      "fr": "Biologique · Huile exotique pour la peau"
+    },
+    "form": "liquid",
+    "servingSize": "1 bottle",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R5",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "1607",
+        "upc": "628747216074",
+        "size": {
+          "en": "50 ml",
+          "fr": "50 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      },
+      {
+        "sku": "1739",
+        "upc": "628747217392",
+        "size": {
+          "en": "15 ml",
+          "fr": "15 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/argan-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "ashwagandha",
     "sku": "2113",
     "upc": "628747121132",
     "npn": "80071783",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Ashwagandha",
@@ -913,6 +986,7 @@
     "sku": "3564",
     "upc": "628747135641",
     "npn": "80125583",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Astaxanthin",
@@ -963,6 +1037,7 @@
     "sku": "1157",
     "upc": "628747111577",
     "npn": "80023779",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Astragalus Defense",
@@ -1013,6 +1088,7 @@
     "sku": "1544",
     "upc": "628747215442",
     "npn": "80025918",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Astragalus Root",
@@ -1071,6 +1147,7 @@
     "sku": "2583",
     "upc": "628747925839",
     "npn": "80104440",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Astragalus Root Slices",
@@ -1119,6 +1196,7 @@
     "sku": "3429",
     "upc": "628747134293",
     "npn": "80126307",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "ATA Mg® Magnesium Acetyl Taurate",
@@ -1169,6 +1247,7 @@
     "sku": "2275",
     "upc": "628747222754",
     "npn": "80083590",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "B12 Liquid",
@@ -1219,6 +1298,7 @@
     "sku": "1412",
     "upc": "628747114127",
     "npn": "80033471",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Bee Pollen",
@@ -1265,10 +1345,97 @@
     "reviewedBy": null
   },
   {
+    "id": "beef-bone-broth-protein",
+    "sku": "2293",
+    "upc": "628747022934",
+    "kind": "food",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Beef Bone Broth Protein",
+      "fr": "Protéine de Bouillon d’Os de Bœuf"
+    },
+    "shortName": {
+      "en": "Beef Bone Broth Protein",
+      "fr": "Protéine de Bouillon d’Os de Bœuf"
+    },
+    "subtitle": {
+      "en": "Grass-Fed",
+      "fr": "Nourri en pâturage"
+    },
+    "form": "powder",
+    "servingSize": "3 rounded tbsp. (30 g)",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2293",
+        "upc": "628747022934",
+        "size": {
+          "en": "300 g",
+          "fr": "300 g"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/beef-bone-broth-protein",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "beef-bone-broth-protein-organic-fermented-ginger",
+    "sku": "2462",
+    "upc": "628747024624",
+    "kind": "food",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Beef Bone Broth Protein + Organic Fermented Ginger",
+      "fr": "Protéine de Bouillon d’Os de Bœuf + Gingembre Fermenté Biologique"
+    },
+    "shortName": {
+      "en": "Beef Bone Broth Protein",
+      "fr": "Protéine de Bouillon d’Os de Bœuf"
+    },
+    "subtitle": {
+      "en": "Grass-Fed · Antibiotic-, BSE- and Hormone-Free",
+      "fr": "Nourri en pâturage · Sans antibiotiques, ESB, ni hormones"
+    },
+    "form": "powder",
+    "servingSize": "3 rounded tbsp. (30 g)",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2462",
+        "upc": "628747024624",
+        "size": {
+          "en": "300 g",
+          "fr": "300 g"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/beef-bone-broth-protein-organic-fermented-ginger",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "benfotiamine",
     "sku": "2352",
     "upc": "628747123525",
     "npn": "80086082",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Benfotiamine",
@@ -1335,6 +1502,7 @@
     "sku": "2483",
     "upc": "628747124836",
     "npn": "80093363",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Berberine",
@@ -1385,10 +1553,105 @@
     "reviewedBy": null
   },
   {
+    "id": "bergamot-essential-oil",
+    "sku": "3199",
+    "upc": "628747231992",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Bergamot Essential Oil",
+      "fr": "Huille Essentielle de Bergamote"
+    },
+    "shortName": {
+      "en": "Bergamot Essential Oil",
+      "fr": "Huille Essentielle de Bergamote"
+    },
+    "subtitle": {
+      "en": "100% Pure · Clean",
+      "fr": "100 % pure · Saine"
+    },
+    "form": "liquid",
+    "servingSize": "1 drop",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "3199",
+        "upc": "628747231992",
+        "size": {
+          "en": "30 ml",
+          "fr": "30 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/bergamot-essential-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "beta-carotene",
+    "sku": "0774",
+    "upc": "628747107747",
+    "npn": "80087568",
+    "kind": "nhp",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Beta-Carotene",
+      "fr": "Bêta-Carotène"
+    },
+    "shortName": {
+      "en": "Beta-Carotene",
+      "fr": "Bêta-Carotène"
+    },
+    "subtitle": {
+      "en": "25,000 IU · Provitamin A",
+      "fr": "25 000 UI · Provitamine A"
+    },
+    "form": "softgel",
+    "servingSize": "1 softgel",
+    "dosesPerDayDefault": 1,
+    "unitsPerDose": 1,
+    "unitLabel": "softgel",
+    "status": "draft",
+    "labelVersion": "R4",
+    "ingredients": [
+      {
+        "ingredientId": "vitamin-a-iu",
+        "amountPerDose": 25000
+      }
+    ],
+    "variants": [
+      {
+        "sku": "0774",
+        "upc": "628747107747",
+        "size": {
+          "en": "90",
+          "fr": "90"
+        },
+        "format": {
+          "en": "Softgels",
+          "fr": "Gélules"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/beta-carotene",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "bifido-builder-42-billion",
     "sku": "3037",
     "upc": "628747130370",
     "npn": "80135089",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Bifido Builder 42 Billion+",
@@ -1443,6 +1706,7 @@
     "sku": "3040",
     "upc": "628747130400",
     "npn": "80135031",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Bifido Infantis 5 Billion+",
@@ -1497,6 +1761,7 @@
     "sku": "2321",
     "upc": "628747123211",
     "npn": "80083274",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Biotin",
@@ -1547,6 +1812,7 @@
     "sku": "0777",
     "upc": "628747107778",
     "npn": "80023952",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Black Cohosh Root Extract",
@@ -1597,10 +1863,69 @@
     "reviewedBy": null
   },
   {
+    "id": "black-cumin-seed-oil-liquid",
+    "sku": "2225",
+    "upc": "628747222259",
+    "npn": "80080852",
+    "kind": "nhp",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Black Cumin Seed Oil (Liquid)",
+      "fr": "Cumin Noir (Huile de Graine) Liquide"
+    },
+    "shortName": {
+      "en": "Black Cumin Seed Oil",
+      "fr": "Cumin Noir"
+    },
+    "subtitle": {
+      "en": "Organic",
+      "fr": "Biologique"
+    },
+    "form": "liquid",
+    "servingSize": "1 teaspoon",
+    "dosesPerDayDefault": 2,
+    "unitsPerDose": 0.5,
+    "unitLabel": "teaspoon",
+    "status": "draft",
+    "labelVersion": "R2",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2225",
+        "upc": "628747222259",
+        "size": {
+          "en": "200 ml",
+          "fr": "200 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      },
+      {
+        "sku": "2226",
+        "upc": "628747222266",
+        "size": {
+          "en": "100 ml",
+          "fr": "100 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/black-cumin-seed-oil-liquid",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "black-cumin-seed-oil-softgels-500-mg",
     "sku": "0130",
     "upc": "628747201308",
     "npn": "80035939",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Black Cumin Seed Oil (Softgels) 500 mg",
@@ -1663,6 +1988,7 @@
     "sku": "3139",
     "upc": "628747131391",
     "npn": "80095308",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Black Cumin Seed Oil 1,000 mg Extra Strength",
@@ -1713,6 +2039,7 @@
     "sku": "0997",
     "upc": "628747109970",
     "npn": "80106851",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Black Walnut Green Hull",
@@ -1763,6 +2090,7 @@
     "sku": "1627",
     "upc": "628747216272",
     "npn": "80031291",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Black Walnut Hull",
@@ -1825,6 +2153,7 @@
     "sku": "0841",
     "upc": "628747108416",
     "npn": "80112105",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Black Walnut Leaf and Hull",
@@ -1879,6 +2208,7 @@
     "sku": "1086",
     "upc": "628747110860",
     "npn": "80068848",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Blood Sugar Balance",
@@ -1997,10 +2327,79 @@
     "reviewedBy": null
   },
   {
+    "id": "body-muscle-massage",
+    "sku": "0341",
+    "upc": "628747203418",
+    "npn": "80054950",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Body Muscle Massage",
+      "fr": "Musculo-Massage"
+    },
+    "shortName": {
+      "en": "Body Muscle Massage",
+      "fr": "Musculo-Massage"
+    },
+    "subtitle": {
+      "en": "Pain Relief",
+      "fr": "Analgésique"
+    },
+    "form": "liquid",
+    "servingSize": "1 liquid",
+    "dosesPerDayDefault": 3,
+    "status": "draft",
+    "labelVersion": "R3",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "0341",
+        "upc": "628747203418",
+        "size": {
+          "en": "250 ml",
+          "fr": "250 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      },
+      {
+        "sku": "0732",
+        "upc": "628747207324",
+        "size": {
+          "en": "500 ml",
+          "fr": "500 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      },
+      {
+        "sku": "1198",
+        "upc": "628747211987",
+        "size": {
+          "en": "125 ml",
+          "fr": "125 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/body-muscle-massage",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "borage-oil-softgels",
     "sku": "0775",
     "upc": "628747107754",
     "npn": "80097675",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Borage Oil (Softgels)",
@@ -2067,6 +2466,7 @@
     "sku": "0436",
     "upc": "628747104364",
     "npn": "80044094",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Boron",
@@ -2117,6 +2517,7 @@
     "sku": "2096",
     "upc": "628747120968",
     "npn": "80072262",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Boswellia",
@@ -2139,7 +2540,7 @@
     "labelVersion": "R2",
     "ingredients": [
       {
-        "ingredientId": "boswellia-oleogum-resin-70-organic-acid-providing-35-boswellic-acid",
+        "ingredientId": "boswellia-oleogum-resin-70-organic-acid",
         "amountPerDose": 380
       }
     ],
@@ -2167,6 +2568,7 @@
     "sku": "3576",
     "upc": "628747135764",
     "npn": "80119513",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Bronchio Buster",
@@ -2213,7 +2615,7 @@
         "amountPerDose": 30
       },
       {
-        "ingredientId": "reishi-mushroom-extract-40-polysaccharides-providing-30-beta-glucans",
+        "ingredientId": "reishi-mushroom-extract-40-polysaccharides",
         "amountPerDose": 30
       },
       {
@@ -2269,6 +2671,7 @@
     "sku": "0229",
     "upc": "628747102292",
     "npn": "80028481",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Cal-Mag Citrate With Zinc, Potassium, Selenium",
@@ -2368,6 +2771,7 @@
     "sku": "1468",
     "upc": "628747114684",
     "npn": "80033666",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Cal-Mag Citrates Vitamin D, Zinc, Silica, and Boron",
@@ -2467,6 +2871,7 @@
     "sku": "0319",
     "upc": "628747103190",
     "npn": "80061748",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Calcium Citrate and Vitamin D3",
@@ -2517,6 +2922,7 @@
     "sku": "2277",
     "upc": "628747122771",
     "npn": "80083170",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Calcium ᴅ‑Glucarate",
@@ -2567,6 +2973,7 @@
     "sku": "0021",
     "upc": "628747100212",
     "npn": "80066778",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Candida Stop",
@@ -2657,6 +3064,7 @@
     "sku": "0022",
     "upc": "628747100229",
     "npn": "80041615",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Caprylic Acid Plus",
@@ -2731,6 +3139,7 @@
     "sku": "1170",
     "upc": "628747111706",
     "npn": "80069470",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Cardio Flow",
@@ -2834,6 +3243,7 @@
     "sku": "1474",
     "upc": "628747114745",
     "npn": "80016113",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Cascara Sagrada",
@@ -2884,10 +3294,54 @@
     "reviewedBy": null
   },
   {
+    "id": "cedarwood-essential-oil",
+    "sku": "3200",
+    "upc": "628747232005",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Cedarwood Essential Oil",
+      "fr": "Huille Essentielle de Cèdre"
+    },
+    "shortName": {
+      "en": "Cedarwood Essential Oil",
+      "fr": "Huille Essentielle de Cèdre"
+    },
+    "subtitle": {
+      "en": "100% Pure · Clean",
+      "fr": "100 % pure · Saine"
+    },
+    "form": "liquid",
+    "servingSize": "1 drop",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "3200",
+        "upc": "628747232005",
+        "size": {
+          "en": "30 ml",
+          "fr": "30 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/cedarwood-essential-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "chaga-extract",
     "sku": "1936",
     "upc": "628747119368",
     "npn": "80055779",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Chaga Extract",
@@ -2910,7 +3364,7 @@
     "labelVersion": "R1",
     "ingredients": [
       {
-        "ingredientId": "chaga-mushroom-extract-standardized-to-40-polysaccharides",
+        "ingredientId": "chaga-mushroom-extract",
         "amountPerDose": 350
       }
     ],
@@ -2934,10 +3388,55 @@
     "reviewedBy": null
   },
   {
+    "id": "chaga-tea",
+    "sku": "2093",
+    "upc": "628747920933",
+    "npn": "80069451",
+    "kind": "nhp",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Chaga Tea",
+      "fr": "Thé Chaga"
+    },
+    "shortName": {
+      "en": "Chaga Tea",
+      "fr": "Thé Chaga"
+    },
+    "subtitle": {
+      "en": "Immunity",
+      "fr": "Immunité"
+    },
+    "form": "powder",
+    "servingSize": "1 powder",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2093",
+        "upc": "628747920933",
+        "size": {
+          "en": "100 g",
+          "fr": "100 g"
+        },
+        "format": {
+          "en": "Tea",
+          "fr": "Thé"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/chaga-tea",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "chanca-piedra",
     "sku": "3643",
     "upc": "628747136433",
     "npn": "80139716",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Chanca Piedra",
@@ -2992,6 +3491,7 @@
     "sku": "2730",
     "upc": "628747127301",
     "npn": "80085697",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Children’s ADHD Balance",
@@ -3048,10 +3548,54 @@
     "reviewedBy": null
   },
   {
+    "id": "childrens-elderberry-juice-powder",
+    "sku": "3242",
+    "upc": "628747032421",
+    "kind": "food",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Children’s Elderberry Juice Powder",
+      "fr": "Poudre de Jus de Sureau pour Enfants"
+    },
+    "shortName": {
+      "en": "Children’s Elderberry Juice Powder",
+      "fr": "Poudre de Jus de Sureau pour Enfants"
+    },
+    "subtitle": {
+      "en": "160+ Berries per Portion",
+      "fr": "160+ baies par portion"
+    },
+    "form": "powder",
+    "servingSize": "1 teaspoon (2.9 g)",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "3242",
+        "upc": "628747032421",
+        "size": {
+          "en": "100 g / 34 portions",
+          "fr": "100 g / 34 portions"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/childrens-elderberry-juice-powder",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "childrens-omega-3",
     "sku": "1856",
     "upc": "628747118569",
     "npn": "80080677",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Children’s Omega-3",
@@ -3108,6 +3652,7 @@
     "sku": "1821",
     "upc": "628747018210",
     "npn": "80136123",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Children’s Probiotic 10 Billion+",
@@ -3160,6 +3705,7 @@
     "sku": "1930",
     "upc": "628747219303",
     "npn": "80054011",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Children’s Vitamin D3",
@@ -3210,6 +3756,7 @@
     "sku": "1654",
     "upc": "628747116541",
     "npn": "80073330",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Chlorella (Capsules)",
@@ -3272,6 +3819,7 @@
     "sku": "1647",
     "upc": "628747016476",
     "npn": "80073351",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Chlorella (Powder)",
@@ -3334,6 +3882,7 @@
     "sku": "1837",
     "upc": "628747118378",
     "npn": "80068512",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Cho-less-terin",
@@ -3408,6 +3957,7 @@
     "sku": "0304",
     "upc": "628747103046",
     "npn": "80024259",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Chondroitin and Glucosamine",
@@ -3470,6 +4020,7 @@
     "sku": "0287",
     "upc": "628747102872",
     "npn": "80020089",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Chromium Picolinate 200 mcg",
@@ -3516,6 +4067,7 @@
     "sku": "0444",
     "upc": "628747104449",
     "npn": "80020092",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Chromium Picolinate 500 mcg",
@@ -3558,10 +4110,54 @@
     "reviewedBy": null
   },
   {
+    "id": "citronella-essential-oil",
+    "sku": "3208",
+    "upc": "628747232081",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Citronella Essential Oil",
+      "fr": "Huille Essentielle de Citronnelle"
+    },
+    "shortName": {
+      "en": "Citronella Essential Oil",
+      "fr": "Huille Essentielle de Citronnelle"
+    },
+    "subtitle": {
+      "en": "100% Pure · Clean",
+      "fr": "100 % pure · Saine"
+    },
+    "form": "liquid",
+    "servingSize": "1 drop",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "3208",
+        "upc": "628747232081",
+        "size": {
+          "en": "30 ml",
+          "fr": "30 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/citronella-essential-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "citrus-bioflavonoids",
     "sku": "0240",
     "upc": "628747102407",
     "npn": "80031507",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Citrus Bioflavonoids",
@@ -3620,6 +4216,7 @@
     "sku": "2337",
     "upc": "628747123372",
     "npn": "80084052",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Clarity Mag",
@@ -3683,10 +4280,98 @@
     "reviewedBy": null
   },
   {
+    "id": "clary-sage-essential-oil",
+    "sku": "3201",
+    "upc": "628747232012",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Clary Sage Essential Oil",
+      "fr": "Huille Essentielle de Sauge Sclarée"
+    },
+    "shortName": {
+      "en": "Clary Sage Essential Oil",
+      "fr": "Huille Essentielle de Sauge Sclarée"
+    },
+    "subtitle": {
+      "en": "100% Pure · Clean",
+      "fr": "100 % pure · Saine"
+    },
+    "form": "liquid",
+    "servingSize": "1 drop",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "3201",
+        "upc": "628747232012",
+        "size": {
+          "en": "30 ml",
+          "fr": "30 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/clary-sage-essential-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "clove-bud-essential-oil",
+    "sku": "2186",
+    "upc": "628747221863",
+    "npn": "80076494",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Clove Bud Essential Oil",
+      "fr": "Huile Essentielle de Clou de Girofle"
+    },
+    "shortName": {
+      "en": "Clove Bud Essential Oil",
+      "fr": "Huile Essentielle de Clou de Girofle"
+    },
+    "subtitle": {
+      "en": "Organic · Sygygium aromaticum",
+      "fr": "Biologique · Sygygium aromaticum"
+    },
+    "form": "liquid",
+    "servingSize": "1 drop",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2186",
+        "upc": "628747221863",
+        "size": {
+          "en": "15 ml",
+          "fr": "15 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/clove-bud-essential-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "cloves",
     "sku": "0250",
     "upc": "628747102506",
     "npn": "80029855",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Cloves",
@@ -3737,6 +4422,7 @@
     "sku": "0288",
     "upc": "628747102889",
     "npn": "80024928",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Co-Enzyme Q10 · 100 mg",
@@ -3783,6 +4469,7 @@
     "sku": "2072",
     "upc": "628747120722",
     "npn": "80071034",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Co-Enzyme Q10 · 200 mg",
@@ -3841,6 +4528,7 @@
     "sku": "0679",
     "upc": "628747106795",
     "npn": "80009241",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Co-Enzyme Q10 · 30 mg",
@@ -3887,6 +4575,7 @@
     "sku": "1290",
     "upc": "628747112901",
     "npn": "80106303",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Co-Enzyme Q10 · 300 mg",
@@ -3933,6 +4622,7 @@
     "sku": "0682",
     "upc": "628747106825",
     "npn": "80009243",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Co-Enzyme Q10 · 60 mg",
@@ -3975,10 +4665,66 @@
     "reviewedBy": null
   },
   {
+    "id": "coconut-mct-oil",
+    "sku": "2414",
+    "upc": "628747224147",
+    "kind": "food",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Coconut MCT Oil",
+      "fr": "Huile de TCM de Noix de Coco"
+    },
+    "shortName": {
+      "en": "Coconut MCT Oil",
+      "fr": "Huile de TCM de Noix de Coco"
+    },
+    "subtitle": {
+      "en": "Medium-Chain Triglycerides",
+      "fr": "Medium-Chain Triglycerides"
+    },
+    "form": "liquid",
+    "servingSize": "1 tbsp. (15 ml)",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2414",
+        "upc": "628747224147",
+        "size": {
+          "en": "500 ml",
+          "fr": "500 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      },
+      {
+        "sku": "2415",
+        "upc": "628747224154",
+        "size": {
+          "en": "1 litre",
+          "fr": "1 litre"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/coconut-mct-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "cold-flu",
     "sku": "2203",
     "upc": "628747122030",
     "npn": "80105919",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Cold & Flu",
@@ -4073,6 +4819,7 @@
     "sku": "2153",
     "upc": "628747121538",
     "npn": "80136131",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Colon Care Probiotics 90 Billion+",
@@ -4127,6 +4874,7 @@
     "sku": "0273",
     "upc": "628747102735",
     "npn": "80069549",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Colostrum",
@@ -4201,6 +4949,7 @@
     "sku": "0872",
     "upc": "628747008723",
     "npn": "80032126",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Colostrum",
@@ -4247,6 +4996,7 @@
     "sku": "3167",
     "upc": "628747131674",
     "npn": "80119472",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Copper",
@@ -4297,6 +5047,7 @@
     "sku": "1866",
     "upc": "628747118668",
     "npn": "80110671",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Cordyceps",
@@ -4319,7 +5070,7 @@
     "labelVersion": "R3",
     "ingredients": [
       {
-        "ingredientId": "cordyceps-mushroom-extract-standardized-to-40-polysaccharides-20-beta-glucans",
+        "ingredientId": "cordyceps-mushroom-extract",
         "amountPerDose": 500
       }
     ],
@@ -4343,10 +5094,62 @@
     "reviewedBy": null
   },
   {
+    "id": "cordyceps-militaris",
+    "sku": "2672",
+    "upc": "628747126724",
+    "npn": "80105570",
+    "kind": "nhp",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Cordyceps Militaris",
+      "fr": "Cordyceps Militaris"
+    },
+    "shortName": {
+      "en": "Cordyceps Militaris",
+      "fr": "Cordyceps Militaris"
+    },
+    "subtitle": {
+      "en": "Hot-Water Extract · 20% beta‑Glucans from 40% Polysaccharides · 400 mg",
+      "fr": "Extrait à l’eau chaude · 20 % de bêta-glucanes de 40 % de polysaccharides · 400 mg"
+    },
+    "form": "capsule",
+    "servingSize": "1 capsule",
+    "dosesPerDayDefault": 2,
+    "unitsPerDose": 1,
+    "unitLabel": "capsule",
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [
+      {
+        "ingredientId": "cordyceps-mushroom-fruiting-body-extract",
+        "amountPerDose": 400
+      }
+    ],
+    "variants": [
+      {
+        "sku": "2672",
+        "upc": "628747126724",
+        "size": {
+          "en": "60",
+          "fr": "60"
+        },
+        "format": {
+          "en": "Vegetable Capsules",
+          "fr": "Capsules végétales"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/cordyceps-militaris",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "coriolus-powder",
     "sku": "2578",
     "upc": "628747025782",
     "npn": "80105459",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Coriolus Powder",
@@ -4397,6 +5200,7 @@
     "sku": "1051",
     "upc": "628747110518",
     "npn": "80021849",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Cranberry",
@@ -4439,10 +5243,54 @@
     "reviewedBy": null
   },
   {
+    "id": "cranberry-seed-oil",
+    "sku": "2101",
+    "upc": "628747221016",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Cranberry Seed Oil",
+      "fr": "Huile de Pépin de Canneberge"
+    },
+    "shortName": {
+      "en": "Cranberry Seed Oil",
+      "fr": "Huile de Pépin de Canneberge"
+    },
+    "subtitle": {
+      "en": "Organic · Exotic Beauty Skincare Oil",
+      "fr": "Biologique · Huile exotique pour la peau"
+    },
+    "form": "liquid",
+    "servingSize": "1 bottle",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R2",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2101",
+        "upc": "628747221016",
+        "size": {
+          "en": "15 ml",
+          "fr": "15 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/cranberry-seed-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "creatine-powder",
     "sku": "3627",
     "upc": "628747036276",
     "npn": "80019922",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Creatine Powder",
@@ -4493,6 +5341,7 @@
     "sku": "1154",
     "upc": "628747111546",
     "npn": "80093664",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Curcumin Plus Piperine",
@@ -4514,6 +5363,10 @@
     "status": "draft",
     "labelVersion": "R3",
     "ingredients": [
+      {
+        "ingredientId": "turmeric-root-extract-95-curcuminoids",
+        "amountPerDose": 500
+      },
       {
         "ingredientId": "black-pepper-fruit-extract-95-piperine",
         "amountPerDose": 5
@@ -4543,6 +5396,7 @@
     "sku": "1549",
     "upc": "628747015493",
     "npn": "80112942",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "D-Mannose & Cranberry",
@@ -4599,6 +5453,7 @@
     "sku": "2644",
     "upc": "628747026444",
     "npn": "80102333",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "D-Mannose Powder",
@@ -4659,6 +5514,7 @@
     "sku": "0294",
     "upc": "628747002943",
     "npn": "80041899",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "D-Ribose",
@@ -4733,6 +5589,7 @@
     "sku": "1974",
     "upc": "628747119740",
     "npn": "80056812",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "D-Stress",
@@ -4807,6 +5664,7 @@
     "sku": "0835",
     "upc": "628747108355",
     "npn": "80035276",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Dandelion Root and Celery Seed",
@@ -4861,6 +5719,7 @@
     "sku": "0834",
     "upc": "628747108348",
     "npn": "80009416",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Devil’s Claw",
@@ -4911,6 +5770,7 @@
     "sku": "0224",
     "upc": "628747102247",
     "npn": "80090702",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Digestive Enzymes",
@@ -4985,6 +5845,7 @@
     "sku": "0962",
     "upc": "628747109628",
     "npn": "80114865",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "DMG",
@@ -5031,10 +5892,63 @@
     "reviewedBy": null
   },
   {
+    "id": "dmso-liquid",
+    "sku": "1968",
+    "upc": "628747219686",
+    "npn": "80058315",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "DMSO Liquid",
+      "fr": "DMSO Liquide"
+    },
+    "shortName": {
+      "en": "DMSO Liquid",
+      "fr": "DMSO Liquide"
+    },
+    "form": "liquid",
+    "servingSize": "1 liquid",
+    "dosesPerDayDefault": 3,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "1968",
+        "upc": "628747219686",
+        "size": {
+          "en": "50 ml",
+          "fr": "50 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      },
+      {
+        "sku": "3599",
+        "upc": "628747235990",
+        "size": {
+          "en": "100 ml (previously 95 ml)",
+          "fr": "100 ml (précédemment 95 ml)"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/dmso-liquid",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "dong-quai",
     "sku": "0388",
     "upc": "628747103886",
     "npn": "80039734",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Dong Quai",
@@ -5085,6 +5999,7 @@
     "sku": "1708",
     "upc": "628747217088",
     "npn": "80051823",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Echinacea",
@@ -5147,6 +6062,7 @@
     "sku": "2566",
     "upc": "628747225663",
     "npn": "80112083",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Elderberry ResQ Fruit Tincture",
@@ -5209,6 +6125,7 @@
     "sku": "2568",
     "upc": "628747225687",
     "npn": "80108530",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Elderflower ResQ Organic Tincture",
@@ -5271,6 +6188,7 @@
     "sku": "0209",
     "upc": "628747102094",
     "npn": "80045018",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Energy",
@@ -5345,10 +6263,141 @@
     "reviewedBy": null
   },
   {
+    "id": "essential-oils-gift-set",
+    "sku": "K3425",
+    "upc": "628747534253",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Essential Oils Gift Set",
+      "fr": "Huiles essentielles (Coffret cadeau)"
+    },
+    "shortName": {
+      "en": "Essential Oils Gift Set",
+      "fr": "Huiles essentielles"
+    },
+    "subtitle": {
+      "en": "100% Pure and Clean Essential Oils",
+      "fr": "Huiles essentielles 100 % pures et saines"
+    },
+    "form": "other",
+    "servingSize": "1 serving",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "K3425",
+        "upc": "628747534253",
+        "size": {
+          "en": "Gift Pack",
+          "fr": "Emballage-cadeau"
+        },
+        "format": {
+          "en": "Set",
+          "fr": "Coffret"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/essential-oils-gift-set",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "eucalyptus-essential-oil",
+    "sku": "2138",
+    "upc": "628747221382",
+    "npn": "80071187",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Eucalyptus Essential Oil",
+      "fr": "Huile Essentielle d’Eucalyptus"
+    },
+    "shortName": {
+      "en": "Eucalyptus Essential Oil",
+      "fr": "Huile Essentielle d’Eucalyptus"
+    },
+    "subtitle": {
+      "en": "Organic · Eucalyptus globulus",
+      "fr": "Biologique · Eucalyptus globulus"
+    },
+    "form": "liquid",
+    "servingSize": "1 drop",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2138",
+        "upc": "628747221382",
+        "size": {
+          "en": "15 ml",
+          "fr": "15 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/eucalyptus-essential-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "eucalyptus-essential-oil-1",
+    "sku": "3202",
+    "upc": "628747232029",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Eucalyptus Essential Oil",
+      "fr": "Huille Essentielle d’Eucalyptus"
+    },
+    "shortName": {
+      "en": "Eucalyptus Essential Oil",
+      "fr": "Huille Essentielle d’Eucalyptus"
+    },
+    "subtitle": {
+      "en": "100% Pure · Clean",
+      "fr": "100 % pure · Saine"
+    },
+    "form": "liquid",
+    "servingSize": "1 drop",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "3202",
+        "upc": "628747232029",
+        "size": {
+          "en": "30 ml",
+          "fr": "30 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/eucalyptus-essential-oil-1",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "evening-primrose-oil-1000-mg",
     "sku": "1438",
     "upc": "628747114387",
     "npn": "80092916",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Evening Primrose Oil 1,000 mg",
@@ -5419,6 +6468,7 @@
     "sku": "0413",
     "upc": "628747104135",
     "npn": "80092918",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Evening Primrose Oil 500 mg",
@@ -5485,10 +6535,50 @@
     "reviewedBy": null
   },
   {
+    "id": "exotic-oils-gift-set-english-version",
+    "sku": "K3407",
+    "upc": "628747534079",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Exotic Oils Gift Set (English version)",
+      "fr": "Huiles exotiques (Coffret-cadeau) (Version anglaise)"
+    },
+    "shortName": {
+      "en": "Exotic Oils Gift Set",
+      "fr": "Huiles exotiques"
+    },
+    "form": "other",
+    "servingSize": "1 set",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "K3407",
+        "upc": "628747534079",
+        "size": {
+          "en": "Gift Pack",
+          "fr": "Emballage-cadeau"
+        },
+        "format": {
+          "en": "Set",
+          "fr": "Coffret"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/exotic-oils-gift-set-english-version",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "eyesurance",
     "sku": "2724",
     "upc": "628747127240",
     "npn": "80109354",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "EyeSurance",
@@ -5555,6 +6645,7 @@
     "sku": "1065",
     "upc": "628747110655",
     "npn": "80041956",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Femina Flora 10 Billion+",
@@ -5603,6 +6694,7 @@
     "sku": "2168",
     "upc": "628747121682",
     "npn": "80116921",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Femina Flora Oral 55 Billion+",
@@ -5653,10 +6745,183 @@
     "reviewedBy": null
   },
   {
+    "id": "fermented-ginger",
+    "sku": "2279",
+    "upc": "628747022798",
+    "kind": "food",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Fermented Ginger",
+      "fr": "Gingembre Fermenté"
+    },
+    "shortName": {
+      "en": "Fermented Ginger",
+      "fr": "Gingembre Fermenté"
+    },
+    "subtitle": {
+      "en": "Organic · Whole-Food Powder",
+      "fr": "Biologique · Poudre d’aliment complet"
+    },
+    "form": "powder",
+    "servingSize": "1 tsp. (3 g)",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2279",
+        "upc": "628747022798",
+        "size": {
+          "en": "150 g",
+          "fr": "150 g"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/fermented-ginger",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "fermented-red-beet",
+    "sku": "2340",
+    "upc": "628747023405",
+    "kind": "food",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Fermented Red Beet",
+      "fr": "Betterave Rouge Fermentée"
+    },
+    "shortName": {
+      "en": "Fermented Red Beet",
+      "fr": "Betterave Rouge Fermentée"
+    },
+    "subtitle": {
+      "en": "Organic · Whole-Food Powder",
+      "fr": "Biologique · Poudre d’aliment complet"
+    },
+    "form": "powder",
+    "servingSize": "1 tsp. (3 g)",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2340",
+        "upc": "628747023405",
+        "size": {
+          "en": "150 g / 50 portions",
+          "fr": "150 g / 50 portions"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/fermented-red-beet",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "fermented-superfood-blend-inulin-from-jerusalem-artichoke",
+    "sku": "2341",
+    "upc": "628747023412",
+    "kind": "food",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Fermented Superfood Blend + Inulin from Jerusalem Artichoke",
+      "fr": "Superaliments Fermentés + Inuline de topinambour"
+    },
+    "shortName": {
+      "en": "Fermented Superfood Blend",
+      "fr": "Superaliments Fermentés"
+    },
+    "subtitle": {
+      "en": "Organic · 29 Fully Fermented Plants",
+      "fr": "Biologique · 29 plantes entièrement fermentées"
+    },
+    "form": "powder",
+    "servingSize": "1½ tbsp. (11 g)",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2341",
+        "upc": "628747023412",
+        "size": {
+          "en": "230 g / 21 portions",
+          "fr": "230 g / 21 portions"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/fermented-superfood-blend-inulin-from-jerusalem-artichoke",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "fermented-turmeric",
+    "sku": "2281",
+    "upc": "628747022811",
+    "kind": "food",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Fermented Turmeric",
+      "fr": "Curcuma Fermenté"
+    },
+    "shortName": {
+      "en": "Fermented Turmeric",
+      "fr": "Curcuma Fermenté"
+    },
+    "subtitle": {
+      "en": "Organic · Whole-Food Powder",
+      "fr": "Biologique · Poudre d’aliment complet"
+    },
+    "form": "powder",
+    "servingSize": "1 tsp. (3 g)",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2281",
+        "upc": "628747022811",
+        "size": {
+          "en": "150 g / 50 portions",
+          "fr": "150 g / 50 portions"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/fermented-turmeric",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "fibre-ultra-rich-psyllium-capsules",
     "sku": "0396",
     "upc": "628747103961",
     "npn": "80032690",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Fibre Ultra Rich - Psyllium (Capsules)",
@@ -5723,6 +6988,7 @@
     "sku": "0166",
     "upc": "628747001663",
     "npn": "80044396",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Fibre Ultra Rich – Plantago + Inulin (Powder)",
@@ -5785,6 +7051,7 @@
     "sku": "0085",
     "upc": "628747000857",
     "npn": "80034692",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Fibre Ultra Rich Psyllium + Inulin (Powder)",
@@ -5805,6 +7072,14 @@
       {
         "ingredientId": "psyllium-husk",
         "amountPerDose": 1945
+      },
+      {
+        "ingredientId": "roselle",
+        "amountPerDose": 36
+      },
+      {
+        "ingredientId": "clove-flower-bud",
+        "amountPerDose": 6
       }
     ],
     "variants": [
@@ -5843,6 +7118,7 @@
     "sku": "0590",
     "upc": "628747105903",
     "npn": "80015256",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Flaxseed Oil",
@@ -5901,6 +7177,7 @@
     "sku": "0332",
     "upc": "628747103329",
     "npn": "80079876",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Forsight",
@@ -6027,6 +7304,7 @@
     "sku": "2136",
     "upc": "628747121361",
     "npn": "80074264",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "GABA",
@@ -6093,6 +7371,7 @@
     "sku": "1943",
     "upc": "628747119436",
     "npn": "80054640",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Garcinia Cambogia",
@@ -6139,10 +7418,54 @@
     "reviewedBy": null
   },
   {
+    "id": "geranium-essential-oil",
+    "sku": "3204",
+    "upc": "628747232043",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Geranium Essential Oil",
+      "fr": "Huille Essentielle de Géranium"
+    },
+    "shortName": {
+      "en": "Geranium Essential Oil",
+      "fr": "Huille Essentielle de Géranium"
+    },
+    "subtitle": {
+      "en": "100% Pure · Clean",
+      "fr": "100 % pure · Saine"
+    },
+    "form": "liquid",
+    "servingSize": "1 drop",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "3204",
+        "upc": "628747232043",
+        "size": {
+          "en": "30 ml",
+          "fr": "30 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/geranium-essential-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "ginger-195-mg",
     "sku": "2319",
     "upc": "628747123198",
     "npn": "80087672",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Ginger 195 mg",
@@ -6197,6 +7520,7 @@
     "sku": "0830",
     "upc": "628747108300",
     "npn": "80013871",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Ginger 475 mg",
@@ -6243,10 +7567,54 @@
     "reviewedBy": null
   },
   {
+    "id": "ginger-essential-oil",
+    "sku": "3205",
+    "upc": "628747232050",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Ginger Essential Oil",
+      "fr": "Huille Essentielle de Gingembre"
+    },
+    "shortName": {
+      "en": "Ginger Essential Oil",
+      "fr": "Huille Essentielle de Gingembre"
+    },
+    "subtitle": {
+      "en": "100% Pure · Clean",
+      "fr": "100 % pure · Saine"
+    },
+    "form": "liquid",
+    "servingSize": "1 drop",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "3205",
+        "upc": "628747232050",
+        "size": {
+          "en": "30 ml",
+          "fr": "30 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/ginger-essential-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "ginkgo-biloba",
     "sku": "0790",
     "upc": "628747107907",
     "npn": "80022257",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Ginkgo Biloba",
@@ -6313,6 +7681,7 @@
     "sku": "0614",
     "upc": "628747106146",
     "npn": "80010450",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Glucosamine Sulfate 500 mg",
@@ -6371,6 +7740,7 @@
     "sku": "0617",
     "upc": "628747106177",
     "npn": "80043822",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Glucosamine Sulfate 750 mg",
@@ -6417,6 +7787,7 @@
     "sku": "3030",
     "upc": "628747130301",
     "npn": "80121138",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Glucose Align",
@@ -6491,6 +7862,7 @@
     "sku": "0598",
     "upc": "628747105989",
     "npn": "80025650",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Glutathione",
@@ -6553,10 +7925,54 @@
     "reviewedBy": null
   },
   {
+    "id": "goji-seed-oil",
+    "sku": "1599",
+    "upc": "628747215992",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Goji Seed Oil",
+      "fr": "Huile de Graine de Goji"
+    },
+    "shortName": {
+      "en": "Goji Seed Oil",
+      "fr": "Huile de Graine de Goji"
+    },
+    "subtitle": {
+      "en": "Organic · Exotic Beauty Skincare Oil",
+      "fr": "Biologique · Huile exotique pour la peau"
+    },
+    "form": "liquid",
+    "servingSize": "1 bottle",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R2",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "1599",
+        "upc": "628747215992",
+        "size": {
+          "en": "15 ml",
+          "fr": "15 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/goji-seed-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "gotu-kola",
     "sku": "0829",
     "upc": "628747108294",
     "npn": "80022868",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Gotu Kola",
@@ -6607,6 +8023,7 @@
     "sku": "0885",
     "upc": "628747108850",
     "npn": "80048368",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Grapefruit Seed Extract (Capsules)",
@@ -6665,6 +8082,7 @@
     "sku": "0009",
     "upc": "628747200097",
     "npn": "80036596",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Grapefruit Seed Extract (Liquid Concentrate)",
@@ -6733,6 +8151,7 @@
     "sku": "1226",
     "upc": "628747112260",
     "npn": "80023073",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Grapeseed Extract 150 mg",
@@ -6791,6 +8210,7 @@
     "sku": "1225",
     "upc": "628747112253",
     "npn": "80035162",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Grapeseed Extract 500 mg",
@@ -6845,6 +8265,7 @@
     "sku": "1963",
     "upc": "628747119634",
     "npn": "80119351",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Grass-Fed Beef Liver",
@@ -6923,6 +8344,7 @@
     "sku": "1964",
     "upc": "628747119641",
     "npn": "80058174",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Grass-Fed Beef Spleen",
@@ -6989,6 +8411,7 @@
     "sku": "2027",
     "upc": "628747120272",
     "npn": "80071898",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Grass-Fed Lamb Pancreas",
@@ -7055,6 +8478,7 @@
     "sku": "2482",
     "upc": "628747124829",
     "npn": "80103735",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Grass-Fed Lamb Thymus",
@@ -7121,6 +8545,7 @@
     "sku": "1696",
     "upc": "628747116961",
     "npn": "80032105",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Green Tea Extract 500 mg · 75% EGCG",
@@ -7167,6 +8592,7 @@
     "sku": "0847",
     "upc": "628747108478",
     "npn": "80042652",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "H. Goat Weed",
@@ -7217,6 +8643,7 @@
     "sku": "1555",
     "upc": "628747115551",
     "npn": "80072372",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Hair & Scalp",
@@ -7351,6 +8778,7 @@
     "sku": "0828",
     "upc": "628747108287",
     "npn": "80021188",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Hawthorn Berry",
@@ -7401,6 +8829,7 @@
     "sku": "2311",
     "upc": "628747123112",
     "npn": "80084636",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Heart Mag",
@@ -7460,6 +8889,7 @@
     "sku": "1626",
     "upc": "628747216265",
     "npn": "80059927",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Heart Smart Extra Virgin Organic Olive Oil",
@@ -7510,6 +8940,7 @@
     "sku": "0801",
     "upc": "628747108010",
     "npn": "80024488",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Heavy Metal Detox",
@@ -7564,6 +8995,7 @@
     "sku": "1876",
     "upc": "628747118767",
     "npn": "80061737",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Heme Iron",
@@ -7650,6 +9082,7 @@
     "sku": "2494",
     "upc": "628747124942",
     "npn": "80093863",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Heme Iron (Bovine)",
@@ -7736,6 +9169,7 @@
     "sku": "2898",
     "upc": "628747128988",
     "npn": "80112767",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Holy Basil Max",
@@ -7786,6 +9220,7 @@
     "sku": "2210",
     "upc": "628747022101",
     "npn": "80141323",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Homocysteine Reduce",
@@ -7860,6 +9295,7 @@
     "sku": "1588",
     "upc": "628747115889",
     "npn": "80110227",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Hospital Bacteria Defense 10 Billion+",
@@ -7914,6 +9350,7 @@
     "sku": "2166",
     "upc": "628747121668",
     "npn": "80135085",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Human Probiotics 42 Billion+",
@@ -7968,6 +9405,7 @@
     "sku": "1521",
     "upc": "628747115216",
     "npn": "80042032",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "IBS Urgency 10 Billion+",
@@ -8034,6 +9472,7 @@
     "sku": "1151",
     "upc": "628747111515",
     "npn": "80072220",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Indole-3-Carbinol",
@@ -8084,6 +9523,7 @@
     "sku": "1825",
     "upc": "628747118255",
     "npn": "80044720",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Infla-Heal Plus",
@@ -8182,6 +9622,7 @@
     "sku": "1898",
     "upc": "628747118989",
     "npn": "80052360",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Iron Bisglycinate",
@@ -8288,6 +9729,7 @@
     "sku": "1735",
     "upc": "628747117357",
     "npn": "80038376",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Joint Pain Relief",
@@ -8310,12 +9752,16 @@
         "amountPerDose": 250
       },
       {
-        "ingredientId": "boswellia-oleogum-resin-70-organic-acid-providing-35-boswellic-acid",
+        "ingredientId": "boswellia-oleogum-resin-70-organic-acid",
         "amountPerDose": 150
       },
       {
         "ingredientId": "devil-s-claw-secondary-tuber-5-harpagosides",
         "amountPerDose": 150
+      },
+      {
+        "ingredientId": "turmeric-root-extract-95-curcuminoids",
+        "amountPerDose": 100
       },
       {
         "ingredientId": "black-pepper-fruit-extract-95-piperine",
@@ -8346,6 +9792,7 @@
     "sku": "3617",
     "upc": "628747136174",
     "npn": "80143604",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Joint-Tissu&MSM",
@@ -8400,6 +9847,7 @@
     "sku": "1511",
     "upc": "628747015110",
     "npn": "80082454",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Juicy Immune - Energy",
@@ -8560,6 +10008,7 @@
     "sku": "2111",
     "upc": "628747121118",
     "npn": "80072998",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Kava Kava",
@@ -8610,6 +10059,7 @@
     "sku": "0314",
     "upc": "628747103145",
     "npn": "80020944",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Kelp",
@@ -8672,6 +10122,7 @@
     "sku": "1079",
     "upc": "628747110792",
     "npn": "80068833",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Kidney Clean Flow",
@@ -8770,6 +10221,7 @@
     "sku": "3532",
     "upc": "628747135320",
     "npn": "80112197",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Kidney Glandular",
@@ -8824,6 +10276,7 @@
     "sku": "1346",
     "upc": "628747113465",
     "npn": "80043472",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Kidny",
@@ -8894,6 +10347,7 @@
     "sku": "1018",
     "upc": "628747110181",
     "npn": "80021242",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "L-Arginine",
@@ -8944,6 +10398,7 @@
     "sku": "1795",
     "upc": "628747117951",
     "npn": "80044764",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "L-Carnitine Tartrate",
@@ -8996,6 +10451,7 @@
     "sku": "0868",
     "upc": "628747008686",
     "npn": "80021094",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "L-Glutamine",
@@ -9052,6 +10508,7 @@
     "sku": "0865",
     "upc": "628747108652",
     "npn": "80010311",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "L-Glutamine (Capsules)",
@@ -9114,6 +10571,7 @@
     "sku": "0252",
     "upc": "628747102520",
     "npn": "80000790",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "L-Lysine",
@@ -9176,6 +10634,7 @@
     "sku": "0148",
     "upc": "628747101486",
     "npn": "80017685",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "L-Methionine",
@@ -9226,6 +10685,7 @@
     "sku": "1786",
     "upc": "628747117869",
     "npn": "80039946",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "L-Theanine",
@@ -9300,6 +10760,7 @@
     "sku": "1645",
     "upc": "628747116459",
     "npn": "80031759",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "L-Tryptophan",
@@ -9350,6 +10811,7 @@
     "sku": "1020",
     "upc": "628747110204",
     "npn": "80000017",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "L-Tyrosine",
@@ -9396,10 +10858,358 @@
     "reviewedBy": null
   },
   {
+    "id": "lavender-essential-oil",
+    "sku": "2139",
+    "upc": "628747221399",
+    "npn": "80069450",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Lavender Essential Oil",
+      "fr": "Huile Essentielle de Lavande Officinale"
+    },
+    "shortName": {
+      "en": "Lavender Essential Oil",
+      "fr": "Huile Essentielle de Lavande Officinale"
+    },
+    "subtitle": {
+      "en": "Organic · Lavandula angustifolia",
+      "fr": "Biologique · Lavandula angustifolia"
+    },
+    "form": "liquid",
+    "servingSize": "1 drop",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2139",
+        "upc": "628747221399",
+        "size": {
+          "en": "15 ml",
+          "fr": "15 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/lavender-essential-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "lectro-lytes-coco-pineapple",
+    "sku": "2490",
+    "upc": "628747024907",
+    "kind": "food",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Lectro-Lytes Coco-Pineapple",
+      "fr": "Lectro-Lytes Coco-Ananas"
+    },
+    "shortName": {
+      "en": "Lectro-Lytes Coco-Pineapple",
+      "fr": "Lectro-Lytes Coco-Ananas"
+    },
+    "subtitle": {
+      "en": "Electrolyte Rehydration Drink Mix",
+      "fr": "Mélange d’électrolytes réhydratants"
+    },
+    "form": "powder",
+    "servingSize": "1 scoop (4.2 g)",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2490",
+        "upc": "628747024907",
+        "size": {
+          "en": "168 g = 40 portions",
+          "fr": "168 g = 40 portions"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      },
+      {
+        "sku": "3405",
+        "upc": "628747034050",
+        "size": {
+          "en": "30 × 4.2 g",
+          "fr": "30 × 4,2 g"
+        },
+        "format": {
+          "en": "Sachets",
+          "fr": "Sachets"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/lectro-lytes-coco-pineapple",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "lectro-lytes-lemon-lime",
+    "sku": "2488",
+    "upc": "628747024884",
+    "kind": "food",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Lectro-Lytes Lemon-Lime",
+      "fr": "Lectro-Lytes Citron-Lime"
+    },
+    "shortName": {
+      "en": "Lectro-Lytes Lemon-Lime",
+      "fr": "Lectro-Lytes Citron-Lime"
+    },
+    "subtitle": {
+      "en": "Electrolyte Rehydration Drink Mix",
+      "fr": "Mélange d’électrolytes réhydratants"
+    },
+    "form": "powder",
+    "servingSize": "1 scoop (4.8 g)",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2488",
+        "upc": "628747024884",
+        "size": {
+          "en": "192 g = 40 portions",
+          "fr": "192 g = 40 portions"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      },
+      {
+        "sku": "3404",
+        "upc": "628747034043",
+        "size": {
+          "en": "30 × 4.8 g",
+          "fr": "30 × 4,8 g"
+        },
+        "format": {
+          "en": "Sachets",
+          "fr": "Sachets"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/lectro-lytes-lemon-lime",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "lemon-essential-oil",
+    "sku": "2148",
+    "upc": "628747221481",
+    "npn": "80076490",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Lemon Essential Oil",
+      "fr": "Huile Essentielle de Citron"
+    },
+    "shortName": {
+      "en": "Lemon Essential Oil",
+      "fr": "Huile Essentielle de Citron"
+    },
+    "subtitle": {
+      "en": "Organic · Citrus × limon",
+      "fr": "Biologique · Citrus × limon"
+    },
+    "form": "liquid",
+    "servingSize": "1 drop",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2148",
+        "upc": "628747221481",
+        "size": {
+          "en": "15 ml",
+          "fr": "15 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/lemon-essential-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "lemon-essential-oil-1",
+    "sku": "3206",
+    "upc": "628747232067",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Lemon Essential Oil",
+      "fr": "Huille Essentielle de Citron"
+    },
+    "shortName": {
+      "en": "Lemon Essential Oil",
+      "fr": "Huille Essentielle de Citron"
+    },
+    "subtitle": {
+      "en": "100% Pure · Clean",
+      "fr": "100 % pure · Saine"
+    },
+    "form": "liquid",
+    "servingSize": "1 drop",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "3206",
+        "upc": "628747232067",
+        "size": {
+          "en": "30 ml",
+          "fr": "30 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/lemon-essential-oil-1",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "lemon-eucalyptus-essential-oil",
+    "sku": "3207",
+    "upc": "628747232074",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Lemon Eucalyptus Essential Oil",
+      "fr": "Huille Essentielle d’Eucalyptus Citronné"
+    },
+    "shortName": {
+      "en": "Lemon Eucalyptus Essential Oil",
+      "fr": "Huille Essentielle d’Eucalyptus Citronné"
+    },
+    "subtitle": {
+      "en": "100% Pure · Clean",
+      "fr": "100 % pure · Saine"
+    },
+    "form": "liquid",
+    "servingSize": "1 drop",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "3207",
+        "upc": "628747232074",
+        "size": {
+          "en": "30 ml",
+          "fr": "30 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/lemon-eucalyptus-essential-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "lions-mane",
+    "sku": "1868",
+    "upc": "628747118682",
+    "npn": "80070799",
+    "kind": "nhp",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Lion’s Mane",
+      "fr": "Hydne Hérisson"
+    },
+    "shortName": {
+      "en": "Lion’s Mane",
+      "fr": "Hydne Hérisson"
+    },
+    "subtitle": {
+      "en": "500 mg · Hot-Water Extract · 35% beta-Glucans from 40% Polysaccharides",
+      "fr": "500 mg · Extrait à l’eau chaude · 35 % de bêta‑glucanes de 40 % de polysaccharides"
+    },
+    "form": "capsule",
+    "servingSize": "1 capsule",
+    "dosesPerDayDefault": 1,
+    "unitsPerDose": 1,
+    "unitLabel": "capsule",
+    "status": "draft",
+    "labelVersion": "R2",
+    "ingredients": [
+      {
+        "ingredientId": "lion-s-mane-mushroom-extract",
+        "amountPerDose": 500
+      }
+    ],
+    "variants": [
+      {
+        "sku": "1868",
+        "upc": "628747118682",
+        "size": {
+          "en": "60",
+          "fr": "60"
+        },
+        "format": {
+          "en": "Vegetable Capsules",
+          "fr": "Capsules végétales"
+        }
+      },
+      {
+        "sku": "2297",
+        "upc": "628747122979",
+        "size": {
+          "en": "120",
+          "fr": "120"
+        },
+        "format": {
+          "en": "Vegetable Capsules",
+          "fr": "Capsules végétales"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/lions-mane",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "lions-mane-powder",
     "sku": "2579",
     "upc": "628747025799",
     "npn": "80111122",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Lion’s Mane Powder",
@@ -9448,6 +11258,7 @@
     "sku": "1946",
     "upc": "628747219464",
     "npn": "80112811",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Liquid Melatonin",
@@ -9506,6 +11317,7 @@
     "sku": "0206",
     "upc": "628747102063",
     "npn": "80085370",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Liver Protection",
@@ -9534,6 +11346,10 @@
       {
         "ingredientId": "black-spanish-radish-root",
         "amountPerDose": 120
+      },
+      {
+        "ingredientId": "curcuma-root-extract-95-curcuminoids",
+        "amountPerDose": 50
       },
       {
         "ingredientId": "dandelion-root-extract-3-flavonoids",
@@ -9600,6 +11416,7 @@
     "sku": "1835",
     "upc": "628747118354",
     "npn": "80042262",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Maca",
@@ -9650,6 +11467,7 @@
     "sku": "2378",
     "upc": "628747023788",
     "npn": "80077751",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Magnesium Bisglycinate",
@@ -9716,6 +11534,7 @@
     "sku": "2308",
     "upc": "628747123082",
     "npn": "80085063",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Magnesium Bisglycinate (Capsules)",
@@ -9778,6 +11597,7 @@
     "sku": "1390",
     "upc": "628747113908",
     "npn": "80022757",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Magnesium Bisglycinate Plus",
@@ -9844,6 +11664,7 @@
     "sku": "0903",
     "upc": "628747109031",
     "npn": "80023337",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Magnesium Citrate Plus Taurine",
@@ -9906,6 +11727,7 @@
     "sku": "3537",
     "upc": "628747135375",
     "npn": "80134392",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Magnesium⁸",
@@ -9956,6 +11778,7 @@
     "sku": "1860",
     "upc": "628747118606",
     "npn": "80117430",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Maitake",
@@ -9978,7 +11801,7 @@
     "labelVersion": "R3",
     "ingredients": [
       {
-        "ingredientId": "maitake-mushroom-extract-standardized-to-40-polysaccharides-30-beta-glucans",
+        "ingredientId": "maitake-mushroom-extract",
         "amountPerDose": 400
       }
     ],
@@ -10006,6 +11829,7 @@
     "sku": "2109",
     "upc": "628747121095",
     "npn": "80071357",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Male Fertility",
@@ -10088,10 +11912,109 @@
     "reviewedBy": null
   },
   {
+    "id": "marula-seed-oil",
+    "sku": "2306",
+    "upc": "628747223065",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Marula Seed Oil",
+      "fr": "Huile de Graine de Marula"
+    },
+    "shortName": {
+      "en": "Marula Seed Oil",
+      "fr": "Huile de Graine de Marula"
+    },
+    "subtitle": {
+      "en": "Organic · Exotic Beauty Skincare Oil",
+      "fr": "Biologique · Huile exotique pour la peau"
+    },
+    "form": "liquid",
+    "servingSize": "1 bottle",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R2",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2306",
+        "upc": "628747223065",
+        "size": {
+          "en": "30 ml",
+          "fr": "30 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/marula-seed-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "matcha",
+    "sku": "1874",
+    "upc": "628747018746",
+    "kind": "food",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Matcha",
+      "fr": "Matcha"
+    },
+    "shortName": {
+      "en": "Matcha",
+      "fr": "Matcha"
+    },
+    "subtitle": {
+      "en": "First Harvest",
+      "fr": "Première récolte"
+    },
+    "form": "powder",
+    "servingSize": "1 powder",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "1874",
+        "upc": "628747018746",
+        "size": {
+          "en": "30 g",
+          "fr": "30 g"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      },
+      {
+        "sku": "1907",
+        "upc": "628747019071",
+        "size": {
+          "en": "100 g",
+          "fr": "100 g"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/matcha",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "maxabsorb-curcumin",
     "sku": "3402",
     "upc": "628747134026",
     "npn": "80143095",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "MaxAbsorb Curcumin",
@@ -10114,7 +12037,7 @@
     "labelVersion": "R1",
     "ingredients": [
       {
-        "ingredientId": "curcurouge-providing",
+        "ingredientId": "curcurouge",
         "amountPerDose": 90
       },
       {
@@ -10142,10 +12065,66 @@
     "reviewedBy": null
   },
   {
+    "id": "mct-energy-liquid",
+    "sku": "1546",
+    "upc": "628747215466",
+    "kind": "food",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "MCT Energy (Liquid)",
+      "fr": "MCT Énergie (Liquide)"
+    },
+    "shortName": {
+      "en": "MCT Energy",
+      "fr": "MCT Énergie"
+    },
+    "subtitle": {
+      "en": "Medium-Chain Triglycerides · 60/40 Formula",
+      "fr": "Triglycérides à chaîne moyenne · Formule 60/40"
+    },
+    "form": "liquid",
+    "servingSize": "1 tbsp. (15 ml)",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "1546",
+        "upc": "628747215466",
+        "size": {
+          "en": "500 ml",
+          "fr": "500 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      },
+      {
+        "sku": "1800",
+        "upc": "628747218009",
+        "size": {
+          "en": "1 litre",
+          "fr": "1 litre"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/mct-energy-liquid",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "mct-energy-softgels",
     "sku": "2171",
     "upc": "628747121712",
     "npn": "80071199",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "MCT Energy (Softgels)",
@@ -10168,7 +12147,7 @@
     "labelVersion": "R1",
     "ingredients": [
       {
-        "ingredientId": "medium-chain-triglycerides-providing-60-caprylic-acid-and-40-capric-acid",
+        "ingredientId": "medium-chain-triglycerides",
         "amountPerDose": 1000
       }
     ],
@@ -10208,6 +12187,7 @@
     "sku": "2078",
     "upc": "628747120784",
     "npn": "80068400",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Melatonin 10 mg",
@@ -10254,6 +12234,7 @@
     "sku": "0658",
     "upc": "628747106580",
     "npn": "80120429",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Melatonin 3 mg",
@@ -10312,6 +12293,7 @@
     "sku": "2076",
     "upc": "628747120760",
     "npn": "80068403",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Melatonin 5 mg",
@@ -10358,6 +12340,7 @@
     "sku": "3148",
     "upc": "628747131483",
     "npn": "80105758",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Memory Care",
@@ -10408,6 +12391,7 @@
     "sku": "0232",
     "upc": "628747102322",
     "npn": "80036425",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Menopeace",
@@ -10490,6 +12474,7 @@
     "sku": "2163",
     "upc": "628747121637",
     "npn": "80077448",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Merry Mind Omega 3",
@@ -10552,6 +12537,7 @@
     "sku": "1597",
     "upc": "628747215978",
     "npn": "80079356",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Milk Thistle",
@@ -10614,6 +12600,7 @@
     "sku": "3628",
     "upc": "628747136280",
     "npn": "80127788",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Milk Thistle Seed Extract 250 mg",
@@ -10676,6 +12663,7 @@
     "sku": "2239",
     "upc": "628747022392",
     "npn": "80078773",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Modified Citrus Pectin",
@@ -10722,6 +12710,7 @@
     "sku": "0846",
     "upc": "628747108461",
     "npn": "80114485",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Molybdenum",
@@ -10768,10 +12757,54 @@
     "reviewedBy": null
   },
   {
+    "id": "moringa-seed-oil",
+    "sku": "2088",
+    "upc": "628747220880",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Moringa Seed Oil",
+      "fr": "Huile de Graine de Moringa"
+    },
+    "shortName": {
+      "en": "Moringa Seed Oil",
+      "fr": "Huile de Graine de Moringa"
+    },
+    "subtitle": {
+      "en": "Organic · Exotic Beauty Skincare Oil",
+      "fr": "Biologique · Huile exotique pour la peau"
+    },
+    "form": "liquid",
+    "servingSize": "1 bottle",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R2",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2088",
+        "upc": "628747220880",
+        "size": {
+          "en": "30 ml",
+          "fr": "30 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/moringa-seed-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "msm-capsules",
     "sku": "0785",
     "upc": "628747107853",
     "npn": "80042766",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "MSM (Capsules)",
@@ -10830,10 +12863,69 @@
     "reviewedBy": null
   },
   {
+    "id": "msm-powder",
+    "sku": "0796",
+    "upc": "628747007962",
+    "npn": "80019681",
+    "kind": "nhp",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "MSM (Powder)",
+      "fr": "MSM (Poudre)"
+    },
+    "shortName": {
+      "en": "MSM",
+      "fr": "MSM"
+    },
+    "subtitle": {
+      "en": "Methylsulfonylmethane · 100% Pure",
+      "fr": "Méthylsulfonylméthane · 100 % Pur"
+    },
+    "form": "powder",
+    "servingSize": "1 powder",
+    "dosesPerDayDefault": 3,
+    "unitsPerDose": 0.5,
+    "unitLabel": "teaspoon",
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "0796",
+        "upc": "628747007962",
+        "size": {
+          "en": "300 g",
+          "fr": "300 g"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      },
+      {
+        "sku": "0797",
+        "upc": "628747007979",
+        "size": {
+          "en": "600 g",
+          "fr": "600 g"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/msm-powder",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "multi",
     "sku": "1726",
     "upc": "628747117265",
     "npn": "80035202",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Multi",
@@ -10981,10 +13073,109 @@
     "reviewedBy": null
   },
   {
+    "id": "multi-5-collagen",
+    "sku": "2518",
+    "upc": "628747025188",
+    "kind": "food",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Multi 5 Collagen",
+      "fr": "Multi 5 Collagène"
+    },
+    "shortName": {
+      "en": "Multi 5 Collagen",
+      "fr": "Multi 5 Collagène"
+    },
+    "subtitle": {
+      "en": "Protein-Building Peptides · 5 Types of Food-Sourced Collagen: I, II, III, V, and X",
+      "fr": "Peptides formatrices de protéines · 5 types de collagène de source alimentaire : I, II, III, V, et X"
+    },
+    "form": "powder",
+    "servingSize": "2 tbsp. (10.9 g)",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R2",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2518",
+        "upc": "628747025188",
+        "size": {
+          "en": "200 g / 18 portions",
+          "fr": "200 g / 18 portions"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      },
+      {
+        "sku": "2519",
+        "upc": "628747025195",
+        "size": {
+          "en": "400 g / 36 portions",
+          "fr": "400 g / 36 portions"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/multi-5-collagen",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "multi-5-collagen-with-delicious-organic-cocoa",
+    "sku": "2546",
+    "upc": "628747025461",
+    "kind": "food",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Multi 5 Collagen with Delicious Organic Cocoa",
+      "fr": "Multi 5 Collagène avec cacao biologique délicieux"
+    },
+    "shortName": {
+      "en": "Multi 5 Collagen with Delicious Organic Cocoa",
+      "fr": "Multi 5 Collagène avec cacao biologique délicieux"
+    },
+    "subtitle": {
+      "en": "Protein-Building Peptides · 5 Types of Food-Sourced Collagen: I, II, III, V, and X",
+      "fr": "Peptides formatrices de protéines · 5 types de collagène de source alimentaire : I, II, III, V, et X"
+    },
+    "form": "powder",
+    "servingSize": "5 tsp. (12 g)",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R2",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2546",
+        "upc": "628747025461",
+        "size": {
+          "en": "200 g / 16 portions",
+          "fr": "200 g / 16 portions"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/multi-5-collagen-with-delicious-organic-cocoa",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "multi-max",
     "sku": "0963",
     "upc": "628747109635",
     "npn": "80083606",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Multi-Max",
@@ -11057,6 +13248,118 @@
       {
         "ingredientId": "calcium",
         "amountPerDose": 81
+      },
+      {
+        "ingredientId": "potassium",
+        "amountPerDose": 3.75
+      },
+      {
+        "ingredientId": "manganese",
+        "amountPerDose": 1
+      },
+      {
+        "ingredientId": "copper",
+        "amountPerDose": 0.25
+      },
+      {
+        "ingredientId": "boron",
+        "amountPerDose": 0.125
+      },
+      {
+        "ingredientId": "iodine",
+        "amountPerDose": 25
+      },
+      {
+        "ingredientId": "chromium",
+        "amountPerDose": 12.5
+      },
+      {
+        "ingredientId": "selenium",
+        "amountPerDose": 12.5
+      },
+      {
+        "ingredientId": "proline",
+        "amountPerDose": 22.5
+      },
+      {
+        "ingredientId": "n-n-dimethylglycine",
+        "amountPerDose": 20
+      },
+      {
+        "ingredientId": "cysteine-hydrochloride-monohydrate",
+        "amountPerDose": 7.5
+      },
+      {
+        "ingredientId": "green-tea-extract-50-polyphenols",
+        "amountPerDose": 60
+      },
+      {
+        "ingredientId": "citrus-bioflavonoids-50-hesperidin",
+        "amountPerDose": 50
+      },
+      {
+        "ingredientId": "bee-pollen",
+        "amountPerDose": 35
+      },
+      {
+        "ingredientId": "ribose",
+        "amountPerDose": 30
+      },
+      {
+        "ingredientId": "alpha-lipoic-acid",
+        "amountPerDose": 25
+      },
+      {
+        "ingredientId": "broken-cell-organic-chlorella",
+        "amountPerDose": 18
+      },
+      {
+        "ingredientId": "organic-spirulina",
+        "amountPerDose": 18
+      },
+      {
+        "ingredientId": "betaine-hydrochloride",
+        "amountPerDose": 12.5
+      },
+      {
+        "ingredientId": "lecithin",
+        "amountPerDose": 8.25
+      },
+      {
+        "ingredientId": "para-aminobenzoic-acid",
+        "amountPerDose": 6.25
+      },
+      {
+        "ingredientId": "coenzyme-q10",
+        "amountPerDose": 6
+      },
+      {
+        "ingredientId": "rutin",
+        "amountPerDose": 5
+      },
+      {
+        "ingredientId": "choline",
+        "amountPerDose": 4.15
+      },
+      {
+        "ingredientId": "inositol",
+        "amountPerDose": 4.075
+      },
+      {
+        "ingredientId": "hesperidin",
+        "amountPerDose": 2.5
+      },
+      {
+        "ingredientId": "quercetin",
+        "amountPerDose": 2.5
+      },
+      {
+        "ingredientId": "tomato-flesh-extract-20-lycopene",
+        "amountPerDose": 750
+      },
+      {
+        "ingredientId": "black-pepper-fruit-extract-95-piperine",
+        "amountPerDose": 0.2
       }
     ],
     "variants": [
@@ -11113,6 +13416,7 @@
     "sku": "0225",
     "upc": "628747102254",
     "npn": "80046526",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Multi-Max IMMUNE",
@@ -11361,6 +13665,7 @@
     "sku": "2231",
     "upc": "628747122313",
     "npn": "80077537",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Mum Ma Milkstream (Capsules)",
@@ -11427,6 +13732,7 @@
     "sku": "2081",
     "upc": "628747020817",
     "npn": "80072476",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Myo-Inositol",
@@ -11497,6 +13803,7 @@
     "sku": "0301",
     "upc": "628747103015",
     "npn": "80107262",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "N-AcetylCysteine",
@@ -11559,6 +13866,7 @@
     "sku": "3137",
     "upc": "628747131377",
     "npn": "80112465",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "NAD+ Cell Excel",
@@ -11609,6 +13917,7 @@
     "sku": "3624",
     "upc": "628747136242",
     "npn": "80077535",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Neem Leaf",
@@ -11655,10 +13964,54 @@
     "reviewedBy": null
   },
   {
+    "id": "neem-oil",
+    "sku": "1976",
+    "upc": "628747219761",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Neem Oil",
+      "fr": "Huile de Margousier"
+    },
+    "shortName": {
+      "en": "Neem Oil",
+      "fr": "Huile de Margousier"
+    },
+    "subtitle": {
+      "en": "Organic",
+      "fr": "Biologique"
+    },
+    "form": "liquid",
+    "servingSize": "1 bottle",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R2",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "1976",
+        "upc": "628747219761",
+        "size": {
+          "en": "30 ml",
+          "fr": "30 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/neem-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "neuroperform",
     "sku": "3090",
     "upc": "628747130905",
     "npn": "80110011",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "NeuroPerform",
@@ -11713,6 +14066,7 @@
     "sku": "1977",
     "upc": "628747219778",
     "npn": "80109774",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "New Roots Essence",
@@ -11787,6 +14141,7 @@
     "sku": "1163",
     "upc": "628747111638",
     "npn": "80084696",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "New Roots Herbal Chill Pills",
@@ -11941,6 +14296,7 @@
     "sku": "2022",
     "upc": "628747120227",
     "npn": "80069682",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "New Roots Herbal Joyful",
@@ -12039,6 +14395,7 @@
     "sku": "0242",
     "upc": "628747102421",
     "npn": "80036947",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "New Roots Herbal’s Breathe Easy",
@@ -12097,6 +14454,7 @@
     "sku": "2191",
     "upc": "628747121910",
     "npn": "80077106",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Niacinamide",
@@ -12147,6 +14505,7 @@
     "sku": "3408",
     "upc": "628747134088",
     "npn": "80127124",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "NMN Renew 150 mg",
@@ -12209,6 +14568,7 @@
     "sku": "3391",
     "upc": "628747133913",
     "npn": "80127129",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "NMN Renew 300 mg · Extra Strength",
@@ -12271,6 +14631,7 @@
     "sku": "0778",
     "upc": "628747107785",
     "npn": "80030358",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Odourless Garlic",
@@ -12325,6 +14686,7 @@
     "sku": "0845",
     "upc": "628747108454",
     "npn": "80040247",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Olive Leaf Extract (Capsules)",
@@ -12383,10 +14745,69 @@
     "reviewedBy": null
   },
   {
+    "id": "olive-leaf-extract-liquid",
+    "sku": "2294",
+    "upc": "628747222945",
+    "npn": "80087742",
+    "kind": "nhp",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Olive Leaf Extract (Liquid)",
+      "fr": "Olivier (Extrait de Feuille) (Liquide)"
+    },
+    "shortName": {
+      "en": "Olive Leaf Extract",
+      "fr": "Olivier"
+    },
+    "subtitle": {
+      "en": "Antioxidant",
+      "fr": "Antioxydant"
+    },
+    "form": "liquid",
+    "servingSize": "1 Tbsp. (16 ml)",
+    "dosesPerDayDefault": 1,
+    "unitsPerDose": 16,
+    "unitLabel": "ml",
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2294",
+        "upc": "628747222945",
+        "size": {
+          "en": "250 ml",
+          "fr": "250 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      },
+      {
+        "sku": "2296",
+        "upc": "628747222969",
+        "size": {
+          "en": "500 ml",
+          "fr": "500 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/olive-leaf-extract-liquid",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "omega-3679",
     "sku": "1999",
     "upc": "628747119993",
     "npn": "80090997",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Omega 3/6/7/9",
@@ -12465,6 +14886,7 @@
     "sku": "1535",
     "upc": "628747115353",
     "npn": "80025979",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Omega Jolly",
@@ -12523,6 +14945,7 @@
     "sku": "2043",
     "upc": "628747220439",
     "npn": "80079033",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Organic Cardiac Health Tincture",
@@ -12591,10 +15014,55 @@
     "reviewedBy": null
   },
   {
+    "id": "organic-castor-oil",
+    "sku": "3590",
+    "upc": "628747235907",
+    "npn": "80148220",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Organic Castor Oil",
+      "fr": "Huile de Ricin Biologique"
+    },
+    "shortName": {
+      "en": "Organic Castor Oil",
+      "fr": "Huile de Ricin Biologique"
+    },
+    "subtitle": {
+      "en": "aka Palma Christi",
+      "fr": "Aussi appelé Palma Christi"
+    },
+    "form": "liquid",
+    "servingSize": "1 teaspoon (5 ml)",
+    "dosesPerDayDefault": 3,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "3590",
+        "upc": "628747235907",
+        "size": {
+          "en": "500 ml",
+          "fr": "500 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/organic-castor-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "ox-bile",
     "sku": "2641",
     "upc": "628747126410",
     "npn": "80102342",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Ox Bile",
@@ -12645,6 +15113,7 @@
     "sku": "2549",
     "upc": "628747125499",
     "npn": "80082116",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "P-5-P",
@@ -12691,10 +15160,62 @@
     "reviewedBy": null
   },
   {
+    "id": "panax-ginseng",
+    "sku": "0780",
+    "upc": "628747107808",
+    "npn": "80075193",
+    "kind": "nhp",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Panax Ginseng",
+      "fr": "Panax Ginseng"
+    },
+    "shortName": {
+      "en": "Panax Ginseng",
+      "fr": "Panax Ginseng"
+    },
+    "subtitle": {
+      "en": "20% Ginsenosides · 300 mg",
+      "fr": "20 % de ginsénosides · 300 mg"
+    },
+    "form": "capsule",
+    "servingSize": "1 capsule",
+    "dosesPerDayDefault": 1,
+    "unitsPerDose": 2,
+    "unitLabel": "capsule",
+    "status": "draft",
+    "labelVersion": "R3",
+    "ingredients": [
+      {
+        "ingredientId": "panax-ginseng-root-and-leaf-extract",
+        "amountPerDose": 300
+      }
+    ],
+    "variants": [
+      {
+        "sku": "0780",
+        "upc": "628747107808",
+        "size": {
+          "en": "90",
+          "fr": "90"
+        },
+        "format": {
+          "en": "Vegetable Capsules",
+          "fr": "Capsules végétales"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/panax-ginseng",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "pancreatin",
     "sku": "1697",
     "upc": "628747116978",
     "npn": "80038831",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Pancreatin",
@@ -12769,6 +15290,7 @@
     "sku": "1410",
     "upc": "628747214100",
     "npn": "80024264",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Passion Flower",
@@ -12831,6 +15353,7 @@
     "sku": "0124",
     "upc": "628747101240",
     "npn": "80043836",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Pau d’Arco Taheebo (Capsules)",
@@ -12881,6 +15404,7 @@
     "sku": "0026",
     "upc": "628747200264",
     "npn": "80044382",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Pau d’Arco Taheebo (Liquid Extract)",
@@ -12939,6 +15463,7 @@
     "sku": "3092",
     "upc": "628747130929",
     "npn": "80113092",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "PEA Pain Relief",
@@ -12985,10 +15510,121 @@
     "reviewedBy": null
   },
   {
+    "id": "peppermint-essential-oil",
+    "sku": "2137",
+    "upc": "628747221375",
+    "npn": "80069445",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Peppermint Essential Oil",
+      "fr": "Huile Essentielle de Menthe Poivrée"
+    },
+    "shortName": {
+      "en": "Peppermint Essential Oil",
+      "fr": "Huile Essentielle de Menthe Poivrée"
+    },
+    "subtitle": {
+      "en": "Organic · Mentha × piperita",
+      "fr": "Biologique · Mentha × piperita"
+    },
+    "form": "liquid",
+    "servingSize": "1 drop",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2137",
+        "upc": "628747221375",
+        "size": {
+          "en": "15 ml",
+          "fr": "15 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/peppermint-essential-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "plant-digestive-enzymes",
+    "sku": "1309",
+    "upc": "628747113090",
+    "npn": "80073581",
+    "kind": "nhp",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Plant Digestive Enzymes",
+      "fr": "Enzymes Digestives Végétales"
+    },
+    "shortName": {
+      "en": "Plant Digestive Enzymes",
+      "fr": "Enzymes Digestives Végétales"
+    },
+    "form": "capsule",
+    "servingSize": "1 capsule",
+    "dosesPerDayDefault": 3,
+    "unitsPerDose": 1,
+    "unitLabel": "capsule",
+    "status": "draft",
+    "labelVersion": "R5",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "1309",
+        "upc": "628747113090",
+        "size": {
+          "en": "30",
+          "fr": "30"
+        },
+        "format": {
+          "en": "Vegetable Capsules",
+          "fr": "Capsules végétales"
+        }
+      },
+      {
+        "sku": "1310",
+        "upc": "628747113106",
+        "size": {
+          "en": "60",
+          "fr": "60"
+        },
+        "format": {
+          "en": "Vegetable Capsules",
+          "fr": "Capsules végétales"
+        }
+      },
+      {
+        "sku": "1311",
+        "upc": "628747113113",
+        "size": {
+          "en": "120",
+          "fr": "120"
+        },
+        "format": {
+          "en": "Vegetable Capsules",
+          "fr": "Capsules végétales"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/plant-digestive-enzymes",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "plant-sterols",
     "sku": "1595",
     "upc": "628747015950",
     "npn": "80023646",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Plant Sterols",
@@ -13047,6 +15683,7 @@
     "sku": "0233",
     "upc": "628747102339",
     "npn": "80053836",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "PMS Relief",
@@ -13117,10 +15754,54 @@
     "reviewedBy": null
   },
   {
+    "id": "pomegranate-seed-oil",
+    "sku": "2196",
+    "upc": "628747221962",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Pomegranate Seed Oil",
+      "fr": "Huile de Pépin de Grenade"
+    },
+    "shortName": {
+      "en": "Pomegranate Seed Oil",
+      "fr": "Huile de Pépin de Grenade"
+    },
+    "subtitle": {
+      "en": "Organic · Exotic Beauty Skincare Oil",
+      "fr": "Biologique · Huile exotique pour la peau"
+    },
+    "form": "liquid",
+    "servingSize": "1 bottle",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R2",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2196",
+        "upc": "628747221962",
+        "size": {
+          "en": "50 ml",
+          "fr": "50 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/pomegranate-seed-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "potassium-citrate",
     "sku": "1328",
     "upc": "628747113281",
     "npn": "80045230",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Potassium Citrate",
@@ -13171,6 +15852,7 @@
     "sku": "3141",
     "upc": "628747131414",
     "npn": "80086446",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Potassium Iodide 65 mg",
@@ -13231,6 +15913,7 @@
     "sku": "1533",
     "upc": "628747115339",
     "npn": "80024925",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Potassium Iodide 800 mcg",
@@ -13277,6 +15960,7 @@
     "sku": "1434",
     "upc": "628747114349",
     "npn": "80062372",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Prenatal",
@@ -13433,6 +16117,7 @@
     "sku": "1145",
     "upc": "628747111454",
     "npn": "80090712",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Prevent",
@@ -13457,6 +16142,10 @@
       {
         "ingredientId": "green-tea-leaf-extract",
         "amountPerDose": 500
+      },
+      {
+        "ingredientId": "turmeric-root-extract-95-curcuminoids",
+        "amountPerDose": 100
       },
       {
         "ingredientId": "n-acetyl-cysteine",
@@ -13527,6 +16216,7 @@
     "sku": "1878",
     "upc": "628747118781",
     "npn": "80136157",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Probiotic Intensity 20 Billion+",
@@ -13597,6 +16287,7 @@
     "sku": "1965",
     "upc": "628747119658",
     "npn": "80136185",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Probiotics Recovery 120 Billion+",
@@ -13651,6 +16342,7 @@
     "sku": "1398",
     "upc": "628747113984",
     "npn": "80112709",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Probiotics Urgency 50 Billion+",
@@ -13729,6 +16421,7 @@
     "sku": "0016",
     "upc": "628747100168",
     "npn": "80100520",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Prolax",
@@ -13799,6 +16492,7 @@
     "sku": "0890",
     "upc": "628747108904",
     "npn": "80101925",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Prostate Perform",
@@ -13929,6 +16623,7 @@
     "sku": "2266",
     "upc": "628747122665",
     "npn": "80080791",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Pur Collagen Body Renew",
@@ -13991,6 +16686,7 @@
     "sku": "2269",
     "upc": "628747122696",
     "npn": "80139946",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Pur Collagen Radiant Skin",
@@ -14053,6 +16749,7 @@
     "sku": "2776",
     "upc": "628747027762",
     "npn": "80116345",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Pur Collagen+ Joint Recovery",
@@ -14111,6 +16808,7 @@
     "sku": "2200",
     "upc": "628747122009",
     "npn": "80077470",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Pure Magnesium Bisglycinate 115 mg + Taurine",
@@ -14165,6 +16863,7 @@
     "sku": "2175",
     "upc": "628747121750",
     "npn": "80110865",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Pure Magnesium Bisglycinate 130 mg Elemental Magnesium",
@@ -14227,6 +16926,7 @@
     "sku": "0482",
     "upc": "628747104821",
     "npn": "80105121",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Purge Parasitis",
@@ -14317,10 +17017,57 @@
     "reviewedBy": null
   },
   {
+    "id": "purge-parasitis-program-1",
+    "sku": "2646",
+    "upc": "628747526463",
+    "npn": "80058096",
+    "kind": "nhp",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Purge Parasitis Program",
+      "fr": "Programme Purge Parasites"
+    },
+    "shortName": {
+      "en": "Purge Parasitis Program",
+      "fr": "Programme Purge Parasites"
+    },
+    "subtitle": {
+      "en": "Includes Fibre Ultra!",
+      "fr": "Fibre Ultra inclus !"
+    },
+    "form": "capsule",
+    "servingSize": "1 box",
+    "dosesPerDayDefault": 1,
+    "unitsPerDose": 2,
+    "unitLabel": "capsule",
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2646",
+        "upc": "628747526463",
+        "size": {
+          "en": "Kit",
+          "fr": "Trousse"
+        },
+        "format": {
+          "en": "Vegetable Capsules",
+          "fr": "Capsules végétales"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/purge-parasitis-program-1",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "quercetin",
     "sku": "1142",
     "upc": "628747111423",
     "npn": "80024062",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Quercetin",
@@ -14371,6 +17118,7 @@
     "sku": "0241",
     "upc": "628747102414",
     "npn": "80038026",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Quercetin Bioflavonoid Complex",
@@ -14445,6 +17193,7 @@
     "sku": "1378",
     "upc": "628747113786",
     "npn": "80113344",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "R+ Alpha Lipoic",
@@ -14495,6 +17244,7 @@
     "sku": "0824",
     "upc": "628747108249",
     "npn": "80048818",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Red Beet Root",
@@ -14541,10 +17291,117 @@
     "reviewedBy": null
   },
   {
+    "id": "reishi",
+    "sku": "1862",
+    "upc": "628747118620",
+    "npn": "80048612",
+    "kind": "nhp",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Reishi",
+      "fr": "Reishi"
+    },
+    "shortName": {
+      "en": "Reishi",
+      "fr": "Reishi"
+    },
+    "subtitle": {
+      "en": "Hot-Water Extract · 30% beta‑Glucans from 40% Polysaccharides · 500 mgMade from the Fruiting Body of the Mushroom",
+      "fr": "Extrait à l’eau chaude · 30 % de bêta-glucanes de 40 % de polysaccharides · 500 mgFait à partir du sporophore du champignon"
+    },
+    "form": "capsule",
+    "servingSize": "1 capsule",
+    "dosesPerDayDefault": 1,
+    "unitsPerDose": 3,
+    "unitLabel": "capsule",
+    "status": "draft",
+    "labelVersion": "R6",
+    "ingredients": [
+      {
+        "ingredientId": "reishi-fruiting-body-extract",
+        "amountPerDose": 500
+      }
+    ],
+    "variants": [
+      {
+        "sku": "1862",
+        "upc": "628747118620",
+        "size": {
+          "en": "60",
+          "fr": "60"
+        },
+        "format": {
+          "en": "Vegetable Capsules",
+          "fr": "Capsules végétales"
+        }
+      },
+      {
+        "sku": "2298",
+        "upc": "628747122986",
+        "size": {
+          "en": "120",
+          "fr": "120"
+        },
+        "format": {
+          "en": "Vegetable Capsules",
+          "fr": "Capsules végétales"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/reishi",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "reishi-powder",
+    "sku": "2580",
+    "upc": "628747025805",
+    "kind": "food",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Reishi Powder",
+      "fr": "Reishi en Poudre"
+    },
+    "shortName": {
+      "en": "Reishi Powder",
+      "fr": "Reishi en Poudre"
+    },
+    "subtitle": {
+      "en": "Mushroom Lovers · Organic · Ganoderma lucidumMade from the Fruiting Body of the Mushroom",
+      "fr": "Fous des champignons · Biologique · Ganoderma lucidumFait à partir du sporophore du champignon"
+    },
+    "form": "powder",
+    "servingSize": "1/2 tsp. (2.7 g)",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2580",
+        "upc": "628747025805",
+        "size": {
+          "en": "100 g / 37 portions",
+          "fr": "100 g / 37 portions"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/reishi-powder",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "reishi-spores",
     "sku": "2696",
     "upc": "628747126960",
     "npn": "80108206",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Reishi Spores",
@@ -14595,6 +17452,7 @@
     "sku": "1933",
     "upc": "628747119337",
     "npn": "80087975",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Resilience Mushroom Extract Blend",
@@ -14616,6 +17474,10 @@
     "status": "draft",
     "labelVersion": "R1",
     "ingredients": [
+      {
+        "ingredientId": "chaga-mushroom-extract",
+        "amountPerDose": 68
+      },
       {
         "ingredientId": "coriolus-mushroom-extract",
         "amountPerDose": 68
@@ -14665,6 +17527,7 @@
     "sku": "3095",
     "upc": "628747130950",
     "npn": "80114348",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Respira ResQ",
@@ -14715,6 +17578,7 @@
     "sku": "2445",
     "upc": "628747124454",
     "npn": "80086411",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Resveratrol MAX",
@@ -14769,6 +17633,7 @@
     "sku": "3036",
     "upc": "628747130363",
     "npn": "80135115",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Reuteri Restore 2.5 Billion+",
@@ -14835,6 +17700,7 @@
     "sku": "2091",
     "upc": "628747120913",
     "npn": "80071149",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Rhodiola",
@@ -14893,10 +17759,110 @@
     "reviewedBy": null
   },
   {
+    "id": "rosehip-seed-oil",
+    "sku": "1602",
+    "upc": "628747216029",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Rosehip Seed Oil",
+      "fr": "Huile de Graine de Cynorhodon"
+    },
+    "shortName": {
+      "en": "Rosehip Seed Oil",
+      "fr": "Huile de Graine de Cynorhodon"
+    },
+    "subtitle": {
+      "en": "Organic · Exotic Beauty Skincare Oil",
+      "fr": "Biologique · Huile exotique pour la peau"
+    },
+    "form": "liquid",
+    "servingSize": "1 bottle",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R5",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "1602",
+        "upc": "628747216029",
+        "size": {
+          "en": "30 ml",
+          "fr": "30 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      },
+      {
+        "sku": "1738",
+        "upc": "628747217385",
+        "size": {
+          "en": "15 ml",
+          "fr": "15 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/rosehip-seed-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "rosemary-essential-oil",
+    "sku": "2144",
+    "upc": "628747221443",
+    "npn": "80071192",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Rosemary Essential Oil",
+      "fr": "Huile Essentielle de Romarin à Camphre"
+    },
+    "shortName": {
+      "en": "Rosemary Essential Oil",
+      "fr": "Huile Essentielle de Romarin à Camphre"
+    },
+    "subtitle": {
+      "en": "Organic · Rosmarinus officinalis ct. camphoriferum",
+      "fr": "Biologique · Rosmarinus officinalis ct. camphoriferum"
+    },
+    "form": "liquid",
+    "servingSize": "1 drop",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2144",
+        "upc": "628747221443",
+        "size": {
+          "en": "15 ml",
+          "fr": "15 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/rosemary-essential-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "s-acetyl-glutathione",
     "sku": "2416",
     "upc": "628747124164",
     "npn": "80091902",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "S-Acetyl-Glutathione",
@@ -14951,6 +17917,7 @@
     "sku": "1649",
     "upc": "628747116497",
     "npn": "80104932",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "S.O.D.",
@@ -15049,10 +18016,62 @@
     "reviewedBy": null
   },
   {
+    "id": "saffron-zen",
+    "sku": "3387",
+    "upc": "628747133876",
+    "npn": "80097012",
+    "kind": "nhp",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Saffron Zen",
+      "fr": "Safran Zen"
+    },
+    "shortName": {
+      "en": "Saffron Zen",
+      "fr": "Safran Zen"
+    },
+    "subtitle": {
+      "en": "With Affron® Extract · Adults and Teens",
+      "fr": "Avec extrait Affron® · Adultes et adolescents"
+    },
+    "form": "capsule",
+    "servingSize": "1 capsule",
+    "dosesPerDayDefault": 2,
+    "unitsPerDose": 1,
+    "unitLabel": "capsule",
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [
+      {
+        "ingredientId": "saffron-stigma-extract",
+        "amountPerDose": 14
+      }
+    ],
+    "variants": [
+      {
+        "sku": "3387",
+        "upc": "628747133876",
+        "size": {
+          "en": "60",
+          "fr": "60"
+        },
+        "format": {
+          "en": "Vegetable Capsules",
+          "fr": "Capsules végétales"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/saffron-zen",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "saw-palmetto",
     "sku": "0717",
     "upc": "628747107174",
     "npn": "80020986",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Saw Palmetto",
@@ -15099,10 +18118,54 @@
     "reviewedBy": null
   },
   {
+    "id": "sea-buckthorn-berry-oil-mask",
+    "sku": "3394",
+    "upc": "628747233941",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Sea Buckthorn Berry Oil Mask",
+      "fr": "Masque d’Huile de Baie d’Argousier"
+    },
+    "shortName": {
+      "en": "Sea Buckthorn Berry Oil Mask",
+      "fr": "Masque d’Huile de Baie d’Argousier"
+    },
+    "subtitle": {
+      "en": "Organic · Rich in Omega-7",
+      "fr": "Biologique · Riche en oméga-7"
+    },
+    "form": "liquid",
+    "servingSize": "1 liquid",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R2",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "3394",
+        "upc": "628747233941",
+        "size": {
+          "en": "50 ml",
+          "fr": "50 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/sea-buckthorn-berry-oil-mask",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "sea-buckthorn-oil-softgels",
     "sku": "1585",
     "upc": "628747115858",
     "npn": "80037109",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Sea Buckthorn Oil (Softgels)",
@@ -15149,10 +18212,54 @@
     "reviewedBy": null
   },
   {
+    "id": "sea-buckthorn-seed-oil-liquid",
+    "sku": "1604",
+    "upc": "628747216043",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Sea Buckthorn Seed Oil (Liquid)",
+      "fr": "Huile de Graine d’Argousier (Liquide)"
+    },
+    "shortName": {
+      "en": "Sea Buckthorn Seed Oil",
+      "fr": "Huile de Graine d’Argousier"
+    },
+    "subtitle": {
+      "en": "Organic · Exotic Beauty Skincare Oil",
+      "fr": "Biologique · Huile exotique pour la peau"
+    },
+    "form": "liquid",
+    "servingSize": "1 bottle",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R2",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "1604",
+        "upc": "628747216043",
+        "size": {
+          "en": "30 ml",
+          "fr": "30 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/sea-buckthorn-seed-oil-liquid",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "selenium-100-mcg",
     "sku": "1459",
     "upc": "628747114592",
     "npn": "80023097",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Selenium 100 mcg",
@@ -15203,6 +18310,7 @@
     "sku": "3033",
     "upc": "628747130332",
     "npn": "80115294",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Selenium 200 mcg",
@@ -15249,10 +18357,120 @@
     "reviewedBy": null
   },
   {
+    "id": "serratiopeptidase-120000-su",
+    "sku": "1319",
+    "upc": "628747113199",
+    "npn": "80050019",
+    "kind": "nhp",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Serratiopeptidase 120,000 SU",
+      "fr": "Serratiopeptidase 120 000 US"
+    },
+    "shortName": {
+      "en": "Serratiopeptidase 120,000 SU",
+      "fr": "Serratiopeptidase 120 000 US"
+    },
+    "subtitle": {
+      "en": "Valuable Enzymes Protected by Natural Water-Based GPS™ Enteric Coating · Gastric Protective System",
+      "fr": "Précieuses enzymes protégées par enrobage entérique GPS™ naturel à base d’eau · Système de Protection Gastrique"
+    },
+    "form": "capsule",
+    "servingSize": "1 enteric-coated capsule",
+    "dosesPerDayDefault": 1,
+    "unitsPerDose": 1,
+    "unitLabel": "capsule",
+    "status": "draft",
+    "labelVersion": "R2",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "1319",
+        "upc": "628747113199",
+        "size": {
+          "en": "60",
+          "fr": "60"
+        },
+        "format": {
+          "en": "Vegetable Capsules",
+          "fr": "Capsules végétales"
+        }
+      },
+      {
+        "sku": "2487",
+        "upc": "628747124874",
+        "size": {
+          "en": "120",
+          "fr": "120"
+        },
+        "format": {
+          "en": "Vegetable Capsules",
+          "fr": "Capsules végétales"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/serratiopeptidase-120000-su",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "shiitake",
+    "sku": "1870",
+    "upc": "628747118705",
+    "npn": "80113474",
+    "kind": "nhp",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Shiitake",
+      "fr": "Shiitake"
+    },
+    "shortName": {
+      "en": "Shiitake",
+      "fr": "Shiitake"
+    },
+    "subtitle": {
+      "en": "300 mg · Hot-Water Extract · 25% beta-Glucans from 40% Polysaccharides",
+      "fr": "300 mg · Extrait à l’eau chaude · 25 % de bêta-glucanes de 40 % de polysaccharides"
+    },
+    "form": "capsule",
+    "servingSize": "1 capsule",
+    "dosesPerDayDefault": 3,
+    "unitsPerDose": 1,
+    "unitLabel": "capsule",
+    "status": "draft",
+    "labelVersion": "R3",
+    "ingredients": [
+      {
+        "ingredientId": "shiitake-mushroom-extract",
+        "amountPerDose": 300
+      }
+    ],
+    "variants": [
+      {
+        "sku": "1870",
+        "upc": "628747118705",
+        "size": {
+          "en": "60",
+          "fr": "60"
+        },
+        "format": {
+          "en": "Vegetable Capsules",
+          "fr": "Capsules végétales"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/shiitake",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "siberian-ginseng",
     "sku": "0779",
     "upc": "628747107792",
     "npn": "80025577",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Siberian Ginseng",
@@ -15303,6 +18521,7 @@
     "sku": "1590",
     "upc": "628747115902",
     "npn": "80110665",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Silica",
@@ -15353,6 +18572,7 @@
     "sku": "1681",
     "upc": "628747216814",
     "npn": "80052867",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Silica Liquid",
@@ -15371,7 +18591,7 @@
     "labelVersion": "R1",
     "ingredients": [
       {
-        "ingredientId": "silicic-acid-providing",
+        "ingredientId": "silicic-acid",
         "amountPerDose": 53
       }
     ],
@@ -15399,6 +18619,7 @@
     "sku": "1660",
     "upc": "628747016605",
     "npn": "80073346",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Simply Spirulina",
@@ -15447,6 +18668,7 @@
     "sku": "1653",
     "upc": "628747116534",
     "npn": "80073332",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Simply Spirulina (Capsules)",
@@ -15493,10 +18715,54 @@
     "reviewedBy": null
   },
   {
+    "id": "skin-lovers-oil",
+    "sku": "1601",
+    "upc": "628747216012",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Skin Lovers’ Oil",
+      "fr": "Huile pour Amants de la Peau"
+    },
+    "shortName": {
+      "en": "Skin Lovers’ Oil",
+      "fr": "Huile pour Amants de la Peau"
+    },
+    "subtitle": {
+      "en": "Organic · Exotic Beauty Skincare Oil",
+      "fr": "Biologique · Huile exotique pour la peau"
+    },
+    "form": "liquid",
+    "servingSize": "1 bottle",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R3",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "1601",
+        "upc": "628747216012",
+        "size": {
+          "en": "15 ml",
+          "fr": "15 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/skin-lovers-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "sleep8",
     "sku": "1403",
     "upc": "628747114035",
     "npn": "80031162",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Sleep⁸",
@@ -15604,6 +18870,7 @@
     "sku": "3182",
     "upc": "628747131827",
     "npn": "80108182",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Sleep⁸ Plus",
@@ -15690,6 +18957,7 @@
     "sku": "3181",
     "upc": "628747131810",
     "npn": "80108186",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Sleep⁸ Ultra",
@@ -15776,6 +19044,7 @@
     "sku": "1212",
     "upc": "628747112123",
     "npn": "80047815",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Slimmer System",
@@ -15793,6 +19062,10 @@
     "status": "draft",
     "labelVersion": "R6",
     "ingredients": [
+      {
+        "ingredientId": "malabar-tamarind-fruit-extract-50-hydroxycitric-acid",
+        "amountPerDose": 1500
+      },
       {
         "ingredientId": "coleus-forskohlii-root-extract-10-forskolin",
         "amountPerDose": 300
@@ -15842,7 +19115,7 @@
         "amountPerDose": 510
       },
       {
-        "ingredientId": "100-of-the-rda-of-the-following-vitamin-b3",
+        "ingredientId": "vitamin-b3",
         "amountPerDose": 20
       },
       {
@@ -15922,6 +19195,7 @@
     "sku": "1782",
     "upc": "628747117821",
     "npn": "80039835",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Slow Release CoQ10",
@@ -15968,6 +19242,7 @@
     "sku": "0208",
     "upc": "628747102087",
     "npn": "80108131",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Smart Ginkgo",
@@ -15985,6 +19260,10 @@
     "status": "draft",
     "labelVersion": "R5",
     "ingredients": [
+      {
+        "ingredientId": "lion-s-mane-mushroom-extract",
+        "amountPerDose": 170
+      },
       {
         "ingredientId": "glutamine",
         "amountPerDose": 150
@@ -16050,10 +19329,54 @@
     "reviewedBy": null
   },
   {
+    "id": "smooth-stevia",
+    "sku": "1923",
+    "upc": "628747019231",
+    "kind": "food",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Smooth Stevia",
+      "fr": "Smooth Stevia"
+    },
+    "shortName": {
+      "en": "Smooth Stevia",
+      "fr": "Smooth Stevia"
+    },
+    "subtitle": {
+      "en": "Plant-Based Sweetener · Sugar Substitute · Nonbitter",
+      "fr": "Édulcorant à base de plantes · Substitut au sucre · Non amer"
+    },
+    "form": "powder",
+    "servingSize": "1/32 tsp. (0.1 g)",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "1923",
+        "upc": "628747019231",
+        "size": {
+          "en": "30 g",
+          "fr": "30 g"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/smooth-stevia",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "spirulina-chlorella",
     "sku": "1656",
     "upc": "628747116565",
     "npn": "80123473",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Spirulina & Chlorella",
@@ -16108,6 +19431,7 @@
     "sku": "2054",
     "upc": "628747120548",
     "npn": "80067729",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Squalene",
@@ -16158,6 +19482,7 @@
     "sku": "0776",
     "upc": "628747107761",
     "npn": "80031047",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "St. John’s Wort Extract",
@@ -16208,6 +19533,7 @@
     "sku": "0221",
     "upc": "628747102216",
     "npn": "80024751",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Sterols & Sterolins Cholesterol",
@@ -16294,6 +19620,7 @@
     "sku": "1191",
     "upc": "628747111911",
     "npn": "80082452",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Sterols & Sterolins with Arabinogalactan",
@@ -16364,10 +19691,164 @@
     "reviewedBy": null
   },
   {
+    "id": "stevia-sugar-spoonable",
+    "sku": "1069",
+    "upc": "628747910699",
+    "kind": "food",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Stevia Sugar Spoonable",
+      "fr": "Stevia Sugar En Poudre"
+    },
+    "shortName": {
+      "en": "Stevia Sugar Spoonable",
+      "fr": "Stevia Sugar En Poudre"
+    },
+    "subtitle": {
+      "en": "Plant-Based Sweetener · Sugar Substitute with Inulin",
+      "fr": "Édulcorant à base de plantes · Substitut de sucre avec inuline"
+    },
+    "form": "powder",
+    "servingSize": "1/4 tsp. (1 g)",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R3",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "1069",
+        "upc": "628747910699",
+        "size": {
+          "en": "454 g",
+          "fr": "454 g"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      },
+      {
+        "sku": "1070",
+        "upc": "628747910705",
+        "size": {
+          "en": "250 g",
+          "fr": "250 g"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/stevia-sugar-spoonable",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "stevia-sweetleaf",
+    "sku": "0267",
+    "upc": "628747202671",
+    "kind": "food",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Stevia Sweetleaf",
+      "fr": "Stevia Sweetleaf"
+    },
+    "shortName": {
+      "en": "Stevia Sweetleaf",
+      "fr": "Stevia Sweetleaf"
+    },
+    "subtitle": {
+      "en": "Plant-Based Sweetener",
+      "fr": "Édulcorant à base de plante"
+    },
+    "form": "liquid",
+    "servingSize": "1 liquid",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "0267",
+        "upc": "628747202671",
+        "size": {
+          "en": "30 ml",
+          "fr": "30 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/stevia-sweetleaf",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "stevia-white-powder-concentrate",
+    "sku": "0164",
+    "upc": "628747001649",
+    "kind": "food",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Stevia White Powder Concentrate",
+      "fr": "Stévia Poudre blanche concentrée"
+    },
+    "shortName": {
+      "en": "Stevia White Powder Concentrate",
+      "fr": "Stévia Poudre blanche concentrée"
+    },
+    "subtitle": {
+      "en": "Plant-Based Sweetener",
+      "fr": "Édulcorant à base de plantes"
+    },
+    "form": "powder",
+    "servingSize": "1/32 tsp. (0.1 g)",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "0164",
+        "upc": "628747001649",
+        "size": {
+          "en": "15 g",
+          "fr": "15 g"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      },
+      {
+        "sku": "0202",
+        "upc": "628747002028",
+        "size": {
+          "en": "30 g",
+          "fr": "30 g"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/stevia-white-powder-concentrate",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "strong-bones",
     "sku": "0296",
     "upc": "628747102964",
     "npn": "80030327",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Strong Bones",
@@ -16432,6 +19913,10 @@
       {
         "ingredientId": "silicon",
         "amountPerDose": 30
+      },
+      {
+        "ingredientId": "turmeric-root-extract-95-curcuminoids",
+        "amountPerDose": 20
       },
       {
         "ingredientId": "zinc",
@@ -16532,6 +20017,7 @@
     "sku": "1721",
     "upc": "628747117210",
     "npn": "80036486",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Strong Bones Boron-Free Formula",
@@ -16596,6 +20082,10 @@
       {
         "ingredientId": "silicon",
         "amountPerDose": 30
+      },
+      {
+        "ingredientId": "turmeric-root-extract-95-curcuminoids",
+        "amountPerDose": 20
       },
       {
         "ingredientId": "zinc",
@@ -16692,6 +20182,7 @@
     "sku": "2447",
     "upc": "628747124478",
     "npn": "80086406",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Strontium Strong",
@@ -16742,6 +20233,7 @@
     "sku": "0011",
     "upc": "628747100113",
     "npn": "80021829",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Super Fibre Psyllium (Capsules)",
@@ -16792,6 +20284,7 @@
     "sku": "1008",
     "upc": "628747110082",
     "npn": "80024333",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Super Immune",
@@ -16874,6 +20367,7 @@
     "sku": "0970",
     "upc": "628747109703",
     "npn": "80048168",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Super Iron",
@@ -16960,10 +20454,55 @@
     "reviewedBy": null
   },
   {
+    "id": "sweet-orange-essential-oil",
+    "sku": "2146",
+    "upc": "628747221467",
+    "npn": "80071182",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Sweet Orange Essential Oil",
+      "fr": "Huile Essentielle d’Orange Douce"
+    },
+    "shortName": {
+      "en": "Sweet Orange Essential Oil",
+      "fr": "Huile Essentielle d’Orange Douce"
+    },
+    "subtitle": {
+      "en": "Organic · Citrus × sinensis",
+      "fr": "Biologique · Citrus × sinensis"
+    },
+    "form": "liquid",
+    "servingSize": "1 drop",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2146",
+        "upc": "628747221467",
+        "size": {
+          "en": "15 ml",
+          "fr": "15 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/sweet-orange-essential-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "sweet-wormwood-max",
     "sku": "3193",
     "upc": "628747131933",
     "npn": "80112296",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Sweet Wormwood Max",
@@ -17014,10 +20553,140 @@
     "reviewedBy": null
   },
   {
+    "id": "sweet-to-clean-xylitol",
+    "sku": "2459",
+    "upc": "628747024594",
+    "kind": "food",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Sweet-to-Clean Xylitol",
+      "fr": "Douceur-à-Pureté Xylitol"
+    },
+    "shortName": {
+      "en": "Sweet-to-Clean Xylitol",
+      "fr": "Douceur-à-Pureté Xylitol"
+    },
+    "subtitle": {
+      "en": "Organic · Plant-Based Sweetener · No Aftertaste",
+      "fr": "Biologique · Édulcorant à base de plantes · Sans arrière-gout"
+    },
+    "form": "powder",
+    "servingSize": "1 tsp (4 g)",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2459",
+        "upc": "628747024594",
+        "size": {
+          "en": "454 g",
+          "fr": "454 g"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/sweet-to-clean-xylitol",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "sweet-to-slim-erythritol",
+    "sku": "2460",
+    "upc": "628747024600",
+    "kind": "food",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Sweet-to-Slim Erythritol",
+      "fr": "Douceur-à-Légèreté Érythritol"
+    },
+    "shortName": {
+      "en": "Sweet-to-Slim Erythritol",
+      "fr": "Douceur-à-Légèreté Érythritol"
+    },
+    "subtitle": {
+      "en": "Organic · Plant-Based Sweetener · No Aftertaste",
+      "fr": "Biologique · Édulcorant à base de plantes · Sans arrière-gout"
+    },
+    "form": "powder",
+    "servingSize": "1 tsp (4 g)",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2460",
+        "upc": "628747024600",
+        "size": {
+          "en": "454 g",
+          "fr": "454 g"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/sweet-to-slim-erythritol",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "tamanu-oil",
+    "sku": "1600",
+    "upc": "628747216005",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Tamanu Oil",
+      "fr": "Huile de Tamanu"
+    },
+    "shortName": {
+      "en": "Tamanu Oil",
+      "fr": "Huile de Tamanu"
+    },
+    "subtitle": {
+      "en": "Organic · Exotic Beauty Skincare Oil",
+      "fr": "Biologique · Huile exotique pour la peau"
+    },
+    "form": "liquid",
+    "servingSize": "1 bottle",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R2",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "1600",
+        "upc": "628747216005",
+        "size": {
+          "en": "30 ml",
+          "fr": "30 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/tamanu-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "taurine-1000mg",
     "sku": "3575",
     "upc": "628747035750",
     "npn": "80144439",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Taurine 1,000 mg",
@@ -17068,6 +20737,7 @@
     "sku": "0089",
     "upc": "628747100892",
     "npn": "80021987",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Taurine 500 mg",
@@ -17114,6 +20784,7 @@
     "sku": "3566",
     "upc": "628747135665",
     "npn": "80141973",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Taurine 750 mg",
@@ -17160,10 +20831,118 @@
     "reviewedBy": null
   },
   {
+    "id": "tea-tree-essential-oil",
+    "sku": "2116",
+    "upc": "628747221160",
+    "npn": "80069443",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Tea Tree Essential Oil",
+      "fr": "Huile Essentielle d’Arbre à Thé"
+    },
+    "shortName": {
+      "en": "Tea Tree Essential Oil",
+      "fr": "Huile Essentielle d’Arbre à Thé"
+    },
+    "form": "liquid",
+    "servingSize": "1 drop",
+    "dosesPerDayDefault": 3,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "2116",
+        "upc": "628747221160",
+        "size": {
+          "en": "50 ml",
+          "fr": "50 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      },
+      {
+        "sku": "2117",
+        "upc": "628747221177",
+        "size": {
+          "en": "15 ml",
+          "fr": "15 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      },
+      {
+        "sku": "3601",
+        "upc": "628747236010",
+        "size": {
+          "en": "100 ml (previously 95 ml)",
+          "fr": "100 ml (précédemment 95 ml)"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/tea-tree-essential-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "thyme-essential-oil",
+    "sku": "3212",
+    "upc": "628747232128",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Thyme Essential Oil",
+      "fr": "Huille Essentielle de Thym"
+    },
+    "shortName": {
+      "en": "Thyme Essential Oil",
+      "fr": "Huille Essentielle de Thym"
+    },
+    "subtitle": {
+      "en": "100% Pure · Clean",
+      "fr": "100 % pure · Saine"
+    },
+    "form": "liquid",
+    "servingSize": "1 drop",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "3212",
+        "upc": "628747232128",
+        "size": {
+          "en": "30 ml",
+          "fr": "30 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/thyme-essential-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "thyrosyn",
     "sku": "0811",
     "upc": "628747108119",
     "npn": "80056805",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Thyrosyn",
@@ -17250,6 +21029,7 @@
     "sku": "0270",
     "upc": "628747102704",
     "npn": "80041930",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Time Release Vitamin C",
@@ -17332,6 +21112,7 @@
     "sku": "1679",
     "upc": "628747116794",
     "npn": "80034369",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Travelers’ Probiotic 21 Billion+",
@@ -17382,6 +21163,7 @@
     "sku": "0277",
     "upc": "628747102773",
     "npn": "80041605",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Tribulus Terrestris",
@@ -17432,6 +21214,7 @@
     "sku": "3521",
     "upc": "628747135214",
     "npn": "80126947",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "TUDCA Care",
@@ -17482,10 +21265,62 @@
     "reviewedBy": null
   },
   {
+    "id": "turkey-tail",
+    "sku": "1864",
+    "upc": "628747118644",
+    "npn": "80070797",
+    "kind": "nhp",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Turkey Tail",
+      "fr": "Queue de Dinde"
+    },
+    "shortName": {
+      "en": "Turkey Tail",
+      "fr": "Queue de Dinde"
+    },
+    "subtitle": {
+      "en": "Coriolus · 500 mg · Hot-Water Extract",
+      "fr": "Coriolus · 500 mg · Extrait à l’eau chaude"
+    },
+    "form": "capsule",
+    "servingSize": "1 capsule",
+    "dosesPerDayDefault": 3,
+    "unitsPerDose": 1,
+    "unitLabel": "capsule",
+    "status": "draft",
+    "labelVersion": "R4",
+    "ingredients": [
+      {
+        "ingredientId": "coriolus-mushroom-extract",
+        "amountPerDose": 500
+      }
+    ],
+    "variants": [
+      {
+        "sku": "1864",
+        "upc": "628747118644",
+        "size": {
+          "en": "60",
+          "fr": "60"
+        },
+        "format": {
+          "en": "Vegetable Capsules",
+          "fr": "Capsules végétales"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/turkey-tail",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "ultimate-bromelain",
     "sku": "0238",
     "upc": "628747102384",
     "npn": "80034028",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Ultimate Bromelain",
@@ -17536,6 +21371,7 @@
     "sku": "0897",
     "upc": "628747108973",
     "npn": "80070564",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Ultra B Complex 100 mg",
@@ -17646,6 +21482,7 @@
     "sku": "0600",
     "upc": "628747106009",
     "npn": "80071452",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Ultra B Complex 50 mg",
@@ -17756,6 +21593,7 @@
     "sku": "0971",
     "upc": "628747109710",
     "npn": "80047902",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Ultra Iron",
@@ -17846,6 +21684,7 @@
     "sku": "0056",
     "upc": "628747000567",
     "npn": "80030361",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Ultra Max 36 Billion+",
@@ -17896,6 +21735,7 @@
     "sku": "0900",
     "upc": "628747109000",
     "npn": "80072064",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Ultra Stress",
@@ -18014,6 +21854,7 @@
     "sku": "0975",
     "upc": "628747109758",
     "npn": "80025625",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Ultra Zinc 30 mg",
@@ -18092,6 +21933,7 @@
     "sku": "0976",
     "upc": "628747109765",
     "npn": "80025243",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Ultra Zinc 50 mg",
@@ -18170,6 +22012,7 @@
     "sku": "0820",
     "upc": "628747108201",
     "npn": "80027708",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Uva Ursi",
@@ -18220,6 +22063,7 @@
     "sku": "0819",
     "upc": "628747108195",
     "npn": "80019254",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Valerian Root (Capsules)",
@@ -18270,6 +22114,7 @@
     "sku": "1498",
     "upc": "628747214988",
     "npn": "80024817",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Valerian Root (Organic Tincture)",
@@ -18316,6 +22161,7 @@
     "sku": "2533",
     "upc": "628747125338",
     "npn": "80101263",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vegan Glucosamine",
@@ -18366,6 +22212,7 @@
     "sku": "2121",
     "upc": "628747121217",
     "npn": "80071671",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vegetarian Strong Bones",
@@ -18426,6 +22273,10 @@
       {
         "ingredientId": "silicon",
         "amountPerDose": 30
+      },
+      {
+        "ingredientId": "turmeric-root-extract-95-curcuminoids",
+        "amountPerDose": 22.5
       },
       {
         "ingredientId": "zinc",
@@ -18502,6 +22353,7 @@
     "sku": "0917",
     "upc": "628747109178",
     "npn": "80025950",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin B1 Thiamine",
@@ -18580,6 +22432,7 @@
     "sku": "2245",
     "upc": "628747122450",
     "npn": "80075860",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin B12 Methylcobalamin · 15,000 mcg (Sublingual Tablets)",
@@ -18630,6 +22483,7 @@
     "sku": "0916",
     "upc": "628747109161",
     "npn": "80076041",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin B12 Methylcobalamin 1,000 mcg",
@@ -18688,6 +22542,7 @@
     "sku": "0915",
     "upc": "628747109154",
     "npn": "80045023",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin B12 Methylcobalamin 500 mcg",
@@ -18746,6 +22601,7 @@
     "sku": "0905",
     "upc": "628747109055",
     "npn": "80060894",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin B2",
@@ -18796,6 +22652,7 @@
     "sku": "0980",
     "upc": "628747109802",
     "npn": "80027828",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin B3 Niacin · 100 mg",
@@ -18862,6 +22719,7 @@
     "sku": "0908",
     "upc": "628747109086",
     "npn": "80059091",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin B3 Niacin · 500 mg",
@@ -18908,6 +22766,7 @@
     "sku": "1407",
     "upc": "628747114073",
     "npn": "80019683",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin B5",
@@ -18958,6 +22817,7 @@
     "sku": "2584",
     "upc": "628747125840",
     "npn": "80107848",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin B5 Synergistic",
@@ -19024,6 +22884,7 @@
     "sku": "2161",
     "upc": "628747121613",
     "npn": "80074174",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin B6",
@@ -19074,6 +22935,7 @@
     "sku": "0911",
     "upc": "628747109116",
     "npn": "80042343",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin B6 Synergistic",
@@ -19165,6 +23027,7 @@
     "sku": "0239",
     "upc": "628747102391",
     "npn": "80102991",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin C Calcium Ascorbate (Capsules)",
@@ -19219,6 +23082,7 @@
     "sku": "0159",
     "upc": "628747001595",
     "npn": "80066047",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin C Calcium Ascorbate (Crystals)",
@@ -19267,10 +23131,72 @@
     "reviewedBy": null
   },
   {
+    "id": "vitamin-c-crystals",
+    "sku": "0027",
+    "upc": "628747000277",
+    "npn": "80106954",
+    "kind": "nhp",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Vitamin C Crystals",
+      "fr": "Vitamine C Cristaux"
+    },
+    "shortName": {
+      "en": "Vitamin C Crystals",
+      "fr": "Vitamine C Cristaux"
+    },
+    "subtitle": {
+      "en": "100% Pure",
+      "fr": "100 % pure"
+    },
+    "form": "powder",
+    "servingSize": "1 powder",
+    "dosesPerDayDefault": 2,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [
+      {
+        "ingredientId": "vitamin-c",
+        "amountPerDose": 600
+      }
+    ],
+    "variants": [
+      {
+        "sku": "0027",
+        "upc": "628747000277",
+        "size": {
+          "en": "150 g",
+          "fr": "150 g"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      },
+      {
+        "sku": "0162",
+        "upc": "628747001625",
+        "size": {
+          "en": "227 g",
+          "fr": "227 g"
+        },
+        "format": {
+          "en": "Powder",
+          "fr": "Poudre"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/vitamin-c-crystals",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "vitamin-c-sodium-ascorbate",
     "sku": "0870",
     "upc": "628747008709",
     "npn": "80020857",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin C Sodium Ascorbate",
@@ -19319,6 +23245,7 @@
     "sku": "1229",
     "upc": "628747112291",
     "npn": "80041263",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin C⁸ (Capsules)",
@@ -19467,6 +23394,7 @@
     "sku": "1030",
     "upc": "628747010306",
     "npn": "80040818",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin C⁸ (Powder)",
@@ -19615,6 +23543,7 @@
     "sku": "0171",
     "upc": "628747201711",
     "npn": "80101455",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin D3 (Oil Emulsification) · 1,000 IU per Drop",
@@ -19673,6 +23602,7 @@
     "sku": "2735",
     "upc": "628747227353",
     "npn": "80110403",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin D3 (Oil Emulsification) 2,500 IU per Drop Extra Strength",
@@ -19719,6 +23649,7 @@
     "sku": "1441",
     "upc": "628747114417",
     "npn": "80024707",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin D3 1,000 IU per Capsule",
@@ -19765,6 +23696,7 @@
     "sku": "2586",
     "upc": "628747125864",
     "npn": "80103409",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin D3 1,000 IU per Softgel",
@@ -19835,6 +23767,7 @@
     "sku": "2731",
     "upc": "628747127318",
     "npn": "80110402",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin D3 2,500 IU Extra Strength (Capsules)",
@@ -19905,6 +23838,7 @@
     "sku": "2737",
     "upc": "628747127370",
     "npn": "80110404",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin D3 2,500 IU Extra Strength (Softgels)",
@@ -19999,6 +23933,7 @@
     "sku": "1092",
     "upc": "628747110921",
     "npn": "80065157",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin E⁸ · 200 IU",
@@ -20073,6 +24008,7 @@
     "sku": "1093",
     "upc": "628747110938",
     "npn": "80065165",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin E⁸ · 400 IU",
@@ -20147,6 +24083,7 @@
     "sku": "2235",
     "upc": "628747222358",
     "npn": "80080203",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Vitamin K2+D3",
@@ -20201,6 +24138,7 @@
     "sku": "0818",
     "upc": "628747108188",
     "npn": "80024331",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "White Willow",
@@ -20247,10 +24185,54 @@
     "reviewedBy": null
   },
   {
+    "id": "wild-field-mint-pure-essential-oil",
+    "sku": "3211",
+    "upc": "628747232111",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Wild Field Mint Pure Essential Oil",
+      "fr": "Huille Essentielle de Menthe des Champs"
+    },
+    "shortName": {
+      "en": "Wild Field Mint Pure Essential Oil",
+      "fr": "Huille Essentielle de Menthe des Champs"
+    },
+    "subtitle": {
+      "en": "100% Pure · Clean",
+      "fr": "100 % pure · Saine"
+    },
+    "form": "liquid",
+    "servingSize": "1 drop",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "3211",
+        "upc": "628747232111",
+        "size": {
+          "en": "30 ml",
+          "fr": "30 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/wild-field-mint-pure-essential-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "wild-omega-3-180-mg-epa-120-mg-dha",
     "sku": "1000",
     "upc": "628747110006",
     "npn": "80020862",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Wild Omega 3 180 mg EPA 120 mg DHA",
@@ -20329,6 +24311,7 @@
     "sku": "2194",
     "upc": "628747121941",
     "npn": "80077104",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Wild Omega 3 EPA 330 mg · DHA 165 mg",
@@ -20399,6 +24382,7 @@
     "sku": "1253",
     "upc": "628747112536",
     "npn": "80009414",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Wild Omega 3 EPA 660 mg DHA 330 mg",
@@ -20469,6 +24453,7 @@
     "sku": "2006",
     "upc": "628747120067",
     "npn": "80064643",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Wild Omega 3 EPA 660 mg DHA 330 mg Lemon Flavour",
@@ -20535,10 +24520,70 @@
     "reviewedBy": null
   },
   {
+    "id": "wild-omega-3-epa-900-mg-dha-600-mg-lemon-flavour",
+    "sku": "2465",
+    "upc": "628747224659",
+    "npn": "80092888",
+    "kind": "nhp",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Wild Omega 3 EPA 900 mg · DHA 600 mg Lemon Flavour",
+      "fr": "Oméga-3 Sauvage AEP 900 mg · ADH 600 mg Saveur de citron"
+    },
+    "shortName": {
+      "en": "Wild Omega 3",
+      "fr": "Oméga-3 Sauvage"
+    },
+    "subtitle": {
+      "en": "Ultrapure Pharmaceutical Grade",
+      "fr": "Ultrapur, qualité pharmaceutique"
+    },
+    "form": "liquid",
+    "servingSize": "1 teaspoon",
+    "dosesPerDayDefault": 1,
+    "unitsPerDose": 1,
+    "unitLabel": "teaspoon",
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [
+      {
+        "ingredientId": "fish-oil",
+        "amountPerDose": 4500
+      },
+      {
+        "ingredientId": "epa",
+        "amountPerDose": 900
+      },
+      {
+        "ingredientId": "dha",
+        "amountPerDose": 600
+      }
+    ],
+    "variants": [
+      {
+        "sku": "2465",
+        "upc": "628747224659",
+        "size": {
+          "en": "200 ml",
+          "fr": "200 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/wild-omega-3-epa-900-mg-dha-600-mg-lemon-flavour",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "wild-oregano-c93",
     "sku": "1233",
     "upc": "628747212335",
     "npn": "80033637",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Wild Oregano C93",
@@ -20611,6 +24656,7 @@
     "sku": "2094",
     "upc": "628747220941",
     "npn": "80073040",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Wild Oregano C93 Extra Strong",
@@ -20671,6 +24717,7 @@
     "sku": "1632",
     "upc": "628747216326",
     "npn": "80043763",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Wild Oregano C93 With Garlic",
@@ -20745,10 +24792,54 @@
     "reviewedBy": null
   },
   {
+    "id": "wintergreen-essential-oil",
+    "sku": "3213",
+    "upc": "628747232135",
+    "kind": "topical",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Wintergreen Essential Oil",
+      "fr": "Huille Essentielle de Gaulthérie"
+    },
+    "shortName": {
+      "en": "Wintergreen Essential Oil",
+      "fr": "Huille Essentielle de Gaulthérie"
+    },
+    "subtitle": {
+      "en": "100% Pure · Clean",
+      "fr": "100 % pure · Saine"
+    },
+    "form": "liquid",
+    "servingSize": "1 drop",
+    "dosesPerDayDefault": 1,
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [],
+    "variants": [
+      {
+        "sku": "3213",
+        "upc": "628747232135",
+        "size": {
+          "en": "30 ml",
+          "fr": "30 ml"
+        },
+        "format": {
+          "en": "Liquid",
+          "fr": "Liquide"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/wintergreen-essential-oil",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "wormwood",
     "sku": "0249",
     "upc": "628747102490",
     "npn": "80033348",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Wormwood",
@@ -20799,6 +24890,7 @@
     "sku": "3573",
     "upc": "628747235730",
     "npn": "80119547",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Wormwood Tincture",
@@ -20847,6 +24939,7 @@
     "sku": "2545",
     "upc": "628747125451",
     "npn": "80102846",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Zinc",
@@ -20897,6 +24990,7 @@
     "sku": "3622",
     "upc": "628747136228",
     "npn": "80085996",
+    "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
       "en": "Zinc ʟ-Carnosine",

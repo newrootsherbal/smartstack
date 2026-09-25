@@ -78,7 +78,7 @@ export function validateCatalogue(raw: unknown): ValidationResult {
       if (!/\(sample\)/i.test(p.name.en)) {
         errors.push(`${where}: sample product names must contain "(sample)"`)
       }
-      if (!p.npn.startsWith('SAMPLE-'))
+      if (!p.npn?.startsWith('SAMPLE-'))
         errors.push(`${where}: sample NPN must start with "SAMPLE-"`)
       if (!p.upc.startsWith(SAMPLE_EAN13_PREFIX) || p.upc.length !== 13) {
         errors.push(`${where}: sample UPC must be an EAN-13 with prefix ${SAMPLE_EAN13_PREFIX}`)
@@ -86,10 +86,15 @@ export function validateCatalogue(raw: unknown): ValidationResult {
       if (p.reviewStatus !== 'unreviewed')
         errors.push(`${where}: sample products must be unreviewed`)
     } else {
-      if (p.npn.startsWith('SAMPLE-') || p.brand === 'Sample') {
+      if (p.npn?.startsWith('SAMPLE-') || p.brand === 'Sample') {
         errors.push(`${where}: only status "sample" products may use the sample brand / NPN`)
       }
-      if (!/^\d{8}$/.test(p.npn)) errors.push(`${where}: NPN must be 8 digits (got ${p.npn})`)
+      if (p.kind === 'nhp' && !/^\d{8}$/.test(p.npn ?? '')) {
+        errors.push(`${where}: a natural health product needs an 8-digit NPN (got ${p.npn})`)
+      }
+      if (p.kind !== 'nhp' && p.npn !== undefined && !/^\d{8}$/.test(p.npn)) {
+        errors.push(`${where}: NPN must be 8 digits when present (got ${p.npn})`)
+      }
       if (p.upc.startsWith(SAMPLE_EAN13_PREFIX) && p.upc.length === 13) {
         errors.push(`${where}: real products cannot use the GS1 200 sample range`)
       }

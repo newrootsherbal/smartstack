@@ -1,12 +1,5 @@
 [
   {
-    "id": "100-of-the-rda-of-the-following-vitamin-b3",
-    "name": {
-      "en": "*100% of the RDA of the following: Vitamin B3"
-    },
-    "unit": "mg"
-  },
-  {
     "id": "5-hydroxytryptophan",
     "name": {
       "en": "ʟ‑5‑Hydroxytryptophan"
@@ -16,14 +9,7 @@
   {
     "id": "acetyl-carnitine-hydrochloride",
     "name": {
-      "en": "Acetyl-ʟ‑carnitine hydrochloride"
-    },
-    "unit": "mg"
-  },
-  {
-    "id": "acetyl-carnitine-hydrochloride-providing",
-    "name": {
-      "en": "Acetyl‒ʟ‒carnitine hydrochloride, providing"
+      "en": "Acetyl‒ʟ‒carnitine hydrochloride"
     },
     "unit": "mg"
   },
@@ -98,13 +84,6 @@
     "unit": "mg"
   },
   {
-    "id": "approx-1-tbsp-servings-per-container-16-calories-48-daily-value-fat",
-    "name": {
-      "en": "approx. 1 Tbsp. Servings per container: 16 Calories 48 % Daily Value* Fat"
-    },
-    "unit": "mg"
-  },
-  {
     "id": "arabinogalactan",
     "name": {
       "en": "Arabinogalactan"
@@ -170,7 +149,7 @@
   {
     "id": "astaxanthin-from-haematococcus-pluvialis-extract",
     "name": {
-      "en": "Astaxanthin , from Haematococcus pluvialis extract"
+      "en": "Astaxanthin, from Haematococcus pluvialis extract"
     },
     "unit": "mg"
   },
@@ -415,9 +394,9 @@
     "unit": "mg"
   },
   {
-    "id": "boswellia-oleogum-resin-70-organic-acid-providing-35-boswellic-acid",
+    "id": "boswellia-oleogum-resin-70-organic-acid",
     "name": {
-      "en": "Boswellia oleogum resin, 70% organic acid providing 35% boswellic acid"
+      "en": "Boswellia oleogum resin, 70% organic acid"
     },
     "unit": "mg"
   },
@@ -425,6 +404,13 @@
     "id": "bovine-colostrum",
     "name": {
       "en": "Bovine colostrum"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "broken-cell-organic-chlorella",
+    "name": {
+      "en": "Broken cell, organic chlorella"
     },
     "unit": "mg"
   },
@@ -452,7 +438,7 @@
   {
     "id": "bromelain-2400-gdu-g",
     "name": {
-      "en": "Bromelain , 2400 GDU/g"
+      "en": "Bromelain, 2400 GDU/g"
     },
     "unit": "mg"
   },
@@ -626,9 +612,9 @@
     "unit": "mg"
   },
   {
-    "id": "chaga-mushroom-extract-standardized-to-40-polysaccharides",
+    "id": "chaga-mushroom-extract",
     "name": {
-      "en": "Chaga mushroom extract standardized to 40% polysaccharides"
+      "en": "Chaga mushroom extract"
     },
     "unit": "mg"
   },
@@ -728,7 +714,7 @@
   {
     "id": "citrus-bioflavonoids-50-hesperidin",
     "name": {
-      "en": "Citrus bioflavonoids , 50% hesperidin"
+      "en": "Citrus bioflavonoids, 50% hesperidin"
     },
     "unit": "mg"
   },
@@ -765,21 +751,21 @@
   {
     "id": "cordyceps-mushroom-extract",
     "name": {
-      "en": "Cordyceps mushroom extract*"
+      "en": "Cordyceps mushroom extract"
     },
     "unit": "mg"
   },
   {
-    "id": "cordyceps-mushroom-extract-standardized-to-40-polysaccharides-20-beta-glucans",
+    "id": "cordyceps-mushroom-fruiting-body-extract",
     "name": {
-      "en": "Cordyceps mushroom extract standardized to 40% polysaccharides, 20% beta‑glucans"
+      "en": "Cordyceps mushroom fruiting body extract"
     },
     "unit": "mg"
   },
   {
     "id": "coriolus-mushroom-extract",
     "name": {
-      "en": "Coriolus mushroom extract*"
+      "en": "Coriolus mushroom extract"
     },
     "unit": "mg"
   },
@@ -812,9 +798,16 @@
     "unit": "mg"
   },
   {
-    "id": "curcurouge-providing",
+    "id": "curcuma-root-extract-95-curcuminoids",
     "name": {
-      "en": "curcuRouge , providing"
+      "en": "Curcuma root extract, 95% curcuminoids"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "curcurouge",
+    "name": {
+      "en": "curcuRouge"
     },
     "unit": "mg"
   },
@@ -1035,7 +1028,7 @@
   {
     "id": "fruit-blend-20-multianthocyanidins",
     "name": {
-      "en": "Fruit blend, 20% multianthocyanidins *"
+      "en": "Fruit blend, 20% multianthocyanidins"
     },
     "unit": "mg"
   },
@@ -1126,7 +1119,7 @@
   {
     "id": "glucosamine-sulfate-sodium-free",
     "name": {
-      "en": "Glucosamine sulfate , sodium-free"
+      "en": "Glucosamine sulfate, sodium-free"
     },
     "unit": "mg"
   },
@@ -1203,7 +1196,14 @@
   {
     "id": "grapefruit-seed-extract",
     "name": {
-      "en": "Grapefruit seed extract*"
+      "en": "Grapefruit seed extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "green-tea-extract-50-polyphenols",
+    "name": {
+      "en": "Green tea extract, 50% polyphenols"
     },
     "unit": "mg"
   },
@@ -1308,7 +1308,7 @@
   {
     "id": "histidine",
     "name": {
-      "en": "ʟ‑Histidine*"
+      "en": "ʟ‑Histidine"
     },
     "unit": "mg"
   },
@@ -1423,14 +1423,14 @@
   {
     "id": "isoleucine",
     "name": {
-      "en": "ʟ‑Isoleucine *"
+      "en": "ʟ‑Isoleucine"
     },
     "unit": "mg"
   },
   {
     "id": "japanese-knotweed-50-resveratrol",
     "name": {
-      "en": "Japanese knotweed , 50% resveratrol"
+      "en": "Japanese knotweed, 50% resveratrol"
     },
     "unit": "mg"
   },
@@ -1521,7 +1521,7 @@
   {
     "id": "leucine",
     "name": {
-      "en": "ʟ‑Leucine *"
+      "en": "ʟ‑Leucine"
     },
     "unit": "mg"
   },
@@ -1542,14 +1542,14 @@
   {
     "id": "lion-s-mane-mushroom-extract",
     "name": {
-      "en": "Lion’s mane mushroom extract*"
+      "en": "Lion’s mane mushroom extract"
     },
     "unit": "mg"
   },
   {
     "id": "liver-organ-from-bovine-source",
     "name": {
-      "en": "Liver organ, from bovine source *"
+      "en": "Liver organ, from bovine source"
     },
     "unit": "mg"
   },
@@ -1577,14 +1577,14 @@
   {
     "id": "lycopene-from-tomato-flesh-extract",
     "name": {
-      "en": "Lycopene , from tomato flesh extract"
+      "en": "Lycopene, from tomato flesh extract"
     },
     "unit": "mg"
   },
   {
     "id": "lysine",
     "name": {
-      "en": "ʟ‑Lysine*"
+      "en": "ʟ‑Lysine"
     },
     "unit": "mg"
   },
@@ -1620,14 +1620,14 @@
   {
     "id": "maitake-mushroom-extract",
     "name": {
-      "en": "Maitake mushroom extract*"
+      "en": "Maitake mushroom extract"
     },
     "unit": "mg"
   },
   {
-    "id": "maitake-mushroom-extract-standardized-to-40-polysaccharides-30-beta-glucans",
+    "id": "malabar-tamarind-fruit-extract-50-hydroxycitric-acid",
     "name": {
-      "en": "Maitake mushroom extract, standardized to 40% polysaccharides, 30% beta‑glucans"
+      "en": "Malabar tamarind fruit extract, 50% hydroxycitric acid"
     },
     "unit": "mg"
   },
@@ -1675,9 +1675,9 @@
     "unit": "mg"
   },
   {
-    "id": "medium-chain-triglycerides-providing-60-caprylic-acid-and-40-capric-acid",
+    "id": "medium-chain-triglycerides",
     "name": {
-      "en": "Medium-chain triglycerides providing 60% caprylic acid and 40% capric acid"
+      "en": "Medium-chain triglycerides"
     },
     "unit": "mg"
   },
@@ -1692,7 +1692,7 @@
   {
     "id": "methionine",
     "name": {
-      "en": "ʟ‑Methionine*"
+      "en": "ʟ‑Methionine"
     },
     "unit": "mg"
   },
@@ -1706,14 +1706,14 @@
   {
     "id": "methylsulfonylmethane-100-pure",
     "name": {
-      "en": "Methylsulfonylmethane , 100% pure"
+      "en": "Methylsulfonylmethane, 100% pure"
     },
     "unit": "mg"
   },
   {
     "id": "microcrystalline-hydroxyapatite",
     "name": {
-      "en": "Microcrystalline hydroxyapatite *"
+      "en": "Microcrystalline hydroxyapatite"
     },
     "unit": "mg"
   },
@@ -2253,21 +2253,28 @@
   {
     "id": "ox-bile-45-cholic-acids",
     "name": {
-      "en": "Ox bile , 45% cholic acids"
+      "en": "Ox bile, 45% cholic acids"
     },
     "unit": "mg"
   },
   {
     "id": "ox-bile-from-bovine-source-45-cholic-acid",
     "name": {
-      "en": "Ox bile, from bovine source , 45% cholic acid"
+      "en": "Ox bile, from bovine source, 45% cholic acid"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "panax-ginseng-root-and-leaf-extract",
+    "name": {
+      "en": "Panax ginseng root and leaf extract"
     },
     "unit": "mg"
   },
   {
     "id": "pancreas-organ",
     "name": {
-      "en": "Pancreas organ *"
+      "en": "Pancreas organ"
     },
     "unit": "mg"
   },
@@ -2295,7 +2302,7 @@
   {
     "id": "para-aminobenzoic-acid",
     "name": {
-      "en": "para‑Aminobenzoic acid"
+      "en": "para-Aminobenzoic acid"
     },
     "unit": "mg"
   },
@@ -2358,7 +2365,7 @@
   {
     "id": "phenylalanine",
     "name": {
-      "en": "ʟ‑Phenylalanine*"
+      "en": "ʟ‑Phenylalanine"
     },
     "unit": "mg"
   },
@@ -2423,7 +2430,7 @@
   {
     "id": "protease-amylase-lipase-bromelain-2-400-gdu-g",
     "name": {
-      "en": "Protease Amylase Lipase Bromelain , 2,400 GDU/g"
+      "en": "Protease Amylase Lipase Bromelain, 2,400 GDU/g"
     },
     "unit": "mg"
   },
@@ -2540,16 +2547,23 @@
     "unit": "mg"
   },
   {
-    "id": "reishi-mushroom-extract",
+    "id": "reishi-fruiting-body-extract",
     "name": {
-      "en": "Reishi mushroom extract*"
+      "en": "Reishi fruiting body extract"
     },
     "unit": "mg"
   },
   {
-    "id": "reishi-mushroom-extract-40-polysaccharides-providing-30-beta-glucans",
+    "id": "reishi-mushroom-extract",
     "name": {
-      "en": "Reishi mushroom extract, 40% polysaccharides, providing 30% beta‑glucans"
+      "en": "Reishi mushroom extract"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "reishi-mushroom-extract-40-polysaccharides",
+    "name": {
+      "en": "Reishi mushroom extract, 40% polysaccharides"
     },
     "unit": "mg"
   },
@@ -2631,6 +2645,13 @@
     "unit": "mg"
   },
   {
+    "id": "saffron-stigma-extract",
+    "name": {
+      "en": "Saffron stigma extract"
+    },
+    "unit": "mg"
+  },
+  {
     "id": "sage-leaf",
     "name": {
       "en": "Sage leaf"
@@ -2690,7 +2711,7 @@
   {
     "id": "shiitake-mushroom-extract",
     "name": {
-      "en": "Shiitake mushroom extract*"
+      "en": "Shiitake mushroom extract"
     },
     "unit": "mg"
   },
@@ -2709,9 +2730,9 @@
     "unit": "mg"
   },
   {
-    "id": "silicic-acid-providing",
+    "id": "silicic-acid",
     "name": {
-      "en": "Silicic acid providing"
+      "en": "Silicic acid"
     },
     "unit": "mg"
   },
@@ -2720,13 +2741,6 @@
     "name": {
       "en": "Silicon",
       "fr": "Silicium"
-    },
-    "unit": "mg"
-  },
-  {
-    "id": "sodium",
-    "name": {
-      "en": "Sodium"
     },
     "unit": "mg"
   },
@@ -2740,14 +2754,14 @@
   {
     "id": "spleen-from-bovine-source",
     "name": {
-      "en": "Spleen , from bovine source *"
+      "en": "Spleen, from bovine source"
     },
     "unit": "mg"
   },
   {
     "id": "squalene-hexane-free",
     "name": {
-      "en": "Squalene , hexane-free"
+      "en": "Squalene, hexane-free"
     },
     "unit": "mg"
   },
@@ -2845,7 +2859,7 @@
   {
     "id": "threonine",
     "name": {
-      "en": "ʟ‑Threonine*"
+      "en": "ʟ‑Threonine"
     },
     "unit": "mg"
   },
@@ -2862,6 +2876,13 @@
       "en": "Tomato flesh extract, 10% lycopene"
     },
     "unit": "mg"
+  },
+  {
+    "id": "tomato-flesh-extract-20-lycopene",
+    "name": {
+      "en": "Tomato flesh extract, 20% lycopene"
+    },
+    "unit": "mcg"
   },
   {
     "id": "trans-resveratrol",
@@ -2887,7 +2908,14 @@
   {
     "id": "tryptophan",
     "name": {
-      "en": "ʟ‑Tryptophan*"
+      "en": "ʟ‑Tryptophan"
+    },
+    "unit": "mg"
+  },
+  {
+    "id": "turmeric-root-extract-95-curcuminoids",
+    "name": {
+      "en": "Turmeric root extract, 95% curcuminoids"
     },
     "unit": "mg"
   },
@@ -2915,7 +2943,7 @@
   {
     "id": "valine",
     "name": {
-      "en": "ʟ‑Valine *"
+      "en": "ʟ‑Valine"
     },
     "unit": "mg"
   },
@@ -2932,6 +2960,14 @@
       "en": "Vanadyl sulfate"
     },
     "unit": "mg"
+  },
+  {
+    "id": "vitamin-a-iu",
+    "name": {
+      "en": "Vitamin A",
+      "fr": "Vitamine A"
+    },
+    "unit": "IU"
   },
   {
     "id": "vitamin-b1",
@@ -3114,7 +3150,7 @@
   {
     "id": "zeaxanthin-from-marigold-extract",
     "name": {
-      "en": "Zeaxanthin , from marigold extract"
+      "en": "Zeaxanthin, from marigold extract"
     },
     "unit": "mg"
   },
