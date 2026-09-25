@@ -149,7 +149,12 @@
     "timesPerDay": "Prises par jour",
     "fromLabel": "selon l’étiquette",
     "loading": "Chargement…",
-    "andMore": "et {count} de plus"
+    "andMore": "et {count} de plus",
+    "kind": {
+      "nhp": "Produit de santé naturel",
+      "food": "Aliment (sans NPN)",
+      "topical": "Usage externe (sans NPN)"
+    }
   },
   "install": {
     "iosTitle": "Ajoutez SmartStack à votre écran d’accueil",
@@ -212,7 +217,9 @@
     "ingredients": "Ingrédients médicinaux par {serving}",
     "sizes": "Formats : {sizes}",
     "viewToday": "Voir l’horaire d’aujourd’hui",
-    "addAnother": "En ajouter un autre"
+    "addAnother": "En ajouter un autre",
+    "topicalNotice": "Ce produit s’applique sur la peau ou se diffuse; il ne se prend donc pas selon un horaire. Vous pouvez tout de même le consulter ici.",
+    "labelFacts": "Renseignements de l’étiquette"
   },
   "stack": {
     "title": "Mes suppléments",
