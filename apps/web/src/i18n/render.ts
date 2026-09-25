@@ -1,6 +1,6 @@
 import { getIngredient, getProduct } from '@smartstack/engine'
 import type { Adjustment, Catalogue, Reason, Severity } from '@smartstack/shared'
-import { t, tl } from './index'
+import { intlLocale, t, tl } from './index'
 
 /** "Iron moved away from calcium", "Fish oil moved to a meal", … */
 export function renderAdjustment(adjustment: Adjustment, catalogue?: Catalogue): string {
@@ -8,7 +8,7 @@ export function renderAdjustment(adjustment: Adjustment, catalogue?: Catalogue):
   const productName = product ? tl(product.shortName) : adjustment.productId
   const otherId = adjustment.params.otherIngredientId
   const other = otherId ? getIngredient(otherId, catalogue) : undefined
-  const ingredientName = other ? tl(other.name).toLocaleLowerCase() : (otherId ?? '')
+  const ingredientName = other ? tl(other.name).toLocaleLowerCase(intlLocale()) : (otherId ?? '')
   return t(`adjustment.${adjustment.code}`, { product: productName, ingredient: ingredientName })
 }
 

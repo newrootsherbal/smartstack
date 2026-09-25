@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react'
 import { api } from '../api/client'
+import { t } from '../i18n'
 import { platformName } from '../platform/detect'
 import {
   permissionState,
@@ -110,7 +111,11 @@ export function useReminders() {
     setTestStatus('idle')
     setError(null)
     try {
-      await api.postTestReminder(state.userId)
+      // Composed here, like every other notification, so it arrives in the app's language.
+      await api.postTestReminder(state.userId, {
+        title: t('reminders.testTitle'),
+        body: t('reminders.testBody'),
+      })
       setTestStatus('sent')
     } catch (err) {
       setTestStatus('failed')

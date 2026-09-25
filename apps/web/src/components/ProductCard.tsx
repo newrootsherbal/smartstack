@@ -1,7 +1,7 @@
 import { getIngredient } from '@smartstack/engine'
 import type { Product } from '@smartstack/shared'
 import { useState } from 'react'
-import { formatAmount } from '../format'
+import { formatAmount, formatServingSize } from '../format'
 import { t, tl } from '../i18n'
 import styles from './ProductCard.module.css'
 
@@ -22,7 +22,7 @@ export function ProductCard({ product }: { product: Product }) {
           <h3>{tl(product.name)}</h3>
           {product.subtitle && <p className="small">{tl(product.subtitle)}</p>}
           <p className="small muted">
-            {product.brand} · {product.servingSize}
+            {product.brand} · {formatServingSize(product.servingSize)}
           </p>
         </div>
         {product.status === 'sample' ? (
@@ -35,33 +35,31 @@ export function ProductCard({ product }: { product: Product }) {
         {product.npn ? `NPN ${product.npn}` : t(`common.kind.${product.kind}`)} · SKU {product.sku}
         {sizes.length > 0 && <> · {t('add.sizes', { sizes: sizes.join(', ') })}</>}
       </p>
-      {product.ingredients.length > 0 && (
-        <div>
-          <p className="small" style={{ fontWeight: 600 }}>
-            {t('add.ingredients', { serving: product.servingSize })}
-          </p>
-          <ul className={styles.ingredients}>
-            {rows.map((pi) => {
-              const ing = getIngredient(pi.ingredientId)
-              return (
-                <li key={pi.ingredientId}>
-                  <span>{ing ? tl(ing.name) : pi.ingredientId}</span>
-                  <span className="muted">{formatAmount(pi.amountPerDose, ing?.unit ?? '')}</span>
-                </li>
-              )
-            })}
-          </ul>
-          {hidden > 0 && (
-            <button
-              type="button"
-              className="btn btn--link btn--small"
-              onClick={() => setExpanded(true)}
-            >
-              {t('common.andMore', { count: hidden })}
-            </button>
-          )}
-        </div>
-      )}
+      <div>
+        <p className="small" style={{ fontWeight: 600 }}>
+          {t('add.ingredients', { serving: formatServingSize(product.servingSize) })}
+        </p>
+        <ul className={styles.ingredients}>
+          {rows.map((pi) => {
+            const ing = getIngredient(pi.ingredientId)
+            return (
+              <li key={pi.ingredientId}>
+                <span>{ing ? tl(ing.name) : pi.ingredientId}</span>
+                <span className="muted">{formatAmount(pi.amountPerDose, ing?.unit ?? '')}</span>
+              </li>
+            )
+          })}
+        </ul>
+        {hidden > 0 && (
+          <button
+            type="button"
+            className="btn btn--link btn--small"
+            onClick={() => setExpanded(true)}
+          >
+            {t('common.andMore', { count: hidden })}
+          </button>
+        )}
+      </div>
     </div>
   )
 }

@@ -7,6 +7,7 @@
     "sample": "Product details come from newrootsherbal.com. Timing rules are not yet reviewed and are not medical advice. Talk to a healthcare professional about your supplements."
   },
   "nav": {
+    "label": "Main",
     "today": "Today",
     "stack": "My stack",
     "add": "Add",
@@ -14,26 +15,11 @@
     "settings": "Settings"
   },
   "severity": {
-    "important": {
-      "label": "Important",
-      "sub": "Action required"
-    },
-    "timing_conflict": {
-      "label": "Timing conflict",
-      "sub": "Action recommended"
-    },
-    "consideration": {
-      "label": "Consideration",
-      "sub": ""
-    },
-    "product_instruction": {
-      "label": "Product instruction",
-      "sub": ""
-    },
-    "informational": {
-      "label": "Informational",
-      "sub": ""
-    }
+    "important": { "label": "Important", "sub": "Action required" },
+    "timing_conflict": { "label": "Timing conflict", "sub": "Action recommended" },
+    "consideration": { "label": "Consideration", "sub": "" },
+    "product_instruction": { "label": "Product instruction", "sub": "" },
+    "informational": { "label": "Informational", "sub": "" }
   },
   "anchor": {
     "breakfast": "Morning",
@@ -68,31 +54,78 @@
   "push": {
     "several": "{count} supplements"
   },
+  "unit": {
+    "mg": "mg",
+    "mcg": "mcg",
+    "IU": "IU",
+    "CFU": "CFU"
+  },
+  "amount": {
+    "billion": { "one": "billion", "other": "billion" },
+    "million": { "one": "million", "other": "million" }
+  },
   "form": {
-    "capsule": {
-      "one": "capsule",
-      "other": "capsules"
-    },
-    "tablet": {
-      "one": "tablet",
-      "other": "tablets"
-    },
-    "softgel": {
-      "one": "softgel",
-      "other": "softgels"
-    },
-    "powder": {
-      "one": "serving",
-      "other": "servings"
-    },
-    "liquid": {
-      "one": "dose",
-      "other": "doses"
-    },
-    "other": {
-      "one": "dose",
-      "other": "doses"
-    }
+    "capsule": { "one": "capsule", "other": "capsules" },
+    "tablet": { "one": "tablet", "other": "tablets" },
+    "softgel": { "one": "softgel", "other": "softgels" },
+    "powder": { "one": "serving", "other": "servings" },
+    "liquid": { "one": "dose", "other": "doses" },
+    "other": { "one": "dose", "other": "doses" }
+  },
+  "unitLabel": {
+    "capsule": { "one": "capsule", "other": "capsules" },
+    "softgel": { "one": "softgel", "other": "softgels" },
+    "tablet": { "one": "tablet", "other": "tablets" },
+    "caplet": { "one": "caplet", "other": "caplets" },
+    "drop": { "one": "drop", "other": "drops" },
+    "teaspoon": { "one": "teaspoon", "other": "teaspoons" },
+    "tablespoon": { "one": "tablespoon", "other": "tablespoons" },
+    "scoop": { "one": "scoop", "other": "scoops" },
+    "ml": { "one": "ml", "other": "ml" },
+    "sachet": { "one": "sachet", "other": "sachets" },
+    "lozenge": { "one": "lozenge", "other": "lozenges" },
+    "chewable": { "one": "chewable", "other": "chewables" },
+    "ovule": { "one": "ovule", "other": "ovules" },
+    "dose": { "one": "dose", "other": "doses" },
+    "serving": { "one": "serving", "other": "servings" },
+    "cup": { "one": "cup", "other": "cups" },
+    "bag": { "one": "bag", "other": "bags" }
+  },
+  "serving": {
+    "capsule": "capsule",
+    "capsules": "capsules",
+    "vegetable-capsule": "vegetable capsule",
+    "vegetable-capsules": "vegetable capsules",
+    "enteric-coated-capsule": "enteric-coated capsule",
+    "enteric-coated-capsules": "enteric-coated capsules",
+    "softgel": "softgel",
+    "softgels": "softgels",
+    "chewable-softgel": "chewable softgel",
+    "chewable-softgels": "chewable softgels",
+    "tablet": "tablet",
+    "tablets": "tablets",
+    "sublingual-tablet": "sublingual tablet",
+    "drop": "drop",
+    "drops": "drops",
+    "ml": "ml",
+    "teaspoon": "teaspoon",
+    "teaspoons": "teaspoons",
+    "rounded-teaspoon": "rounded teaspoon",
+    "rounded-half-teaspoon": "rounded half teaspoon",
+    "tablespoon": "tablespoon",
+    "tablespoons": "tablespoons",
+    "scoop": "scoop",
+    "scoops": "scoops",
+    "powder": "powder",
+    "liquid": "liquid",
+    "dose": "dose",
+    "doses": "doses",
+    "serving": "serving",
+    "servings": "servings",
+    "bottle": "bottle",
+    "box": "box",
+    "set": "set",
+    "vaginal-ovule": "vaginal ovule"
   },
   "times": {
     "1": "Once a day",
@@ -254,6 +287,8 @@
     "unsupported": "This browser can't deliver reminders. On iPhone, add SmartStack to your Home Screen and open it from there.",
     "pushServiceFailed": "Your browser could not register with its push service (the message was “{error}”). Office networks often block this channel; try a phone on mobile data or a home network. Nothing was sent to the server.",
     "test": "Send me a test reminder in 2–3 minutes",
+    "testTitle": "SmartStack test reminder",
+    "testBody": "Reminders are working on this device.",
     "testSent": "Test reminder scheduled. Lock your phone and wait.",
     "testFailed": "Could not schedule the test: {error}",
     "lastSync": "Schedule synced {when}.",
@@ -272,7 +307,7 @@
     "timezoneNote": "Detected from your device. Reminders follow it automatically.",
     "language": "Language",
     "english": "English",
-    "french": "Français (coming soon)",
+    "french": "Français",
     "data": "Your data",
     "delete": "Delete my data",
     "deleteConfirm": "Delete your stack, routine and reminders on this device and on the server? This can't be undone.",
@@ -288,6 +323,7 @@
   "dev": {
     "barcodesTitle": "Barcodes",
     "barcodesIntro": "Search a product and scan its barcode off the screen. Real products render as UPC-A; sample codes use GS1 prefix 200.",
+    "showing": "showing {count}",
     "styleguideTitle": "Style guide"
   }
 }

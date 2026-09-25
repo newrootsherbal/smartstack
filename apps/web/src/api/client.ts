@@ -2,7 +2,12 @@
  * Thin client for /api/me/… . The anonymous id is the only credential.
  * Nothing here is called until the user taps "Turn on reminders."
  */
-import type { PushSubscriptionBody, PutMeBody, PutScheduleBody } from '@smartstack/shared'
+import type {
+  PushSubscriptionBody,
+  PutMeBody,
+  PutScheduleBody,
+  TestReminderBody,
+} from '@smartstack/shared'
 
 export class ApiError extends Error {
   constructor(
@@ -63,5 +68,6 @@ export const api = {
     request(userId, 'DELETE', '/api/me/push-subscription', { endpoint }),
   putSchedule: (userId: string, body: PutScheduleBody) =>
     request(userId, 'PUT', '/api/me/schedule', body),
-  postTestReminder: (userId: string) => request(userId, 'POST', '/api/me/test-reminder'),
+  postTestReminder: (userId: string, body: TestReminderBody) =>
+    request(userId, 'POST', '/api/me/test-reminder', body),
 }

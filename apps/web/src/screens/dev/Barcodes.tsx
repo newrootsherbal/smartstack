@@ -57,7 +57,7 @@ export default function DevBarcodes() {
         />
         <p className="small muted">
           {t('add.results', { count: matches.length })}
-          {matches.length > MAX_RENDERED && ` · showing ${MAX_RENDERED}`}
+          {matches.length > MAX_RENDERED && ` · ${t('dev.showing', { count: MAX_RENDERED })}`}
         </p>
       </header>
       <ul className={styles.barcodes}>

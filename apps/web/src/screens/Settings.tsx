@@ -2,10 +2,16 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { catalogue } from '@smartstack/engine'
 import { api } from '../api/client'
-import { t } from '../i18n'
+import { t, type Locale, type MessageKey } from '../i18n'
 import { unsubscribe } from '../platform/reminders'
 import { useAppState } from '../state/context'
 import { clearState, defaultState } from '../storage'
+
+/** Each language names itself, whatever the current one is. */
+const LANGUAGES: { locale: Locale; label: MessageKey }[] = [
+  { locale: 'en', label: 'settings.english' },
+  { locale: 'fr', label: 'settings.french' },
+]
 
 export function Settings() {
   const { state, dispatch } = useAppState()
@@ -58,12 +64,18 @@ export function Settings() {
       <section className="card stack-v">
         <h2>{t('settings.language')}</h2>
         <div className="row">
-          <button type="button" className="btn btn--small btn--primary" disabled>
-            {t('settings.english')}
-          </button>
-          <button type="button" className="btn btn--small btn--outline" disabled>
-            {t('settings.french')}
-          </button>
+          {LANGUAGES.map(({ locale, label }) => (
+            <button
+              key={locale}
+              type="button"
+              lang={locale}
+              aria-pressed={state.locale === locale}
+              className={`btn btn--small ${state.locale === locale ? 'btn--primary' : 'btn--outline'}`}
+              onClick={() => dispatch({ type: 'SET_LOCALE', locale })}
+            >
+              {t(label)}
+            </button>
+          ))}
         </div>
       </section>
 

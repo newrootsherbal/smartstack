@@ -86,6 +86,10 @@ describe('imported New Roots Herbal catalogue', () => {
     expect(searchProducts('iron bis').map((p) => p.id)).toContain('iron-bisglycinate')
     expect(searchProducts('1898').map((p) => p.id)).toEqual(['iron-bisglycinate'])
     expect(searchProducts('628747118989').map((p) => p.id)).toEqual(['iron-bisglycinate'])
+    // Accent-insensitive: French names carry diacritics the user may not type, and vice versa.
+    expect(searchProducts('echinacee').map((p) => p.id)).toContain('echinacea')
+    expect(searchProducts('Échinacée').map((p) => p.id)).toContain('echinacea')
+    expect(searchProducts('fer (dig').map((p) => p.id)).toContain('iron-bisglycinate')
     expect(searchProducts('').length).toBe(catalogue.products.length)
   })
 })
