@@ -1,21 +1,7 @@
-/* Design tokens — neutral placeholder palette (no New Roots branding yet). */
+/* Design tokens. Theme colours (bg, surface, text, primary, accent…) live in themes.css. */
 :root {
   --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-
-  --color-bg: #f7f7f5;
-  --color-surface: #ffffff;
-  --color-surface-2: #f0f0ed;
-  --color-text: #1b1b1b;
-  --color-text-muted: #5f6368;
-  --color-border: #dfe1dc;
-  --color-primary: #1f6f5c;
-  --color-primary-strong: #175447;
-  --color-primary-soft: #e3f1ec;
-  --color-on-primary: #ffffff;
-  --color-danger: #b3261e;
-  --color-danger-soft: #fbe9e7;
-  --color-focus: #2b7fff;
 
   /* Severity levels — exactly the pitch document's five. */
   --sev-important: #c62828; /* red — Action required */

@@ -16,6 +16,17 @@
     <link rel="icon" href="/icon.svg" sizes="any" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" />
     <title>SmartStack</title>
+    <script>
+      // The stored theme before the first paint; the app applies it again once loaded.
+      try {
+        var stored = JSON.parse(localStorage.getItem('smartstack:v1') || 'null')
+        if (stored && typeof stored.theme === 'string') {
+          document.documentElement.setAttribute('data-theme', stored.theme)
+        }
+      } catch (e) {
+        // Private mode or blocked storage: the default theme paints.
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -308,6 +308,8 @@
     "language": "Langue",
     "english": "English",
     "french": "Français",
+    "theme": "Thème",
+    "themeHint": "Choisissez l’apparence qui vous plaît. Le choix reste sur cet appareil.",
     "data": "Vos données",
     "delete": "Supprimer mes données",
     "deleteConfirm": "Supprimer vos suppléments, votre routine et vos rappels sur cet appareil et sur le serveur? Cette action est irréversible.",
@@ -319,6 +321,15 @@
     "dev": "Développement",
     "devBarcodes": "Codes à barres",
     "devStyleguide": "Guide de style"
+  },
+  "theme": {
+    "rooted": { "name": "Racines", "tagline": "Terreux et naturel" },
+    "fresh": { "name": "Frais", "tagline": "Épuré et minimaliste" },
+    "blush": { "name": "Rosé", "tagline": "Doux et féminin" },
+    "bold": { "name": "Audace", "tagline": "Sombre et puissant" },
+    "ice": { "name": "Glace", "tagline": "Froid et net" },
+    "energy": { "name": "Énergie", "tagline": "Vif et enjoué" },
+    "wild": { "name": "Sauvage", "tagline": "Terreux et chaleureux" }
   },
   "dev": {
     "barcodesTitle": "Codes à barres",

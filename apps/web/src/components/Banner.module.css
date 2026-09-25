@@ -6,9 +6,9 @@
   align-items: flex-start;
   gap: var(--space-2);
   padding: calc(var(--space-2) + var(--safe-top)) var(--space-4) var(--space-2);
-  background: var(--sev-consideration-soft);
-  color: #5c4300;
-  border-bottom: 1px solid #f0d78a;
+  background: var(--color-warn-soft);
+  color: var(--color-warn);
+  border-bottom: 1px solid var(--color-warn-border);
   font-size: var(--text-xs);
   line-height: 1.35;
 }

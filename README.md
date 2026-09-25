@@ -192,6 +192,14 @@ until someone clicks "Approve and run"; the refresh job runs the same full check
 it, so the data is validated either way. In a public repository GitHub disables schedules after
 60 days without commits (private repositories are not affected); a manual run re-enables them.
 
+### Themes
+
+Settings → Theme offers seven colour themes: Rooted (the default), Fresh, Blush, Bold, Ice,
+Energy and Wild. Each is one block of CSS custom properties in `apps/web/src/styles/themes.css`,
+selected by `data-theme` on `<html>`; the choice is stored with the rest of the local state
+and never leaves the device. `index.html` applies the stored theme inline before the first
+paint, and the theme-color meta tag follows the theme's background.
+
 ### Developer pages
 
 - `/dev/barcodes` renders any product's UPC-A (one per size) large enough to scan off a monitor,

@@ -6,6 +6,7 @@ import { Routine, Stack } from '@smartstack/shared'
 import { z } from 'zod'
 import { currentTimeZone, localDateKey } from './dates'
 import { detectLocale } from './i18n'
+import { DEFAULT_THEME, THEME_IDS } from './themes'
 
 export const STORAGE_KEY = 'smartstack:v1'
 
@@ -40,6 +41,8 @@ export const PersistedState = z.object({
   lastSyncHash: z.string().nullable(),
   tz: z.string(),
   locale: z.enum(['en', 'fr']),
+  /** Colour theme (themes.ts). Missing or unknown falls back instead of resetting the user. */
+  theme: z.enum(THEME_IDS).catch(DEFAULT_THEME),
 })
 export type PersistedState = z.infer<typeof PersistedState>
 
@@ -62,6 +65,7 @@ export function defaultState(userId = newUserId()): PersistedState {
     tz: currentTimeZone(),
     // A new user starts in the browser's language when the app speaks it.
     locale: detectLocale(),
+    theme: DEFAULT_THEME,
   }
 }
 
