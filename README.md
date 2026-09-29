@@ -88,6 +88,19 @@ product joins the shopping list once per bottle with a "running low" sheet; Refi
 35") clears it. My stack's **Manage** sheet holds times per day, Refill, Edit count, Move to…
 (a pin), Add to shopping list, More info and Remove. Bottles and the list work for guests too.
 
+### Other brands, medications and foods
+
+Accounts can add products that aren't in the catalogue (Add → Other brand, or "Add it manually"
+from the unknown-barcode sheet): a natural health product (NPN), a medication (DIN) or a food,
+drink or anything else. "Fill from Health Canada" prefills the form through the Worker
+(`/api/lookup/…`); the person reviews every field. They are stored as `UserProduct`s (`u_…`)
+in the device state, synced to `user_products`, and merged into the catalogue by
+`useCatalogue()` / `catalogueFor()` (`apps/web/src/catalogue.ts`), so the scheduler, the
+reminders, the bottles and the duplicates treat them like any other product. A medication's
+doses are pinned to the times the person chose, never moved, and its ingredients still push
+supplements away (a calcium supplement moves away from an iron medication); the form and More
+info show N3 (SmartStack doesn't check medication interactions).
+
 ### Engine in one paragraph
 
 Every product starts at breakfast (or the first available meal). Fixed-anchor rules move it
