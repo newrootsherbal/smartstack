@@ -15,6 +15,50 @@ import {
 } from './account'
 
 const NOW = Date.UTC(2026, 9, 1, 14, 0, 0)
+
+const STACK_ROW = {
+  product_id: 'iron',
+  doses_per_day: 1,
+  pins: '["breakfast"]',
+  dismissed: '[]',
+  units_per_dose: null,
+  variant_upc: null,
+  inv_remaining: 20,
+  inv_unit: 'unit' as const,
+  inv_package_size: 60,
+  low_flagged_at: NOW,
+  added_at: NOW,
+  updated_at: NOW,
+  deleted_at: null,
+  rev: 3,
+}
+
+/** A deleted product as the upsert leaves it: placeholders except the key and dates. */
+const PRODUCT_TOMBSTONE_ROW = {
+  id: '',
+  product_type: 'other' as const,
+  brand: null,
+  name: '',
+  upc: null,
+  npn: null,
+  din: null,
+  strength: null,
+  form: 'other' as const,
+  dose_unit: '',
+  units_per_dose: 1,
+  doses_per_day: 1,
+  package_quantity: null,
+  package_unit: null,
+  timing: '[]',
+  ingredients: '[]',
+  directions: null,
+  warnings: null,
+  notes: null,
+  created_at: 0,
+  updated_at: NOW,
+  deleted_at: NOW,
+  rev: 4,
+}
 const VERSION = '2026-10'
 
 const account = (overrides: Partial<AccountWithProviders> = {}): AccountWithProviders => ({
@@ -122,7 +166,9 @@ describe('deletion and export (§5.9)', () => {
   })
 
   it('exports every row of the account without secrets', () => {
-    expect(exportStatements('acc-1')).toHaveLength(4)
+    // Account, sign-in methods, sessions, devices, then the 5 synced tables (migration 0003).
+    expect(exportStatements('acc-1')).toHaveLength(9)
+    for (const s of exportStatements('acc-1')) expect(s.params).toEqual(['acc-1'])
     expect(exportStatements('acc-1')[2]!.sql).not.toMatch(/SELECT \*|\bid\b,/)
     const data = buildAccountExport(
       {
@@ -146,6 +192,13 @@ describe('deletion and export (§5.9)', () => {
             last_seen_at: NOW,
           },
         ],
+        synced: {
+          settings: [],
+          products: [{ ...PRODUCT_TOMBSTONE_ROW, id: 'u_0f8fad5b-d9cb-469f-a165-70867728950e' }],
+          stack: [STACK_ROW],
+          shopping: [],
+          checks: [],
+        },
       },
       NOW,
     )
@@ -165,6 +218,34 @@ describe('deletion and export (§5.9)', () => {
       expiresAt: '2026-10-01T14:00:00.000Z',
     })
     expect(data.devices[0]?.timeZone).toBe('America/Toronto')
+    // Synced data: as the app syncs it, dates as ISO strings, tombstones reduced to key + dates.
+    expect(data.settings).toBeNull()
+    expect(data.products).toEqual([
+      {
+        id: 'u_0f8fad5b-d9cb-469f-a165-70867728950e',
+        updatedAt: '2026-10-01T14:00:00.000Z',
+        deletedAt: '2026-10-01T14:00:00.000Z',
+      },
+    ])
+    expect(data.stack).toEqual([
+      {
+        productId: 'iron',
+        dosesPerDay: 1,
+        pins: ['breakfast'],
+        dismissed: [],
+        inventory: {
+          remaining: 20,
+          unit: 'unit',
+          packageSize: 60,
+          lowFlaggedAt: '2026-10-01T14:00:00.000Z',
+        },
+        addedAt: '2026-10-01T14:00:00.000Z',
+        updatedAt: '2026-10-01T14:00:00.000Z',
+        deletedAt: null,
+      },
+    ])
+    expect(data.shoppingList).toEqual([])
+    expect(data.doseChecks).toEqual([])
     expect(exportFileName(NOW)).toBe('smartstack-account-2026-10-01.json')
   })
 })

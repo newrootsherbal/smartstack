@@ -12,6 +12,15 @@ import type {
   UserRow,
 } from '../env'
 import type { Statement } from '../logic'
+import {
+  checkFromRow,
+  productFromRow,
+  settingsFromRow,
+  shoppingFromRow,
+  stackFromRow,
+  syncExportStatements,
+  type SyncReadRows,
+} from '../sync'
 
 /** Correlated subquery giving an account's distinct providers ("google", "apple,google"…). */
 export const PROVIDERS_SQL = `(SELECT group_concat(DISTINCT provider) FROM auth_identities
@@ -186,7 +195,10 @@ export function disconnectIdentityStatement(
   }
 }
 
-/** The four reads behind GET /api/account/export, in one DB.batch. */
+/**
+ * The reads behind GET /api/account/export, in one DB.batch: the account, sign-in methods,
+ * sessions, devices, then the synced data (settings, products, stack, shopping list, checks).
+ */
 export function exportStatements(accountId: string): Statement[] {
   return [
     { sql: `SELECT * FROM accounts WHERE id = ?1`, params: [accountId] },
@@ -205,6 +217,7 @@ export function exportStatements(accountId: string): Statement[] {
             WHERE account_id = ?1 ORDER BY created_at`,
       params: [accountId],
     },
+    ...syncExportStatements(accountId),
   ]
 }
 
@@ -220,6 +233,20 @@ export interface ExportRows {
   >[]
   sessions: Pick<SessionRow, 'platform' | 'created_at' | 'last_used_at' | 'expires_at'>[]
   devices: Pick<UserRow, 'id' | 'tz' | 'platform' | 'created_at' | 'last_seen_at'>[]
+  /** Every synced row, tombstones (deleted items, kept 30 days) included. */
+  synced: SyncReadRows
+}
+
+/** Deep copy with every number under a key ending in "At" as an ISO date. */
+export function withIsoDates<T>(value: T): unknown {
+  if (Array.isArray(value)) return value.map(withIsoDates)
+  if (typeof value !== 'object' || value === null) return value
+  return Object.fromEntries(
+    Object.entries(value).map(([key, v]) => [
+      key,
+      key.endsWith('At') && typeof v === 'number' ? iso(v) : withIsoDates(v),
+    ]),
+  )
 }
 
 /**
@@ -228,6 +255,7 @@ export interface ExportRows {
  */
 export function buildAccountExport(rows: ExportRows, now: number) {
   const a = rows.account
+  const synced = rows.synced
   return {
     format: 'smartstack-account-export',
     version: 1,
@@ -270,6 +298,13 @@ export function buildAccountExport(rows: ExportRows, now: number) {
       createdAt: iso(d.created_at),
       lastSeenAt: iso(d.last_seen_at),
     })),
+    // As the app syncs them (docs/smartstack-phase2-prompt.md §8), dates in ISO form. A deleted
+    // item stays 30 days as a tombstone: its key and dates only.
+    settings: withIsoDates(synced.settings[0] ? settingsFromRow(synced.settings[0]) : null),
+    products: withIsoDates(synced.products.map(productFromRow)),
+    stack: withIsoDates(synced.stack.map(stackFromRow)),
+    shoppingList: withIsoDates(synced.shopping.map(shoppingFromRow)),
+    doseChecks: withIsoDates(synced.checks.map(checkFromRow)),
   }
 }
 

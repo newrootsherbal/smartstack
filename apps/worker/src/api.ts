@@ -15,6 +15,7 @@ import { z } from 'zod'
 import { accountApi } from './account-api'
 import type { Env, PushSubscriptionRow, UserRow } from './env'
 import { scheduleStatements, TEST_LEAD_MS, testReminderAllowed } from './logic'
+import { syncApi } from './sync-api'
 
 type Variables = { userId: string }
 type AppEnv = { Bindings: Env; Variables: Variables }
@@ -200,6 +201,8 @@ api.post('/me/test-reminder', async (c) => {
 
 // /api/auth/… and /api/account/… (session bearer; 404 while ACCOUNTS_MODE is off).
 api.route('/', accountApi)
+// /api/sync (session + consent, §8).
+api.route('/', syncApi)
 
 api.notFound((c) => c.json({ error: 'not_found' }, 404))
 api.onError((err, c) => {

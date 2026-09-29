@@ -105,12 +105,12 @@ import {
 import type { AccountWithProviders, Env, OAuthAttemptRow, ThrottleRow } from './env'
 import { defer, isUniqueViolation, parseJsonBody, prepare, prepareAll } from './http'
 
-interface SessionAuth {
+export interface SessionAuth {
   sessionId: string
   account: AccountWithProviders
 }
 
-type AuthEnv = { Bindings: Env; Variables: { auth: SessionAuth } }
+export type AuthEnv = { Bindings: Env; Variables: { auth: SessionAuth } }
 type Ctx = Context<AuthEnv>
 
 export const accountApi = new Hono<AuthEnv>()
@@ -226,7 +226,7 @@ async function authenticate(c: Ctx): Promise<SessionAuth | Response> {
   return { sessionId, account: row }
 }
 
-const requireSession = createMiddleware<AuthEnv>(async (c, next) => {
+export const requireSession = createMiddleware<AuthEnv>(async (c, next) => {
   const auth = await authenticate(c)
   if (auth instanceof Response) return auth
   c.set('auth', auth)
@@ -237,7 +237,7 @@ const requireSession = createMiddleware<AuthEnv>(async (c, next) => {
 // Launch gate and session requirement
 // ---------------------------------------------------------------------------
 
-const accountsGate = createMiddleware<AuthEnv>(async (c, next) => {
+export const accountsGate = createMiddleware<AuthEnv>(async (c, next) => {
   if (accountsMode(c.env) === 'off') return c.json({ error: 'not_found' }, 404)
   await next()
 })
@@ -719,17 +719,24 @@ accountApi.delete('/account/identity/:provider', async (c) => {
 accountApi.get('/account/export', async (c) => {
   const { account } = c.get('auth')
   const now = Date.now()
-  const [accounts, identities, sessions, devices] = await c.env.DB.batch(
-    prepareAll(c.env.DB, exportStatements(account.id)),
-  )
+  const [accounts, identities, sessions, devices, settings, products, stack, shopping, checks] =
+    await c.env.DB.batch(prepareAll(c.env.DB, exportStatements(account.id)))
   const accountRow = accounts?.results[0] as ExportRows['account'] | undefined
   if (!accountRow) return c.json({ error: 'unauthorized' }, 401)
+  const synced = {
+    settings: settings?.results ?? [],
+    products: products?.results ?? [],
+    stack: stack?.results ?? [],
+    shopping: shopping?.results ?? [],
+    checks: checks?.results ?? [],
+  } as ExportRows['synced']
   const data = buildAccountExport(
     {
       account: accountRow,
       identities: (identities?.results ?? []) as ExportRows['identities'],
       sessions: (sessions?.results ?? []) as ExportRows['sessions'],
       devices: (devices?.results ?? []) as ExportRows['devices'],
+      synced,
     },
     now,
   )
