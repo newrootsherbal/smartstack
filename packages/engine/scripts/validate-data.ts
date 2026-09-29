@@ -1,12 +1,13 @@
 /**
  * `npm run data:validate` — validate packages/engine/data/*.json against the
- * shared zod schemas plus the referential and sample-data rules in src/validate.ts.
+ * shared zod schemas plus the referential and sample-data rules in src/validate.ts,
+ * then data/alternatives.json against the validated catalogue.
  * Exits 1 with a readable list when anything is wrong.
  */
 import { readFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { validateCatalogue } from '../src/validate'
+import { validateAlternatives, validateCatalogue } from '../src/validate'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const read = (name: string): unknown =>
@@ -28,3 +29,11 @@ const { ingredients, products, rules } = result.catalogue
 console.log(
   `✓ catalogue valid: ${ingredients.length} ingredients, ${products.length} products, ${rules.length} rules`,
 )
+
+const alternatives = validateAlternatives(read('alternatives.json'), result.catalogue)
+if (!alternatives.ok) {
+  console.error(`✗ alternatives.json invalid — ${alternatives.errors.length} problem(s):`)
+  for (const e of alternatives.errors) console.error(`  - ${e}`)
+  process.exit(1)
+}
+console.log(`✓ alternatives valid: ${alternatives.alternatives.length} curated entries`)

@@ -52,6 +52,11 @@ export type ShoppingItem = z.infer<typeof ShoppingItem>
 // Products the person adds by hand (accounts only): other brands, medications, foods
 // ---------------------------------------------------------------------------
 
+/** Ids of the person's own products; never used by bundled catalogue data. */
+export const USER_PRODUCT_ID_PREFIX = 'u_'
+/** Ids of the label rules built on the device: `user:{productId}:{attribute}`. */
+export const USER_RULE_ID_PREFIX = 'user:'
+
 export const USER_PRODUCT_TYPES = ['nhp', 'medication', 'food', 'other'] as const
 export const UserProductType = z.enum(USER_PRODUCT_TYPES)
 export type UserProductType = z.infer<typeof UserProductType>

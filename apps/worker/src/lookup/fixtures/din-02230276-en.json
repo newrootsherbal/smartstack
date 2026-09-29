@@ -1,0 +1,38 @@
+{
+  "_source": "Health Canada Drug Product Database, fetched live on 2026-09-29",
+  "_urls": [
+    "https://health-products.canada.ca/api/drug/drugproduct/?din=02230276&lang=en&type=json",
+    "https://health-products.canada.ca/api/drug/activeingredient/?id=49032&lang=en&type=json",
+    "https://health-products.canada.ca/api/drug/form/?id=49032&lang=en&type=json"
+  ],
+  "product": [
+    {
+      "drug_code": 49032,
+      "class_name": "Human",
+      "drug_identification_number": "02230276",
+      "brand_name": "SCHEINPHARM FERROUS FUMARATE - 300MG",
+      "descriptor": "",
+      "number_of_ais": "1",
+      "ai_group_no": "0108536004",
+      "company_name": "SCHEIN PHARMACEUTICAL CANADA INC.",
+      "last_update_date": "2025-03-22"
+    }
+  ],
+  "ingredients": [
+    {
+      "dosage_unit": "",
+      "dosage_value": "",
+      "drug_code": 49032,
+      "ingredient_name": "IRON (FERROUS FUMARATE)",
+      "strength": "100",
+      "strength_unit": "MG"
+    }
+  ],
+  "form": [
+    {
+      "drug_code": 49032,
+      "pharmaceutical_form_code": 5,
+      "pharmaceutical_form_name": "Capsule"
+    }
+  ]
+}

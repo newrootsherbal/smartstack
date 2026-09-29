@@ -105,6 +105,21 @@ Rules attach to ingredients; a product may disable inherited rules (`ruleOverrid
 Duplicate ingredients are listed whenever two or more stack products contain the same
 ingredient, with amounts and the sum, never compared to any reference intake.
 
+The person's own products (other brands, medications, foods; accounts only) are `UserProduct`s
+turned into engine products on the device: `mergeCatalogue(catalogue, userProducts)` appends
+`toEngineProduct` (id `u_…`, status `user`, the person's doses as label defaults, ingredients
+recognized by id or name and converted to canonical units as the importer does; anything else
+stays free text) and `userRules` (the label checkboxes as product-level `product_instruction`
+rules `user:{id}:{attribute}`). The web hook memoizes the merge and passes it to every lookup,
+`buildSchedule` and `findDuplicateIngredients`. A **medication** has no rules and is never
+moved: its doses stay at the times the person gave (an unpinned dose stays where it lands, at
+the first meal), it carries no reasons or adjustment, and it is left out of duplicates and
+alternatives, but the separation rules its ingredients carry move the other products away (an
+iron medication moves a calcium supplement, never the reverse). `suggestAlternatives` offers
+at most two New Roots Herbal products for another brand's product: curated entries from
+`data/alternatives.json` first, then a score over shared canonical ingredients (daily amounts,
+same form, distinctive name words), each with the facts behind it.
+
 ## Development
 
 Requirements: Node 22 (`.nvmrc`), npm 11. Do not use pnpm or yarn.
@@ -185,6 +200,13 @@ Hand-curated ingredient-level rules stay in `data/rules.json`. The importer writ
 writes nothing if the merged catalogue fails validation. The original ten-product sample
 catalogue lives in `data/sample/` as a test fixture. `docs/data-template.md` remains for
 products the website does not list.
+
+`data/alternatives.json` holds the product team's New Roots Herbal alternatives for other
+brands' products (`[]` until filled): `{ match: { upc } | { brand, name }, productId,
+reviewStatus, lastReviewed, reviewedBy }`. `npm run data:validate` checks it (the product
+exists and is not topical, check digits, review fields, repeats). The monthly other-brand report
+that feeds it is a D1 query in `docs/smartstack-phase2-setup.md`, part H (counts only, no
+account ids, medications excluded).
 
 #### Keeping the catalogue current
 
@@ -272,9 +294,9 @@ against one public key is useless with another.
 Two bearer credentials on separate prefixes. `/api/me/…` takes
 `Authorization: Bearer <anonymous uuid>` (the Phase 1 device id): unknown ids get `401`, except
 `PUT /api/me`, which creates the device and requires `X-Beta-Key`. `/api/auth/…`,
-`/api/account/…` and `/api/sync` take the **session token** (`Authorization: Bearer <token>`).
-Every request body is validated with the shared zod schemas (`packages/shared/src/index.ts`,
-`packages/shared/src/auth.ts`, `packages/shared/src/sync.ts`); errors are `{ error, detail? }`,
+`/api/account/…`, `/api/sync` and `/api/lookup/…` take the **session token**
+(`Authorization: Bearer <token>`). Every request body is validated with the shared zod schemas
+(`packages/shared/src/index.ts`, `auth.ts`, `sync.ts`, `lookup.ts`); errors are `{ error, detail? }`,
 and every API response has `Cache-Control: no-store`.
 
 | Route                              | Purpose                                                                                                 |
@@ -416,6 +438,32 @@ put a throwaway `AUTH_PEPPER` (any 43-character base64url string) in
 `npm run dev -w apps/worker -- --env-file .dev.vars.e2e` (the `worker-accounts` entry in
 `.claude/launch.json`) and the web app with `npm run dev`. Emails are printed in the wrangler
 console (`EMAIL_MODE=log`).
+
+### Health Canada lookups (`/api/lookup/…`)
+
+"Fill from Health Canada" in the Other brand form. Session required, `404` while
+`ACCOUNTS_MODE` is `off`, 30 lookups per account per hour (`429` with `Retry-After`). The Worker
+calls Health Canada's public APIs itself (no key; the app's CSP stays `connect-src 'self'` and
+the person's IP never reaches a third party), sending only the number, the language and a generic
+User-Agent. Each upstream answer is cached a week in the Cache API (`caches.default`, a synthetic
+key per upstream URL on the app's origin; "not found" a day). At most three upstream calls per
+lookup, 4 seconds each.
+
+| Route                      | Answer                                                                          |
+| -------------------------- | ------------------------------------------------------------------------------- |
+| `GET /api/lookup/npn/:npn` | `?lang=en\|fr` → `ProductPrefill` (LNHPD: licence, medicinal ingredients, dose) |
+| `GET /api/lookup/din/:din` | `?lang=en\|fr` → `ProductPrefill` (DPD: product, active ingredients, form)      |
+
+Both answer `400 invalid_number` (not 8 digits), `401` without a session, `404 not_found` (no
+such number, or accounts off), `429 rate_limited` and `502 lookup_failed` (Health Canada
+unreachable, slow or answering garbage); nothing is ever cached on an error.
+
+`ProductPrefill` (`packages/shared/src/lookup.ts`) is `{ source, npn, din, name, brand, form,
+strength, dose: { amount, unit, frequency } | null, ingredients: [{ name, amount, unit }],
+partial }`; `partial` means a follow-up call failed and the ingredients, dose or form may be
+missing. Ingredient amounts are per dosage unit, units mapped to mg, mcg, IU, CFU, g or ml. Which
+upstream field maps where is documented in `apps/worker/src/lookup/health-canada.ts`; the tests
+use real answers saved in `apps/worker/src/lookup/fixtures/`.
 
 ### Reminder cron
 

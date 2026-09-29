@@ -4,6 +4,7 @@
  * duplicate detection need one id per nutrient.
  */
 import type { Unit } from '@smartstack/shared'
+import type { RawUnit } from './recipe'
 
 export interface CanonicalIngredient {
   en: string
@@ -107,11 +108,31 @@ export function slugify(text: string): string {
     .replace(/^-+|-+$/g, '')
 }
 
-/** Canonical id for a label ingredient name (parentheticals already removed). */
-export function canonicalIngredientId(baseName: string): string {
+/** The canonical nutrient id a name is recognized as, or null (parentheticals already removed). */
+export function matchCanonical(baseName: string): string | null {
   const name = baseName.trim()
   for (const [re, id] of PATTERNS) if (re.test(name)) return id
-  return slugify(name) || 'unknown'
+  return null
+}
+
+/** Canonical id for a label ingredient name (parentheticals already removed). */
+export function canonicalIngredientId(baseName: string): string {
+  return matchCanonical(baseName) ?? (slugify(baseName.trim()) || 'unknown')
+}
+
+/**
+ * An amount in a label unit converted to an ingredient's canonical unit (g → mg → mcg;
+ * vitamin D IU → mcg ÷ 40; vitamin E IU → mg × 0.67, d-alpha, approximate), or null when
+ * the units cannot be converted. Shared by the importer and the person's own products.
+ */
+export function convertUnit(amount: number, from: RawUnit, to: Unit, id: string): number | null {
+  if (from === to) return amount
+  if (from === 'g' && to === 'mg') return amount * 1000
+  if (from === 'mg' && to === 'mcg') return amount * 1000
+  if (from === 'mcg' && to === 'mg') return amount / 1000
+  if (from === 'IU' && to === 'mcg' && id === 'vitamin-d') return amount / 40
+  if (from === 'IU' && to === 'mg' && id === 'vitamin-e') return amount * 0.67 // d-alpha; approximate
+  return null
 }
 
 /**

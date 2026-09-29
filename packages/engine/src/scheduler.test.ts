@@ -2,6 +2,8 @@ import type { Routine, Stack } from '@smartstack/shared'
 import { describe, expect, it } from 'vitest'
 import { sampleCatalogue } from './sample'
 import { buildSchedule as buildScheduleWith } from './scheduler'
+import { row, userProduct } from './user-product.fixture'
+import { mergeCatalogue } from './user-products'
 
 // Every test runs against the stable sample fixture, not the imported catalogue.
 const buildSchedule = (routine: Routine, stack: Stack) =>
@@ -342,5 +344,142 @@ describe('buildSchedule — pins (the person chose the time)', () => {
       ['07:30', ['sample-multi']],
       ['09:30', ['sample-iron']],
     ])
+  })
+})
+
+describe('buildSchedule — medications (never moved)', () => {
+  const ironMedication = userProduct({
+    productType: 'medication',
+    brand: null,
+    name: 'Iron 100 mg',
+    form: 'capsule',
+    doseUnit: 'capsule',
+    ingredients: [row('IRON (FERROUS FUMARATE)', 100, 'mg')],
+  })
+  const calciumMedication = userProduct({
+    productType: 'medication',
+    brand: null,
+    name: 'Calcium 500 mg',
+    form: 'tablet',
+    doseUnit: 'tablet',
+    ingredients: [row('Calcium carbonate', 500, 'mg')],
+  })
+  const magnesiumMedication = userProduct({
+    productType: 'medication',
+    name: 'Magnesium 250 mg',
+    timing: ['BEDTIME'],
+    ingredients: [row('Magnesium', 250, 'mg')],
+  })
+  const catalogue = mergeCatalogue(sampleCatalogue, [
+    ironMedication,
+    calciumMedication,
+    magnesiumMedication,
+  ])
+  const build = (stack: Stack) => buildScheduleWith(section5Routine, stack, { catalogue })
+  const placementOf = (schedule: ReturnType<typeof build>, id: string) =>
+    schedule.placements.find((p) => p.productIds.includes(id))
+
+  it('moves a calcium supplement away from an iron medication, never the reverse', () => {
+    const schedule = build([
+      { productId: ironMedication.id, dosesPerDay: 1, pins: ['breakfast'] },
+      { productId: 'sample-multi', dosesPerDay: 1 },
+    ])
+    expect(schedule.placements.map((p) => [p.time, p.productIds])).toEqual([
+      ['07:30', [ironMedication.id]],
+      ['09:30', ['sample-multi']],
+    ])
+    const multi = placementOf(schedule, 'sample-multi')!.reasons.find(
+      (r) => r.ruleId === 'rule-iron-separate-calcium',
+    )
+    expect(multi).toMatchObject({
+      attribute: 'SEPARATE_FROM_IRON',
+      productId: 'sample-multi',
+      params: { otherIngredientId: 'iron', otherProductIds: [ironMedication.id] },
+    })
+    expect(schedule.adjustments).toEqual([
+      expect.objectContaining({
+        productId: 'sample-multi',
+        code: 'MOVED_AWAY_FROM_INGREDIENT',
+        params: expect.objectContaining({ from: '07:30', to: '09:30' }),
+      }),
+    ])
+    // The medication carries no reason and no adjustment.
+    expect(placementOf(schedule, ironMedication.id)!.reasons).toEqual([])
+  })
+
+  it('treats an unpinned medication dose as fixed where it lands (the first meal), without reporting a pin', () => {
+    const schedule = build([
+      { productId: 'sample-multi', dosesPerDay: 1 },
+      { productId: ironMedication.id, dosesPerDay: 1 },
+    ])
+    const med = placementOf(schedule, ironMedication.id)!
+    expect(med.time).toBe('07:30')
+    expect(med.doses).toEqual([{ productId: ironMedication.id, doseIndex: 0, slot: 0 }])
+    expect(placementOf(schedule, 'sample-multi')!.time).toBe('09:30')
+  })
+
+  it('lets a supplement move itself away from a medication, which stays', () => {
+    const schedule = build([
+      { productId: calciumMedication.id, dosesPerDay: 1, pins: ['breakfast'] },
+      { productId: 'sample-iron', dosesPerDay: 1 },
+    ])
+    expect(placementOf(schedule, calciumMedication.id)!.time).toBe('07:30')
+    expect(placementOf(schedule, 'sample-iron')!.time).toBe('09:30')
+    expect(placementOf(schedule, calciumMedication.id)!.reasons).toEqual([])
+  })
+
+  it('flags the supplement, never the medication, when both are fixed too close', () => {
+    const pinnedCalcium = build([
+      { productId: ironMedication.id, dosesPerDay: 1, pins: ['breakfast'] },
+      { productId: 'sample-calmag', dosesPerDay: 1, pins: ['breakfast'] },
+    ])
+    expect(pinnedCalcium.placements.map((p) => [p.time, p.productIds])).toEqual([
+      ['07:30', [ironMedication.id, 'sample-calmag']],
+    ])
+    const reasons = pinnedCalcium.placements[0]!.reasons
+    expect(reasons.filter((r) => r.productId === ironMedication.id)).toEqual([])
+    expect(reasons.find((r) => r.params.pinnedConflict)).toMatchObject({
+      productId: 'sample-calmag',
+      attribute: 'SEPARATE_FROM_IRON',
+      severity: 'timing_conflict',
+      params: { otherProductIds: [ironMedication.id] },
+    })
+
+    const pinnedIron = build([
+      { productId: calciumMedication.id, dosesPerDay: 1, pins: ['breakfast'] },
+      { productId: 'sample-iron', dosesPerDay: 1, pins: ['breakfast'] },
+    ])
+    const conflict = pinnedIron.placements[0]!.reasons.find((r) => r.params.pinnedConflict)
+    expect(conflict).toMatchObject({
+      productId: 'sample-iron',
+      attribute: 'SEPARATE_FROM_CALCIUM',
+      params: { otherProductIds: [calciumMedication.id] },
+    })
+    expect(
+      pinnedIron.placements[0]!.reasons.filter((r) => r.productId === calciumMedication.id),
+    ).toEqual([])
+  })
+
+  it('applies no rule to a medication: its magnesium does not send it to bedtime', () => {
+    const schedule = build([{ productId: magnesiumMedication.id, dosesPerDay: 1 }])
+    expect(schedule.placements.map((p) => [p.time, p.anchor, p.reasons])).toEqual([
+      ['07:30', 'breakfast', []],
+    ])
+    expect(schedule.adjustments).toEqual([])
+  })
+
+  it('keeps pinned and unpinned doses of one medication apart and fixed', () => {
+    const schedule = build([
+      { productId: ironMedication.id, dosesPerDay: 2, pins: [null, 'bedtime'] },
+      { productId: 'sample-calmag', dosesPerDay: 1 },
+    ])
+    expect(schedule.placements.map((p) => [p.time, p.productIds])).toEqual([
+      ['07:30', [ironMedication.id]],
+      ['18:00', ['sample-calmag']],
+      ['22:00', [ironMedication.id]],
+    ])
+    expect(
+      placementOf(schedule, 'sample-calmag')!.reasons.some((r) => r.params.otherProductIds),
+    ).toBe(false)
   })
 })
