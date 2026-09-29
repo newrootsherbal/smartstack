@@ -6,7 +6,9 @@
  * one batch (promote + pick), one fan-out select, their pushes, one batch of writes.
  */
 import { authCleanupStatements } from './auth/cleanup'
+import { sendEmail } from './email'
 import type { Env, PushSubscriptionRow, ReminderRow } from './env'
+import { isInactivityTick, runInactivityStep, type InactivitySummary } from './inactivity'
 import {
   claimStatement,
   expireStatement,
@@ -36,6 +38,8 @@ interface TickSummary {
   authErrors: number
   /** News: what the step did (counts and the campaign id only). */
   news: NewsStepSummary | null
+  /** Retention of inactive accounts and devices (03:00–03:09 UTC): counts only. */
+  inactivity: InactivitySummary | null
   wallMs: number
 }
 
@@ -55,6 +59,7 @@ export async function runTick(env: Env, now: number): Promise<TickSummary> {
     gone: 0,
     authErrors: 0,
     news: null,
+    inactivity: null,
     wallMs: 0,
   }
   const batchSize = parseBatchSize(env.MAX_PUSHES_PER_TICK)
@@ -228,6 +233,20 @@ export async function runTick(env: Env, now: number): Promise<TickSummary> {
       await env.DB.batch(syncCleanupStatements(now).map((s) => bind(env.DB, s)))
     } catch (err) {
       console.error('sync cleanup failed:', err instanceof Error ? err.message : String(err))
+    }
+  }
+
+  // Retention (§8.6): accounts unused for 3 years (warned 30 days before) and devices without an
+  // account unused for 12 months. Last, so nothing above waits on the emails.
+  if (isInactivityTick(now)) {
+    try {
+      summary.inactivity = await runInactivityStep(env.DB, now, {
+        deletions: isRetentionTick(now),
+        appOrigin: env.APP_ORIGIN,
+        send: (message) => sendEmail(env, message),
+      })
+    } catch (err) {
+      console.error('inactivity cleanup failed:', err instanceof Error ? err.message : String(err))
     }
   }
 
