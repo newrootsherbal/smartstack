@@ -5,7 +5,7 @@
   "description": "Cloudflare Worker: serves the web app, /api/*, and the every-minute reminder cron",
   "type": "module",
   "scripts": {
-    "dev": "wrangler dev --test-scheduled --var ACCOUNTS_MODE:public --var APP_ORIGIN:http://localhost:5173",
+    "dev": "wrangler dev --test-scheduled --var ACCOUNTS_MODE:public --var APP_ORIGIN:http://localhost:5173 --var EMAIL_MODE:log",
     "deploy": "wrangler deploy",
     "typecheck": "tsc -p tsconfig.json",
     "db:migrate:local": "wrangler d1 migrations apply smartstack --local",

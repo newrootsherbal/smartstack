@@ -55,6 +55,17 @@ ACCOUNTS_MODE = "staff"
 STAFF_EMAIL_DOMAINS = "newrootsherbal.com"
 # Sign in with Apple waits for the Apple Developer Program enrollment.
 APPLE_ENABLED = "false"
+# Google OAuth "Web application" client (public id; the secret is GOOGLE_CLIENT_SECRET).
+# Redirect URI registered per origin: <APP_ORIGIN>/api/auth/oauth/google/callback.
+GOOGLE_CLIENT_ID = "1059774157627-79j1g0kmr33rdn3gc73t5i4oreq8i0ad.apps.googleusercontent.com"
+# Account emails (verify, reset, password changed): "smtp2go" here; local dev uses "log".
+EMAIL_MODE = "smtp2go"
+# Verified SMTP2GO sender, e.g. "New Roots SmartStack <no-reply@newrootsherbal.com>", and the
+# Reply-To mailbox. Empty until provided (setup doc, part D): emails are then logged as not sent.
+EMAIL_FROM = ""
+EMAIL_REPLY_TO = ""
+# Version of the consent texts (docs/privacy/consent-texts.md). Changing it asks everyone again.
+CONSENT_VERSION = "2026-10"
 
 # ---------------------------------------------------------------------------
 # Staging: https://schedule-staging.flourishbodyandmind.com, its own D1 database.
@@ -89,3 +100,8 @@ APP_ORIGIN = "https://schedule-staging.flourishbodyandmind.com"
 ACCOUNTS_MODE = "public"
 STAFF_EMAIL_DOMAINS = "newrootsherbal.com"
 APPLE_ENABLED = "false"
+GOOGLE_CLIENT_ID = "1059774157627-79j1g0kmr33rdn3gc73t5i4oreq8i0ad.apps.googleusercontent.com"
+EMAIL_MODE = "smtp2go"
+EMAIL_FROM = ""
+EMAIL_REPLY_TO = ""
+CONSENT_VERSION = "2026-10"

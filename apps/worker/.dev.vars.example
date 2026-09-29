@@ -2,3 +2,11 @@
 # The PRIVATE half of the pair from `npx web-push generate-vapid-keys`.
 # Never commit it, never paste it in chat. Production: `wrangler secret put VAPID_PRIVATE_KEY`.
 VAPID_PRIVATE_KEY=
+# Accounts (M3). Generate the local pepper once:
+#   node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"
+# Password routes answer 500 without it.
+AUTH_PEPPER=
+# Google OAuth client secret (setup doc, part C). Google sign-in answers 503 without it.
+GOOGLE_CLIENT_SECRET=
+# Optional locally: `npm run dev:worker` uses EMAIL_MODE=log and prints email links instead.
+SMTP2GO_API_KEY=
