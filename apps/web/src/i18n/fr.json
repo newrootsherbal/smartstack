@@ -22,6 +22,7 @@
     "informational": { "label": "Information", "sub": "" }
   },
   "anchor": {
+    "wake": "Réveil",
     "breakfast": "Matin",
     "lunch": "Midi",
     "dinner": "Soir",
@@ -33,7 +34,8 @@
     "MOVED_TO_MEAL": "{product} : maintenant avec un repas",
     "MOVED_TO_MORNING": "{product} : maintenant le matin",
     "MOVED_TO_EVENING": "{product} : maintenant le soir",
-    "MOVED_TO_BEDTIME": "{product} : maintenant au coucher"
+    "MOVED_TO_BEDTIME": "{product} : maintenant au coucher",
+    "MOVED_BY_YOU": "{product} : à l’heure que vous avez choisie"
   },
   "reason": {
     "short": {
@@ -47,9 +49,22 @@
       "SEPARATE_FROM_IRON": "Prendre à distance du fer",
       "SEPARATE_FROM_COFFEE_TEA": "Éviter le café et le thé autour de cette dose",
       "TAKE_WITH_WATER": "Prendre avec de l’eau",
-      "REFRIGERATE": "Garder au réfrigérateur"
+      "REFRIGERATE": "Garder au réfrigérateur",
+      "SUGGEST_BEDTIME": "Suggestion pour le soir"
     },
-    "separatedBy": "{ingredient} : {hours} h d’écart"
+    "separatedBy": "{ingredient} : {hours} h d’écart",
+    "pinnedConflict": "Proche du {ingredient}, aux heures que vous avez choisies"
+  },
+  "pinned": {
+    "wake": "Vous avez choisi le réveil",
+    "breakfast": "Vous avez choisi le matin",
+    "lunch": "Vous avez choisi le midi",
+    "dinner": "Vous avez choisi le soir",
+    "bedtime": "Vous avez choisi le coucher"
+  },
+  "suggest": {
+    "moveToBedtime": "Déplacer au coucher",
+    "noThanks": "Non merci"
   },
   "push": {
     "several": "{count} suppléments"
@@ -140,7 +155,8 @@
     "save": "Enregistrer",
     "remove": "Retirer",
     "done": "Terminé",
-    "why": "Pourquoi?",
+    "moreInfo": "Plus d’infos",
+    "moreInfoAbout": "Plus d’infos sur {product}",
     "learnMore": "En savoir plus",
     "notYetReviewed": "Pas encore révisé",
     "sourceToBeAdded": "Source : à venir",
@@ -219,7 +235,8 @@
     "viewToday": "Voir l’horaire d’aujourd’hui",
     "addAnother": "En ajouter un autre",
     "topicalNotice": "Ce produit s’applique sur la peau ou se diffuse; il ne se prend donc pas selon un horaire. Vous pouvez tout de même le consulter ici.",
-    "labelFacts": "Renseignements de l’étiquette"
+    "labelFacts": "Renseignements de l’étiquette",
+    "takeAtBedtime": "Le prendre au coucher"
   },
   "stack": {
     "title": "Mes suppléments",
@@ -258,15 +275,17 @@
     "dosesTaken": "{done} de {total} prises",
     "doseOf": "Dose {n} de {total}"
   },
-  "why": {
-    "title": "Pourquoi?",
+  "info": {
+    "timing": "Moment de la prise",
+    "noTiming": "Aucune règle d’horaire ne s’applique à ce produit.",
+    "pinnedConflictNote": "Vous avez choisi ces deux moments; SmartStack les a donc laissés tels quels.",
+    "moveBack": "Revenir à l’heure automatique",
     "evidence": "Preuve ou source",
-    "productInfo": "Renseignements sur le produit",
     "lastReviewed": "Dernière révision",
     "reviewedBy": "Révisé par",
     "directions": "Usage suggéré",
     "warnings": "Mises en garde",
-    "facts": "Ingrédients médicinaux",
+    "labelFacts": "Renseignements de l’étiquette",
     "sampleNote": "Produit d’exemple — l’usage suggéré et les mises en garde sont des textes provisoires.",
     "draftNote": "Texte de l’étiquette tiré de newrootsherbal.com; règles d’horaire pas encore révisées.",
     "openSource": "Ouvrir la source",

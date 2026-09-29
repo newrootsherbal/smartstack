@@ -1,6 +1,9 @@
 import { findDuplicateIngredients, getIngredient, getProduct } from '@smartstack/engine'
 import { MAX_DOSES_PER_DAY } from '@smartstack/shared'
+import { useCallback, useState } from 'react'
 import { Link } from 'react-router'
+import { MoreInfoButton } from '../components/MoreInfoButton'
+import { ProductInfoSheet } from '../components/ProductInfoSheet'
 import { formatAmount, formatServingSize, timesLabel } from '../format'
 import { t, tl } from '../i18n'
 import { useAppState } from '../state/context'
@@ -9,6 +12,8 @@ import styles from './StackScreen.module.css'
 export function StackScreen() {
   const { state, dispatch } = useAppState()
   const duplicates = findDuplicateIngredients(state.stack)
+  const [info, setInfo] = useState<string | null>(null)
+  const closeInfo = useCallback(() => setInfo(null), [])
 
   const remove = (productId: string) => {
     const product = getProduct(productId)
@@ -66,6 +71,11 @@ export function StackScreen() {
                     {item.dosesPerDay !== product.dosesPerDayDefault &&
                       ` · ${t('stack.labelSays', { times: timesLabel(product.dosesPerDayDefault) })}`}
                   </span>
+                  <MoreInfoButton
+                    product={tl(product.shortName)}
+                    className={styles.moreInfo}
+                    onClick={() => setInfo(product.id)}
+                  />
                 </div>
                 <label className={styles.doses}>
                   <span className="visually-hidden">{t('common.timesPerDay')}</span>
@@ -143,6 +153,7 @@ export function StackScreen() {
           </div>
         </section>
       )}
+      <ProductInfoSheet productId={info} onClose={closeInfo} />
     </main>
   )
 }

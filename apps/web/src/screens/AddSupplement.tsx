@@ -1,4 +1,9 @@
-import { findProductByBarcode, normalizeBarcode, searchProducts } from '@smartstack/engine'
+import {
+  findProductByBarcode,
+  normalizeBarcode,
+  rulesForProduct,
+  searchProducts,
+} from '@smartstack/engine'
 import { MAX_DOSES_PER_DAY, type Product } from '@smartstack/shared'
 import { lazy, Suspense, useCallback, useMemo, useState } from 'react'
 import { Link } from 'react-router'
@@ -28,6 +33,7 @@ export function AddSupplement() {
   const [adjusting, setAdjusting] = useState(false)
   const [notFound, setNotFound] = useState<string | null>(null)
   const [added, setAdded] = useState<Product | null>(null)
+  const [atBedtime, setAtBedtime] = useState(false)
   const text = useProductText(candidate)
 
   const select = useCallback(
@@ -38,6 +44,7 @@ export function AddSupplement() {
       setCandidate(product)
       setDoses(inStack?.dosesPerDay ?? product.dosesPerDayDefault)
       setAdjusting(!!inStack && inStack.dosesPerDay !== product.dosesPerDayDefault)
+      setAtBedtime(false)
     },
     [state.stack],
   )
@@ -59,7 +66,16 @@ export function AddSupplement() {
 
   const confirm = () => {
     if (!candidate) return
-    dispatch({ type: 'ADD_PRODUCT', productId: candidate.id, dosesPerDay: doses })
+    // "Take it at bedtime" pins the day's last dose (slot doses - 1) to bedtime.
+    const pins = atBedtime
+      ? [...Array.from({ length: doses - 1 }, () => null), 'bedtime' as const]
+      : undefined
+    dispatch({
+      type: 'ADD_PRODUCT',
+      productId: candidate.id,
+      dosesPerDay: doses,
+      ...(pins ? { pins } : {}),
+    })
     setAdded(candidate)
     setCandidate(null)
     setUpc('')
@@ -67,6 +83,9 @@ export function AddSupplement() {
 
   const results = useMemo(() => searchProducts(query), [query])
   const inStack = candidate ? state.stack.some((s) => s.productId === candidate.id) : false
+  const suggestsBedtime = candidate
+    ? rulesForProduct(candidate).some((r) => r.attribute === 'SUGGEST_BEDTIME')
+    : false
 
   return (
     <main className="screen">
@@ -180,6 +199,17 @@ export function AddSupplement() {
                 </button>
               )}
             </div>
+          )}
+
+          {candidate.kind !== 'topical' && suggestsBedtime && (
+            <label className={`card ${styles.checkbox}`}>
+              <input
+                type="checkbox"
+                checked={atBedtime}
+                onChange={(e) => setAtBedtime(e.target.checked)}
+              />
+              <span>{t('add.takeAtBedtime')}</span>
+            </label>
           )}
 
           <div className="row">

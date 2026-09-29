@@ -1,15 +1,17 @@
-import { getProduct, parseHHMM, shiftRoutine } from '@smartstack/engine'
-import type { Placement, Reason } from '@smartstack/shared'
-import { useCallback, useState } from 'react'
+import { getProduct, getRule, parseHHMM, shiftRoutine } from '@smartstack/engine'
+import type { Placement } from '@smartstack/shared'
+import { useCallback, useState, type Dispatch } from 'react'
 import { Link } from 'react-router'
+import { MoreInfoButton } from '../components/MoreInfoButton'
+import { ProductInfoSheet } from '../components/ProductInfoSheet'
 import { Sheet } from '../components/Sheet'
-import { WhySheet } from '../components/WhySheet'
 import { formatClock, formatLongDate, minutesOfDay } from '../dates'
 import { formatUnits } from '../format'
 import { t, tl } from '../i18n'
-import { renderAdjustment, renderReasonShort } from '../i18n/render'
+import { isShortReason, renderAdjustment, renderReasonShort } from '../i18n/render'
 import { useTodaySchedule } from '../schedule'
 import { useAppState } from '../state/context'
+import type { Action } from '../state/reducer'
 import { checkKey } from '../storage'
 import styles from './Today.module.css'
 
@@ -19,8 +21,8 @@ export function Today() {
   const { state, dispatch } = useAppState()
   const { today, schedule } = useTodaySchedule()
   const [sheet, setSheet] = useState<SheetKind>('none')
-  const [why, setWhy] = useState<Reason[] | null>(null)
-  const closeWhy = useCallback(() => setWhy(null), [])
+  const [info, setInfo] = useState<string | null>(null)
+  const closeInfo = useCallback(() => setInfo(null), [])
   const closeSheet = useCallback(() => setSheet('none'), [])
 
   const shift = (minutes: number) => {
@@ -108,13 +110,14 @@ export function Today() {
               onToggle={(productId, doseIndex) =>
                 dispatch({ type: 'TOGGLE_CHECK', date: today, productId, doseIndex })
               }
-              onWhy={setWhy}
+              onInfo={setInfo}
+              dispatch={dispatch}
             />
           ))}
         </>
       )}
 
-      <WhySheet reasons={why} onClose={closeWhy} />
+      <ProductInfoSheet productId={info} onClose={closeInfo} />
 
       <Sheet open={sheet === 'late'} onClose={closeSheet} title={t('today.lateTitle')}>
         <p className="muted">{t('today.lateIntro')}</p>
@@ -167,7 +170,8 @@ interface PlacementSectionProps {
   /** Doses per product across the whole day, to label "Dose 2 of 4". */
   doseTotals: ReadonlyMap<string, number>
   onToggle: (productId: string, doseIndex: number) => void
-  onWhy: (reasons: Reason[]) => void
+  onInfo: (productId: string) => void
+  dispatch: Dispatch<Action>
 }
 
 function PlacementSection({
@@ -176,7 +180,8 @@ function PlacementSection({
   checks,
   doseTotals,
   onToggle,
-  onWhy,
+  onInfo,
+  dispatch,
 }: PlacementSectionProps) {
   const heading = placement.anchor ? t(`anchor.${placement.anchor}`) : formatClock(placement.time)
   const past = parseHHMM(placement.time) < minutesOfDay()
@@ -196,6 +201,10 @@ function PlacementSection({
           const key = checkKey(today, dose.productId, dose.doseIndex)
           const checked = checks[key] === true
           const total = doseTotals.get(dose.productId) ?? 1
+          const name = product ? tl(product.shortName) : dose.productId
+          const lines = reasons.filter(isShortReason)
+          const suggestion = reasons.find((r) => r.attribute === 'SUGGEST_BEDTIME')
+          const suggestionRule = suggestion ? getRule(suggestion.ruleId) : undefined
           return (
             <li key={key} className={styles.row}>
               <label className={styles.check}>
@@ -205,7 +214,7 @@ function PlacementSection({
                   onChange={() => onToggle(dose.productId, dose.doseIndex)}
                 />
                 <span className={checked ? styles.done : ''}>
-                  {product ? tl(product.shortName) : dose.productId}
+                  {name}
                   {product?.unitsPerDose && (
                     <span className="muted small">
                       {' '}
@@ -220,21 +229,54 @@ function PlacementSection({
                   )}
                 </span>
               </label>
-              {reasons.length > 0 && (
-                <>
-                  <ul className={styles.reasons}>
-                    {reasons.map((r) => (
-                      <li key={r.ruleId}>{renderReasonShort(r)}</li>
-                    ))}
-                  </ul>
-                  <button
-                    type="button"
-                    className={`btn btn--link btn--small ${styles.why}`}
-                    onClick={() => onWhy(reasons)}
-                  >
-                    {t('common.why')}
-                  </button>
-                </>
+              {(lines.length > 0 || dose.pinned) && (
+                <ul className={styles.reasons}>
+                  {dose.pinned && <li>{t(`pinned.${dose.pinned}`)}</li>}
+                  {lines.map((r) => (
+                    <li key={`${r.ruleId}:${r.params.pinnedConflict ? 1 : 0}`}>
+                      {renderReasonShort(r)}
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <MoreInfoButton
+                product={name}
+                className={styles.info}
+                onClick={() => onInfo(dose.productId)}
+              />
+              {suggestion && suggestionRule && (
+                <div className={`notice ${styles.suggestion}`}>
+                  <p>{tl(suggestionRule.explanation)}</p>
+                  <div className="row">
+                    <button
+                      type="button"
+                      className="btn btn--small btn--primary"
+                      onClick={() =>
+                        dispatch({
+                          type: 'SET_PIN',
+                          productId: dose.productId,
+                          slot: dose.slot,
+                          anchor: 'bedtime',
+                        })
+                      }
+                    >
+                      {t('suggest.moveToBedtime')}
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn--small btn--outline"
+                      onClick={() =>
+                        dispatch({
+                          type: 'DISMISS_SUGGESTION',
+                          productId: dose.productId,
+                          code: 'SUGGEST_BEDTIME',
+                        })
+                      }
+                    >
+                      {t('suggest.noThanks')}
+                    </button>
+                  </div>
+                </div>
               )}
             </li>
           )

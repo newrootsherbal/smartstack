@@ -131,8 +131,9 @@ describe('buildSchedule — multiple doses per day', () => {
     ])
     expect(schedule.placements.map((p) => [p.time, p.anchor, p.doses])).toEqual([
       // Doses are numbered in time order: the label's first dose of the day is dose 0.
-      ['12:00', 'lunch', [{ productId: 'sample-calmag', doseIndex: 0 }]],
-      ['18:00', 'dinner', [{ productId: 'sample-calmag', doseIndex: 1 }]],
+      // `slot` keeps the creation order (the main dose went to dinner, the extra one to lunch).
+      ['12:00', 'lunch', [{ productId: 'sample-calmag', doseIndex: 0, slot: 1 }]],
+      ['18:00', 'dinner', [{ productId: 'sample-calmag', doseIndex: 1, slot: 0 }]],
     ])
   })
 
@@ -232,5 +233,114 @@ describe('buildSchedule — many doses, few anchors', () => {
     const schedule = buildSchedule(routine, [{ productId: 'sample-zinc', dosesPerDay: 4 }])
     // Three meals + bedtime: no gap splitting needed.
     expect(schedule.placements.map((p) => p.time)).toEqual(['07:30', '12:00', '18:00', '22:00'])
+  })
+})
+
+describe('buildSchedule — pins (the person chose the time)', () => {
+  it('pins a dose to wake-up, an anchor the engine never picks itself', () => {
+    const schedule = buildSchedule(section5Routine, [
+      { productId: 'sample-multi', dosesPerDay: 1, pins: ['wake'] },
+    ])
+    expect(schedule.placements.map((p) => [p.time, p.anchor])).toEqual([['06:30', 'wake']])
+    expect(schedule.placements[0]?.doses).toEqual([
+      { productId: 'sample-multi', doseIndex: 0, slot: 0, pinned: 'wake' },
+    ])
+    expect(schedule.adjustments).toEqual([
+      expect.objectContaining({
+        code: 'MOVED_BY_YOU',
+        productId: 'sample-multi',
+        params: expect.objectContaining({ from: '07:30', to: '06:30' }),
+      }),
+    ])
+  })
+
+  it('beats a fixed-anchor rule', () => {
+    const schedule = buildSchedule(section5Routine, [
+      { productId: 'sample-magnesium', dosesPerDay: 1, pins: ['lunch'] },
+    ])
+    expect(schedule.placements.map((p) => [p.time, p.anchor])).toEqual([['12:00', 'lunch']])
+    // The bedtime rule's reason only shows when the dose is at bedtime.
+    expect(schedule.placements[0]?.reasons.map((r) => r.attribute)).not.toContain('BEDTIME')
+  })
+
+  it('falls back like a meal preference when the pinned meal is skipped', () => {
+    const schedule = buildSchedule({ ...section5Routine, lunch: null }, [
+      { productId: 'sample-multi', dosesPerDay: 1, pins: ['lunch'] },
+    ])
+    expect(schedule.placements.map((p) => p.anchor)).toEqual(['breakfast'])
+  })
+
+  it('moves an unpinned dose of the same product out of the pinned slot', () => {
+    const schedule = buildSchedule(section5Routine, [
+      { productId: 'sample-calmag', dosesPerDay: 2, pins: [null, 'dinner'] },
+    ])
+    expect(schedule.placements.map((p) => [p.time, p.doses])).toEqual([
+      ['12:00', [{ productId: 'sample-calmag', doseIndex: 0, slot: 0 }]],
+      ['18:00', [{ productId: 'sample-calmag', doseIndex: 1, slot: 1, pinned: 'dinner' }]],
+    ])
+  })
+
+  it('ignores pins beyond the number of doses', () => {
+    const schedule = buildSchedule(section5Routine, [
+      { productId: 'sample-multi', dosesPerDay: 1, pins: [null, 'bedtime'] },
+    ])
+    expect(schedule.placements.map((p) => p.anchor)).toEqual(['breakfast'])
+    expect(schedule.adjustments).toEqual([])
+  })
+
+  it('never moves a pinned dose for a separation rule: the other product moves', () => {
+    const schedule = buildSchedule(section5Routine, [
+      { productId: 'sample-iron', dosesPerDay: 1, pins: ['breakfast'] },
+      { productId: 'sample-multi', dosesPerDay: 1 },
+    ])
+    expect(schedule.placements.map((p) => [p.time, p.productIds])).toEqual([
+      ['07:30', ['sample-iron']],
+      ['09:30', ['sample-multi']],
+    ])
+    const multi = schedule.placements[1]?.reasons.find(
+      (r) => r.ruleId === 'rule-iron-separate-calcium',
+    )
+    expect(multi).toMatchObject({
+      ruleId: 'rule-iron-separate-calcium',
+      attribute: 'SEPARATE_FROM_IRON',
+      params: { otherIngredientId: 'iron', otherProductIds: ['sample-iron'] },
+    })
+    expect(schedule.adjustments.find((a) => a.productId === 'sample-multi')).toMatchObject({
+      code: 'MOVED_AWAY_FROM_INGREDIENT',
+      params: { otherIngredientId: 'iron', from: '07:30', to: '09:30' },
+    })
+    // Coffee can't move and neither can the pinned iron: the reason stays, nothing moves.
+    const iron = schedule.placements[0]?.reasons.map((r) => r.attribute)
+    expect(iron).toContain('SEPARATE_FROM_COFFEE_TEA')
+  })
+
+  it('keeps two pinned, conflicting doses and flags the later one', () => {
+    const schedule = buildSchedule(section5Routine, [
+      { productId: 'sample-iron', dosesPerDay: 1, pins: ['breakfast'] },
+      { productId: 'sample-multi', dosesPerDay: 1, pins: ['wake'] },
+    ])
+    expect(schedule.placements.map((p) => [p.time, p.productIds])).toEqual([
+      ['06:30', ['sample-multi']],
+      ['07:30', ['sample-iron']],
+    ])
+    const conflict = schedule.placements[1]?.reasons.find((r) => r.params.pinnedConflict)
+    expect(conflict).toMatchObject({
+      productId: 'sample-iron',
+      severity: 'timing_conflict',
+      attribute: 'SEPARATE_FROM_CALCIUM',
+      params: { otherProductIds: ['sample-multi'] },
+    })
+    expect(schedule.placements[0]?.reasons.some((r) => r.params.pinnedConflict)).toBe(false)
+  })
+
+  it('still lets an unpinned product move itself away from a pinned one', () => {
+    const schedule = buildSchedule(section5Routine, [
+      { productId: 'sample-iron', dosesPerDay: 1 },
+      { productId: 'sample-multi', dosesPerDay: 1, pins: ['breakfast'] },
+    ])
+    expect(schedule.placements.map((p) => [p.time, p.productIds])).toEqual([
+      ['07:30', ['sample-multi']],
+      ['09:30', ['sample-iron']],
+    ])
   })
 })

@@ -163,6 +163,8 @@ export const RULE_ATTRIBUTES = [
   'SEPARATE_FROM_COFFEE_TEA',
   'TAKE_WITH_WATER',
   'REFRIGERATE',
+  /** Never places a dose: offers the person to move it to bedtime (informational only). */
+  'SUGGEST_BEDTIME',
 ] as const
 export const RuleAttribute = z.enum(RULE_ATTRIBUTES)
 export type RuleAttribute = z.infer<typeof RuleAttribute>
@@ -171,6 +173,14 @@ export type RuleAttribute = z.infer<typeof RuleAttribute>
 export const ANCHORS = ['breakfast', 'lunch', 'dinner', 'bedtime'] as const
 export const Anchor = z.enum(ANCHORS)
 export type Anchor = z.infer<typeof Anchor>
+
+/**
+ * Anchors a person can pin a dose to. `wake` is for pins only: the engine never places
+ * anything at wake-up on its own.
+ */
+export const PIN_ANCHORS = ['wake', ...ANCHORS] as const
+export const PinAnchor = z.enum(PIN_ANCHORS)
+export type PinAnchor = z.infer<typeof PinAnchor>
 
 export const MEAL_ANCHORS = ['breakfast', 'lunch', 'dinner'] as const
 export const MealAnchor = z.enum(MEAL_ANCHORS)
@@ -244,6 +254,14 @@ export type Routine = z.infer<typeof Routine>
 export const StackItem = z.object({
   productId: z.string().min(1),
   dosesPerDay: z.number().int().min(1).max(MAX_DOSES_PER_DAY),
+  /**
+   * The person's chosen anchor per dose slot (null = the engine decides). Slot i is the
+   * product's i-th dose in the order the engine creates them (slot 0 is the main dose); a
+   * pinned dose beats every placement rule and never moves for a separation rule.
+   */
+  pins: z.array(PinAnchor.nullable()).max(MAX_DOSES_PER_DAY).optional(),
+  /** Suggestions the person turned down, e.g. ["SUGGEST_BEDTIME"]. */
+  dismissed: z.array(z.string().min(1)).optional(),
 })
 export type StackItem = z.infer<typeof StackItem>
 
@@ -261,17 +279,24 @@ export const ADJUSTMENT_CODES = [
   'MOVED_TO_MORNING',
   'MOVED_TO_EVENING',
   'MOVED_TO_BEDTIME',
+  /** The person pinned the dose to a time of their choosing. */
+  'MOVED_BY_YOU',
 ] as const
 export type AdjustmentCode = (typeof ADJUSTMENT_CODES)[number]
 
 export interface ReasonParams {
   /** Anchor the rule attached the dose to, when any. */
-  anchor?: Anchor | null
+  anchor?: PinAnchor | null
   separationMinutes?: number
   /** For SEPARATE_FROM_<ingredient>: the ingredient kept apart. */
   otherIngredientId?: string
   /** Products in the stack that triggered a separation rule. */
   otherProductIds?: string[]
+  /**
+   * Both doses are pinned by the person, so the separation could not be applied: the later
+   * one carries this reason as a timing conflict.
+   */
+  pinnedConflict?: boolean
 }
 
 export interface Reason {
@@ -288,6 +313,10 @@ export interface PlacedDose {
   productId: string
   /** 0-based index of this dose within the product's day, in time order. */
   doseIndex: number
+  /** The dose's slot in `StackItem.pins` (creation order; stable when pins move doses). */
+  slot: number
+  /** Set when the person pinned this dose: the anchor they chose. */
+  pinned?: PinAnchor
 }
 
 export interface Placement {
@@ -295,7 +324,8 @@ export interface Placement {
   time: HHMM
   /** Minutes since local midnight. */
   minutes: number
-  anchor: Anchor | null
+  /** `wake` only when a pinned dose sits at wake-up. */
+  anchor: PinAnchor | null
   productIds: string[]
   doses: PlacedDose[]
   reasons: Reason[]

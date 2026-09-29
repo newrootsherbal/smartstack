@@ -65,7 +65,7 @@ describe('adjustment sentences (pitch section 11)', () => {
   it('renders the short reason lines from the pitch mock-up', () => {
     const schedule = buildSchedule(routine, ironAndCalcium, { catalogue: sampleCatalogue })
     const iron = schedule.placements.find((p) => p.productIds.includes('sample-iron'))!
-    const lines = iron.reasons.map(renderReasonShort)
+    const lines = iron.reasons.map((r) => renderReasonShort(r))
     expect(lines).toContain('Take separately from calcium')
     expect(lines).toContain('Avoid coffee/tea around this dose')
   })
@@ -74,7 +74,7 @@ describe('adjustment sentences (pitch section 11)', () => {
     setLocale('fr')
     const schedule = buildSchedule(routine, ironAndCalcium, { catalogue: sampleCatalogue })
     const iron = schedule.placements.find((p) => p.productIds.includes('sample-iron'))!
-    const lines = iron.reasons.map(renderReasonShort)
+    const lines = iron.reasons.map((r) => renderReasonShort(r))
     expect(lines).toContain('Prendre à distance du calcium')
     expect(lines).toContain('Éviter le café et le thé autour de cette dose')
   })
@@ -134,5 +134,35 @@ describe('detectLocale', () => {
     expect(detectLocale(['de-DE', 'fr'])).toBe('fr')
     expect(detectLocale(['de-DE'])).toBe('en')
     expect(detectLocale([])).toBe('en')
+  })
+})
+
+describe('pins in sentences', () => {
+  const pinned = buildSchedule(
+    routine,
+    [
+      { productId: 'sample-iron', dosesPerDay: 1, pins: ['breakfast'] },
+      { productId: 'sample-multi', dosesPerDay: 1, pins: ['wake'] },
+    ],
+    { catalogue: sampleCatalogue },
+  )
+  const conflict = pinned.placements.flatMap((p) => p.reasons).find((r) => r.params.pinnedConflict)!
+
+  it('says the person chose the time', () => {
+    const rendered = pinned.adjustments.map((a) => renderAdjustment(a, sampleCatalogue))
+    expect(rendered).toContain('Multivitamin moved to the time you chose')
+    setLocale('fr')
+    const fr = pinned.adjustments.map((a) => renderAdjustment(a, sampleCatalogue))
+    expect(fr.some((line) => line.endsWith(`${NBSP}: à l’heure que vous avez choisie`))).toBe(true)
+  })
+
+  it('explains two pinned doses that could not be kept apart', () => {
+    expect(renderReasonShort(conflict, sampleCatalogue)).toBe(
+      'Close to calcium, at the times you chose',
+    )
+    setLocale('fr')
+    expect(renderReasonShort(conflict, sampleCatalogue)).toBe(
+      'Proche du calcium, aux heures que vous avez choisies',
+    )
   })
 })

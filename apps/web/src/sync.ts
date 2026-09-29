@@ -14,7 +14,7 @@ import {
 } from '@smartstack/shared'
 import { addDays, formatClock, localDateKey, localDateTimeToEpoch } from './dates'
 import { t, tl } from './i18n'
-import { renderReasonShort } from './i18n/render'
+import { isShortReason, renderReasonShort } from './i18n/render'
 import { scheduleForDay } from './schedule'
 import type { TodayOverride } from './storage'
 
@@ -47,7 +47,8 @@ export function composeNotification(placement: Placement): { title: string; body
         ? `${names[0]} + ${names[1]}`
         : t('push.several', { count: names.length })
   const title = truncate(`${subject} — ${clock}`, MAX_TITLE_LENGTH)
-  const hint = placement.reasons[0] ? renderReasonShort(placement.reasons[0]) : ''
+  const first = placement.reasons.find(isShortReason)
+  const hint = first ? renderReasonShort(first) : ''
   const body = truncate(hint ? `${names.join(', ')} · ${hint}` : names.join(', '), MAX_BODY_LENGTH)
   return { title, body }
 }

@@ -70,12 +70,12 @@
   },
   {
     "id": "rule-magnesium-bedtime",
-    "attribute": "BEDTIME",
+    "attribute": "SUGGEST_BEDTIME",
     "appliesTo": { "ingredientId": "magnesium" },
-    "severity": "consideration",
+    "severity": "informational",
     "explanation": {
-      "en": "Scheduled at bedtime based on your selected routine.",
-      "fr": "Placé au coucher selon la routine que vous avez choisie."
+      "en": "Many people prefer to take magnesium in the evening. Move it to bedtime?",
+      "fr": "Plusieurs personnes préfèrent prendre leur magnésium le soir. Le déplacer au coucher?"
     },
     "evidenceUrl": null,
     "reviewStatus": "unreviewed",

@@ -6,13 +6,16 @@ import {
   type Anchor,
   type Catalogue,
   type MealAnchor,
+  type PinAnchor,
   type Placement,
   type Reason,
   type ReasonParams,
   type Routine,
+  type RuleAttribute,
   type Schedule,
   type Severity,
   type Stack,
+  type StackItem,
   type TimingRule,
 } from '@smartstack/shared'
 import {
@@ -34,6 +37,8 @@ const EXTRA_DOSE_ORDER: readonly MealAnchor[] = ['dinner', 'lunch', 'breakfast']
 const FALLBACK_ORDER: readonly MealAnchor[] = ['breakfast', 'lunch', 'dinner']
 const ROUNDING_STEP_MINUTES = 15
 const DEFAULT_SEPARATION_MINUTES = 120
+/** Rule id carried by the adjustment of a dose the person pinned. */
+export const PIN_RULE_ID = 'user:pin'
 
 const SEVERITY_RANK: Record<Severity, number> = {
   important: 5,
@@ -44,18 +49,22 @@ const SEVERITY_RANK: Record<Severity, number> = {
 }
 
 interface Mover {
-  rule: TimingRule
+  ruleId: string
   code: AdjustmentCode
   params: ReasonParams
 }
 
 interface DoseState {
   productId: string
+  /** Creation order within the product: the index into `StackItem.pins`. */
+  slot: number
   doseIndex: number
   /** Time the dose would have without any rule (first meal for dose 0, its meal anchor after). */
   baselineMinutes: number
   minutes: number
-  anchor: Anchor | null
+  anchor: PinAnchor | null
+  /** The person's chosen anchor: the dose never moves. */
+  pinned: PinAnchor | null
   movedBy: Mover | null
   reasons: Reason[]
 }
@@ -83,8 +92,8 @@ function parseRoutine(routine: Routine): RoutineMinutes {
   }
 }
 
-function anchorMinutes(r: RoutineMinutes, anchor: Anchor): number {
-  const value = anchor === 'bedtime' ? r.bedtime : r[anchor]
+function anchorMinutes(r: RoutineMinutes, anchor: PinAnchor): number {
+  const value = anchor === 'bedtime' ? r.bedtime : anchor === 'wake' ? r.wake : r[anchor]
   if (value === null) throw new Error(`anchor ${anchor} is not in the routine`)
   return value
 }
@@ -106,6 +115,12 @@ function resolveMeal(
   return hit
 }
 
+/** A pinned meal the routine skips falls back like a meal preference does. */
+function resolvePin(pin: PinAnchor, available: ReadonlySet<MealAnchor>): PinAnchor {
+  if (pin === 'wake' || pin === 'bedtime') return pin
+  return resolveMeal([pin], available)
+}
+
 interface FixedAnchor {
   anchor: Anchor
   rule: TimingRule
@@ -116,6 +131,7 @@ interface FixedAnchor {
  * Step 2 — fixed-anchor rules. Product-level (label) rules are considered before
  * ingredient-level ones; within a level the priority is
  * BEDTIME > EVENING > MORNING > preferredAnchors (WITH_FAT / WITH_FOOD) > plain WITH_FOOD.
+ * SUGGEST_BEDTIME never places a dose.
  */
 function pickFixedAnchor(
   rules: readonly TimingRule[],
@@ -188,14 +204,18 @@ function pickFixedAnchorFrom(
  * gap in its day. Two doses of one product never share a time.
  */
 function extraDoseSlot(
-  used: ReadonlySet<Anchor>,
+  used: ReadonlySet<PinAnchor>,
   assigned: readonly number[],
   r: RoutineMinutes,
   available: ReadonlySet<MealAnchor>,
 ): { anchor: Anchor | null; minutes: number } {
-  const meal = EXTRA_DOSE_ORDER.find((a) => available.has(a) && !used.has(a))
+  const meal = EXTRA_DOSE_ORDER.find(
+    (a) => available.has(a) && !used.has(a) && !assigned.includes(anchorMinutes(r, a)),
+  )
   if (meal) return { anchor: meal, minutes: anchorMinutes(r, meal) }
-  if (!used.has('bedtime')) return { anchor: 'bedtime', minutes: r.bedtime }
+  if (!used.has('bedtime') && !assigned.includes(r.bedtime)) {
+    return { anchor: 'bedtime', minutes: r.bedtime }
+  }
 
   const points = [...new Set([r.wake, ...assigned, r.bedtime])].sort((a, b) => a - b)
   let start = points[0]!
@@ -213,6 +233,90 @@ function extraDoseSlot(
   return { anchor: null, minutes }
 }
 
+/**
+ * Steps 1 + 2 for one product: baseline at the first meal, then fixed anchors; extra
+ * doses take the next preferred meal (dinner, lunch, breakfast) not yet used by the
+ * product. Pinned slots then take the anchor the person chose, and an unpinned dose that
+ * would share a time with a pinned one takes the next free slot instead.
+ */
+function layoutProduct(
+  item: StackItem,
+  rules: readonly TimingRule[],
+  r: RoutineMinutes,
+  available: ReadonlySet<MealAnchor>,
+  firstMeal: MealAnchor,
+): DoseState[] {
+  const count = Math.min(item.dosesPerDay, MAX_DOSES_PER_DAY)
+  const fixed = pickFixedAnchor(rules, available)
+  const firstAnchor: Anchor = fixed?.anchor ?? firstMeal
+  const doses: DoseState[] = [
+    {
+      productId: item.productId,
+      slot: 0,
+      doseIndex: 0,
+      baselineMinutes: anchorMinutes(r, firstMeal),
+      minutes: anchorMinutes(r, firstAnchor),
+      anchor: firstAnchor,
+      pinned: null,
+      movedBy:
+        fixed && firstAnchor !== firstMeal
+          ? { ruleId: fixed.rule.id, code: fixed.code, params: { anchor: firstAnchor } }
+          : null,
+      reasons: [],
+    },
+  ]
+  const used = new Set<PinAnchor>([firstAnchor])
+  const assigned = [doses[0]!.minutes]
+  for (let i = 1; i < count; i++) {
+    const slot = extraDoseSlot(used, assigned, r, available)
+    if (slot.anchor) used.add(slot.anchor)
+    assigned.push(slot.minutes)
+    doses.push({
+      productId: item.productId,
+      slot: i,
+      doseIndex: i,
+      baselineMinutes: slot.minutes,
+      minutes: slot.minutes,
+      anchor: slot.anchor,
+      pinned: null,
+      movedBy: null,
+      reasons: [],
+    })
+  }
+
+  const pins = item.pins ?? []
+  if (!pins.some((p, i) => p && i < count)) return doses
+
+  for (const dose of doses) {
+    const pin = pins[dose.slot]
+    if (!pin) continue
+    const anchor = resolvePin(pin, available)
+    dose.pinned = anchor
+    dose.anchor = anchor
+    dose.minutes = anchorMinutes(r, anchor)
+    dose.movedBy = { ruleId: PIN_RULE_ID, code: 'MOVED_BY_YOU', params: { anchor } }
+  }
+  // Unpinned doses keep their place unless a pinned dose of the same product took it.
+  const taken = doses.filter((d) => d.pinned)
+  const takenAnchors = new Set<PinAnchor>(taken.map((d) => d.anchor!))
+  const takenMinutes = taken.map((d) => d.minutes)
+  for (const dose of doses) {
+    if (dose.pinned) continue
+    if (!takenMinutes.includes(dose.minutes)) {
+      if (dose.anchor) takenAnchors.add(dose.anchor)
+      takenMinutes.push(dose.minutes)
+      continue
+    }
+    const slot = extraDoseSlot(takenAnchors, takenMinutes, r, available)
+    if (slot.anchor) takenAnchors.add(slot.anchor)
+    takenMinutes.push(slot.minutes)
+    dose.anchor = slot.anchor
+    dose.minutes = slot.minutes
+    dose.movedBy = null
+  }
+  return doses
+}
+
 const FIXED_ANCHOR_ATTRIBUTES = new Set(['MORNING', 'EVENING', 'BEDTIME'])
 const MEAL_ADVICE_ATTRIBUTES = new Set(['WITH_FOOD', 'WITH_FAT'])
 const SEPARATION_ATTRIBUTES = new Set([
@@ -226,6 +330,8 @@ function baseReasons(dose: DoseState, rules: readonly TimingRule[]): Reason[] {
   const reasons: Reason[] = []
   for (const rule of rules) {
     if (SEPARATION_ATTRIBUTES.has(rule.attribute)) continue
+    // Added once per product after placement (step 3b).
+    if (rule.attribute === 'SUGGEST_BEDTIME') continue
     if (FIXED_ANCHOR_ATTRIBUTES.has(rule.attribute)) {
       const target: Anchor =
         rule.attribute === 'BEDTIME'
@@ -255,6 +361,8 @@ interface SeparationConstraint {
   rule: TimingRule
   separation: number
   conflicts: number[]
+  /** The doses behind `conflicts` (empty for coffee). */
+  others: DoseState[]
   otherProductIds: string[]
   otherIngredientId?: string
 }
@@ -273,7 +381,7 @@ function separationConstraints(
     if (rule.attribute === 'SEPARATE_FROM_COFFEE_TEA') {
       // No coffee in the routine → the rule is silent (no reason, no move).
       if (r.coffee === null) continue
-      constraints.push({ rule, separation, conflicts: [r.coffee], otherProductIds: [] })
+      constraints.push({ rule, separation, conflicts: [r.coffee], others: [], otherProductIds: [] })
       continue
     }
     const ingredientId = rule.attribute === 'SEPARATE_FROM_CALCIUM' ? 'calcium' : 'iron'
@@ -287,6 +395,7 @@ function separationConstraints(
       rule,
       separation,
       conflicts: others.map((d) => d.minutes),
+      others,
       otherProductIds: [...new Set(others.map((d) => d.productId))],
       otherIngredientId: ingredientId,
     })
@@ -298,11 +407,17 @@ function violates(minutes: number, c: SeparationConstraint): boolean {
   return c.conflicts.some((conflict) => Math.abs(minutes - conflict) < c.separation)
 }
 
-/**
- * Step 3 — move a dose to the earliest time ≥ (conflict + separation), rounded up
- * to 15 minutes, that satisfies every separation constraint at once.
- */
-function applySeparation(dose: DoseState, constraints: SeparationConstraint[]): void {
+function separationParams(
+  c: Pick<SeparationConstraint, 'separation' | 'otherIngredientId' | 'otherProductIds'>,
+): ReasonParams {
+  return {
+    separationMinutes: c.separation,
+    ...(c.otherIngredientId ? { otherIngredientId: c.otherIngredientId } : {}),
+    ...(c.otherProductIds.length ? { otherProductIds: c.otherProductIds } : {}),
+  }
+}
+
+function addSeparationReasons(dose: DoseState, constraints: readonly SeparationConstraint[]) {
   for (const c of constraints) {
     dose.reasons.push({
       ruleId: c.rule.id,
@@ -310,17 +425,19 @@ function applySeparation(dose: DoseState, constraints: SeparationConstraint[]): 
       severity: c.rule.severity,
       productId: dose.productId,
       doseIndex: dose.doseIndex,
-      params: {
-        separationMinutes: c.separation,
-        ...(c.otherIngredientId ? { otherIngredientId: c.otherIngredientId } : {}),
-        ...(c.otherProductIds.length ? { otherProductIds: c.otherProductIds } : {}),
-      },
+      params: separationParams(c),
     })
   }
+}
 
-  const violated = constraints.filter((c) => violates(dose.minutes, c))
-  if (violated.length === 0) return
-
+/**
+ * The earliest time ≥ `from`, among `conflict + separation` rounded up to 15 minutes,
+ * that satisfies every constraint at once; undefined when none fits in the day.
+ */
+function earliestClearTime(
+  from: number,
+  constraints: readonly Pick<SeparationConstraint, 'conflicts' | 'separation'>[],
+): number | undefined {
   const candidates = [
     ...new Set(
       constraints.flatMap((c) =>
@@ -328,10 +445,24 @@ function applySeparation(dose: DoseState, constraints: SeparationConstraint[]): 
       ),
     ),
   ]
-    .filter((t) => t >= dose.minutes && t < MINUTES_PER_DAY)
+    .filter((t) => t >= from && t < MINUTES_PER_DAY)
     .sort((a, b) => a - b)
+  return candidates.find((t) =>
+    constraints.every((c) => !c.conflicts.some((x) => Math.abs(t - x) < c.separation)),
+  )
+}
 
-  const target = candidates.find((t) => constraints.every((c) => !violates(t, c)))
+/**
+ * Step 3 — move a dose to the earliest time ≥ (conflict + separation), rounded up
+ * to 15 minutes, that satisfies every separation constraint at once.
+ */
+function applySeparation(dose: DoseState, constraints: SeparationConstraint[]): void {
+  addSeparationReasons(dose, constraints)
+
+  const violated = constraints.filter((c) => violates(dose.minutes, c))
+  if (violated.length === 0) return
+
+  const target = earliestClearTime(dose.minutes, constraints)
   if (target === undefined) return // cannot satisfy today; leave the dose where it is
 
   // Worded by the most severe violated rule (first in rules order on ties).
@@ -341,22 +472,122 @@ function applySeparation(dose: DoseState, constraints: SeparationConstraint[]): 
   dose.minutes = target
   dose.anchor = null
   dose.movedBy = {
-    rule: mover.rule,
+    ruleId: mover.rule.id,
     code:
       mover.rule.attribute === 'SEPARATE_FROM_COFFEE_TEA'
         ? 'MOVED_AWAY_FROM_COFFEE_TEA'
         : 'MOVED_AWAY_FROM_INGREDIENT',
-    params: {
-      separationMinutes: mover.separation,
-      ...(mover.otherIngredientId ? { otherIngredientId: mover.otherIngredientId } : {}),
-      ...(mover.otherProductIds.length ? { otherProductIds: mover.otherProductIds } : {}),
-    },
+    params: separationParams(mover),
   }
 }
 
-function anchorAt(minutes: number, r: RoutineMinutes): Anchor | null {
+/** From the other product's side: calcium kept apart from iron reads "separately from iron". */
+function mirroredAttribute(rule: TimingRule): RuleAttribute {
+  if (!('ingredientId' in rule.appliesTo)) return rule.attribute
+  if (rule.appliesTo.ingredientId === 'iron') return 'SEPARATE_FROM_IRON'
+  if (rule.appliesTo.ingredientId === 'calcium') return 'SEPARATE_FROM_CALCIUM'
+  return rule.attribute
+}
+
+function ruleIngredient(rule: TimingRule): string | undefined {
+  return 'ingredientId' in rule.appliesTo ? rule.appliesTo.ingredientId : undefined
+}
+
+/**
+ * Step 3 for a pinned dose: it never moves. An unpinned dose it conflicts with moves
+ * instead (to the earliest time that clears the pinned dose and its own rules). Two
+ * pinned doses both stay, and the later one gets a timing-conflict reason.
+ */
+function separateAroundPinned(
+  dose: DoseState,
+  constraints: SeparationConstraint[],
+  all: readonly DoseState[],
+  rulesByProduct: ReadonlyMap<string, TimingRule[]>,
+  r: RoutineMinutes,
+  cat: Catalogue,
+): void {
+  addSeparationReasons(dose, constraints)
+  for (const c of constraints) {
+    for (const other of c.others) {
+      if (Math.abs(other.minutes - dose.minutes) >= c.separation) continue
+      const ingredient = ruleIngredient(c.rule)
+      const mirrored: ReasonParams = {
+        separationMinutes: c.separation,
+        ...(ingredient ? { otherIngredientId: ingredient } : {}),
+        otherProductIds: [dose.productId],
+      }
+      if (other.pinned) {
+        const later = other.minutes > dose.minutes ? other : dose
+        const params: ReasonParams =
+          later === dose
+            ? { ...separationParams(c), otherProductIds: [other.productId], pinnedConflict: true }
+            : { ...mirrored, pinnedConflict: true }
+        later.reasons.push({
+          ruleId: c.rule.id,
+          attribute: later === dose ? c.rule.attribute : mirroredAttribute(c.rule),
+          severity: 'timing_conflict',
+          productId: later.productId,
+          doseIndex: later.doseIndex,
+          params,
+        })
+        continue
+      }
+      const imposed = { conflicts: [dose.minutes], separation: c.separation }
+      const own = separationConstraints(
+        other,
+        rulesByProduct.get(other.productId) ?? [],
+        all,
+        r,
+        cat,
+      )
+      if (!other.reasons.some((x) => x.ruleId === c.rule.id)) {
+        other.reasons.push({
+          ruleId: c.rule.id,
+          attribute: mirroredAttribute(c.rule),
+          severity: c.rule.severity,
+          productId: other.productId,
+          doseIndex: other.doseIndex,
+          params: mirrored,
+        })
+      }
+      const target = earliestClearTime(other.minutes, [imposed, ...own])
+      if (target === undefined) continue
+      other.minutes = target
+      other.anchor = null
+      other.movedBy = { ruleId: c.rule.id, code: 'MOVED_AWAY_FROM_INGREDIENT', params: mirrored }
+    }
+  }
+}
+
+/**
+ * Step 3b — the bedtime suggestion (SUGGEST_BEDTIME): an informational reason on the
+ * product's last dose of the day, only when no dose is at bedtime, nothing is pinned
+ * and the person did not turn the suggestion down.
+ */
+function addBedtimeSuggestion(
+  item: StackItem,
+  rules: readonly TimingRule[],
+  doses: readonly DoseState[],
+): void {
+  const rule = rules.find((x) => x.attribute === 'SUGGEST_BEDTIME')
+  if (!rule) return
+  if (item.dismissed?.includes('SUGGEST_BEDTIME')) return
+  if (doses.some((d) => d.anchor === 'bedtime' || d.pinned)) return
+  const last = doses.reduce((a, b) => (b.minutes > a.minutes ? b : a))
+  last.reasons.push({
+    ruleId: rule.id,
+    attribute: 'SUGGEST_BEDTIME',
+    severity: rule.severity,
+    productId: last.productId,
+    doseIndex: last.doseIndex,
+    params: {},
+  })
+}
+
+function anchorAt(minutes: number, r: RoutineMinutes, group: readonly DoseState[]) {
   if (minutes === r.bedtime) return 'bedtime'
   for (const meal of MEAL_ANCHORS) if (r[meal] === minutes) return meal
+  if (minutes === r.wake && group.some((d) => d.anchor === 'wake')) return 'wake'
   return null
 }
 
@@ -377,48 +608,17 @@ export function buildSchedule(
 
   const doses: DoseState[] = []
   const rulesByProduct = new Map<string, TimingRule[]>()
+  const dosesByItem = new Map<StackItem, DoseState[]>()
 
-  // Steps 1 + 2: baseline at the first meal, then fixed anchors; extra doses take
-  // the next preferred meal (dinner, lunch, breakfast) not yet used by the product.
+  // Steps 1 + 2: baseline, fixed anchors, extra doses, then the person's pins.
   for (const item of stack) {
     const product = getProduct(item.productId, cat)
     if (!product) throw new Error(`unknown product: ${item.productId}`)
     const rules = rulesForProduct(product, cat)
     rulesByProduct.set(product.id, rules)
-
-    const fixed = pickFixedAnchor(rules, available)
-    const firstAnchor: Anchor = fixed?.anchor ?? firstMeal
-    const first: DoseState = {
-      productId: product.id,
-      doseIndex: 0,
-      baselineMinutes: anchorMinutes(r, firstMeal),
-      minutes: anchorMinutes(r, firstAnchor),
-      anchor: firstAnchor,
-      movedBy:
-        fixed && firstAnchor !== firstMeal
-          ? { rule: fixed.rule, code: fixed.code, params: { anchor: firstAnchor } }
-          : null,
-      reasons: [],
-    }
-    doses.push(first)
-
-    const used = new Set<Anchor>([firstAnchor])
-    const assigned = [first.minutes]
-    const count = Math.min(item.dosesPerDay, MAX_DOSES_PER_DAY)
-    for (let i = 1; i < count; i++) {
-      const slot = extraDoseSlot(used, assigned, r, available)
-      if (slot.anchor) used.add(slot.anchor)
-      assigned.push(slot.minutes)
-      doses.push({
-        productId: product.id,
-        doseIndex: i,
-        baselineMinutes: slot.minutes,
-        minutes: slot.minutes,
-        anchor: slot.anchor,
-        movedBy: null,
-        reasons: [],
-      })
-    }
+    const productDoses = layoutProduct(item, rules, r, available, firstMeal)
+    dosesByItem.set(item, productDoses)
+    doses.push(...productDoses)
   }
 
   for (const dose of doses) {
@@ -429,7 +629,13 @@ export function buildSchedule(
   for (const dose of doses) {
     const rules = rulesByProduct.get(dose.productId) ?? []
     const constraints = separationConstraints(dose, rules, doses, r, cat)
-    if (constraints.length) applySeparation(dose, constraints)
+    if (!constraints.length) continue
+    if (dose.pinned) separateAroundPinned(dose, constraints, doses, rulesByProduct, r, cat)
+    else applySeparation(dose, constraints)
+  }
+
+  for (const [item, productDoses] of dosesByItem) {
+    addBedtimeSuggestion(item, rulesByProduct.get(item.productId) ?? [], productDoses)
   }
 
   // Step 4: one adjustment per product whose final time differs from baseline.
@@ -442,7 +648,7 @@ export function buildSchedule(
     adjustments.push({
       code: dose.movedBy.code,
       productId: dose.productId,
-      ruleId: dose.movedBy.rule.id,
+      ruleId: dose.movedBy.ruleId,
       params: {
         ...dose.movedBy.params,
         from: formatHHMM(dose.baselineMinutes),
@@ -453,14 +659,8 @@ export function buildSchedule(
 
   // Number each product's doses in time order, so "four times daily" reads Dose 1…4
   // across the day (checkbox keys and reasons follow the same numbering).
-  const byProduct = new Map<string, DoseState[]>()
-  for (const dose of doses) {
-    const list = byProduct.get(dose.productId) ?? []
-    list.push(dose)
-    byProduct.set(dose.productId, list)
-  }
-  for (const list of byProduct.values()) {
-    const ordered = [...list].sort((a, b) => a.minutes - b.minutes || a.doseIndex - b.doseIndex)
+  for (const list of dosesByItem.values()) {
+    const ordered = [...list].sort((a, b) => a.minutes - b.minutes || a.slot - b.slot)
     ordered.forEach((dose, i) => {
       dose.doseIndex = i
       for (const reason of dose.reasons) reason.doseIndex = i
@@ -479,9 +679,14 @@ export function buildSchedule(
     .map(([minutes, group]) => ({
       time: formatHHMM(minutes),
       minutes,
-      anchor: anchorAt(minutes, r),
+      anchor: anchorAt(minutes, r, group),
       productIds: [...new Set(group.map((d) => d.productId))],
-      doses: group.map((d) => ({ productId: d.productId, doseIndex: d.doseIndex })),
+      doses: group.map((d) => ({
+        productId: d.productId,
+        doseIndex: d.doseIndex,
+        slot: d.slot,
+        ...(d.pinned ? { pinned: d.pinned } : {}),
+      })),
       reasons: group.flatMap((d) => d.reasons),
     }))
 

@@ -22,6 +22,7 @@
     "informational": { "label": "Informational", "sub": "" }
   },
   "anchor": {
+    "wake": "Wake-up",
     "breakfast": "Morning",
     "lunch": "Lunch",
     "dinner": "Evening",
@@ -33,7 +34,8 @@
     "MOVED_TO_MEAL": "{product} moved to a meal",
     "MOVED_TO_MORNING": "{product} moved to the morning",
     "MOVED_TO_EVENING": "{product} moved to the evening",
-    "MOVED_TO_BEDTIME": "{product} moved to bedtime"
+    "MOVED_TO_BEDTIME": "{product} moved to bedtime",
+    "MOVED_BY_YOU": "{product} moved to the time you chose"
   },
   "reason": {
     "short": {
@@ -47,9 +49,22 @@
       "SEPARATE_FROM_IRON": "Take separately from iron",
       "SEPARATE_FROM_COFFEE_TEA": "Avoid coffee/tea around this dose",
       "TAKE_WITH_WATER": "Take with water",
-      "REFRIGERATE": "Keep refrigerated"
+      "REFRIGERATE": "Keep refrigerated",
+      "SUGGEST_BEDTIME": "Evening suggestion"
     },
-    "separatedBy": "Separated by {hours} h from {ingredient}"
+    "separatedBy": "Separated by {hours} h from {ingredient}",
+    "pinnedConflict": "Close to {ingredient}, at the times you chose"
+  },
+  "pinned": {
+    "wake": "You moved this to wake-up",
+    "breakfast": "You moved this to the morning",
+    "lunch": "You moved this to lunch",
+    "dinner": "You moved this to the evening",
+    "bedtime": "You moved this to bedtime"
+  },
+  "suggest": {
+    "moveToBedtime": "Move to bedtime",
+    "noThanks": "No thanks"
   },
   "push": {
     "several": "{count} supplements"
@@ -140,7 +155,8 @@
     "save": "Save",
     "remove": "Remove",
     "done": "Done",
-    "why": "Why?",
+    "moreInfo": "More info",
+    "moreInfoAbout": "More info about {product}",
     "learnMore": "Learn more",
     "notYetReviewed": "Not yet reviewed",
     "sourceToBeAdded": "Source: to be added",
@@ -219,7 +235,8 @@
     "viewToday": "View today's schedule",
     "addAnother": "Add another",
     "topicalNotice": "This product is applied to the skin or diffused, so it is not something to take on a schedule. You can still look it up here.",
-    "labelFacts": "Label facts"
+    "labelFacts": "Label facts",
+    "takeAtBedtime": "Take it at bedtime"
   },
   "stack": {
     "title": "My stack",
@@ -258,15 +275,17 @@
     "dosesTaken": "{done} of {total} taken",
     "doseOf": "Dose {n} of {total}"
   },
-  "why": {
-    "title": "Why?",
+  "info": {
+    "timing": "Timing",
+    "noTiming": "No timing rule applies to this product.",
+    "pinnedConflictNote": "You chose both of these times, so SmartStack left them as they are.",
+    "moveBack": "Move back",
     "evidence": "Evidence/source",
-    "productInfo": "Product information",
     "lastReviewed": "Last reviewed",
     "reviewedBy": "Reviewed by",
     "directions": "Suggested use",
     "warnings": "Warnings",
-    "facts": "Medicinal ingredients",
+    "labelFacts": "Label facts",
     "sampleNote": "Sample product — directions and warnings are placeholders.",
     "draftNote": "Label text from newrootsherbal.com; timing rules not yet reviewed.",
     "openSource": "Open source",

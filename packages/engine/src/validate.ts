@@ -118,6 +118,10 @@ export function validateCatalogue(raw: unknown): ValidationResult {
     if (r.preferredAnchors && !ANCHOR_PREFERENCE_ATTRIBUTES.has(r.attribute)) {
       errors.push(`${where}: preferredAnchors only applies to WITH_FOOD / WITH_FAT`)
     }
+    // A suggestion never moves a dose, so it may only ever be informational.
+    if (r.attribute === 'SUGGEST_BEDTIME' && r.severity !== 'informational') {
+      errors.push(`${where}: SUGGEST_BEDTIME rules must be informational (got ${r.severity})`)
+    }
     errors.push(...reviewConsistency(where, r))
     if (
       r.reviewStatus !== 'reviewed' &&

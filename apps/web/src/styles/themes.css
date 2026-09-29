@@ -5,7 +5,7 @@
  * Severity colours stay in tokens.css: they are semantic, not decorative.
  *
  * Tokens: bg (screen), surface (containers), surface-2 (section headers, secondary fills),
- * primary (the "Optimize" button), accent ("Why?" links, active nav), warn (sample banner
+ * primary (the "Optimize" button), accent ("More info" links, active nav), warn (sample banner
  * and warning notices). Every text/background pair here meets WCAG AA (4.5:1).
  */
 

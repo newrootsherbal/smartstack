@@ -116,3 +116,28 @@ describe('validateCatalogue — rejections', () => {
     if (!result.ok) expect(result.errors.join('\n')).toMatch(/requires separationMinutes/)
   })
 })
+
+describe('SUGGEST_BEDTIME rules', () => {
+  const suggestion = {
+    id: 'rule-test-suggest',
+    attribute: 'SUGGEST_BEDTIME',
+    appliesTo: { ingredientId: 'magnesium' },
+    severity: 'informational',
+    explanation: { en: 'Many people prefer the evening.' },
+    evidenceUrl: null,
+    reviewStatus: 'unreviewed',
+    lastReviewed: null,
+    reviewedBy: null,
+  }
+  const withRule = (rule: object) => ({ ...seed, rules: [...seed.rules, rule] })
+
+  it('accepts an informational suggestion', () => {
+    expect(validateCatalogue(withRule(suggestion)).ok).toBe(true)
+  })
+
+  it('refuses any other severity', () => {
+    const result = validateCatalogue(withRule({ ...suggestion, severity: 'consideration' }))
+    expect(result.ok).toBe(false)
+    if (!result.ok) expect(result.errors.join('\n')).toMatch(/SUGGEST_BEDTIME.*informational/)
+  })
+})
