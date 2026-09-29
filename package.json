@@ -26,7 +26,9 @@
     "check": "npm run typecheck && npm run lint && npm run format:check && npm test",
     "deploy": "npm run build && npm run deploy -w apps/worker",
     "data:refresh": "npm run data:import:website -w packages/engine -- --refresh",
-    "data:import:website": "npm run data:import:website -w packages/engine"
+    "data:import:website": "npm run data:import:website -w packages/engine",
+    "build:staging": "npm run build -w apps/web -- --mode staging",
+    "deploy:staging": "npm run build:staging && npm run deploy:staging -w apps/worker"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.0",

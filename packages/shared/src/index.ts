@@ -378,6 +378,53 @@ export interface Schedule {
 }
 
 // ---------------------------------------------------------------------------
+// Accounts launch gate (ACCOUNTS_MODE in the Worker, VITE_ACCOUNTS_MODE in the web build)
+// ---------------------------------------------------------------------------
+
+/**
+ * off: no account features at all · staff: only addresses in STAFF_EMAIL_DOMAINS can sign
+ * up or log in, and the public UI shows no account features · public: everyone.
+ */
+export const ACCOUNTS_MODES = ['off', 'staff', 'public'] as const
+export type AccountsMode = (typeof ACCOUNTS_MODES)[number]
+
+/** A missing or unknown value means "off": a typo never opens accounts to the public. */
+export function parseAccountsMode(raw: string | undefined | null): AccountsMode {
+  const value = (raw ?? '').trim().toLowerCase()
+  return (ACCOUNTS_MODES as readonly string[]).includes(value) ? (value as AccountsMode) : 'off'
+}
+
+/** "newrootsherbal.com, example.org" → ["newrootsherbal.com", "example.org"]. */
+export function parseEmailDomains(raw: string | undefined | null): string[] {
+  return (raw ?? '')
+    .split(',')
+    .map((d) => d.trim().toLowerCase().replace(/^@/, ''))
+    .filter(Boolean)
+}
+
+/** True when the address's domain is exactly one of `domains` (no subdomains). */
+export function emailInDomains(email: string, domains: readonly string[]): boolean {
+  const at = email.lastIndexOf('@')
+  if (at < 1) return false
+  const domain = email
+    .slice(at + 1)
+    .trim()
+    .toLowerCase()
+  return domains.includes(domain)
+}
+
+/** Whether an address may sign up or log in under the given mode. */
+export function accountsOpenTo(
+  mode: AccountsMode,
+  email: string,
+  staffDomains: readonly string[],
+): boolean {
+  if (mode === 'public') return true
+  if (mode === 'staff') return emailInDomains(email, staffDomains)
+  return false
+}
+
+// ---------------------------------------------------------------------------
 // API contracts (/api/me/…, bearer UUID). Validated by the Worker, reused by the client.
 // ---------------------------------------------------------------------------
 
@@ -435,3 +482,4 @@ export const ApiError = z.object({
   detail: z.unknown().optional(),
 })
 export type ApiError = z.infer<typeof ApiError>
+export * from './auth'

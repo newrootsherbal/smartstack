@@ -45,3 +45,63 @@ VAPID_SUBJECT = "mailto:hosts@newrootsherbal.com"
 MAX_PUSHES_PER_TICK = "20"
 # Must match VITE_BETA_KEY in apps/web/.env. A speed bump, not security.
 BETA_KEY = "qEjK2x-cvUwSsn4qF-1RsKhd"
+# Origin the app is served from: OAuth redirects and email links are built from it.
+APP_ORIGIN = "https://schedule.flourishbodyandmind.com"
+# Accounts launch gate: off | staff | public. Production stays "staff" (only addresses in
+# STAFF_EMAIL_DOMAINS can sign up or log in) until the Law 25 launch checklist is done
+# (docs/smartstack-phase2-setup.md, part F). Must match VITE_ACCOUNTS_MODE in apps/web/.env.
+ACCOUNTS_MODE = "staff"
+# Comma-separated email domains allowed while ACCOUNTS_MODE is "staff".
+STAFF_EMAIL_DOMAINS = "newrootsherbal.com"
+# Sign in with Apple waits for the Apple Developer Program enrollment.
+APPLE_ENABLED = "false"
+# Google OAuth "Web application" client (public id; the secret is GOOGLE_CLIENT_SECRET).
+# Redirect URI registered per origin: <APP_ORIGIN>/api/auth/oauth/google/callback.
+GOOGLE_CLIENT_ID = "1059774157627-79j1g0kmr33rdn3gc73t5i4oreq8i0ad.apps.googleusercontent.com"
+# Account emails (verify, reset, password changed): "smtp2go" here; local dev uses "log".
+EMAIL_MODE = "smtp2go"
+# Verified SMTP2GO sender, e.g. "New Roots SmartStack <no-reply@newrootsherbal.com>", and the
+# Reply-To mailbox. Empty until provided (setup doc, part D): emails are then logged as not sent.
+EMAIL_FROM = ""
+EMAIL_REPLY_TO = ""
+# Version of the consent texts (docs/privacy/consent-texts.md). Changing it asks everyone again.
+CONSENT_VERSION = "2026-10"
+
+# ---------------------------------------------------------------------------
+# Staging: https://schedule-staging.flourishbodyandmind.com, its own D1 database.
+# Deploy from the repository root with `npm run deploy:staging` (staging build of the web app,
+# then `wrangler deploy --env staging`), or run the "Deploy staging" workflow.
+# vars, bindings and assets are not inherited by environments, so they are all repeated.
+# One level below the zone, so the free Universal SSL certificate covers it.
+# ---------------------------------------------------------------------------
+[env.staging]
+routes = [{ pattern = "schedule-staging.flourishbodyandmind.com", custom_domain = true }]
+
+[env.staging.assets]
+directory = "../web/dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+run_worker_first = ["/api/*", "/__scheduled"]
+
+[[env.staging.d1_databases]]
+binding = "DB"
+database_name = "smartstack-staging"
+# Created 2026-09-29 with `wrangler d1 create smartstack-staging --location enam`.
+database_id = "94c2d88e-4b1f-4145-b402-e6528bb3face"
+migrations_dir = "migrations"
+
+[env.staging.vars]
+# Same VAPID pair as production: subscriptions are per origin anyway.
+VAPID_PUBLIC_KEY = "BProg2B-2MpQYotwZwsJOIHc_rTVBisevREVnVVZ0bPc5MggyMDxvjeVR45kW9RHKHuzKNcRzUA3-ejU3ZWWWbY"
+VAPID_SUBJECT = "mailto:hosts@newrootsherbal.com"
+MAX_PUSHES_PER_TICK = "20"
+BETA_KEY = "qEjK2x-cvUwSsn4qF-1RsKhd"
+APP_ORIGIN = "https://schedule-staging.flourishbodyandmind.com"
+ACCOUNTS_MODE = "public"
+STAFF_EMAIL_DOMAINS = "newrootsherbal.com"
+APPLE_ENABLED = "false"
+GOOGLE_CLIENT_ID = "1059774157627-79j1g0kmr33rdn3gc73t5i4oreq8i0ad.apps.googleusercontent.com"
+EMAIL_MODE = "smtp2go"
+EMAIL_FROM = ""
+EMAIL_REPLY_TO = ""
+CONSENT_VERSION = "2026-10"

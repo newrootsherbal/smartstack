@@ -12,6 +12,7 @@ import {
 } from '@smartstack/shared'
 import { Hono, type Context } from 'hono'
 import { z } from 'zod'
+import { accountApi } from './account-api'
 import type { Env, PushSubscriptionRow, UserRow } from './env'
 import { scheduleStatements, TEST_LEAD_MS, testReminderAllowed } from './logic'
 
@@ -56,6 +57,12 @@ async function parseBody<T extends z.ZodType>(
 }
 
 export const api = new Hono<AppEnv>().basePath('/api')
+
+// API responses are per person and never cached (by the browser, the service worker or a proxy).
+api.use('*', async (c, next) => {
+  await next()
+  c.header('Cache-Control', 'no-store')
+})
 
 api.get('/health', (c) => c.json({ ok: true }))
 
@@ -190,6 +197,9 @@ api.post('/me/test-reminder', async (c) => {
     .run()
   return c.json({ ok: true, scheduledAt })
 })
+
+// /api/auth/… and /api/account/… (session bearer; 404 while ACCOUNTS_MODE is off).
+api.route('/', accountApi)
 
 api.notFound((c) => c.json({ error: 'not_found' }, 404))
 api.onError((err, c) => {

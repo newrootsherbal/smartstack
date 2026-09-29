@@ -118,11 +118,15 @@ npm run data:validate  # validate packages/engine/data/*.json
 npm run build          # production build of the web app into apps/web/dist
 ```
 
-First time only, create the local D1 tables:
+First time only, create the local D1 tables (and again after pulling a new migration):
 
 ```bash
 npm run db:migrate:local -w apps/worker
 ```
+
+Accounts need `AUTH_PEPPER` in `apps/worker/.dev.vars` (generate it as `.dev.vars.example`
+says). `npm run dev:worker` runs with `EMAIL_MODE=log`: verification and reset emails are not
+sent, their links are printed in the wrangler console instead.
 
 Fire the cron locally (the Worker must be running with `--test-scheduled`):
 
@@ -198,17 +202,20 @@ is redeployed. Three GitHub Actions workflows in `.github/workflows/` take care 
   the `allow_shrink` input; it also refuses a partial download. GitHub may delay scheduled runs
   by minutes or, rarely, hours; a manual run is always available.
 - `deploy.yml`: on every push to `main` (so merging that pull request ships the data) runs the
-  checks, builds and runs `wrangler deploy`.
+  checks, builds, applies new D1 migrations (`wrangler d1 migrations apply --remote`) and runs
+  `wrangler deploy`. Every migration must be additive, so the running code keeps working
+  between the two steps.
+- `deploy-staging.yml`: manual (Actions → Deploy staging → Run workflow, any branch): the same
+  checks, a staging build, staging migrations and `wrangler deploy --env staging`.
 
 One-time setup, all in the GitHub repository settings once the code is pushed there:
 
 1. Actions → General → Workflow permissions: tick "Allow GitHub Actions to create and approve
    pull requests" (otherwise `gh pr create` is refused). Add a branch protection rule on `main`
    (require a pull request), since the refresh job holds a token that can push.
-2. Secrets and variables → Actions: add `CLOUDFLARE_API_TOKEN` (an API token with
-   Account → Workers Scripts → Edit on the newrootsherbal account; the "Edit Cloudflare
-   Workers" template also works but grants more) and `CLOUDFLARE_ACCOUNT_ID` (shown by
-   `wrangler whoami`).
+2. Secrets and variables → Actions: add `CLOUDFLARE_API_TOKEN` (an API token on the
+   newrootsherbal account with Account → Workers Scripts → Edit and Account → D1 → Edit, so
+   the deploy can apply migrations) and `CLOUDFLARE_ACCOUNT_ID` (shown by `wrangler whoami`).
 
 Because the pull request is opened with the workflow's own token, GitHub holds `ci.yml` on it
 until someone clicks "Approve and run"; the refresh job runs the same full check before opening
@@ -234,13 +241,21 @@ Herbal natural health product shows "Product not found."
 
 ### Environment
 
-| File                        | Committed | Contents                                                                                 |
-| --------------------------- | --------- | ---------------------------------------------------------------------------------------- |
-| `apps/web/.env`             | yes       | `VITE_VAPID_PUBLIC_KEY` (public), `VITE_BETA_KEY` (speed bump, not security)             |
-| `apps/web/.env.local`       | **no**    | Optional override of `VITE_VAPID_PUBLIC_KEY` for local testing                           |
-| `apps/worker/wrangler.toml` | yes       | `VAPID_PUBLIC_KEY`, `VAPID_SUBJECT`, `MAX_PUSHES_PER_TICK`, `BETA_KEY`, D1 binding, cron |
-| `apps/worker/.dev.vars`     | **no**    | `VAPID_PRIVATE_KEY` (and optionally `VAPID_PUBLIC_KEY`) for local `wrangler dev`         |
-| Cloudflare secret           | n/a       | `wrangler secret put VAPID_PRIVATE_KEY`                                                  |
+| File                        | Committed | Contents                                                                                                                                                                                                                                                                                              |
+| --------------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `apps/web/.env`             | yes       | Production build: `VITE_VAPID_PUBLIC_KEY` (public), `VITE_BETA_KEY` (speed bump), `VITE_ACCOUNTS_MODE`, `VITE_APPLE_ENABLED`                                                                                                                                                                          |
+| `apps/web/.env.development` | yes       | `vite` dev server overrides (`VITE_ACCOUNTS_MODE=public`)                                                                                                                                                                                                                                             |
+| `apps/web/.env.staging`     | yes       | `vite build --mode staging` overrides                                                                                                                                                                                                                                                                 |
+| `apps/web/.env.local`       | **no**    | Optional override of `VITE_VAPID_PUBLIC_KEY` for local testing                                                                                                                                                                                                                                        |
+| `apps/worker/wrangler.toml` | yes       | Vars (`VAPID_PUBLIC_KEY`, `VAPID_SUBJECT`, `MAX_PUSHES_PER_TICK`, `BETA_KEY`, `APP_ORIGIN`, `ACCOUNTS_MODE`, `STAFF_EMAIL_DOMAINS`, `APPLE_ENABLED`, `GOOGLE_CLIENT_ID`, `EMAIL_MODE`, `EMAIL_FROM`, `EMAIL_REPLY_TO`, `CONSENT_VERSION`), D1 binding, cron; `[env.staging]` repeats them for staging |
+| `apps/worker/.dev.vars`     | **no**    | Local secrets for `wrangler dev`: `VAPID_PRIVATE_KEY` (and optionally `VAPID_PUBLIC_KEY`), `AUTH_PEPPER`, `GOOGLE_CLIENT_SECRET`, optionally `SMTP2GO_API_KEY` (see `.dev.vars.example`)                                                                                                              |
+| Cloudflare secret           | n/a       | `wrangler secret put NAME` for `VAPID_PRIVATE_KEY`, `AUTH_PEPPER`, `GOOGLE_CLIENT_SECRET`, `SMTP2GO_API_KEY` (add `--env staging` for staging)                                                                                                                                                        |
+
+**Accounts launch gate.** `ACCOUNTS_MODE` (Worker) and `VITE_ACCOUNTS_MODE` (web build) are
+`off`, `staff` or `public`; anything else counts as `off`. Local (`npm run dev`,
+`npm run dev:worker`) and staging use `public`. Production uses `staff` (only addresses in
+`STAFF_EMAIL_DOMAINS` can sign up or log in, and the public UI shows no account features) until
+the Law 25 launch checklist in `docs/smartstack-phase2-setup.md` (part F) is done.
 
 Generate the real VAPID pair **once** with `npx web-push generate-vapid-keys` and store it in
 the company password manager. If the keys change, every phone must re-subscribe. The
@@ -253,8 +268,13 @@ against one public key is useless with another.
 
 ## Worker and API
 
-All routes live under `/api/me/…` and take `Authorization: Bearer <anonymous uuid>`. Unknown
-ids get `401`, except `PUT /api/me`, which creates the user and requires `X-Beta-Key`.
+Two bearer credentials on separate prefixes. `/api/me/…` takes
+`Authorization: Bearer <anonymous uuid>` (the Phase 1 device id): unknown ids get `401`, except
+`PUT /api/me`, which creates the device and requires `X-Beta-Key`. `/api/auth/…` and
+`/api/account/…` take the **session token** (`Authorization: Bearer <token>`). Every request
+body is validated with the shared zod schemas (`packages/shared/src/index.ts`,
+`packages/shared/src/auth.ts`); errors are `{ error, detail? }`, and every API response has
+`Cache-Control: no-store`.
 
 | Route                              | Purpose                                                                                                 |
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------- |
@@ -265,14 +285,85 @@ ids get `401`, except `PUT /api/me`, which creates the user and requires `X-Beta
 | `PUT /api/me/schedule`             | Replace the pending, future `schedule` rows with the browser's 7-day window (≤ 200); never touches sent |
 | `POST /api/me/test-reminder`       | One `test` reminder 2 minutes out, at most once per 2 minutes                                           |
 
+### Accounts (`/api/auth/…`, `/api/account/…`)
+
+All of these answer `404` while `ACCOUNTS_MODE` is `off`. In `staff` mode, sign-up, login and
+Google sign-in (at the callback, once the address is known) answer `403 accounts_not_open` for
+addresses outside `STAFF_EMAIL_DOMAINS` (an existing session can still log out, export and
+delete its account). Throttled routes answer `429 rate_limited` with `Retry-After`. Code: `apps/worker/src/account-api.ts`
+(routes), `apps/worker/src/auth/*` (pure, unit-tested parts), `apps/worker/src/email.ts`.
+
+| Route                                 | Auth         | Body → answer                                                                                                                                                                   |
+| ------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `POST /api/auth/signup`               | `X-Beta-Key` | `{ email, key, name?, locale, consent: true, age14: true, platform? }` → `201 { token, account }`; `409 email_in_use`; sends the verify email; 5 per IP per hour                |
+| `POST /api/auth/login`                | —            | `{ email, key, platform? }` → `{ token, account, rehash? }`; `401 invalid_credentials`; 5 failures per email and 30 per IP per 15 min                                           |
+| `POST /api/auth/logout`               | session      | `204`, deletes this session                                                                                                                                                     |
+| `POST /api/auth/verify-email`         | —            | `{ token }` → `{ ok }`; `400 invalid_token` (unknown, used or older than 48 h)                                                                                                  |
+| `POST /api/auth/verify-email/resend`  | session      | `{ ok }`; `409 already_verified`; `503 email_failed`; 3 per email per hour                                                                                                      |
+| `POST /api/auth/password/forgot`      | —            | `{ email }` → always `{ ok }` (lookup and email happen after the response); 3 per email per hour                                                                                |
+| `POST /api/auth/password/reset`       | —            | `{ token, key }` → `{ ok }`; verifies the email, ends every session; `400 invalid_token` (older than 1 h or used)                                                               |
+| `POST /api/auth/password/change`      | session      | `{ currentKey, newKey }` → `{ ok }`; ends the other sessions; `401 invalid_credentials`; `409 no_password`                                                                      |
+| `POST /api/auth/oauth/start`          | `X-Beta-Key` | `{ provider, intent, claimHash, locale }` (+ session for `link`) → `{ url, state }`; Apple `404 provider_disabled`; `503 provider_not_configured`; 20 per IP per 15 min         |
+| `GET /api/auth/oauth/google/callback` | —            | `303 /auth/done?state=…` (`&error=code` on failure: `cancelled`, `invalid_state`, `identity_in_use`, `email_in_use_unverified`, `accounts_not_open`…)                           |
+| `POST /api/auth/oauth/claim`          | —            | `{ state, claimSecret, platform? }` → `{ token, account, isNew }`; single use: `409 already_claimed`, `409 not_ready`, `403 invalid_claim`, `410 expired`; 10 per IP per 15 min |
+| `GET /api/account`                    | session      | `{ id, email, emailVerified, name, locale, role, providers, hasPassword, consentNeeded }`                                                                                       |
+| `POST /api/account/consent`           | session      | `{ age14: true }` → the account; records `CONSENT_VERSION`                                                                                                                      |
+| `POST /api/account/device`            | session      | `{ deviceId }` → `{ ok }`; links the Phase 1 device row; `404 unknown_device`. `DELETE` with the same body unlinks (`204`)                                                      |
+| `DELETE /api/account/identity/:p`     | session      | `204`; `409 last_sign_in_method` when it is the only way to sign in; `404 not_connected`                                                                                        |
+| `GET /api/account/export`             | session      | JSON download (`Content-Disposition: attachment`): account (no password hash or salt), sign-in methods, sessions' platform and dates, linked devices                            |
+| `DELETE /api/account`                 | session      | `204`; deletes the account row, `ON DELETE CASCADE` removes the rest (linked devices, their subscriptions and reminders included)                                               |
+
+**Passwords.** The password never leaves the device. The browser derives
+`key = PBKDF2-HMAC-SHA256(password NFC, "smartstack/v1/" + lowercased email, 600 000 iterations,
+32 bytes)` with WebCrypto and sends `base64url(key)` (`KDF_*` constants in
+`packages/shared/src/auth.ts`). The Worker stores `HMAC-SHA256(AUTH_PEPPER, 16-byte random salt ‖
+key)` and compares in constant time, which costs microseconds. Stretching happens in the browser
+because the Worker can't do it: production Workers cap WebCrypto PBKDF2 at 100 000 iterations
+(`wrangler dev` doesn't enforce the cap, so it would only fail once deployed), already below
+current guidance, and even that would very likely exceed the free plan's 10 ms of CPU per request.
+Whoever steals the database still needs 600 000 PBKDF2 iterations per guess per account, and the
+pepper (Bitwarden's model). `kdf_version` records the parameters; raising them later makes login
+answer `rehash: true` so the client sends a new key. The email is part of the salt, so changing an
+address isn't offered. Never change the production `AUTH_PEPPER` once accounts exist: every
+password would stop working. Without it (or shorter than 32 characters) the password routes
+answer `500 server_misconfigured` and log why; everything else keeps working.
+
+**Sessions** are 32 random bytes (base64url); D1 keeps only the hex SHA-256. They end after 90 days
+without use; `expires_at`, `last_used_at` and the account's `last_active_at` slide at most once a
+day. Emailed tokens (verify 48 h, reset 1 h) are hashed the same way, single use, and travel in the
+link's fragment (`/verify-email#token=…`). Throttling uses fixed windows in D1 (`auth_throttle`,
+keys are hashes of the email or IP).
+
+**Google sign-in** is a plain OAuth redirect (no Google script): start → Google → callback → claim
+(`docs/smartstack-phase2-prompt.md` §5.4), PKCE S256, state, nonce, `prompt=select_account`, built
+with `arctic`. The ID token comes straight from Google's token endpoint over TLS; `iss`, `aud`,
+`exp` and `nonce` are checked and `email_verified` read. The redirect URI is
+`${APP_ORIGIN}/api/auth/oauth/google/callback` and must be registered on the Google client.
+The linking rules are `resolveOAuthIdentity` in `apps/worker/src/auth/linking.ts`. Sign in with
+Apple is accepted by the schema and answers `404 provider_disabled` until it is built and
+`APPLE_ENABLED` is `"true"`.
+
+**Emails** (verify, reset, password changed, and the inactive-account warning N8/N9 for later)
+are plain text plus minimal HTML in the account's language. `EMAIL_MODE=smtp2go` posts to
+SMTP2GO's HTTP API (`SMTP2GO_API_KEY`, sender `EMAIL_FROM`, optional `EMAIL_REPLY_TO`); with no
+sender or key the email is skipped and an error without the address is logged. `EMAIL_MODE=log`
+(local only, refused for a non-localhost `APP_ORIGIN`) prints the link in the wrangler console.
+
+`consentNeeded` is true until the account consents to the current `CONSENT_VERSION` (email
+sign-up records it; Google accounts consent on `/auth/consent`); `consentNeeded()` in
+`apps/worker/src/auth/account.ts` is the gate `/api/sync` will use.
+
+### Reminder cron
+
 **Cron (every minute).** `Date.now()` is captured once. Pending rows more than 30 minutes past
 due are marked `expired` (never sent late). One `UPDATE … RETURNING *` claims up to
 `MAX_PUSHES_PER_TICK` reminders (pending, or `sending` for more than 5 minutes, fewer than 3
 attempts). At most six pushes are in flight at once. Responses: `404/410` delete the
 subscription; `401/403` keep it, fail the row and log loudly (VAPID/key problem); `429/5xx` and
 network errors leave the row for the next tick. All result writes go in one `DB.batch`. The
-03:00 UTC tick deletes `sent/failed/expired` rows older than 7 days. Logs contain counts,
-status codes and ids only.
+03:00 UTC tick deletes `sent/failed/expired` rows older than 7 days and, in a separate batch,
+expired sessions, used or expired email tokens, OAuth attempts and throttle rows older than a
+day. Logs contain counts, status codes and ids only.
 
 `MAX_PUSHES_PER_TICK` counts reminders claimed per tick; a user with several devices
 multiplies pushes. Start at 20 and raise toward 45 only after Workers Logs (`cpuTimeMs`)
@@ -310,6 +401,30 @@ which builds the web app and runs `wrangler deploy`. Production is
 (the zone is on Cloudflare in the same account; wrangler manages the DNS record and the
 certificate, and switches the `workers.dev` URL off). **Push subscriptions are tied to the origin**, so keep the custom domain stable once
 employees install.
+
+### Staging
+
+`https://schedule-staging.flourishbodyandmind.com` is a second Worker (`smartstack-staging`,
+`[env.staging]` in `wrangler.toml`) with its own D1 database `smartstack-staging` (ENAM) and
+`ACCOUNTS_MODE = "public"`. It sits one level below the zone so the free Universal SSL
+certificate covers it. From the repository root:
+
+```bash
+npm run db:migrate:staging -w apps/worker   # apply new migrations to the staging database
+npm run deploy:staging                      # staging build of the web app + wrangler deploy --env staging
+```
+
+Staging secrets are set separately (`npx wrangler secret put NAME --env staging`).
+
+### Security headers
+
+`apps/web/public/_headers` gives every page and asset a Content-Security-Policy
+(`default-src 'self'`, scripts only from our origin plus `'wasm-unsafe-eval'` for the ZXing
+WASM, `connect-src 'self'`, `frame-ancestors 'none'`…), `Referrer-Policy`,
+`X-Content-Type-Options` and `Permissions-Policy` (camera for our origin only). Workers static
+assets apply that file to asset responses and the SPA fallback; `/api/*` responses come from the
+Worker, which adds `Cache-Control: no-store`. There is no inline script: `index.html` loads the
+pre-paint theme from `public/theme-init.js`.
 
 ## Web Push facts baked into the code
 
