@@ -65,9 +65,10 @@ there is no build step for them.
   counts, shopping list and today's check marks (`smartstack:v1`, a versioned blob; version 2
   since Phase 2, migrated from version 1 on load by `src/storage.ts`). If it is wiped, the user
   re-onboards.
-- The server stores only what is needed to deliver reminders. **Routine and stack are never
-  sent to the server.** Reminder rows carry the notification text; by default that text only
-  says how many products to take ("Time for 3 products — 9:30 AM") and no product id is sent.
+- For guests, the server stores only what is needed to deliver reminders. **A guest's routine
+  and stack are never sent to the server** (an account syncs them: see [Sync](#sync-apisync)).
+  Reminder rows carry the notification text; by default that text only says how many products
+  to take ("Time for 3 products — 9:30 AM") and no product id is sent.
   Notifications → "Show product names in reminders" puts the names (and ids) back.
 - The app makes **no network call** until the user taps "Turn on reminders." Afterwards it
   syncs a rolling 7-day window on every change and on every app open, and retries on the next
@@ -270,11 +271,11 @@ against one public key is useless with another.
 
 Two bearer credentials on separate prefixes. `/api/me/…` takes
 `Authorization: Bearer <anonymous uuid>` (the Phase 1 device id): unknown ids get `401`, except
-`PUT /api/me`, which creates the device and requires `X-Beta-Key`. `/api/auth/…` and
-`/api/account/…` take the **session token** (`Authorization: Bearer <token>`). Every request
-body is validated with the shared zod schemas (`packages/shared/src/index.ts`,
-`packages/shared/src/auth.ts`); errors are `{ error, detail? }`, and every API response has
-`Cache-Control: no-store`.
+`PUT /api/me`, which creates the device and requires `X-Beta-Key`. `/api/auth/…`,
+`/api/account/…` and `/api/sync` take the **session token** (`Authorization: Bearer <token>`).
+Every request body is validated with the shared zod schemas (`packages/shared/src/index.ts`,
+`packages/shared/src/auth.ts`, `packages/shared/src/sync.ts`); errors are `{ error, detail? }`,
+and every API response has `Cache-Control: no-store`.
 
 | Route                              | Purpose                                                                                                 |
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------- |
@@ -293,25 +294,26 @@ addresses outside `STAFF_EMAIL_DOMAINS` (an existing session can still log out, 
 delete its account). Throttled routes answer `429 rate_limited` with `Retry-After`. Code: `apps/worker/src/account-api.ts`
 (routes), `apps/worker/src/auth/*` (pure, unit-tested parts), `apps/worker/src/email.ts`.
 
-| Route                                 | Auth         | Body → answer                                                                                                                                                                   |
-| ------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `POST /api/auth/signup`               | `X-Beta-Key` | `{ email, key, name?, locale, consent: true, age14: true, platform? }` → `201 { token, account }`; `409 email_in_use`; sends the verify email; 5 per IP per hour                |
-| `POST /api/auth/login`                | —            | `{ email, key, platform? }` → `{ token, account, rehash? }`; `401 invalid_credentials`; 5 failures per email and 30 per IP per 15 min                                           |
-| `POST /api/auth/logout`               | session      | `204`, deletes this session                                                                                                                                                     |
-| `POST /api/auth/verify-email`         | —            | `{ token }` → `{ ok }`; `400 invalid_token` (unknown, used or older than 48 h)                                                                                                  |
-| `POST /api/auth/verify-email/resend`  | session      | `{ ok }`; `409 already_verified`; `503 email_failed`; 3 per email per hour                                                                                                      |
-| `POST /api/auth/password/forgot`      | —            | `{ email }` → always `{ ok }` (lookup and email happen after the response); 3 per email per hour                                                                                |
-| `POST /api/auth/password/reset`       | —            | `{ token, key }` → `{ ok }`; verifies the email, ends every session; `400 invalid_token` (older than 1 h or used)                                                               |
-| `POST /api/auth/password/change`      | session      | `{ currentKey, newKey }` → `{ ok }`; ends the other sessions; `401 invalid_credentials`; `409 no_password`                                                                      |
-| `POST /api/auth/oauth/start`          | `X-Beta-Key` | `{ provider, intent, claimHash, locale }` (+ session for `link`) → `{ url, state }`; Apple `404 provider_disabled`; `503 provider_not_configured`; 20 per IP per 15 min         |
-| `GET /api/auth/oauth/google/callback` | —            | `303 /auth/done?state=…` (`&error=code` on failure: `cancelled`, `invalid_state`, `identity_in_use`, `email_in_use_unverified`, `accounts_not_open`…)                           |
-| `POST /api/auth/oauth/claim`          | —            | `{ state, claimSecret, platform? }` → `{ token, account, isNew }`; single use: `409 already_claimed`, `409 not_ready`, `403 invalid_claim`, `410 expired`; 10 per IP per 15 min |
-| `GET /api/account`                    | session      | `{ id, email, emailVerified, name, locale, role, providers, hasPassword, consentNeeded }`                                                                                       |
-| `POST /api/account/consent`           | session      | `{ age14: true }` → the account; records `CONSENT_VERSION`                                                                                                                      |
-| `POST /api/account/device`            | session      | `{ deviceId }` → `{ ok }`; links the Phase 1 device row; `404 unknown_device`. `DELETE` with the same body unlinks (`204`)                                                      |
-| `DELETE /api/account/identity/:p`     | session      | `204`; `409 last_sign_in_method` when it is the only way to sign in; `404 not_connected`                                                                                        |
-| `GET /api/account/export`             | session      | JSON download (`Content-Disposition: attachment`): account (no password hash or salt), sign-in methods, sessions' platform and dates, linked devices                            |
-| `DELETE /api/account`                 | session      | `204`; deletes the account row, `ON DELETE CASCADE` removes the rest (linked devices, their subscriptions and reminders included)                                               |
+| Route                                 | Auth              | Body → answer                                                                                                                                                                                                                                                                                   |
+| ------------------------------------- | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `POST /api/auth/signup`               | `X-Beta-Key`      | `{ email, key, name?, locale, consent: true, age14: true, platform? }` → `201 { token, account }`; `409 email_in_use`; sends the verify email; 5 per IP per hour                                                                                                                                |
+| `POST /api/auth/login`                | —                 | `{ email, key, platform? }` → `{ token, account, rehash? }`; `401 invalid_credentials`; 5 failures per email and 30 per IP per 15 min                                                                                                                                                           |
+| `POST /api/auth/logout`               | session           | `204`, deletes this session                                                                                                                                                                                                                                                                     |
+| `POST /api/auth/verify-email`         | —                 | `{ token }` → `{ ok }`; `400 invalid_token` (unknown, used or older than 48 h)                                                                                                                                                                                                                  |
+| `POST /api/auth/verify-email/resend`  | session           | `{ ok }`; `409 already_verified`; `503 email_failed`; 3 per email per hour                                                                                                                                                                                                                      |
+| `POST /api/auth/password/forgot`      | —                 | `{ email }` → always `{ ok }` (lookup and email happen after the response); 3 per email per hour                                                                                                                                                                                                |
+| `POST /api/auth/password/reset`       | —                 | `{ token, key }` → `{ ok }`; verifies the email, ends every session; `400 invalid_token` (older than 1 h or used)                                                                                                                                                                               |
+| `POST /api/auth/password/change`      | session           | `{ currentKey, newKey }` → `{ ok }`; ends the other sessions; `401 invalid_credentials`; `409 no_password`                                                                                                                                                                                      |
+| `POST /api/auth/oauth/start`          | `X-Beta-Key`      | `{ provider, intent, claimHash, locale }` (+ session for `link`) → `{ url, state }`; Apple `404 provider_disabled`; `503 provider_not_configured`; 20 per IP per 15 min                                                                                                                         |
+| `GET /api/auth/oauth/google/callback` | —                 | `303 /auth/done?state=…` (`&error=code` on failure: `cancelled`, `invalid_state`, `identity_in_use`, `email_in_use_unverified`, `accounts_not_open`…)                                                                                                                                           |
+| `POST /api/auth/oauth/claim`          | —                 | `{ state, claimSecret, platform? }` → `{ token, account, isNew }`; single use: `409 already_claimed`, `409 not_ready`, `403 invalid_claim`, `410 expired`; 10 per IP per 15 min                                                                                                                 |
+| `GET /api/account`                    | session           | `{ id, email, emailVerified, name, locale, role, providers, hasPassword, consentNeeded }`                                                                                                                                                                                                       |
+| `POST /api/account/consent`           | session           | `{ age14: true }` → the account; records `CONSENT_VERSION`                                                                                                                                                                                                                                      |
+| `POST /api/account/device`            | session           | `{ deviceId }` → `{ ok }`; links the Phase 1 device row; `404 unknown_device`. `DELETE` with the same body unlinks (`204`)                                                                                                                                                                      |
+| `DELETE /api/account/identity/:p`     | session           | `204`; `409 last_sign_in_method` when it is the only way to sign in; `404 not_connected`                                                                                                                                                                                                        |
+| `GET /api/account/export`             | session           | JSON download (`Content-Disposition: attachment`): account (no password hash or salt), sign-in methods, sessions' platform and dates, linked devices, and the synced data (settings, products, stack, shopping list, check marks; tombstones included, dates in ISO form)                       |
+| `DELETE /api/account`                 | session           | `204`; deletes the account row, `ON DELETE CASCADE` removes the rest (linked devices, their subscriptions and reminders included)                                                                                                                                                               |
+| `POST /api/sync`                      | session + consent | `{ since, changes }` → `{ rev, changes }` ([Sync](#sync-apisync)); `403 consent_required` (`detail: ["account"]` until the account accepts `CONSENT_VERSION`, `["health"]` for the health profile until M8); `413 payload_too_large` / `too_many_rows`; `409 limit_reached`; `400 invalid_body` |
 
 **Passwords.** The password never leaves the device. The browser derives
 `key = PBKDF2-HMAC-SHA256(password NFC, "smartstack/v1/" + lowercased email, 600 000 iterations,
@@ -351,7 +353,42 @@ sender or key the email is skipped and an error without the address is logged. `
 
 `consentNeeded` is true until the account consents to the current `CONSENT_VERSION` (email
 sign-up records it; Google accounts consent on `/auth/consent`); `consentNeeded()` in
-`apps/worker/src/auth/account.ts` is the gate `/api/sync` will use.
+`apps/worker/src/auth/account.ts` is the gate `/api/sync` uses.
+
+### Sync (`/api/sync`)
+
+An account's devices share their settings (routine, time zone, language, theme), their own
+products, the stack with its bottles, the shopping list and today's check marks (migration
+`0003_user_data.sql`; wire format in `packages/shared/src/sync.ts`, statements in
+`apps/worker/src/sync.ts`). One endpoint does both directions:
+
+- **Request** `{ since, changes: { settings?, products[], stack[], shopping[], checks[] } }`.
+  `since` is the last `rev` the device applied (0 the first time). Empty `changes` = a pull.
+- Every entity carries `updatedAt` (the device's `Date.now()`) and `deletedAt`. A deletion is a
+  **tombstone**: the key, `updatedAt` and `deletedAt` only; the server clears the rest of the row.
+- **Last write wins** by `updatedAt`; on a tie the server's copy wins. A push bumps
+  `accounts.rev` and runs in **one `DB.batch`** (a transaction): the bump, one upsert per table
+  (the table's rows travel as one JSON parameter read with `json_each`, so a request never
+  approaches D1's 100 bound parameters or 50 queries; about 11 queries at most), then the reads.
+- **Answer** `{ rev, changes }`: every row whose revision is newer than `since` (tombstones
+  included), except what this request pushed: a pushed row comes back only when it lost, as the
+  server's copy. The device stores `rev` as its next `since`; `rev` 0 means the account is empty.
+- **Limits**: 512 KB and 500 rows per request (`413`), 200 own products and 60 stack items per
+  account, counted as live rows after the push would apply (`409 limit_reached`, checked before
+  the batch; deletions alone are never refused).
+- **Consent**: `403 consent_required` until the account has accepted the current
+  `CONSENT_VERSION`. The health profile syncs from M8; until then sending `health` answers `403`.
+- The language lives in `account_settings.locale` only; account emails keep using
+  `accounts.locale` (chosen at sign-up). `accounts.last_active_at` slides with the session, at
+  most once a day; a pull writes nothing.
+- **Retention** (03:00 UTC tick): check marks older than 3 days (by the person's local date; the
+  cutoff is the UTC date 12 hours back, minus 3 days, so no time zone loses its last 3 days) and
+  tombstones deleted more than 30 days ago. `GET /api/account/export` includes all of it.
+
+**Known limitations.** Bottle counts are last-write-wins: two devices ticking the same product
+offline can lose one decrease; edit the count. A device offline for more than 30 days misses
+deletions whose tombstones were cleaned up, and could bring such an item back by editing it.
+`updatedAt` comes from the device clock: a clock far ahead wins until it's corrected.
 
 ### Reminder cron
 
@@ -363,7 +400,8 @@ subscription; `401/403` keep it, fail the row and log loudly (VAPID/key problem)
 network errors leave the row for the next tick. All result writes go in one `DB.batch`. The
 03:00 UTC tick deletes `sent/failed/expired` rows older than 7 days and, in a separate batch,
 expired sessions, used or expired email tokens, OAuth attempts and throttle rows older than a
-day. Logs contain counts, status codes and ids only.
+day, and, in a third batch, check marks older than 3 days and sync tombstones older than 30.
+Logs contain counts, status codes and ids only.
 
 `MAX_PUSHES_PER_TICK` counts reminders claimed per tick; a user with several devices
 multiplies pushes. Start at 20 and raise toward 45 only after Workers Logs (`cpuTimeMs`)
@@ -506,7 +544,9 @@ This is health-adjacent personal data. Phase 1 is designed to hold as little as 
 | Push subscription (endpoint, `p256dh`, `auth`)                           | To deliver Web Push                   |
 | Reminder rows (time, title, body; product ids only when names are shown) | The rolling 7-day delivery window     |
 
-Not stored on the server: name, email, routine, stack, dose counts, checkbox history.
+Not stored on the server for guests: name, email, routine, stack, dose counts, checkbox history.
+Accounts (behind `ACCOUNTS_MODE`) also store what [Sync](#sync-apisync) lists; this section is
+rewritten for accounts before they launch (M10).
 
 **Where:** Cloudflare D1, database `smartstack` in the ENAM (Eastern North America) region. Sent, failed and expired reminder rows are deleted 7 days after
 their scheduled time by the 03:00 UTC cron tick. Logs contain counts, status codes and reminder
