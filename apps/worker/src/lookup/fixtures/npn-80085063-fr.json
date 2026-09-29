@@ -1,0 +1,74 @@
+{
+  "_source": "Health Canada LNHPD, fetched live on 2026-09-29",
+  "_urls": [
+    "https://health-products.canada.ca/api/natural-licences/productlicence/?id=80085063&lang=fr&type=json",
+    "https://health-products.canada.ca/api/natural-licences/medicinalingredient/?id=9264801&lang=fr&type=json",
+    "https://health-products.canada.ca/api/natural-licences/productdose/?id=9264801&lang=fr&type=json"
+  ],
+  "licence": [
+    {
+      "lnhpd_id": 9264801,
+      "licence_number": "80085063",
+      "licence_date": "2018-05-09",
+      "revised_date": null,
+      "time_receipt": "2018-04-10",
+      "date_start": "2018-04-27",
+      "product_name_id": 12741361,
+      "product_name": "Magnesium Bisglycinate 200 mg",
+      "dosage_form": "Capsule",
+      "company_id": 10651,
+      "company_name_id": 24929,
+      "company_name": "New Roots Herbal Inc.",
+      "sub_submission_type_code": 1,
+      "sub_submission_type_desc": "Officinale",
+      "flag_primary_name": 1,
+      "flag_product_status": 1,
+      "flag_attested_monograph": 1
+    }
+  ],
+  "ingredients": {
+    "metadata": {
+      "pagination": null,
+      "dateReceived": "2026-09-30T02:13:28.0313068Z"
+    },
+    "data": [
+      {
+        "lnhpd_id": 9264801,
+        "ingredient_name": "Magnésium",
+        "ingredient_Text": null,
+        "potency_amount": 0,
+        "potency_constituent": "",
+        "potency_unit_of_measure": "",
+        "quantity": 200,
+        "quantity_minimum": 0,
+        "quantity_maximum": 0,
+        "quantity_unit_of_measure": "milligramme",
+        "ratio_numerator": "",
+        "ratio_denominator": "",
+        "dried_herb_equivalent": "",
+        "dhe_unit_of_measure": "",
+        "extract_type_desc": "",
+        "source_material": "Bisglycinate de magnésium"
+      }
+    ]
+  },
+  "dose": [
+    {
+      "lnhpd_id": 9264801,
+      "dose_id": 12741369,
+      "population_type_desc": "Adultes",
+      "age": 0,
+      "age_minimum": 0,
+      "age_maximum": 0,
+      "uom_type_desc_age": "",
+      "quantity_dose": 1,
+      "quantity_dose_minimum": 0,
+      "quantity_dose_maximum": 0,
+      "uom_type_desc_quantity_dose": "Capsule",
+      "frequency": 1,
+      "frequency_minimum": 0,
+      "frequency_maximum": 0,
+      "uom_type_desc_frequency": "Tous les jours"
+    }
+  ]
+}

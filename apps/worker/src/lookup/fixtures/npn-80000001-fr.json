@@ -1,0 +1,74 @@
+{
+  "_source": "Health Canada LNHPD, fetched live on 2026-09-29",
+  "_urls": [
+    "https://health-products.canada.ca/api/natural-licences/productlicence/?id=80000001&lang=fr&type=json",
+    "https://health-products.canada.ca/api/natural-licences/medicinalingredient/?id=3898401&lang=fr&type=json",
+    "https://health-products.canada.ca/api/natural-licences/productdose/?id=3898401&lang=fr&type=json"
+  ],
+  "licence": [
+    {
+      "lnhpd_id": 3898401,
+      "licence_number": "80000001",
+      "licence_date": "2004-03-03",
+      "revised_date": null,
+      "time_receipt": "2004-01-27",
+      "date_start": "2004-01-29",
+      "product_name_id": 12755,
+      "product_name": "Flax Seed Oil 1000 mg",
+      "dosage_form": "Capsule",
+      "company_id": 27102,
+      "company_name_id": 26426783,
+      "company_name": "Wampole Group L.P.",
+      "sub_submission_type_code": 7,
+      "sub_submission_type_desc": "(M) non traditionnelle",
+      "flag_primary_name": 1,
+      "flag_product_status": 1,
+      "flag_attested_monograph": 0
+    }
+  ],
+  "ingredients": {
+    "metadata": {
+      "pagination": null,
+      "dateReceived": "2026-09-30T02:16:09.4688007Z"
+    },
+    "data": [
+      {
+        "lnhpd_id": 3898401,
+        "ingredient_name": "Linum usitatissimum L. subsp. sativa",
+        "ingredient_Text": null,
+        "potency_amount": 0,
+        "potency_constituent": "",
+        "potency_unit_of_measure": "",
+        "quantity": 1000,
+        "quantity_minimum": 0,
+        "quantity_maximum": 0,
+        "quantity_unit_of_measure": "milligramme",
+        "ratio_numerator": "",
+        "ratio_denominator": "",
+        "dried_herb_equivalent": "",
+        "dhe_unit_of_measure": "",
+        "extract_type_desc": "",
+        "source_material": ""
+      }
+    ]
+  },
+  "dose": [
+    {
+      "lnhpd_id": 3898401,
+      "dose_id": 12854,
+      "population_type_desc": "Adultes",
+      "age": 0,
+      "age_minimum": 0,
+      "age_maximum": 0,
+      "uom_type_desc_age": "",
+      "quantity_dose": 1,
+      "quantity_dose_minimum": 0,
+      "quantity_dose_maximum": 0,
+      "uom_type_desc_quantity_dose": "Chacun",
+      "frequency": 1,
+      "frequency_minimum": 0,
+      "frequency_maximum": 0,
+      "uom_type_desc_frequency": "Tous les jours"
+    }
+  ]
+}

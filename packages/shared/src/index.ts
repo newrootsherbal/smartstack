@@ -5,6 +5,7 @@ import { MAX_DOSES_PER_DAY } from './limits'
 import { Inventory } from './user-data'
 
 export { MAX_DOSES_PER_DAY } from './limits'
+export * from './lookup'
 export * from './user-data'
 
 export const SHARED_VERSION = '0.1.0'
