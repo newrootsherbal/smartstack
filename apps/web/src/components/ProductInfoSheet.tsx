@@ -28,10 +28,11 @@ interface ScheduledDose {
  * person's own choices), then the label text and where it comes from.
  */
 export function ProductInfoSheet({ productId, onClose }: ProductInfoSheetProps) {
-  const { dispatch } = useAppState()
+  const { state, dispatch } = useAppState()
   const catalogue = useCatalogue()
   const { schedule } = useTodaySchedule()
   const product = productId ? getProduct(productId, catalogue) : undefined
+  const own = productId ? state.userProducts.find((p) => p.id === productId) : undefined
   const text = useProductText(product)
 
   const doses: ScheduledDose[] = []
@@ -74,6 +75,7 @@ export function ProductInfoSheet({ productId, onClose }: ProductInfoSheetProps) 
 
   return (
     <Sheet open={open} onClose={onClose} title={title}>
+      {product?.kind === 'medication' && <p className="notice notice--warn">{t('notice.N3')}</p>}
       <section className={styles.section}>
         <h3>{t('info.timing')}</h3>
         {offerBedtime && suggestion && lastDose && (
@@ -168,13 +170,21 @@ export function ProductInfoSheet({ productId, onClose }: ProductInfoSheetProps) 
               <p className="small">{tl(text.facts)}</p>
             </section>
           )}
+          {own?.notes && (
+            <section className={styles.section}>
+              <h3>{t('other.notes_title')}</h3>
+              <p className="small">{own.notes}</p>
+            </section>
+          )}
           <section className={styles.section}>
             {product.sourceUrl && (
               <a href={product.sourceUrl} target="_blank" rel="noopener noreferrer">
                 {t('info.productPage')}
               </a>
             )}
-            {product.status === 'sample' ? (
+            {product.status === 'user' ? (
+              <p className="small muted">{t('other.addedByYou')}</p>
+            ) : product.status === 'sample' ? (
               <p className="small muted">
                 <span className="tag tag--sample">{t('common.sample')}</span> {t('info.sampleNote')}
               </p>

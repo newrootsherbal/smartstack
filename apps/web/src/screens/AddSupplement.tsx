@@ -7,10 +7,11 @@ import {
 } from '@smartstack/engine'
 import { MAX_DOSES_PER_DAY, SYNC_MAX_STACK_ITEMS, type Product } from '@smartstack/shared'
 import { lazy, Suspense, useCallback, useMemo, useState } from 'react'
-import { Link, useNavigate } from 'react-router'
+import { Link, useNavigate, useSearchParams } from 'react-router'
 import { bottleFromDraft, initialBottleDraft, type BottleDraft } from '../bottle'
 import { BottleCard } from '../components/BottleCard'
 import { ProductCard } from '../components/ProductCard'
+import { OtherBrandForm } from './OtherBrandForm'
 import { Sheet } from '../components/Sheet'
 import { ACCOUNTS_PUBLIC } from '../config'
 import { formatUnits, parseCount, timesLabel } from '../format'
@@ -23,7 +24,7 @@ import styles from './AddSupplement.module.css'
 
 const ScanView = lazy(() => import('./ScanView'))
 
-type Mode = 'scan' | 'manual' | 'browse'
+type Mode = 'scan' | 'manual' | 'browse' | 'other'
 
 // Decided once at load: a device without a camera opens on the product list.
 const DEFAULT_MODE: Mode = hasCamera() ? 'scan' : 'browse'
@@ -33,7 +34,20 @@ export function AddSupplement() {
   const { state, dispatch } = useAppState()
   const catalogue = useCatalogue()
   const navigate = useNavigate()
-  const [mode, setMode] = useState<Mode>(DEFAULT_MODE)
+  const [params, setParams] = useSearchParams()
+  const [mode, setMode] = useState<Mode>(() =>
+    params.get('mode') === 'other' ? 'other' : DEFAULT_MODE,
+  )
+  // /add?mode=other[&upc=…][&edit=u_…] (the unknown-barcode sheet, Manage → Edit product).
+  const otherUpc = params.get('upc') ?? undefined
+  const otherEdit = params.get('edit') ?? undefined
+  const [lastParams, setLastParams] = useState(params.toString())
+  if (params.toString() !== lastParams) {
+    setLastParams(params.toString())
+    if (params.get('mode') === 'other') setMode('other')
+  }
+  // Other brands need an account; the tab shows once accounts are public (to explain why).
+  const showOther = state.auth.mode === 'account' || ACCOUNTS_PUBLIC
   const [upc, setUpc] = useState('')
   const [query, setQuery] = useState('')
   const [candidate, setCandidate] = useState<Product | null>(null)
@@ -122,6 +136,8 @@ export function AddSupplement() {
   }
 
   const results = useMemo(() => searchProducts(query, catalogue), [query, catalogue])
+  const mine = results.filter((p) => p.status === 'user')
+  const theirs = results.filter((p) => p.status !== 'user')
   // An unknown code opens a sheet for accounts (add it by hand) and, once accounts are public,
   // for guests (why an account helps). Otherwise the plain "not found" notice stays.
   const unknownSheet = state.auth.mode === 'account' || ACCOUNTS_PUBLIC
@@ -142,21 +158,24 @@ export function AddSupplement() {
       <h1>{t('add.title')}</h1>
 
       <div className={styles.tabs} role="tablist">
-        {(['scan', 'manual', 'browse'] as Mode[]).map((m) => (
-          <button
-            key={m}
-            type="button"
-            role="tab"
-            aria-selected={mode === m}
-            className={`${styles.tab} ${mode === m ? styles.tabActive : ''}`}
-            onClick={() => {
-              setMode(m)
-              setNotFound(null)
-            }}
-          >
-            {t(`add.${m}`)}
-          </button>
-        ))}
+        {(['scan', 'manual', 'browse', 'other'] as Mode[])
+          .filter((m) => m !== 'other' || showOther)
+          .map((m) => (
+            <button
+              key={m}
+              type="button"
+              role="tab"
+              aria-selected={mode === m}
+              className={`${styles.tab} ${mode === m ? styles.tabActive : ''}`}
+              onClick={() => {
+                setMode(m)
+                setNotFound(null)
+                if (params.size > 0) setParams({}, { replace: true })
+              }}
+            >
+              {m === 'other' ? t('other.tab') : t(`add.${m}`)}
+            </button>
+          ))}
       </div>
 
       {added && (
@@ -177,7 +196,33 @@ export function AddSupplement() {
         </div>
       )}
 
-      {candidate ? (
+      {mode === 'other' ? (
+        state.auth.mode === 'account' ? (
+          <OtherBrandForm
+            key={`${otherUpc ?? ''}:${otherEdit ?? ''}`}
+            upc={otherUpc}
+            editId={otherEdit}
+            onDone={() => navigate('/stack')}
+            onCancel={() => {
+              setMode(DEFAULT_MODE)
+              setParams({}, { replace: true })
+            }}
+          />
+        ) : (
+          <section className="card stack-v">
+            <h2>{t('other.needAccountTitle')}</h2>
+            <p className="small muted">{t('other.needAccount')}</p>
+            <div className="row">
+              <Link to="/signup?from=/add" className="btn btn--primary">
+                {t('backup.create')}
+              </Link>
+              <Link to="/login?from=/add" className="btn btn--outline">
+                {t('backup.login')}
+              </Link>
+            </div>
+          </section>
+        )
+      ) : candidate ? (
         <section className="stack-v">
           <h2>{t('add.confirmTitle')}</h2>
           <ProductCard product={candidate} />
@@ -374,7 +419,11 @@ export function AddSupplement() {
                 <p className="notice">{t('add.noResults', { query })}</p>
               ) : (
                 <ul className={`list card ${styles.productList}`}>
-                  {results.slice(0, MAX_RESULTS).map((p) => (
+                  {/* The person's own products first, under their own heading. */}
+                  {mine.length > 0 && (
+                    <li className={styles.listHeading}>{t('other.yourProducts')}</li>
+                  )}
+                  {[...mine, ...theirs].slice(0, MAX_RESULTS).map((p) => (
                     <li key={p.id}>
                       <button
                         type="button"

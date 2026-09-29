@@ -29,12 +29,13 @@ export function ProductCard({ product }: { product: Product }) {
         </div>
         {product.status === 'sample' ? (
           <span className="tag tag--sample">{t('common.sample')}</span>
-        ) : (
+        ) : product.status === 'user' ? null : (
           <span className="tag">{t('common.draft')}</span>
         )}
       </div>
       <p className="small muted">
-        {product.npn ? `NPN ${product.npn}` : t(`common.kind.${product.kind}`)} · SKU {product.sku}
+        {product.npn ? `NPN ${product.npn}` : t(`common.kind.${product.kind}`)}
+        {product.sku && <> · SKU {product.sku}</>}
         {sizes.length > 0 && <> · {t('add.sizes', { sizes: sizes.join(', ') })}</>}
       </p>
       <div>

@@ -110,7 +110,9 @@
     "dose": { "one": "dose", "other": "doses" },
     "serving": { "one": "portion", "other": "portions" },
     "cup": { "one": "tasse", "other": "tasses" },
-    "bag": { "one": "sachet", "other": "sachets" }
+    "bag": { "one": "sachet", "other": "sachets" },
+    "g": { "one": "g", "other": "g" },
+    "gummy": { "one": "jujube", "other": "jujubes" }
   },
   "serving": {
     "capsule": "capsule",
@@ -294,6 +296,8 @@
   },
   "notice": {
     "N1": "Vos suppléments restent sur cet appareil. Vous pourrez les sauvegarder plus tard à partir de votre profil.",
+    "N3": "SmartStack ne vérifie pas les interactions médicamenteuses. Suivez les directives de votre médecin ou de votre pharmacien, et demandez à votre pharmacien si vos suppléments doivent être pris à distance de ce médicament.",
+    "N5": "Nous transmettons seulement le numéro entré à Santé Canada.",
     "N6": "Cette action supprime définitivement votre compte, vos suppléments, vos produits, votre profil santé et vos réglages de notifications sur tous vos appareils. Elle est irréversible."
   },
   "sync": {
@@ -301,6 +305,88 @@
     "choiceBody": "Combinez ce qui se trouve sur cet appareil avec votre compte, ou gardez seulement les données de votre compte. Rien n’est supprimé de votre compte dans les deux cas.",
     "combine": "Combiner les deux (recommandé)",
     "useAccount": "Utiliser les données de mon compte"
+  },
+  "other": {
+    "tab": "Autre marque",
+    "needAccountTitle": "Ajoutez des produits d’autres marques",
+    "needAccount": "Les produits d’autres marques, les médicaments et les aliments sont conservés dans votre compte : il vous en faut un pour les ajouter.",
+    "kindQuestion": "De quel type de produit s’agit-il?",
+    "kind": {
+      "nhp": "Produit de santé naturel",
+      "medication": "Médicament",
+      "other": "Aliment, boisson ou autre"
+    },
+    "kindHint": {
+      "nhp": "Porte un NPN sur l’étiquette",
+      "medication": "Sur ordonnance ou en vente libre; porte un DIN",
+      "other": "Aucun numéro sur l’étiquette"
+    },
+    "editTitle": "Modifier le produit",
+    "product": "Produit",
+    "brand": "Marque",
+    "company": "Entreprise (facultatif)",
+    "name": "Nom du produit",
+    "medName": "Nom",
+    "barcode": "Code-barres (facultatif)",
+    "scan": "Numériser",
+    "npn": "NPN (8 chiffres, facultatif)",
+    "din": "DIN (8 chiffres, facultatif)",
+    "fill": "Remplir avec Santé Canada",
+    "filling": "Recherche…",
+    "filled": "Rempli à partir de Santé Canada. Vérifiez chaque champ avant d’enregistrer.",
+    "partial": "Santé Canada n’a pas tout fourni : certains champs sont encore vides.",
+    "notFound": "Santé Canada n’a aucun produit avec ce numéro.",
+    "lookupFailed": "Santé Canada n’a pas pu être joint. Remplissez le formulaire vous-même ou réessayez.",
+    "strength": "Teneur (facultatif, p. ex. 50 mcg)",
+    "format": "Format",
+    "form": "Forme",
+    "forms": {
+      "capsule": "Capsule",
+      "tablet": "Comprimé",
+      "softgel": "Gélule",
+      "liquid": "Liquide",
+      "powder": "Poudre",
+      "other": "Autre"
+    },
+    "bottleSize": "Format du flacon",
+    "bottleSizeOptional": "Format du flacon (facultatif)",
+    "bottleUnit": "Unité du format",
+    "packageUnits": {
+      "unit": "capsules, comprimés…"
+    },
+    "dose": "Dose",
+    "amountPerDose": "Quantité par dose",
+    "doseUnit": "Unité",
+    "doseUnitOther": "autre",
+    "whenTitle": "Quand le prenez-vous?",
+    "label": "Selon l’étiquette (facultatif)",
+    "timings": {
+      "WITH_FOOD": "Avec de la nourriture",
+      "WITHOUT_FOOD": "À jeun",
+      "MORNING": "Le matin",
+      "EVENING": "Le soir",
+      "BEDTIME": "Au coucher"
+    },
+    "ingredients": "Ingrédients médicinaux (facultatif)",
+    "ingredientsHint": "Ajoutez les ingrédients pour que nous puissions vérifier l’horaire avec le reste de vos suppléments.",
+    "ingredient": "Ingrédient",
+    "amount": "Quantité",
+    "ingredientUnit": "Unité de l’ingrédient",
+    "perUnit": "Les quantités sont par {unit}, comme sur l’étiquette.",
+    "addIngredient": "Ajouter un ingrédient",
+    "directions": "Usage suggéré (facultatif)",
+    "warnings": "Mises en garde (facultatif)",
+    "notes": "Notes (facultatif)",
+    "check": "Vérifiez ce champ.",
+    "fix": "Vérifiez les champs indiqués ci-dessus.",
+    "saveEdit": "Enregistrer les modifications",
+    "limit": "Vous pouvez ajouter jusqu’à {max} de vos propres produits.",
+    "yourProducts": "Vos produits",
+    "edit": "Modifier le produit",
+    "delete": "Supprimer ce produit",
+    "deleteConfirm": "Supprimer {product}? Il sera aussi retiré de vos suppléments et de votre liste d’achats.",
+    "addedByYou": "Ajouté par vous. SmartStack ne révise pas les produits d’autres marques.",
+    "notes_title": "Notes"
   },
   "backup": {
     "title": "Sauvegarde et synchronisation",

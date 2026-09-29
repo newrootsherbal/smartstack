@@ -54,6 +54,16 @@
   min-width: 150px;
 }
 
+.listHeading {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  background: var(--color-surface-2);
+}
+
 .checkbox {
   display: flex;
   align-items: center;

@@ -254,9 +254,12 @@ function PlacementSection({
                   )}
                 </span>
               </label>
-              {(lines.length > 0 || dose.pinned) && (
+              {(lines.length > 0 || (dose.pinned && product?.kind !== 'medication')) && (
                 <ul className={styles.reasons}>
-                  {dose.pinned && <li>{t(`pinned.${dose.pinned}`)}</li>}
+                  {/* A medication's time is always the person's own: nothing was "moved". */}
+                  {dose.pinned && product?.kind !== 'medication' && (
+                    <li>{t(`pinned.${dose.pinned}`)}</li>
+                  )}
                   {lines.map((r) => (
                     <li key={`${r.ruleId}:${r.params.pinnedConflict ? 1 : 0}`}>
                       {renderReasonShort(r, catalogue)}

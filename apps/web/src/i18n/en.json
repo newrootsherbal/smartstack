@@ -110,7 +110,9 @@
     "dose": { "one": "dose", "other": "doses" },
     "serving": { "one": "serving", "other": "servings" },
     "cup": { "one": "cup", "other": "cups" },
-    "bag": { "one": "bag", "other": "bags" }
+    "bag": { "one": "bag", "other": "bags" },
+    "g": { "one": "g", "other": "g" },
+    "gummy": { "one": "gummy", "other": "gummies" }
   },
   "serving": {
     "capsule": "capsule",
@@ -294,6 +296,8 @@
   },
   "notice": {
     "N1": "Your stack stays on this device. You can back it up later from your profile.",
+    "N3": "SmartStack doesn't check medication interactions. Follow your doctor’s or pharmacist’s instructions, and ask your pharmacist whether your supplements should be taken apart from this medication.",
+    "N5": "We only send Health Canada the number you entered.",
     "N6": "This permanently deletes your account, your stack, your products, your health profile and your notification settings on every device. This can't be undone."
   },
   "sync": {
@@ -301,6 +305,88 @@
     "choiceBody": "Combine what's on this device with your account, or keep only your account's data. Nothing is deleted from your account either way.",
     "combine": "Combine both (recommended)",
     "useAccount": "Use my account's data"
+  },
+  "other": {
+    "tab": "Other brand",
+    "needAccountTitle": "Add products from other brands",
+    "needAccount": "Products from other brands, medications and foods are kept in your account, so you need one to add them.",
+    "kindQuestion": "What kind of product is it?",
+    "kind": {
+      "nhp": "Natural health product",
+      "medication": "Medication",
+      "other": "Food, drink or other"
+    },
+    "kindHint": {
+      "nhp": "Has an NPN on its label",
+      "medication": "Prescription or over the counter; has a DIN",
+      "other": "No number on the label"
+    },
+    "editTitle": "Edit product",
+    "product": "Product",
+    "brand": "Brand",
+    "company": "Company (optional)",
+    "name": "Product name",
+    "medName": "Name",
+    "barcode": "Barcode (optional)",
+    "scan": "Scan",
+    "npn": "NPN (8 digits, optional)",
+    "din": "DIN (8 digits, optional)",
+    "fill": "Fill from Health Canada",
+    "filling": "Looking it up…",
+    "filled": "Filled from Health Canada. Check every field before saving.",
+    "partial": "Health Canada didn't answer completely: some fields are still empty.",
+    "notFound": "Health Canada has no product with this number.",
+    "lookupFailed": "Health Canada couldn't be reached. Fill in the form yourself or try again.",
+    "strength": "Strength (optional, e.g. 50 mcg)",
+    "format": "Format",
+    "form": "Form",
+    "forms": {
+      "capsule": "Capsule",
+      "tablet": "Tablet",
+      "softgel": "Softgel",
+      "liquid": "Liquid",
+      "powder": "Powder",
+      "other": "Other"
+    },
+    "bottleSize": "Bottle size",
+    "bottleSizeOptional": "Bottle size (optional)",
+    "bottleUnit": "Bottle size unit",
+    "packageUnits": {
+      "unit": "capsules, tablets…"
+    },
+    "dose": "Dose",
+    "amountPerDose": "Amount per dose",
+    "doseUnit": "Unit",
+    "doseUnitOther": "other",
+    "whenTitle": "When do you take it?",
+    "label": "From the label (optional)",
+    "timings": {
+      "WITH_FOOD": "With food",
+      "WITHOUT_FOOD": "On an empty stomach",
+      "MORNING": "In the morning",
+      "EVENING": "In the evening",
+      "BEDTIME": "At bedtime"
+    },
+    "ingredients": "Medicinal ingredients (optional)",
+    "ingredientsHint": "Add the ingredients so we can check timing with the rest of your stack.",
+    "ingredient": "Ingredient",
+    "amount": "Amount",
+    "ingredientUnit": "Ingredient unit",
+    "perUnit": "Amounts are per {unit}, as on the label.",
+    "addIngredient": "Add an ingredient",
+    "directions": "Suggested use (optional)",
+    "warnings": "Warnings (optional)",
+    "notes": "Notes (optional)",
+    "check": "Check this field.",
+    "fix": "Check the fields marked above.",
+    "saveEdit": "Save changes",
+    "limit": "You can add up to {max} of your own products.",
+    "yourProducts": "Your products",
+    "edit": "Edit product",
+    "delete": "Delete this product",
+    "deleteConfirm": "Delete {product}? It also leaves your stack and your shopping list.",
+    "addedByYou": "Added by you. SmartStack doesn't review products from other brands.",
+    "notes_title": "Notes"
   },
   "backup": {
     "title": "Back up & sync",

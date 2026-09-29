@@ -2,6 +2,7 @@
 import {
   AccountView,
   AuthResponse,
+  ProductPrefill,
   SyncResponse,
   type SyncRequestBody,
   OAuthClaimResponse,
@@ -49,6 +50,15 @@ export const accountApi = {
   disconnect: (session: string, provider: OAuthProviderId) =>
     request(session, 'DELETE', `/api/account/identity/${provider}`),
   deleteAccount: (session: string) => request(session, 'DELETE', '/api/account'),
+  /** Health Canada prefill for the Other brand form (proxied by the Worker, cached a week). */
+  lookup: async (session: string, kind: 'npn' | 'din', number: string, lang: 'en' | 'fr') =>
+    ProductPrefill.parse(
+      await request(
+        session,
+        'GET',
+        `/api/lookup/${kind}/${encodeURIComponent(number)}?lang=${lang}`,
+      ),
+    ),
   /** Push the outbox and pull what changed since `since` (§8.2). */
   sync: async (session: string, body: SyncRequestBody) =>
     SyncResponse.parse(await request(session, 'POST', '/api/sync', body)),

@@ -17,6 +17,7 @@ import type {
   ShoppingItem,
   StackEntry,
   StackItem,
+  UserProduct,
 } from '@smartstack/shared'
 import {
   afterSync,
@@ -91,6 +92,10 @@ export type Action =
   /** First sign-in, "Use my account's data": the device's copy goes, the account's comes. */
   | { type: 'SYNC_USE_ACCOUNT' }
   | { type: 'SYNC_INITIALIZED' }
+  /** A product the person added or edited (other brand, medication, food). */
+  | { type: 'UPSERT_USER_PRODUCT'; product: UserProduct }
+  /** Deleting it also takes it out of the stack and the shopping list. */
+  | { type: 'DELETE_USER_PRODUCT'; id: string }
   /** "Continue without an account", or accounts aren't open to the public. */
   | { type: 'SET_GUEST' }
   | { type: 'RESET'; state: PersistedState }
@@ -309,6 +314,25 @@ export function reducer(state: PersistedState, action: Action): PersistedState {
       return dropLocalData(state)
     case 'SYNC_INITIALIZED':
       return { ...state, sync: { ...state.sync, initialized: true } }
+    case 'UPSERT_USER_PRODUCT': {
+      const exists = state.userProducts.some((p) => p.id === action.product.id)
+      return {
+        ...state,
+        userProducts: exists
+          ? state.userProducts.map((p) => (p.id === action.product.id ? action.product : p))
+          : [...state.userProducts, action.product],
+      }
+    }
+    case 'DELETE_USER_PRODUCT':
+      return {
+        ...state,
+        userProducts: state.userProducts.filter((p) => p.id !== action.id),
+        stack: state.stack.filter((s) => s.productId !== action.id),
+        shopping: state.shopping.filter(
+          (s) => s.productId !== action.id && s.replacesProductId !== action.id,
+        ),
+        lowAlerts: state.lowAlerts.filter((id) => id !== action.id),
+      }
     case 'SET_GUEST':
       return state.auth.mode === 'unset'
         ? { ...state, auth: { ...state.auth, mode: 'guest' } }

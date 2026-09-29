@@ -1,6 +1,7 @@
 import { getProduct } from '@smartstack/engine'
 import { MAX_DOSES_PER_DAY, PIN_ANCHORS, type PinAnchor } from '@smartstack/shared'
 import { useId } from 'react'
+import { useNavigate } from 'react-router'
 import { bottleStatus } from '../bottle'
 import { timesLabel } from '../format'
 import { t, tl, type MessageKey } from '../i18n'
@@ -33,7 +34,9 @@ export function ManageSheet({ productId, onClose, onOpen }: ManageSheetProps) {
   const { state, dispatch } = useAppState()
   const catalogue = useCatalogue()
   const id = useId()
+  const navigate = useNavigate()
   const entry = state.stack.find((s) => s.productId === productId)
+  const own = state.userProducts.find((p) => p.id === productId)
   const product = getProduct(productId, catalogue)
   if (!entry) return null
   const name = product ? tl(product.shortName) : productId
@@ -151,9 +154,31 @@ export function ManageSheet({ productId, onClose, onOpen }: ManageSheetProps) {
           </button>
         )}
         <MoreInfoButton product={name} onClick={() => onOpen('info')} className={styles.left} />
+        {own && (
+          <button
+            type="button"
+            className="btn btn--small btn--outline"
+            onClick={() => navigate(`/add?mode=other&edit=${own.id}`)}
+          >
+            {t('other.edit')}
+          </button>
+        )}
         <button type="button" className="btn btn--small btn--danger" onClick={remove}>
           {t('manage.removeTitle')}
         </button>
+        {own && (
+          <button
+            type="button"
+            className="btn btn--small btn--danger"
+            onClick={() => {
+              if (!window.confirm(t('other.deleteConfirm', { product: own.name }))) return
+              dispatch({ type: 'DELETE_USER_PRODUCT', id: own.id })
+              onClose()
+            }}
+          >
+            {t('other.delete')}
+          </button>
+        )}
       </section>
     </Sheet>
   )
