@@ -10,6 +10,7 @@ import { useSyncStatus } from '../reminders/syncStatus'
 import { useNews } from '../reminders/useNews'
 import { useReminders } from '../reminders/useReminders'
 import { useAppState } from '../state/context'
+import { HealthTargetingSwitch } from './HealthProfile'
 
 const STALE_MS = 5 * 24 * 60 * 60 * 1000
 
@@ -177,6 +178,8 @@ export function Notifications() {
             {t('consent.C6')}
           </Switch>
         )}
+        {/* Accounts with a health profile: the targeting switch (C5), as in the profile. */}
+        {state.auth.mode === 'account' && <HealthTargetingSwitch />}
         {news.error && (
           <p className="notice notice--error" role="alert">
             {t('reminders.syncFailed', { error: news.error })}
