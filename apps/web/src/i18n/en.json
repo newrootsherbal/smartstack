@@ -243,7 +243,8 @@
     "kind": {
       "nhp": "Natural health product",
       "food": "Food product (no NPN)",
-      "topical": "For external use (no NPN)"
+      "topical": "For external use (no NPN)",
+      "medication": "Medication"
     }
   },
   "install": {

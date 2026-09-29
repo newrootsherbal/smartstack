@@ -87,8 +87,20 @@ export const ProductIngredient = z.object({
 })
 export type ProductIngredient = z.infer<typeof ProductIngredient>
 
-export const ProductStatus = z.enum(['sample', 'draft', 'reviewed'])
+/**
+ * sample: test fixture · draft / reviewed: bundled catalogue data · user: a product the person
+ * added by hand (built on the device from a `UserProduct`, never in bundled data).
+ */
+export const ProductStatus = z.enum(['sample', 'draft', 'reviewed', 'user'])
 export type ProductStatus = z.infer<typeof ProductStatus>
+
+/**
+ * nhp: licensed natural health product · food: ingested but not licensed (protein, MCT oil,
+ * sweeteners) · topical: essential and skin oils, never scheduled · medication: a person's own
+ * prescription or over-the-counter drug (user products only; never moved, no rules of its own).
+ */
+export const PRODUCT_KINDS = ['nhp', 'food', 'topical', 'medication'] as const
+export type ProductKind = (typeof PRODUCT_KINDS)[number]
 
 /** A product may switch off rules inherited from its ingredients. */
 export const RuleOverrides = z.object({
@@ -110,18 +122,22 @@ export type ProductVariant = z.infer<typeof ProductVariant>
 export const Product = z
   .object({
     id: z.string().min(1),
-    /** Primary SKU (first variant). */
-    sku: z.string().min(1),
-    /** Primary barcode as printed: 12-digit UPC-A or 13-digit EAN-13. */
-    upc: z.string().regex(/^\d{12,13}$/),
+    /** Primary SKU (first variant). Required in bundled data (validateCatalogue); none on user products. */
+    sku: z.string().min(1).optional(),
+    /**
+     * Primary barcode as printed: 12-digit UPC-A or 13-digit EAN-13 (validateCatalogue requires
+     * one in bundled data); a user product may carry an 8-digit EAN-8, or none.
+     */
+    upc: z
+      .string()
+      .regex(/^\d{8,13}$/)
+      .optional(),
     /** Natural Product Number; absent for foods, sweeteners, essential and skin oils. */
     npn: z.string().min(1).optional(),
-    /**
-     * nhp: licensed natural health product · food: ingested but not licensed (protein,
-     * MCT oil, sweeteners) · topical: essential and skin oils, never scheduled.
-     */
-    kind: z.enum(['nhp', 'food', 'topical']).default('nhp'),
-    brand: z.string().min(1),
+    /** See PRODUCT_KINDS; `medication` only on user products. */
+    kind: z.enum(PRODUCT_KINDS).default('nhp'),
+    /** Required in bundled data; empty for a medication whose company was not given. */
+    brand: z.string(),
     name: LocalizedText,
     /** Short label for schedule rows, push titles and adjustment sentences, e.g. "Iron". */
     shortName: LocalizedText,
@@ -142,7 +158,8 @@ export const Product = z
     directions: LocalizedText.optional(),
     warnings: LocalizedText.optional(),
     status: ProductStatus,
-    labelVersion: z.string().min(1),
+    /** Label revision. Required in bundled data (validateCatalogue); none on user products. */
+    labelVersion: z.string().min(1).optional(),
     /** May be empty when the label lists no medicinal ingredient the importer can read. */
     ingredients: z.array(ProductIngredient),
     variants: z.array(ProductVariant).optional(),

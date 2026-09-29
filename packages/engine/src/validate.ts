@@ -1,4 +1,10 @@
-import { Catalogue as CatalogueSchema, SEED_SEVERITIES, type Catalogue } from '@smartstack/shared'
+import {
+  Catalogue as CatalogueSchema,
+  SEED_SEVERITIES,
+  USER_PRODUCT_ID_PREFIX,
+  USER_RULE_ID_PREFIX,
+  type Catalogue,
+} from '@smartstack/shared'
 import { isValidRetailBarcode, SAMPLE_EAN13_PREFIX } from './barcode'
 
 export type ValidationResult = { ok: true; catalogue: Catalogue } | { ok: false; errors: string[] }
@@ -45,7 +51,20 @@ export function validateCatalogue(raw: unknown): ValidationResult {
     if (productIds.has(p.id)) errors.push(`${where}: duplicate id`)
     productIds.add(p.id)
 
-    const codes = [p.upc, ...(p.variants ?? []).map((v) => v.upc)]
+    // Optional in the schema for the person's own products; bundled data always has them.
+    if (!p.sku) errors.push(`${where}: sku is required`)
+    if (!p.upc) errors.push(`${where}: upc is required`)
+    if (!p.labelVersion) errors.push(`${where}: labelVersion is required`)
+    if (!p.brand.trim()) errors.push(`${where}: brand is required`)
+    if (p.status === 'user' || p.kind === 'medication' || p.id.startsWith(USER_PRODUCT_ID_PREFIX)) {
+      errors.push(
+        `${where}: status "user", kind "medication" and "${USER_PRODUCT_ID_PREFIX}" ids are reserved for the person's own products`,
+      )
+    }
+
+    const codes = [p.upc, ...(p.variants ?? []).map((v) => v.upc)].filter(
+      (code): code is string => code !== undefined,
+    )
     for (const code of codes) {
       if (!isValidRetailBarcode(code))
         errors.push(`${where}: barcode ${code} has a bad check digit`)
@@ -80,7 +99,7 @@ export function validateCatalogue(raw: unknown): ValidationResult {
       }
       if (!p.npn?.startsWith('SAMPLE-'))
         errors.push(`${where}: sample NPN must start with "SAMPLE-"`)
-      if (!p.upc.startsWith(SAMPLE_EAN13_PREFIX) || p.upc.length !== 13) {
+      if (!p.upc?.startsWith(SAMPLE_EAN13_PREFIX) || p.upc.length !== 13) {
         errors.push(`${where}: sample UPC must be an EAN-13 with prefix ${SAMPLE_EAN13_PREFIX}`)
       }
       if (p.reviewStatus !== 'unreviewed')
@@ -95,7 +114,7 @@ export function validateCatalogue(raw: unknown): ValidationResult {
       if (p.kind !== 'nhp' && p.npn !== undefined && !/^\d{8}$/.test(p.npn)) {
         errors.push(`${where}: NPN must be 8 digits when present (got ${p.npn})`)
       }
-      if (p.upc.startsWith(SAMPLE_EAN13_PREFIX) && p.upc.length === 13) {
+      if (p.upc?.startsWith(SAMPLE_EAN13_PREFIX) && p.upc.length === 13) {
         errors.push(`${where}: real products cannot use the GS1 200 sample range`)
       }
     }
@@ -103,6 +122,11 @@ export function validateCatalogue(raw: unknown): ValidationResult {
 
   for (const r of cat.rules) {
     const where = `rules.${r.id}`
+    if (r.id.startsWith(USER_RULE_ID_PREFIX)) {
+      errors.push(
+        `${where}: "${USER_RULE_ID_PREFIX}" rule ids are reserved for the person's label rules`,
+      )
+    }
     if ('ingredientId' in r.appliesTo && !ingredientIds.has(r.appliesTo.ingredientId)) {
       errors.push(`${where}: unknown ingredient ${r.appliesTo.ingredientId}`)
     }

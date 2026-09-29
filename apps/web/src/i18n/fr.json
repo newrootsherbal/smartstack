@@ -243,7 +243,8 @@
     "kind": {
       "nhp": "Produit de santé naturel",
       "food": "Aliment (sans NPN)",
-      "topical": "Usage externe (sans NPN)"
+      "topical": "Usage externe (sans NPN)",
+      "medication": "Médicament"
     }
   },
   "install": {

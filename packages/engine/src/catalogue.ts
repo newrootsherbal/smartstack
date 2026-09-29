@@ -48,7 +48,7 @@ export function getRule(id: string, cat: Catalogue = catalogue): TimingRule | un
 /** Every barcode that identifies the product (primary + all variants). */
 export function productBarcodes(product: Product): string[] {
   const codes = [product.upc, ...(product.variants ?? []).map((v) => v.upc)]
-  return [...new Set(codes)]
+  return [...new Set(codes)].filter((code): code is string => code !== undefined)
 }
 
 export function findProductByBarcode(

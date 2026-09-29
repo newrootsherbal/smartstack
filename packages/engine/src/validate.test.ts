@@ -107,6 +107,49 @@ describe('validateCatalogue — rejections', () => {
     if (!result.ok) expect(result.errors.join('\n')).toMatch(/unknown ingredient unobtainium/)
   })
 
+  // Optional in the Product schema (the person's own products have none), required in bundled data.
+  it.each(['sku', 'upc', 'labelVersion'] as const)('requires %s in bundled data', (field) => {
+    const bad = clone()
+    delete (bad.products[0] as Partial<(typeof bad.products)[number]>)[field]
+    const result = validateCatalogue(bad)
+    expect(result.ok).toBe(false)
+    if (!result.ok)
+      expect(result.errors).toContain(`products.${bad.products[0]!.id}: ${field} is required`)
+  })
+
+  it('requires a brand in bundled data', () => {
+    const bad = clone()
+    bad.products[0]!.brand = ''
+    const result = validateCatalogue(bad)
+    expect(result.ok).toBe(false)
+    if (!result.ok) expect(result.errors.join('\n')).toMatch(/brand is required/)
+  })
+
+  it('keeps medications, status "user", u_ ids and user: rule ids out of bundled data', () => {
+    for (const change of [{ kind: 'medication' }, { status: 'user' }, { id: 'u_sample' }]) {
+      const bad = clone()
+      Object.assign(bad.products[0]!, change)
+      const result = validateCatalogue(bad)
+      expect(result.ok).toBe(false)
+      if (!result.ok)
+        expect(result.errors.join('\n')).toMatch(/reserved for the person's own products/)
+    }
+    const bad = clone()
+    bad.rules[0]!.id = 'user:u_x:WITH_FOOD'
+    const result = validateCatalogue(bad)
+    expect(result.ok).toBe(false)
+    if (!result.ok)
+      expect(result.errors.join('\n')).toMatch(/reserved for the person's label rules/)
+  })
+
+  it('still rejects an 8-digit barcode in bundled data (the schema allows EAN-8 for user products)', () => {
+    const bad = clone()
+    bad.products[0]!.upc = '96385074'
+    const result = validateCatalogue(bad)
+    expect(result.ok).toBe(false)
+    if (!result.ok) expect(result.errors.join('\n')).toMatch(/96385074 has a bad check digit/)
+  })
+
   it('requires separationMinutes on SEPARATE_FROM_* rules', () => {
     const bad = clone()
     const sep = bad.rules.find((r) => r.attribute === 'SEPARATE_FROM_CALCIUM')!
