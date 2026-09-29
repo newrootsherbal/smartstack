@@ -483,3 +483,4 @@ export const ApiError = z.object({
 })
 export type ApiError = z.infer<typeof ApiError>
 export * from './auth'
+export * from './sync'
