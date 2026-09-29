@@ -19,6 +19,7 @@ import {
   type Statement,
 } from './logic'
 import { sendPush, withConcurrency, type VapidConfig } from './push'
+import { syncCleanupStatements } from './sync'
 
 interface TickSummary {
   expired: number
@@ -199,6 +200,14 @@ export async function runTick(env: Env, now: number): Promise<TickSummary> {
       await env.DB.batch(authCleanupStatements(now).map((s) => bind(env.DB, s)))
     } catch (err) {
       console.error('auth cleanup failed:', err instanceof Error ? err.message : String(err))
+    }
+    // Synced data (§8.6): check marks older than 3 days, tombstones older than 30. Its own
+    // batch again: until migration 0003 runs these tables don't exist, and that must not undo
+    // the cleanup above.
+    try {
+      await env.DB.batch(syncCleanupStatements(now).map((s) => bind(env.DB, s)))
+    } catch (err) {
+      console.error('sync cleanup failed:', err instanceof Error ? err.message : String(err))
     }
   }
 
