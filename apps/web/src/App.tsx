@@ -3,13 +3,15 @@ import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router'
 import { Banner } from './components/Banner'
 import { BottomNav } from './components/BottomNav'
 import { InstallGate } from './components/InstallGate'
+import { LowStockSheet } from './components/LowStockSheet'
 import { t } from './i18n'
 import { needsIOSInstallGate } from './platform/detect'
 import { SyncManager } from './reminders/SyncManager'
 import { AddSupplement } from './screens/AddSupplement'
 import { Onboarding } from './screens/Onboarding'
-import { Reminders } from './screens/Reminders'
-import { Settings } from './screens/Settings'
+import { Notifications } from './screens/Notifications'
+import { Profile } from './screens/Profile'
+import { Shopping } from './screens/Shopping'
 import { StackScreen } from './screens/StackScreen'
 import { Today } from './screens/Today'
 import { useAppState } from './state/context'
@@ -59,8 +61,12 @@ export function App() {
             <Route path="/today" element={<Today />} />
             <Route path="/add" element={<AddSupplement />} />
             <Route path="/stack" element={<StackScreen />} />
-            <Route path="/reminders" element={<Reminders />} />
-            <Route path="/settings" element={<Settings />} />
+            <Route path="/shopping" element={<Shopping />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/notifications" element={<Notifications />} />
+            {/* Phase 1 paths (bookmarks, notification links). */}
+            <Route path="/reminders" element={<Navigate to="/notifications" replace />} />
+            <Route path="/settings" element={<Navigate to="/profile" replace />} />
           </Route>
           <Route path="/dev/barcodes" element={<DevBarcodes />} />
           <Route path="/dev/styleguide" element={<DevStyleguide />} />
@@ -68,6 +74,7 @@ export function App() {
         </Routes>
       </Suspense>
       {showNav && <BottomNav />}
+      {state.routine && <LowStockSheet />}
     </>
   )
 }

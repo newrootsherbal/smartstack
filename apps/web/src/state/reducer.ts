@@ -1,17 +1,61 @@
-import type { PinAnchor, Routine, Stack, StackItem } from '@smartstack/shared'
+import { applyTick, getProduct, isLow, refill, undoTick, unitsPerDose } from '@smartstack/engine'
+import type {
+  InventoryUnit,
+  PinAnchor,
+  Routine,
+  ShoppingItem,
+  StackEntry,
+  StackItem,
+} from '@smartstack/shared'
 import { checkKey, type PersistedState, type PushState, type TodayOverride } from '../storage'
 import type { ThemeId } from '../themes'
 
+/** A bottle as the Add flow and the Manage sheet describe it. */
+export interface BottleInput {
+  remaining: number
+  unit: InventoryUnit
+  packageSize: number | null
+}
+
 export type Action =
   | { type: 'SET_ROUTINE'; routine: Routine }
-  | { type: 'ADD_PRODUCT'; productId: string; dosesPerDay: number; pins?: (PinAnchor | null)[] }
+  | {
+      type: 'ADD_PRODUCT'
+      productId: string
+      dosesPerDay: number
+      pins?: (PinAnchor | null)[]
+      unitsPerDose?: number
+      variantUpc?: string
+      bottle?: BottleInput
+      at?: number
+    }
   | { type: 'REMOVE_PRODUCT'; productId: string }
   | { type: 'SET_DOSES'; productId: string; dosesPerDay: number }
   /** Pin one dose slot to an anchor, or give it back to the engine (null). */
   | { type: 'SET_PIN'; productId: string; slot: number; anchor: PinAnchor | null }
   /** The person turned a suggestion down (e.g. SUGGEST_BEDTIME). */
   | { type: 'DISMISS_SUGGESTION'; productId: string; code: string }
-  | { type: 'TOGGLE_CHECK'; date: string; productId: string; doseIndex: number }
+  /** Tick or untick a dose; a tick takes one dose off a tracked bottle. */
+  | { type: 'TOGGLE_CHECK'; date: string; productId: string; doseIndex: number; at?: number }
+  /** Start tracking a bottle, or set the exact count left ("Edit count"). */
+  | { type: 'SET_BOTTLE'; productId: string; bottle: BottleInput; at?: number }
+  | { type: 'UNTRACK_BOTTLE'; productId: string }
+  | { type: 'REFILL'; productId: string; added: number; at?: number }
+  | { type: 'SET_UNITS_PER_DOSE'; productId: string; unitsPerDose: number }
+  | {
+      type: 'ADD_TO_SHOPPING'
+      productId: string
+      reason: 'manual' | 'alternative'
+      replacesProductId?: string
+      at?: number
+    }
+  | { type: 'REMOVE_FROM_SHOPPING'; productId: string; at?: number }
+  /** Undo of a removal: puts the item back exactly as it was. */
+  | { type: 'RESTORE_SHOPPING'; item: ShoppingItem }
+  /** The running-low sheet for this product was shown. */
+  | { type: 'ACK_LOW_ALERT'; productId: string }
+  | { type: 'SET_REMINDER_NAMES'; on: boolean }
+  | { type: 'DISMISS_REMINDERS_CARD' }
   | { type: 'SET_TODAY_OVERRIDE'; override: TodayOverride | null }
   | { type: 'SET_PUSH_STATE'; pushState: PushState }
   | { type: 'SET_SYNC'; lastSync: number | null; lastSyncHash: string | null }
@@ -26,63 +70,172 @@ export function reducer(state: PersistedState, action: Action): PersistedState {
       // A new routine invalidates today's "running late" shift.
       return { ...state, routine: action.routine, todayOverride: null }
     case 'ADD_PRODUCT': {
-      if (state.stack.some((s) => s.productId === action.productId)) {
-        const next = reducer(state, {
-          type: 'SET_DOSES',
-          productId: action.productId,
-          dosesPerDay: action.dosesPerDay,
-        })
-        if (!action.pins) return next
-        return {
-          ...next,
-          stack: next.stack.map((s) =>
-            s.productId === action.productId ? withPins(s, action.pins!) : s,
-          ),
-        }
-      }
-      const item: StackItem = { productId: action.productId, dosesPerDay: action.dosesPerDay }
-      const stack: Stack = [...state.stack, action.pins ? withPins(item, action.pins) : item]
-      return { ...state, stack }
+      const at = action.at ?? Date.now()
+      const existing = state.stack.find((s) => s.productId === action.productId)
+      const base: StackEntry = existing
+        ? { ...existing, dosesPerDay: action.dosesPerDay, updatedAt: at }
+        : {
+            productId: action.productId,
+            dosesPerDay: action.dosesPerDay,
+            addedAt: at,
+            updatedAt: at,
+          }
+      let entry = withPins(base, action.pins ?? base.pins ?? [])
+      if (action.unitsPerDose !== undefined) entry = { ...entry, unitsPerDose: action.unitsPerDose }
+      if (action.variantUpc !== undefined) entry = { ...entry, variantUpc: action.variantUpc }
+      if (action.bottle) entry = { ...entry, inventory: { ...action.bottle, lowFlaggedAt: null } }
+      const stack = existing
+        ? state.stack.map((s) => (s.productId === action.productId ? entry : s))
+        : [...state.stack, entry]
+      const next = { ...state, stack }
+      return action.bottle ? afterDecrease(next, action.productId, at) : next
     }
     case 'REMOVE_PRODUCT':
-      return { ...state, stack: state.stack.filter((s) => s.productId !== action.productId) }
+      return {
+        ...state,
+        stack: state.stack.filter((s) => s.productId !== action.productId),
+        lowAlerts: state.lowAlerts.filter((id) => id !== action.productId),
+      }
     case 'SET_DOSES':
-      return {
-        ...state,
-        stack: state.stack.map((s) =>
-          s.productId === action.productId
-            ? // Pins past the new number of doses no longer mean anything.
-              withPins({ ...s, dosesPerDay: action.dosesPerDay }, s.pins ?? [])
-            : s,
-        ),
-      }
+      return updateEntry(state, action.productId, (s) =>
+        // Pins past the new number of doses no longer mean anything.
+        withPins({ ...s, dosesPerDay: action.dosesPerDay }, s.pins ?? []),
+      )
     case 'SET_PIN':
-      return {
-        ...state,
-        stack: state.stack.map((s) => {
-          if (s.productId !== action.productId) return s
-          const pins = [...(s.pins ?? [])]
-          while (pins.length <= action.slot) pins.push(null)
-          pins[action.slot] = action.anchor
-          return withPins(s, pins)
-        }),
-      }
+      return updateEntry(state, action.productId, (s) => {
+        const pins = [...(s.pins ?? [])]
+        while (pins.length <= action.slot) pins.push(null)
+        pins[action.slot] = action.anchor
+        return withPins(s, pins)
+      })
     case 'DISMISS_SUGGESTION':
-      return {
-        ...state,
-        stack: state.stack.map((s) =>
-          s.productId === action.productId && !s.dismissed?.includes(action.code)
-            ? { ...s, dismissed: [...(s.dismissed ?? []), action.code] }
-            : s,
-        ),
-      }
+      return updateEntry(state, action.productId, (s) =>
+        s.dismissed?.includes(action.code)
+          ? s
+          : { ...s, dismissed: [...(s.dismissed ?? []), action.code] },
+      )
     case 'TOGGLE_CHECK': {
+      const at = action.at ?? Date.now()
       const key = checkKey(action.date, action.productId, action.doseIndex)
       const checks = { ...state.checks }
-      if (checks[key]) delete checks[key]
-      else checks[key] = true
-      return { ...state, checks }
+      const previous = checks[key]
+      const entry = state.stack.find((s) => s.productId === action.productId)
+      const inv = entry?.inventory
+      if (previous) {
+        // Untick: give back exactly what the tick took.
+        delete checks[key]
+        const next = { ...state, checks }
+        if (!inv || previous.units === 0) return next
+        return updateEntry(next, action.productId, (s) => ({
+          ...s,
+          inventory: { ...inv, remaining: undoTick(inv.remaining, previous.units) },
+        }))
+      }
+      if (!entry || !inv) {
+        checks[key] = { units: 0, at }
+        return { ...state, checks }
+      }
+      const { remaining, taken } = applyTick(inv.remaining, perDose(entry))
+      checks[key] = { units: taken, at }
+      const next = updateEntry({ ...state, checks }, action.productId, (s) => ({
+        ...s,
+        inventory: { ...inv, remaining },
+      }))
+      return afterDecrease(next, action.productId, at)
     }
+    case 'SET_BOTTLE': {
+      const at = action.at ?? Date.now()
+      const entry = state.stack.find((s) => s.productId === action.productId)
+      if (!entry) return state
+      const before = entry.inventory
+      const daily =
+        entry.dosesPerDay *
+        perDose({ ...entry, inventory: { ...action.bottle, lowFlaggedAt: null } })
+      // Edited back above the threshold: the next low bottle is flagged again.
+      const lowFlaggedAt =
+        before && before.lowFlaggedAt !== null && isLow(action.bottle.remaining, daily)
+          ? before.lowFlaggedAt
+          : null
+      const next = updateEntry(state, action.productId, (s) => ({
+        ...s,
+        inventory: { ...action.bottle, lowFlaggedAt },
+      }))
+      return afterDecrease(next, action.productId, at)
+    }
+    case 'UNTRACK_BOTTLE':
+      return {
+        ...updateEntry(state, action.productId, (s) => {
+          const { inventory: _inventory, ...rest } = s
+          return rest
+        }),
+        lowAlerts: state.lowAlerts.filter((id) => id !== action.productId),
+      }
+    case 'REFILL': {
+      const at = action.at ?? Date.now()
+      const next = updateEntry(state, action.productId, (s) =>
+        s.inventory
+          ? {
+              ...s,
+              inventory: {
+                ...s.inventory,
+                remaining: refill(s.inventory.remaining, action.added),
+                lowFlaggedAt: null,
+              },
+            }
+          : s,
+      )
+      return {
+        ...removeShopping(next, action.productId, at),
+        lowAlerts: next.lowAlerts.filter((id) => id !== action.productId),
+      }
+    }
+    case 'SET_UNITS_PER_DOSE':
+      return updateEntry(state, action.productId, (s) => ({
+        ...s,
+        unitsPerDose: action.unitsPerDose,
+      }))
+    case 'ADD_TO_SHOPPING': {
+      const at = action.at ?? Date.now()
+      const item: ShoppingItem = {
+        productId: action.productId,
+        reason: action.reason,
+        ...(action.replacesProductId ? { replacesProductId: action.replacesProductId } : {}),
+        addedAt: at,
+        updatedAt: at,
+      }
+      const shopping = state.shopping.some((s) => s.productId === action.productId)
+        ? state.shopping.map((s) => (s.productId === action.productId ? item : s))
+        : [...state.shopping, item]
+      return { ...state, shopping }
+    }
+    case 'REMOVE_FROM_SHOPPING': {
+      const at = action.at ?? Date.now()
+      const item = state.shopping.find((s) => s.productId === action.productId)
+      // The bottle keeps its low flag, so it doesn't come back until the next bottle runs low.
+      let next = removeShopping(state, action.productId, at)
+      // Removing a replacement puts the product it replaced back, if that one is still low.
+      const replaced = item?.replacesProductId
+        ? next.stack.find((s) => s.productId === item.replacesProductId)
+        : undefined
+      if (replaced?.inventory && isLow(replaced.inventory.remaining, dailyUseOf(replaced))) {
+        next = addLowItem(next, replaced.productId, at)
+      }
+      return next
+    }
+    case 'RESTORE_SHOPPING':
+      return {
+        ...state,
+        shopping: [
+          ...state.shopping.filter((s) => s.productId !== action.item.productId),
+          action.item,
+        ],
+      }
+    case 'ACK_LOW_ALERT':
+      return { ...state, lowAlerts: state.lowAlerts.filter((id) => id !== action.productId) }
+    case 'SET_REMINDER_NAMES':
+      return { ...state, reminderProductNames: action.on }
+    case 'DISMISS_REMINDERS_CARD':
+      return { ...state, remindersCardDismissed: true }
     case 'SET_TODAY_OVERRIDE':
       return { ...state, todayOverride: action.override }
     case 'SET_PUSH_STATE':
@@ -102,11 +255,72 @@ export function reducer(state: PersistedState, action: Action): PersistedState {
 
 /**
  * Store pins trimmed to the number of doses, without trailing nulls, and drop the field
- * when nothing is pinned (so an untouched item stays `{ productId, dosesPerDay }`).
+ * when nothing is pinned (so an untouched item stays `{ productId, dosesPerDay, … }`).
  */
-export function withPins(item: StackItem, pins: readonly (PinAnchor | null)[]): StackItem {
+export function withPins<T extends StackItem>(item: T, pins: readonly (PinAnchor | null)[]): T {
   const trimmed = pins.slice(0, item.dosesPerDay)
   while (trimmed.length > 0 && trimmed[trimmed.length - 1] === null) trimmed.pop()
   const { pins: _old, ...rest } = item
-  return trimmed.length > 0 ? { ...rest, pins: trimmed } : rest
+  return (trimmed.length > 0 ? { ...rest, pins: trimmed } : rest) as T
+}
+
+/** What one dose takes off this entry's bottle. */
+export function perDose(entry: StackEntry): number {
+  const unit = entry.inventory?.unit ?? 'unit'
+  return unitsPerDose(unit, getProduct(entry.productId), entry.unitsPerDose)
+}
+
+export function dailyUseOf(entry: StackEntry): number {
+  return entry.dosesPerDay * perDose(entry)
+}
+
+function updateEntry(
+  state: PersistedState,
+  productId: string,
+  update: (entry: StackEntry) => StackEntry,
+): PersistedState {
+  let changed = false
+  const stack = state.stack.map((s) => {
+    if (s.productId !== productId) return s
+    const next = update(s)
+    if (next === s) return s
+    changed = true
+    return { ...next, updatedAt: Date.now() }
+  })
+  return changed ? { ...state, stack } : state
+}
+
+function removeShopping(state: PersistedState, productId: string, _at: number): PersistedState {
+  if (!state.shopping.some((s) => s.productId === productId)) return state
+  return { ...state, shopping: state.shopping.filter((s) => s.productId !== productId) }
+}
+
+function addLowItem(state: PersistedState, productId: string, at: number): PersistedState {
+  if (state.shopping.some((s) => s.productId === productId)) return state
+  return {
+    ...state,
+    shopping: [...state.shopping, { productId, reason: 'low', addedAt: at, updatedAt: at }],
+  }
+}
+
+/**
+ * After a bottle count went down: at 5 days of use or less, and once per bottle, add the
+ * product to the shopping list, flag the bottle and queue the running-low sheet.
+ */
+function afterDecrease(state: PersistedState, productId: string, at: number): PersistedState {
+  const entry = state.stack.find((s) => s.productId === productId)
+  const inv = entry?.inventory
+  if (!entry || !inv || inv.lowFlaggedAt !== null) return state
+  if (!isLow(inv.remaining, dailyUseOf(entry))) return state
+  const flagged = updateEntry(state, productId, (s) => ({
+    ...s,
+    inventory: { ...inv, lowFlaggedAt: at },
+  }))
+  const withItem = addLowItem(flagged, productId, at)
+  return {
+    ...withItem,
+    lowAlerts: withItem.lowAlerts.includes(productId)
+      ? withItem.lowAlerts
+      : [...withItem.lowAlerts, productId],
+  }
 }

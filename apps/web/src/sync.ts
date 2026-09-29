@@ -27,14 +27,38 @@ export interface WindowInput {
   stack: Stack
   todayOverride: TodayOverride | null
   now: Date
+  /**
+   * Name the products (the person turned it on). Off by default: reminders show on lock
+   * screens, so they only say how many products, and no product id reaches the server.
+   */
+  productNames: boolean
 }
 
 function truncate(text: string, max: number): string {
   return text.length <= max ? text : `${text.slice(0, max - 1).trimEnd()}…`
 }
 
-/** Title "Iron — 9:30 AM"; body: product names and the first hint, ≤ 100 chars. */
-export function composeNotification(placement: Placement): { title: string; body: string } {
+/**
+ * Without names: "Time for 3 products — 9:30 AM" and a generic body. With names: title
+ * "Iron — 9:30 AM"; body: product names and the first hint, ≤ 100 chars.
+ */
+export function composeNotification(
+  placement: Placement,
+  productNames = true,
+): { title: string; body: string } {
+  if (!productNames) {
+    const count = placement.productIds.length
+    return {
+      title: truncate(
+        t(`push.hidden.${count === 1 ? 'one' : 'other'}`, {
+          count,
+          time: formatClock(placement.time),
+        }),
+        MAX_TITLE_LENGTH,
+      ),
+      body: t('push.hiddenBody'),
+    }
+  }
   const names = placement.productIds.map((id) => {
     const product = getProduct(id)
     return product ? tl(product.shortName) : id
@@ -64,11 +88,11 @@ export function computeReminderWindow(input: WindowInput): ReminderInput[] {
     for (const placement of schedule.placements) {
       const scheduledAt = localDateTimeToEpoch(day, placement.time)
       if (scheduledAt < cutoff) continue
-      const { title, body } = composeNotification(placement)
+      const { title, body } = composeNotification(placement, input.productNames)
       reminders.push({
         scheduledAt,
         slotKey: `${day}:${placement.time}`,
-        productIds: placement.productIds,
+        productIds: input.productNames ? placement.productIds : [],
         title,
         body,
       })

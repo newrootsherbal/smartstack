@@ -38,6 +38,7 @@ export function syncSchedule(
       stack: state.stack,
       todayOverride: state.todayOverride,
       now: new Date(),
+      productNames: state.reminderProductNames,
     })
     const hash = hashWindow(reminders)
     if (!opts.force && hash === state.lastSyncHash) return

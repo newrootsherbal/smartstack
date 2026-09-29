@@ -7,7 +7,7 @@ import { unsubscribe } from '../platform/reminders'
 import { useAppState } from '../state/context'
 import { clearState, defaultState } from '../storage'
 import { THEMES } from '../themes'
-import styles from './Settings.module.css'
+import styles from './Profile.module.css'
 
 /** Each language names itself, whatever the current one is. */
 const LANGUAGES: { locale: Locale; label: MessageKey }[] = [
@@ -15,7 +15,8 @@ const LANGUAGES: { locale: Locale; label: MessageKey }[] = [
   { locale: 'fr', label: 'settings.french' },
 ]
 
-export function Settings() {
+/** Profile tab: the account and health cards come later; then everything that was Settings. */
+export function Profile() {
   const { state, dispatch } = useAppState()
   const navigate = useNavigate()
   const [notice, setNotice] = useState<string | null>(null)
@@ -48,7 +49,15 @@ export function Settings() {
 
   return (
     <main className="screen">
-      <h1>{t('settings.title')}</h1>
+      <h1>{t('profile.title')}</h1>
+
+      <section className="card stack-v">
+        <h2>{t('profile.notifications')}</h2>
+        <p className="small muted">{t('profile.notificationsHint')}</p>
+        <Link to="/notifications" className="btn btn--outline">
+          {t('profile.notifications')}
+        </Link>
+      </section>
 
       <section className="card stack-v">
         <h2>{t('settings.routine')}</h2>

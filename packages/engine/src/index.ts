@@ -29,6 +29,21 @@ export {
   searchProducts,
 } from './catalogue'
 export { findDuplicateIngredients } from './duplicates'
+export {
+  applyTick,
+  dailyUse,
+  daysLeft,
+  inventoryUnitFor,
+  isLow,
+  LOW_STOCK_DAYS,
+  parsePackageSize,
+  productSizes,
+  refill,
+  undoTick,
+  unitsPerDose,
+  type PackageSize,
+  type ProductSize,
+} from './inventory'
 export { sampleCatalogue } from './sample'
 export { buildSchedule, type BuildScheduleOptions } from './scheduler'
 export { shiftRoutine } from './shift'

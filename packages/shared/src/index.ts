@@ -1,6 +1,11 @@
 // @smartstack/shared — types and zod schemas shared by the engine, the web app and the Worker.
 // Exported as TypeScript source (no build step).
 import { z } from 'zod'
+import { MAX_DOSES_PER_DAY } from './limits'
+import { Inventory } from './user-data'
+
+export { MAX_DOSES_PER_DAY } from './limits'
+export * from './user-data'
 
 export const SHARED_VERSION = '0.1.0'
 
@@ -91,8 +96,6 @@ export const RuleOverrides = z.object({
   disable: z.array(z.string().min(1)).optional(),
 })
 export type RuleOverrides = z.infer<typeof RuleOverrides>
-
-export const MAX_DOSES_PER_DAY = 4
 
 /** One retail size of a product. All variants share the recipe, NPN and rules. */
 export const ProductVariant = z.object({
@@ -268,6 +271,22 @@ export type StackItem = z.infer<typeof StackItem>
 export const Stack = z.array(StackItem)
 export type Stack = z.infer<typeof Stack>
 
+/** A stack item as the device stores it: the engine's StackItem plus the bottle. */
+export const StackEntry = StackItem.extend({
+  /** Units per dose when the label gives none (asked in the Add flow). */
+  unitsPerDose: z.number().positive().optional(),
+  /** The size the person has, when known (scanned or picked). */
+  variantUpc: z
+    .string()
+    .regex(/^\d{8,14}$/)
+    .optional(),
+  /** Absent = not tracked. */
+  inventory: Inventory.optional(),
+  addedAt: z.number(),
+  updatedAt: z.number(),
+})
+export type StackEntry = z.infer<typeof StackEntry>
+
 // ---------------------------------------------------------------------------
 // Engine output (structured; the UI renders everything through i18n)
 // ---------------------------------------------------------------------------
@@ -392,7 +411,8 @@ export const ReminderInput = z.object({
   scheduledAt: z.number().int().positive(),
   /** ≤ 32 chars; unique per (user, scheduledAt). Also used as the push `topic`. */
   slotKey: z.string().min(1).max(MAX_SLOT_KEY_LENGTH),
-  productIds: z.array(z.string().min(1)).min(1).max(20),
+  /** Empty when the person keeps product names out of reminders (the default). */
+  productIds: z.array(z.string().min(1)).max(20),
   title: z.string().min(1).max(MAX_TITLE_LENGTH),
   body: z.string().min(1).max(MAX_BODY_LENGTH),
 })

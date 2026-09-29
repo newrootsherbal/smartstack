@@ -27,11 +27,11 @@ export function SyncManager() {
 
   // Notification titles and bodies are composed in the app's language, so a language
   // change re-sends the window like any other change.
-  const { routine, stack, todayOverride, locale } = state
+  const { routine, stack, todayOverride, locale, reminderProductNames } = state
   const pushStatus = state.pushState.status
   useEffect(() => {
     void syncSchedule(stateRef.current, dispatch)
-  }, [routine, stack, todayOverride, locale, pushStatus, dispatch])
+  }, [routine, stack, todayOverride, locale, reminderProductNames, pushStatus, dispatch])
 
   return null
 }

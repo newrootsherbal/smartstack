@@ -1,10 +1,12 @@
 import { findDuplicateIngredients, getIngredient, getProduct } from '@smartstack/engine'
-import { MAX_DOSES_PER_DAY } from '@smartstack/shared'
 import { useCallback, useState } from 'react'
 import { Link } from 'react-router'
+import { bottleStatus } from '../bottle'
+import { BottleSheet, type BottleSheetKind } from '../components/BottleSheet'
+import { ManageSheet, type ManageAction } from '../components/ManageSheet'
 import { MoreInfoButton } from '../components/MoreInfoButton'
 import { ProductInfoSheet } from '../components/ProductInfoSheet'
-import { formatAmount, formatServingSize, timesLabel } from '../format'
+import { formatAmount, timesLabel } from '../format'
 import { t, tl } from '../i18n'
 import { useAppState } from '../state/context'
 import styles from './StackScreen.module.css'
@@ -14,13 +16,13 @@ export function StackScreen() {
   const duplicates = findDuplicateIngredients(state.stack)
   const [info, setInfo] = useState<string | null>(null)
   const closeInfo = useCallback(() => setInfo(null), [])
+  const [manage, setManage] = useState<string | null>(null)
+  const [bottle, setBottle] = useState<{ productId: string; kind: BottleSheetKind } | null>(null)
 
-  const remove = (productId: string) => {
-    const product = getProduct(productId)
-    const name = product ? tl(product.shortName) : productId
-    if (window.confirm(t('stack.removeConfirm', { product: name }))) {
-      dispatch({ type: 'REMOVE_PRODUCT', productId })
-    }
+  const openFromManage = (productId: string, action: ManageAction) => {
+    setManage(null)
+    if (action === 'info') setInfo(productId)
+    else setBottle({ productId, kind: action })
   }
 
   return (
@@ -62,47 +64,44 @@ export function StackScreen() {
                 </li>
               )
             }
+            const status = bottleStatus(item)
+            const name = tl(product.shortName)
             return (
               <li key={item.productId} className={styles.item}>
                 <div className={styles.info}>
                   <strong>{tl(product.name)}</strong>
                   <span className="small muted">
-                    {product.brand} · {formatServingSize(product.servingSize)}
+                    {product.brand} · {timesLabel(item.dosesPerDay)}
                     {item.dosesPerDay !== product.dosesPerDayDefault &&
-                      ` · ${t('stack.labelSays', { times: timesLabel(product.dosesPerDayDefault) })}`}
+                      ` (${t('stack.labelSays', { times: timesLabel(product.dosesPerDayDefault) })})`}
                   </span>
+                  {status ? (
+                    <span className="small">{status}</span>
+                  ) : (
+                    <span className="small muted">
+                      {t('bottle.notTracked')} ·{' '}
+                      <button
+                        type="button"
+                        className={`btn btn--link btn--small ${styles.inline}`}
+                        onClick={() => setBottle({ productId: item.productId, kind: 'track' })}
+                      >
+                        {t('bottle.track')}
+                      </button>
+                    </span>
+                  )}
                   <MoreInfoButton
-                    product={tl(product.shortName)}
+                    product={name}
                     className={styles.moreInfo}
                     onClick={() => setInfo(product.id)}
                   />
                 </div>
-                <label className={styles.doses}>
-                  <span className="visually-hidden">{t('common.timesPerDay')}</span>
-                  <select
-                    className="input"
-                    value={item.dosesPerDay}
-                    onChange={(e) =>
-                      dispatch({
-                        type: 'SET_DOSES',
-                        productId: item.productId,
-                        dosesPerDay: Number(e.target.value),
-                      })
-                    }
-                  >
-                    {Array.from({ length: MAX_DOSES_PER_DAY }, (_, i) => i + 1).map((n) => (
-                      <option key={n} value={n}>
-                        {timesLabel(n)}
-                      </option>
-                    ))}
-                  </select>
-                </label>
                 <button
                   type="button"
-                  className="btn btn--small btn--danger"
-                  onClick={() => remove(item.productId)}
+                  className="btn btn--small btn--outline"
+                  aria-label={t('manage.buttonLabel', { product: name })}
+                  onClick={() => setManage(item.productId)}
                 >
-                  {t('common.remove')}
+                  {t('manage.button')}
                 </button>
               </li>
             )
@@ -154,6 +153,20 @@ export function StackScreen() {
         </section>
       )}
       <ProductInfoSheet productId={info} onClose={closeInfo} />
+      {manage && (
+        <ManageSheet
+          productId={manage}
+          onClose={() => setManage(null)}
+          onOpen={(action) => openFromManage(manage, action)}
+        />
+      )}
+      {bottle && (
+        <BottleSheet
+          productId={bottle.productId}
+          kind={bottle.kind}
+          onClose={() => setBottle(null)}
+        />
+      )}
     </main>
   )
 }

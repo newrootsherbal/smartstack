@@ -22,7 +22,7 @@ personalized daily schedule with reminders and a "More info" sheet for every pro
 4. No accounts, no analytics, no third-party scripts, no third-party CDN loads.
 5. Bilingual: no user-facing string lives in the engine; all copy is in
    `apps/web/src/i18n/en.json` and `fr.json` (same keys, checked by a test), catalogue text
-   carries `{ en, fr }`, and Settings switches the language (picked from the browser's
+   carries `{ en, fr }`, and Profile → Language switches the language (picked from the browser's
    preferred languages on first launch).
 
 ## Architecture
@@ -61,13 +61,31 @@ there is no build step for them.
 
 ### Where data lives
 
-- **The browser's localStorage is the source of truth** for routine, stack and schedule. If it
-  is wiped, the user re-onboards.
+- **The browser's localStorage is the source of truth** for guests: routine, stack, bottle
+  counts, shopping list and today's check marks (`smartstack:v1`, a versioned blob; version 2
+  since Phase 2, migrated from version 1 on load by `src/storage.ts`). If it is wiped, the user
+  re-onboards.
 - The server stores only what is needed to deliver reminders. **Routine and stack are never
-  sent to the server.** Reminder rows carry product ids and the notification text, nothing more.
+  sent to the server.** Reminder rows carry the notification text; by default that text only
+  says how many products to take ("Time for 3 products — 9:30 AM") and no product id is sent.
+  Notifications → "Show product names in reminders" puts the names (and ids) back.
 - The app makes **no network call** until the user taps "Turn on reminders." Afterwards it
   syncs a rolling 7-day window on every change and on every app open, and retries on the next
   open if offline.
+
+### Bottles and the shopping list
+
+Five tabs: Today, My stack, Add, Shopping, Profile (Profile holds what Settings held, and
+Notifications replaced the Reminders screen; `/settings` and `/reminders` redirect). Adding a
+product asks about the bottle: **New bottle** (the scanned barcode, or a size chip, says how much
+it holds), **Already opened** ("How many are left?") or **Don't track**. Capsules, softgels and
+tablets are counted one by one; liquids and powders in servings (`parsePackageSize` in
+`packages/engine/src/inventory.ts` reads "= 32 doses", "/ 50 portions", "30 × 4.2 g", or divides
+the bottle by the serving when both are in ml or g, and otherwise the app asks). Ticking a dose
+on Today takes one dose off the bottle and unticking gives it back. At 5 days of use or less the
+product joins the shopping list once per bottle with a "running low" sheet; Refill ("5 + 30 =
+35") clears it. My stack's **Manage** sheet holds times per day, Refill, Edit count, Move to…
+(a pin), Add to shopping list, More info and Remove. Bottles and the list work for guests too.
 
 ### Engine in one paragraph
 
@@ -199,7 +217,7 @@ it, so the data is validated either way. In a public repository GitHub disables 
 
 ### Themes
 
-Settings → Theme offers seven colour themes: Rooted (the default), Fresh, Blush, Bold, Ice,
+Profile → Theme offers seven colour themes: Rooted (the default), Fresh, Blush, Bold, Ice,
 Energy and Wild. Each is one block of CSS custom properties in `apps/web/src/styles/themes.css`,
 selected by `data-theme` on `<html>`; the choice is stored with the rest of the local state
 and never leaves the device. `index.html` applies the stored theme inline before the first
@@ -211,7 +229,7 @@ paint, and the theme-color meta tag follows the theme's background.
   plus the sample fixtures' EAN-13 codes (GS1 prefix `200`, never assigned to retail products).
 - `/dev/styleguide` shows the five severity badges, buttons, notices, inputs and tokens.
 
-Both are reachable from Settings → Developer. Scanning a barcode that is not a New Roots
+Both are reachable from Profile → Developer. Scanning a barcode that is not a New Roots
 Herbal natural health product shows "Product not found."
 
 ### Environment
@@ -311,7 +329,7 @@ employees install.
 
 **Android (Chrome)**
 
-- `beforeinstallprompt` is captured and an Install button is shown on the Reminders screen;
+- `beforeinstallprompt` is captured and an Install button is shown on the Notifications screen;
   the manifest carries a description and screenshots for the richer dialog.
 - Pushes arrive with Chrome closed. Samsung and Xiaomi battery optimizers can delay them;
   exclude SmartStack/Chrome from battery optimization when testing.
@@ -346,19 +364,19 @@ employees install.
 
 1. Open the deployed URL in Chrome. Onboarding → Add (scan a code from `/dev/barcodes` on a
    monitor, or pick from the sample list) → Today shows the schedule.
-2. Reminders → Install app (or Chrome menu → Add to Home screen). Open from the icon.
-3. Reminders → Turn on reminders → Allow. Status shows "Reminders are on for this device."
+2. Profile → Notifications → Install app (or Chrome menu → Add to Home screen). Open from the icon.
+3. Profile → Notifications → Turn on reminders → Allow. Status shows "Reminders are on for this device."
 4. Send me a test reminder in 2–3 minutes → lock the phone → the notification arrives; tapping
    it opens Today.
-5. Change the routine or stack → Reminders shows a fresh "Schedule synced" time.
+5. Change the routine or stack → Notifications shows a fresh "Schedule synced" time.
 
 **iPhone Safari**
 
 1. Open the deployed URL in Safari. The install gate appears: Share → Add to Home Screen.
 2. Open SmartStack from the Home Screen icon (not Safari). Onboarding → Add → Today.
-3. Reminders → Turn on reminders → Allow.
+3. Profile → Notifications → Turn on reminders → Allow.
 4. Send me a test reminder in 2–3 minutes → lock the phone → the notification arrives.
-5. Settings → Delete my data removes the server rows and returns to onboarding.
+5. Profile → Delete my data removes the server rows and returns to onboarding.
 
 ## Privacy
 
@@ -366,12 +384,12 @@ This is health-adjacent personal data. Phase 1 is designed to hold as little as 
 
 **What is stored on the server**
 
-| Data                                           | Why                                   |
-| ---------------------------------------------- | ------------------------------------- |
-| Anonymous id (`crypto.randomUUID()`)           | The only credential; no account       |
-| Time zone (IANA name) and platform             | To interpret and debug reminder times |
-| Push subscription (endpoint, `p256dh`, `auth`) | To deliver Web Push                   |
-| Reminder rows (time, product ids, title, body) | The rolling 7-day delivery window     |
+| Data                                                                     | Why                                   |
+| ------------------------------------------------------------------------ | ------------------------------------- |
+| Anonymous id (`crypto.randomUUID()`)                                     | The only credential; no account       |
+| Time zone (IANA name) and platform                                       | To interpret and debug reminder times |
+| Push subscription (endpoint, `p256dh`, `auth`)                           | To deliver Web Push                   |
+| Reminder rows (time, title, body; product ids only when names are shown) | The rolling 7-day delivery window     |
 
 Not stored on the server: name, email, routine, stack, dose counts, checkbox history.
 
@@ -379,7 +397,7 @@ Not stored on the server: name, email, routine, stack, dose counts, checkbox his
 their scheduled time by the 03:00 UTC cron tick. Logs contain counts, status codes and reminder
 ids, never a user id together with product names or notification text.
 
-**How to delete:** Settings → "Delete my data" calls `DELETE /api/me`, which deletes the user,
+**How to delete:** Profile → "Delete my data" calls `DELETE /api/me`, which deletes the user,
 their subscriptions and their reminders, then clears local storage.
 
 **Before any employee beta** (not only before consumer release), a privacy review under

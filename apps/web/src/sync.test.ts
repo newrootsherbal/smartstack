@@ -23,7 +23,13 @@ describe('computeReminderWindow', () => {
   ]
 
   it('covers seven local calendar days and omits what is already past', () => {
-    const reminders = computeReminderWindow({ routine, stack, todayOverride: null, now })
+    const reminders = computeReminderWindow({
+      routine,
+      stack,
+      todayOverride: null,
+      now,
+      productNames: true,
+    })
     const days = new Set(reminders.map((r) => r.slotKey.slice(0, 10)))
     expect(days.size).toBe(WINDOW_DAYS)
     // Today's 08:00 breakfast is in the past; 22:30 bedtime is not.
@@ -51,6 +57,7 @@ describe('computeReminderWindow', () => {
       stack,
       todayOverride: null,
       now: justBefore,
+      productNames: true,
     })
     expect(reminders.some((r) => r.slotKey === '2026-09-24:22:30')).toBe(false)
   })
@@ -61,13 +68,25 @@ describe('computeReminderWindow', () => {
       routine: { ...routine, bedtime: '23:30' as const },
       shiftMinutes: 60,
     }
-    const reminders = computeReminderWindow({ routine, stack, todayOverride: override, now })
+    const reminders = computeReminderWindow({
+      routine,
+      stack,
+      todayOverride: override,
+      now,
+      productNames: true,
+    })
     expect(reminders.some((r) => r.slotKey === `${localDateKey(now)}:23:30`)).toBe(true)
     expect(reminders.some((r) => r.slotKey === `${addDays(localDateKey(now), 1)}:22:30`)).toBe(true)
   })
 
   it('keeps slot keys within 32 characters and titles/bodies within limits', () => {
-    const reminders = computeReminderWindow({ routine, stack, todayOverride: null, now })
+    const reminders = computeReminderWindow({
+      routine,
+      stack,
+      todayOverride: null,
+      now,
+      productNames: true,
+    })
     for (const r of reminders) {
       expect(r.slotKey.length).toBeLessThanOrEqual(32)
       expect(r.title.length).toBeLessThanOrEqual(60)
@@ -76,8 +95,20 @@ describe('computeReminderWindow', () => {
   })
 
   it('hashes deterministically', () => {
-    const a = computeReminderWindow({ routine, stack, todayOverride: null, now })
-    const b = computeReminderWindow({ routine, stack, todayOverride: null, now })
+    const a = computeReminderWindow({
+      routine,
+      stack,
+      todayOverride: null,
+      now,
+      productNames: true,
+    })
+    const b = computeReminderWindow({
+      routine,
+      stack,
+      todayOverride: null,
+      now,
+      productNames: true,
+    })
     expect(hashWindow(a)).toBe(hashWindow(b))
     expect(hashWindow(a)).not.toBe(hashWindow(a.slice(1)))
   })
@@ -155,5 +186,53 @@ describe('composeNotification and the bedtime suggestion', () => {
       ],
     })
     expect(body).toBe('Magnesium Bisglycinate')
+  })
+})
+
+describe('reminders without product names (the default)', () => {
+  const now = new Date(2026, 8, 24, 11, 0)
+  const stack = [
+    { productId: 'multi', dosesPerDay: 1 },
+    { productId: 'iron-bisglycinate', dosesPerDay: 1, pins: ['dinner' as const] },
+  ]
+
+  it('only says how many products, and sends no product id', () => {
+    const reminders = computeReminderWindow({
+      routine,
+      stack,
+      todayOverride: null,
+      now,
+      productNames: false,
+    })
+    expect(reminders.length).toBeGreaterThan(0)
+    for (const r of reminders) {
+      expect(r.productIds).toEqual([])
+      expect(r.title).not.toMatch(/Iron|Multi/)
+      expect(r.body).toBe('Open SmartStack to see what to take.')
+    }
+    expect(reminders.find((r) => r.slotKey.endsWith(':18:00'))?.title).toMatch(
+      /^Time for 1 product — 6:00/,
+    )
+  })
+
+  it('counts in French too', () => {
+    setLocale('fr')
+    try {
+      const { title, body } = composeNotification(
+        {
+          time: '09:30',
+          minutes: 570,
+          anchor: null,
+          productIds: ['a', 'b', 'c'],
+          doses: [],
+          reasons: [],
+        },
+        false,
+      )
+      expect(title.replace(/\s/g, ' ')).toBe('3 produits à prendre — 9 h 30')
+      expect(body).toBe('Ouvrez SmartStack pour voir quoi prendre.')
+    } finally {
+      setLocale('en')
+    }
   })
 })

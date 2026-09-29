@@ -12,7 +12,7 @@ import { isShortReason, renderAdjustment, renderReasonShort } from '../i18n/rend
 import { useTodaySchedule } from '../schedule'
 import { useAppState } from '../state/context'
 import type { Action } from '../state/reducer'
-import { checkKey } from '../storage'
+import { checkKey, type Check } from '../storage'
 import styles from './Today.module.css'
 
 type SheetKind = 'none' | 'late' | 'adjustments'
@@ -76,6 +76,28 @@ export function Today() {
           </button>
         </p>
       )}
+
+      {schedule &&
+        state.pushState.status !== 'subscribed' &&
+        state.pushState.status !== 'unsupported' &&
+        !state.remindersCardDismissed && (
+          <section className="card stack-v">
+            <h2>{t('reminders.cardTitle')}</h2>
+            <p className="small muted">{t('reminders.cardBody')}</p>
+            <div className="row">
+              <Link to="/notifications" className="btn btn--small btn--primary">
+                {t('reminders.turnOn')}
+              </Link>
+              <button
+                type="button"
+                className="btn btn--small btn--outline"
+                onClick={() => dispatch({ type: 'DISMISS_REMINDERS_CARD' })}
+              >
+                {t('reminders.cardNotNow')}
+              </button>
+            </div>
+          </section>
+        )}
 
       {!schedule ? (
         <div className="card stack-v">
@@ -166,7 +188,7 @@ export function Today() {
 interface PlacementSectionProps {
   placement: Placement
   today: string
-  checks: Record<string, true>
+  checks: Record<string, Check>
   /** Doses per product across the whole day, to label "Dose 2 of 4". */
   doseTotals: ReadonlyMap<string, number>
   onToggle: (productId: string, doseIndex: number) => void
@@ -199,7 +221,7 @@ function PlacementSection({
             (r) => r.productId === dose.productId && r.doseIndex === dose.doseIndex,
           )
           const key = checkKey(today, dose.productId, dose.doseIndex)
-          const checked = checks[key] === true
+          const checked = checks[key] !== undefined
           const total = doseTotals.get(dose.productId) ?? 1
           const name = product ? tl(product.shortName) : dose.productId
           const lines = reasons.filter(isShortReason)

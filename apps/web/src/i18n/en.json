@@ -11,8 +11,9 @@
     "today": "Today",
     "stack": "My stack",
     "add": "Add",
-    "reminders": "Reminders",
-    "settings": "Settings"
+    "shopping": "Shopping",
+    "shoppingCount": { "one": "Shopping, 1 item", "other": "Shopping, {count} items" },
+    "profile": "Profile"
   },
   "severity": {
     "important": { "label": "Important", "sub": "Action required" },
@@ -67,7 +68,12 @@
     "noThanks": "No thanks"
   },
   "push": {
-    "several": "{count} supplements"
+    "several": "{count} supplements",
+    "hidden": {
+      "one": "Time for 1 product — {time}",
+      "other": "Time for {count} products — {time}"
+    },
+    "hiddenBody": "Open SmartStack to see what to take."
   },
   "unit": {
     "mg": "mg",
@@ -148,6 +154,74 @@
     "3": "3 times a day",
     "4": "4 times a day"
   },
+  "bottle": {
+    "title": "Your bottle",
+    "new": "New bottle",
+    "opened": "Already opened",
+    "dontTrack": "Don't track",
+    "whichSize": "Which size?",
+    "fullQuestion": "How many {units} in a full bottle?",
+    "leftQuestion": "How many {units} are left?",
+    "perDoseQuestion": "How many per dose?",
+    "perDoseHint": "The label doesn't say how many to take at a time.",
+    "status": "{amount} left · {days}",
+    "days": {
+      "zero": "Empty",
+      "one": "about 1 day",
+      "other": "about {days} days"
+    },
+    "notTracked": "Not tracked",
+    "track": "Track this bottle",
+    "serving": { "one": "serving", "other": "servings" },
+    "refill": "Refill",
+    "refillTitle": "Refill {product}",
+    "refillQuestion": "How many did you add?",
+    "refillSum": "{left} + {added} = {total}",
+    "editCount": "Edit count",
+    "editCountTitle": "How many {units} are left?",
+    "stopTracking": "Stop tracking",
+    "trackTitle": "Track {product}",
+    "invalid": "Enter a number."
+  },
+  "manage": {
+    "button": "Manage",
+    "buttonLabel": "Manage {product}",
+    "moveTo": "Move to…",
+    "moveToHint": "Your choice beats the automatic timing.",
+    "automatic": "Automatic",
+    "doseN": "Dose {n}",
+    "addToShopping": "Add to shopping list",
+    "onShopping": "On your shopping list",
+    "removeTitle": "Remove from my stack"
+  },
+  "low": {
+    "title": "Running low",
+    "body": "You're almost out of {product}. {days} ({amount}). We added it to your shopping list.",
+    "days": {
+      "zero": "Empty",
+      "one": "About 1 day left",
+      "other": "About {days} days left"
+    },
+    "viewList": "View shopping list",
+    "ok": "OK"
+  },
+  "shopping": {
+    "title": "Shopping list",
+    "empty": "Nothing to buy. Products with 5 days or less left appear here.",
+    "count": { "one": "1 product", "other": "{count} products" },
+    "chipLow": "Running low",
+    "chipManual": "Added by you",
+    "chipInstead": "Instead of {product}",
+    "buyOnline": "Buy online",
+    "buyOnlineLabel": "Buy {product} online (opens newrootsherbal.com)",
+    "removed": "{product} removed from your list.",
+    "undo": "Undo"
+  },
+  "profile": {
+    "title": "Profile",
+    "notifications": "Notifications",
+    "notificationsHint": "Dose reminders on this device."
+  },
   "common": {
     "back": "Back",
     "cancel": "Cancel",
@@ -186,7 +260,7 @@
   "onboarding": {
     "title": "Your daily routine",
     "editTitle": "Edit your routine",
-    "intro": "SmartStack fits your supplements around your day. You can change this any time in Settings.",
+    "intro": "SmartStack fits your supplements around your day. You can change this any time in your profile.",
     "wake": "Wake up",
     "coffee": "Coffee or tea",
     "breakfast": "Breakfast",
@@ -292,7 +366,13 @@
     "productPage": "Product page"
   },
   "reminders": {
-    "title": "Reminders",
+    "title": "Notifications",
+    "section": "Dose reminders",
+    "namesTitle": "Show product names in reminders",
+    "namesBody": "Reminders can appear on your lock screen. When this is off, they only say how many products to take.",
+    "cardTitle": "Turn on reminders",
+    "cardBody": "Get a notification at each scheduled time, even when the app is closed.",
+    "cardNotNow": "Not now",
     "intro": "Get a notification at each scheduled time. SmartStack sends nothing to the server until you turn this on.",
     "turnOn": "Turn on reminders",
     "turningOn": "Setting up…",
@@ -316,7 +396,7 @@
     "syncFailed": "Could not reach the reminder service ({error}). It will retry next time you open the app.",
     "vapidMissing": "Reminders aren't configured on this build yet (missing public key).",
     "windowNote": "Reminders are scheduled 7 days ahead each time you open the app.",
-    "privacy": "What is sent: an anonymous id, your time zone, your push subscription and the reminder times with product names. Never your routine or full stack."
+    "privacy": "What is sent: an anonymous id, your time zone, your push subscription and the reminder times with their text (product names only if you turn them on above). Never your routine or full stack."
   },
   "settings": {
     "title": "Settings",
@@ -331,10 +411,10 @@
     "themeHint": "Pick the look you like. The choice stays on this device.",
     "data": "Your data",
     "delete": "Delete my data",
-    "deleteConfirm": "Delete your stack, routine and reminders on this device and on the server? This can't be undone.",
+    "deleteConfirm": "Delete your stack, routine, bottles, shopping list and reminders on this device and on the server? This can't be undone.",
     "deleteFailedServer": "The server could not be reached; local data was deleted anyway. Server rows expire on their own within 7 days.",
     "privacy": "Privacy",
-    "privacyBody": "SmartStack stores your routine and stack only on this device. If you turn on reminders, the server keeps an anonymous id, your time zone, your push subscription and the next 7 days of reminder times with product names. Sent reminders are deleted after 7 days. Nothing is shared with third parties and there are no analytics.",
+    "privacyBody": "SmartStack stores your routine and stack only on this device. If you turn on reminders, the server keeps an anonymous id, your time zone, your push subscription and the next 7 days of reminder times with their text (product names only if you choose to show them). Sent reminders are deleted after 7 days. Nothing is shared with third parties and there are no analytics.",
     "catalogue": "Catalogue: {count} New Roots Herbal products imported from newrootsherbal.com",
     "version": "Version {version}",
     "dev": "Developer",
