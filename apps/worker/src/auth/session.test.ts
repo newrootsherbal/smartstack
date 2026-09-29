@@ -92,6 +92,20 @@ describe('email tokens', () => {
     expect(emailTokenLink('http://localhost:5173', 'reset_password', 'T')).toBe(
       'http://localhost:5173/reset-password#token=T',
     )
+    // The browser needs the address to derive the new key (it is the PBKDF2 salt).
+    expect(emailTokenLink('http://localhost:5173', 'reset_password', 'T', 'a+b@x.co')).toBe(
+      'http://localhost:5173/reset-password#token=T&email=a%2Bb%40x.co',
+    )
+    expect(emailTokenLink('http://localhost:5173', 'verify_email', 'T', 'a@x.co')).toBe(
+      'http://localhost:5173/verify-email#token=T',
+    )
+  })
+
+  it('consumes a reset token only for the address it was sent to', () => {
+    const s = consumeEmailTokenStatement('h', 'reset_password', NOW, 'a@b.co')
+    expect(s.sql).toContain('AND email = ?4')
+    expect(s.params).toEqual(['h', 'reset_password', NOW, 'a@b.co'])
+    expect(consumeEmailTokenStatement('h', 'verify_email', NOW).sql).not.toContain('email = ?4')
   })
 
   it('expires verification after 48 hours and resets after 1 hour', () => {
