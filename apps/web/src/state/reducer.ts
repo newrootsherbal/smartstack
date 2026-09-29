@@ -84,6 +84,7 @@ export type Action =
   | { type: 'SET_PUSH_STATE'; pushState: PushState }
   | { type: 'SET_SYNC'; lastSync: number | null; lastSyncHash: string | null }
   | { type: 'SET_TZ'; tz: string }
+  | { type: 'SET_SERVER_LOCALE'; locale: 'en' | 'fr' }
   | { type: 'SET_LOCALE'; locale: 'en' | 'fr' }
   | { type: 'SET_THEME'; theme: ThemeId }
   /** Signed in (sign-up, login, OAuth claim) or the account was refreshed. */
@@ -302,6 +303,8 @@ export function reducer(state: PersistedState, action: Action): PersistedState {
       return { ...state, pushState: action.pushState }
     case 'SET_SYNC':
       return { ...state, lastSync: action.lastSync, lastSyncHash: action.lastSyncHash }
+    case 'SET_SERVER_LOCALE':
+      return { ...state, serverLocale: action.locale }
     case 'SET_TZ':
       return { ...state, tz: action.tz }
     case 'SET_LOCALE':

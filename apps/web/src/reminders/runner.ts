@@ -75,7 +75,8 @@ export async function reconcileOnOpen(
   try {
     const tz = currentTimeZone()
     if (tz !== state.tz) {
-      await api.putMe(state.userId, { tz, platform: platformName() })
+      await api.putMe(state.userId, { tz, platform: platformName(), locale: state.locale })
+      dispatch({ type: 'SET_SERVER_LOCALE', locale: state.locale })
       dispatch({ type: 'SET_TZ', tz })
       force = true
     }

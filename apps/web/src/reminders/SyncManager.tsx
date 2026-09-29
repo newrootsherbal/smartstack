@@ -1,4 +1,6 @@
 import { useEffect, useRef } from 'react'
+import { api } from '../api/client'
+import { platformName } from '../platform/detect'
 import { useAppState } from '../state/context'
 import { reconcileOnOpen, syncSchedule } from './runner'
 
@@ -25,9 +27,21 @@ export function SyncManager() {
     return () => document.removeEventListener('visibilitychange', onVisible)
   }, [dispatch])
 
+  // News is sent in the device's language: tell the Worker when it changes (§6, PUT /api/me).
+  const { routine, stack, todayOverride, locale, reminderProductNames } = state
+  const subscribed = state.pushState.status === 'subscribed'
+  const localeSent = state.serverLocale === locale
+  useEffect(() => {
+    if (!subscribed || localeSent) return
+    const current = stateRef.current
+    void api
+      .putMe(current.userId, { tz: current.tz, platform: platformName(), locale })
+      .then(() => dispatch({ type: 'SET_SERVER_LOCALE', locale }))
+      .catch(() => undefined) // Tried again on the next app open.
+  }, [subscribed, localeSent, locale, dispatch])
+
   // Notification titles and bodies are composed in the app's language, so a language
   // change re-sends the window like any other change.
-  const { routine, stack, todayOverride, locale, reminderProductNames } = state
   const pushStatus = state.pushState.status
   const remindersOn = state.remindersEnabled
   useEffect(() => {

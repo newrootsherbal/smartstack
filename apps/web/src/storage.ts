@@ -103,6 +103,8 @@ export const PersistedState = z.object({
   newsPromptAsked: z.boolean().catch(false),
   /** The "Turn on reminders" card on Today was dismissed. */
   remindersCardDismissed: z.boolean().catch(false),
+  /** The language last sent with PUT /api/me (news uses it); null: not sent yet. */
+  serverLocale: z.enum(['en', 'fr']).nullable().catch(null),
   tz: z.string(),
   locale: z.enum(['en', 'fr']),
   /** Colour theme (themes.ts). Missing or unknown falls back instead of resetting the user. */
@@ -150,6 +152,7 @@ export function defaultState(userId = newUserId(), now = Date.now()): PersistedS
     newsOptIn: false,
     newsPromptAsked: false,
     remindersCardDismissed: false,
+    serverLocale: null,
     tz: currentTimeZone(),
     // A new user starts in the browser's language when the app speaks it.
     locale: detectLocale(),

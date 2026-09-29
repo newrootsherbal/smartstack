@@ -65,7 +65,12 @@ export function ensurePush(state: PersistedState, dispatch: Dispatch<Action>): P
     try {
       const body = toSubscriptionBody(sub)
       // The app's first network calls: create the device, then its subscription.
-      await api.putMe(state.userId, { tz: state.tz, platform: platformName() })
+      await api.putMe(state.userId, {
+        tz: state.tz,
+        platform: platformName(),
+        locale: state.locale,
+      })
+      dispatch({ type: 'SET_SERVER_LOCALE', locale: state.locale })
       await api.putPushSubscription(state.userId, body)
       // Signed in: this device's reminders and news belong to the account (best effort).
       const session = state.auth.mode === 'account' ? getSessionToken() : null
