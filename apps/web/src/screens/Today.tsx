@@ -80,7 +80,7 @@ export function Today() {
       )}
 
       {schedule &&
-        state.pushState.status !== 'subscribed' &&
+        !(state.remindersEnabled && state.pushState.status === 'subscribed') &&
         state.pushState.status !== 'unsupported' &&
         !state.remindersCardDismissed && (
           <section className="card stack-v">

@@ -297,7 +297,10 @@
     "C4": "I agree that New Roots Herbal stores my health profile (for example, my health conditions) in my account. I can change or delete it at any time.",
     "C5title": "Use my health profile to send me relevant news",
     "C5": "New Roots Herbal will use your health profile to choose which news notifications you receive (webinars, new products). This is called profiling. It stays off unless you turn it on, and you can turn it off at any time.",
-    "C3": "By creating an account, you accept the [Terms of Use]."
+    "C3": "By creating an account, you accept the [Terms of Use].",
+    "C6title": "New products, webinars and offers",
+    "C6": "Get news notifications from New Roots Herbal on this device, at most one a day. You can turn them off here at any time.",
+    "C7": "Also get news about new products and webinars? You can turn this off at any time."
   },
   "notice": {
     "N1": "Your stack stays on this device. You can back it up later from your profile.",
@@ -512,6 +515,12 @@
       "moderate": "Moderate",
       "high": "High"
     }
+  },
+  "news": {
+    "section": "News from New Roots Herbal",
+    "yes": "Yes",
+    "turnedOff": "News notifications are off on this device.",
+    "needsNotifications": "News arrives as a notification, so notifications must be allowed for SmartStack."
   },
   "backup": {
     "title": "Back up & sync",

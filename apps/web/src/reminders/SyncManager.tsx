@@ -29,9 +29,19 @@ export function SyncManager() {
   // change re-sends the window like any other change.
   const { routine, stack, todayOverride, locale, reminderProductNames } = state
   const pushStatus = state.pushState.status
+  const remindersOn = state.remindersEnabled
   useEffect(() => {
     void syncSchedule(stateRef.current, dispatch)
-  }, [routine, stack, todayOverride, locale, reminderProductNames, pushStatus, dispatch])
+  }, [
+    routine,
+    stack,
+    todayOverride,
+    locale,
+    reminderProductNames,
+    pushStatus,
+    remindersOn,
+    dispatch,
+  ])
 
   return null
 }

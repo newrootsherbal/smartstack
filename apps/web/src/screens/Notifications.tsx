@@ -1,24 +1,52 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router'
+import { Sheet } from '../components/Sheet'
 import { Switch } from '../components/Switch'
 import { useInstallPrompt } from '../hooks/useInstallPrompt'
 import { relative } from '../dates'
 import { t } from '../i18n'
 import { isIOS, platformName } from '../platform/detect'
 import { useSyncStatus } from '../reminders/syncStatus'
+import { useNews } from '../reminders/useNews'
 import { useReminders } from '../reminders/useReminders'
 import { useAppState } from '../state/context'
 
 const STALE_MS = 5 * 24 * 60 * 60 * 1000
 
-/** Notifications: dose reminders (and, later, news) for this device. */
+/** Notifications: dose reminders and news for this device (either can be on alone). */
 export function Notifications() {
   const { state, dispatch } = useAppState()
   const r = useReminders()
+  const news = useNews()
+  const navigate = useNavigate()
+  const [params] = useSearchParams()
+  const [askNews, setAskNews] = useState(false)
+  const [newsOffDone, setNewsOffDone] = useState(false)
+  const handledNewsOff = useRef(false)
+
+  // "Turn off news" from an Android notification opens /notifications?news=off.
+  const newsOffParam = params.get('news') === 'off'
+  useEffect(() => {
+    if (!newsOffParam || handledNewsOff.current) return
+    handledNewsOff.current = true
+    navigate('/notifications', { replace: true })
+    if (!state.newsOptIn) return
+    void news.disable().then((ok) => {
+      if (ok) setNewsOffDone(true)
+    })
+  }, [newsOffParam, navigate, news, state.newsOptIn])
+
+  const turnOnReminders = () => {
+    void r.enable().then((on) => {
+      // Asked once, right after reminders go on (C7).
+      if (on && !state.newsOptIn && !state.newsPromptAsked) setAskNews(true)
+    })
+  }
   const [now] = useState(() => Date.now())
   const sync = useSyncStatus()
   const install = useInstallPrompt()
   const platform = platformName()
-  const subscribed = r.pushState.status === 'subscribed'
+  const subscribed = r.on
   const denied = r.permission === 'denied' || r.pushState.status === 'denied'
   const unsupported = r.permission === 'unsupported' || r.pushState.status === 'unsupported'
   const stale = subscribed && r.lastSync !== null && now - r.lastSync > STALE_MS
@@ -99,7 +127,7 @@ export function Notifications() {
             <button
               type="button"
               className="btn btn--primary"
-              onClick={r.enable}
+              onClick={turnOnReminders}
               disabled={r.busy || !r.vapidConfigured}
             >
               {r.busy ? t('reminders.turningOn') : t('reminders.turnOn')}
@@ -126,7 +154,70 @@ export function Notifications() {
         )}
       </section>
 
+      <section className="card stack-v">
+        <h2>{t('news.section')}</h2>
+        {newsOffDone && (
+          <p className="notice" role="status">
+            {t('news.turnedOff')}
+          </p>
+        )}
+        {denied || unsupported ? (
+          <p className="small muted">{t('news.needsNotifications')}</p>
+        ) : (
+          <Switch
+            checked={news.on}
+            disabled={news.busy || !news.vapidConfigured}
+            onChange={(on) => {
+              // Synchronous in the click: the permission prompt must come before any await.
+              if (on) void news.enable()
+              else void news.disable()
+            }}
+            label={t('consent.C6title')}
+          >
+            {t('consent.C6')}
+          </Switch>
+        )}
+        {news.error && (
+          <p className="notice notice--error" role="alert">
+            {t('reminders.syncFailed', { error: news.error })}
+          </p>
+        )}
+      </section>
+
       <p className="small muted">{t('reminders.privacy')}</p>
+
+      <Sheet
+        open={askNews}
+        onClose={() => {
+          setAskNews(false)
+          dispatch({ type: 'SET_NEWS_PROMPT_ASKED' })
+        }}
+        title={t('news.section')}
+      >
+        <p>{t('consent.C7')}</p>
+        <div className="row">
+          <button
+            type="button"
+            className="btn btn--primary"
+            onClick={() => {
+              setAskNews(false)
+              void news.enable()
+            }}
+          >
+            {t('news.yes')}
+          </button>
+          <button
+            type="button"
+            className="btn btn--outline"
+            onClick={() => {
+              setAskNews(false)
+              dispatch({ type: 'SET_NEWS_PROMPT_ASKED' })
+            }}
+          >
+            {t('suggest.noThanks')}
+          </button>
+        </div>
+      </Sheet>
     </main>
   )
 }

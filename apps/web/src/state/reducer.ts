@@ -76,6 +76,9 @@ export type Action =
   /** The running-low sheet for this product was shown. */
   | { type: 'ACK_LOW_ALERT'; productId: string }
   | { type: 'SET_REMINDER_NAMES'; on: boolean }
+  | { type: 'SET_REMINDERS_ENABLED'; on: boolean }
+  | { type: 'SET_NEWS_OPT_IN'; on: boolean }
+  | { type: 'SET_NEWS_PROMPT_ASKED' }
   | { type: 'DISMISS_REMINDERS_CARD' }
   | { type: 'SET_TODAY_OVERRIDE'; override: TodayOverride | null }
   | { type: 'SET_PUSH_STATE'; pushState: PushState }
@@ -284,6 +287,13 @@ export function reducer(state: PersistedState, action: Action): PersistedState {
       return { ...state, lowAlerts: state.lowAlerts.filter((id) => id !== action.productId) }
     case 'SET_REMINDER_NAMES':
       return { ...state, reminderProductNames: action.on }
+    case 'SET_REMINDERS_ENABLED':
+      return { ...state, remindersEnabled: action.on }
+    case 'SET_NEWS_OPT_IN':
+      // Once news is on, the one-time question has no reason to come back.
+      return { ...state, newsOptIn: action.on, newsPromptAsked: true }
+    case 'SET_NEWS_PROMPT_ASKED':
+      return { ...state, newsPromptAsked: true }
     case 'DISMISS_REMINDERS_CARD':
       return { ...state, remindersCardDismissed: true }
     case 'SET_TODAY_OVERRIDE':

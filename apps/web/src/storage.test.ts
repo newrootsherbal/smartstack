@@ -134,3 +134,25 @@ describe('persisted theme', () => {
     expect(loaded.stack).toEqual(saved.stack)
   })
 })
+
+describe('reminders and news are separate', () => {
+  it('keeps reminders on for a Phase 1 device that was subscribed', () => {
+    expect(migrateV1(V1_BLOB)!.remindersEnabled).toBe(true)
+    const off = { ...V1_BLOB, pushState: { status: 'off', endpoint: null, registeredAt: null } }
+    expect(migrateV1(off)!.remindersEnabled).toBe(false)
+  })
+
+  it('derives the flag for a version 2 blob saved before it existed', () => {
+    const { remindersEnabled: _r, ...older } = {
+      ...defaultState(),
+      pushState: {
+        status: 'subscribed' as const,
+        endpoint: 'https://push.example/x',
+        registeredAt: 1,
+      },
+    }
+    const storage = memoryStorage({ [STORAGE_KEY]: JSON.stringify(older) })
+    expect(loadState(storage).remindersEnabled).toBe(true)
+    expect(loadState(storage).newsOptIn).toBe(false)
+  })
+})

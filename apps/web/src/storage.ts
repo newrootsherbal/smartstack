@@ -92,8 +92,15 @@ export const PersistedState = z.object({
   lastSyncHash: z.string().nullable(),
   /** Reminders name the products only when the person turns this on (N4, off by default). */
   reminderProductNames: z.boolean().catch(false),
+  /**
+   * Dose reminders on this device. The push subscription (pushState) is shared with news, so
+   * either can be on alone.
+   */
+  remindersEnabled: z.boolean().catch(false),
   /** News notifications on this device (off by default). */
   newsOptIn: z.boolean().catch(false),
+  /** The one-time "Also get news…?" question (C7) was asked. */
+  newsPromptAsked: z.boolean().catch(false),
   /** The "Turn on reminders" card on Today was dismissed. */
   remindersCardDismissed: z.boolean().catch(false),
   tz: z.string(),
@@ -139,7 +146,9 @@ export function defaultState(userId = newUserId(), now = Date.now()): PersistedS
     lastSync: null,
     lastSyncHash: null,
     reminderProductNames: false,
+    remindersEnabled: false,
     newsOptIn: false,
+    newsPromptAsked: false,
     remindersCardDismissed: false,
     tz: currentTimeZone(),
     // A new user starts in the browser's language when the app speaks it.
@@ -184,6 +193,8 @@ export function migrateV1(raw: unknown, now = Date.now()): PersistedState | null
     todayOverride: v1.todayOverride,
     checks,
     pushState: v1.pushState,
+    // In Phase 1 a subscribed device meant reminders were on.
+    remindersEnabled: v1.pushState.status === 'subscribed',
     lastSync: v1.lastSync,
     // Forces a re-send, so the server's rows lose their product names too.
     lastSyncHash: null,
@@ -218,7 +229,14 @@ export function loadState(storage: Storage = localStorage): PersistedState {
       if (migrated) return pruneForToday(migrated)
     } else {
       const parsed = PersistedState.safeParse(json)
-      if (parsed.success) return pruneForToday(parsed.data)
+      if (parsed.success) {
+        // Saved before reminders and news were separate: a subscribed device had reminders on.
+        const remindersEnabled =
+          'remindersEnabled' in json
+            ? parsed.data.remindersEnabled
+            : parsed.data.pushState.status === 'subscribed'
+        return pruneForToday({ ...parsed.data, remindersEnabled })
+      }
     }
     // Keep the anonymous id if we can, so server-side rows stay deletable.
     const idCheck = z.uuid().safeParse(json.userId)

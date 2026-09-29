@@ -297,7 +297,10 @@
     "C4": "J’accepte que New Roots Herbal conserve mon profil santé (par exemple, mes problèmes de santé) dans mon compte. Je peux le modifier ou le supprimer en tout temps.",
     "C5title": "Utiliser mon profil santé pour m’envoyer des nouvelles pertinentes",
     "C5": "New Roots Herbal utilisera votre profil santé pour choisir les notifications de nouvelles que vous recevez (webinaires, nouveaux produits). C’est ce qu’on appelle du profilage. Cette option reste désactivée tant que vous ne l’activez pas, et vous pouvez la désactiver en tout temps.",
-    "C3": "En créant un compte, vous acceptez les [Conditions d’utilisation]."
+    "C3": "En créant un compte, vous acceptez les [Conditions d’utilisation].",
+    "C6title": "Nouveaux produits, webinaires et offres",
+    "C6": "Recevez sur cet appareil des notifications de nouvelles de New Roots Herbal, au plus une par jour. Vous pouvez les désactiver ici en tout temps.",
+    "C7": "Recevoir aussi des nouvelles sur les nouveaux produits et les webinaires? Vous pouvez désactiver cette option en tout temps."
   },
   "notice": {
     "N1": "Vos suppléments restent sur cet appareil. Vous pourrez les sauvegarder plus tard à partir de votre profil.",
@@ -512,6 +515,12 @@
       "moderate": "Modéré",
       "high": "Élevé"
     }
+  },
+  "news": {
+    "section": "Nouvelles de New Roots Herbal",
+    "yes": "Oui",
+    "turnedOff": "Les notifications de nouvelles sont désactivées sur cet appareil.",
+    "needsNotifications": "Les nouvelles arrivent sous forme de notification; les notifications doivent donc être autorisées pour SmartStack."
   },
   "backup": {
     "title": "Sauvegarde et synchronisation",

@@ -75,4 +75,7 @@ export const api = {
     request(userId, 'PUT', '/api/me/schedule', body),
   postTestReminder: (userId: string, body: TestReminderBody) =>
     request(userId, 'POST', '/api/me/test-reminder', body),
+  /** News on or off for this device (the Worker keeps when, as proof of consent). */
+  putNews: (userId: string, body: { optIn: boolean }) =>
+    request(userId, 'PUT', '/api/me/news', body),
 }

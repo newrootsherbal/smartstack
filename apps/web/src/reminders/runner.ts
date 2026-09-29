@@ -30,7 +30,9 @@ export function syncSchedule(
   dispatch: Dispatch<Action>,
   opts: { force?: boolean } = {},
 ): Promise<void> {
-  if (state.pushState.status !== 'subscribed' || !state.routine) return Promise.resolve()
+  if (state.pushState.status !== 'subscribed' || !state.remindersEnabled || !state.routine) {
+    return Promise.resolve()
+  }
   if (inFlight) return inFlight
   const routine = state.routine
   inFlight = (async () => {
