@@ -2,6 +2,8 @@
 import {
   AccountView,
   AuthResponse,
+  SyncResponse,
+  type SyncRequestBody,
   OAuthClaimResponse,
   OAuthStartResponse,
   type ChangePasswordBody,
@@ -47,6 +49,9 @@ export const accountApi = {
   disconnect: (session: string, provider: OAuthProviderId) =>
     request(session, 'DELETE', `/api/account/identity/${provider}`),
   deleteAccount: (session: string) => request(session, 'DELETE', '/api/account'),
+  /** Push the outbox and pull what changed since `since` (§8.2). */
+  sync: async (session: string, body: SyncRequestBody) =>
+    SyncResponse.parse(await request(session, 'POST', '/api/sync', body)),
   /** The account's data as a file the browser saves (Law 25 portability). */
   async exportData(session: string): Promise<Blob> {
     const res = await fetch('/api/account/export', {

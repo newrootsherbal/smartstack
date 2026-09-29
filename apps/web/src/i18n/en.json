@@ -296,6 +296,12 @@
     "N1": "Your stack stays on this device. You can back it up later from your profile.",
     "N6": "This permanently deletes your account, your stack, your products, your health profile and your notification settings on every device. This can't be undone."
   },
+  "sync": {
+    "choiceTitle": "This account already has a stack",
+    "choiceBody": "Combine what's on this device with your account, or keep only your account's data. Nothing is deleted from your account either way.",
+    "combine": "Combine both (recommended)",
+    "useAccount": "Use my account's data"
+  },
   "backup": {
     "title": "Back up & sync",
     "body": "Keep your stack safe and use it on your other devices.",
@@ -323,7 +329,11 @@
     "delete": "Delete my account",
     "changeTitle": "Change password",
     "currentPassword": "Current password",
-    "passwordChanged": "Password changed."
+    "passwordChanged": "Password changed.",
+    "synced": "Synced {when}.",
+    "notSynced": "Not synced yet.",
+    "syncError": "Couldn't sync ({error}). SmartStack will try again.",
+    "syncLimit": "Your account has reached its limit (60 products in the stack, 200 of your own products). Remove some to keep syncing."
   },
   "legal": {
     "draft": "Draft: this text is not in force yet.",
@@ -411,6 +421,7 @@
     "adjust": "Adjust",
     "addToStack": "Add to my stack",
     "alreadyInStack": "Already in your stack — this updates how often you take it.",
+    "stackFull": "Your stack can hold up to {max} products. Remove one first.",
     "added": "{product} added to your stack.",
     "ingredients": "Medicinal ingredients per {serving}",
     "sizes": "Sizes: {sizes}",

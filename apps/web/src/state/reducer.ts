@@ -1,6 +1,7 @@
 import { applyTick, getProduct, isLow, refill, undoTick, unitsPerDose } from '@smartstack/engine'
 import type {
   AccountView,
+  SyncResponse,
   InventoryUnit,
   PinAnchor,
   Routine,
@@ -8,6 +9,12 @@ import type {
   StackEntry,
   StackItem,
 } from '@smartstack/shared'
+import {
+  afterSync,
+  dropLocalData,
+  queueEverything,
+  type PushSnapshot,
+} from '../account-sync/entities'
 import { authFromAccount } from '../auth/view'
 import { checkKey, type PersistedState, type PushState, type TodayOverride } from '../storage'
 import type { ThemeId } from '../themes'
@@ -66,6 +73,14 @@ export type Action =
   | { type: 'SET_THEME'; theme: ThemeId }
   /** Signed in (sign-up, login, OAuth claim) or the account was refreshed. */
   | { type: 'SET_ACCOUNT'; account: AccountView }
+  /** The Worker answered a sync: apply its rows, clear what was stored as sent. */
+  | { type: 'SYNC_RESULT'; snapshot: PushSnapshot; response: SyncResponse; at: number }
+  | { type: 'SYNC_ERROR'; error: string | null }
+  /** First sign-in: push everything local (backup, or "Combine both"). */
+  | { type: 'SYNC_QUEUE_ALL'; at: number }
+  /** First sign-in, "Use my account's data": the device's copy goes, the account's comes. */
+  | { type: 'SYNC_USE_ACCOUNT' }
+  | { type: 'SYNC_INITIALIZED' }
   /** "Continue without an account", or accounts aren't open to the public. */
   | { type: 'SET_GUEST' }
   | { type: 'RESET'; state: PersistedState }
@@ -254,8 +269,27 @@ export function reducer(state: PersistedState, action: Action): PersistedState {
       return { ...state, locale: action.locale }
     case 'SET_THEME':
       return { ...state, theme: action.theme }
-    case 'SET_ACCOUNT':
-      return { ...state, auth: authFromAccount(action.account) }
+    case 'SET_ACCOUNT': {
+      const auth = authFromAccount(action.account)
+      // Another account on this device starts its sync from scratch.
+      if (state.auth.accountId === auth.accountId) return { ...state, auth }
+      return {
+        ...state,
+        auth,
+        tombstones: {},
+        sync: { rev: 0, outbox: [], lastSyncAt: null, error: null, initialized: false },
+      }
+    }
+    case 'SYNC_RESULT':
+      return afterSync(state, action.snapshot, action.response, action.at)
+    case 'SYNC_ERROR':
+      return { ...state, sync: { ...state.sync, error: action.error } }
+    case 'SYNC_QUEUE_ALL':
+      return queueEverything(state, action.at)
+    case 'SYNC_USE_ACCOUNT':
+      return dropLocalData(state)
+    case 'SYNC_INITIALIZED':
+      return { ...state, sync: { ...state.sync, initialized: true } }
     case 'SET_GUEST':
       return state.auth.mode === 'unset'
         ? { ...state, auth: { ...state.auth, mode: 'guest' } }

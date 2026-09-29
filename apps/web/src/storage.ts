@@ -61,6 +61,8 @@ export const SyncState = z.object({
   outbox: z.array(z.string()),
   lastSyncAt: z.number().nullable(),
   error: z.string().nullable(),
+  /** The first sign-in choice on this device (§8.4) was made. */
+  initialized: z.boolean().default(false),
 })
 export type SyncState = z.infer<typeof SyncState>
 
@@ -80,7 +82,9 @@ export const PersistedState = z.object({
   checks: z.record(z.string(), Check),
   /** Entity key → deletedAt, kept until the deletion is pushed (accounts). */
   tombstones: z.record(z.string(), z.number()).catch({}),
-  sync: SyncState.catch({ rev: 0, outbox: [], lastSyncAt: null, error: null }),
+  sync: SyncState.catch({ rev: 0, outbox: [], lastSyncAt: null, error: null, initialized: false }),
+  /** When routine, language, theme or time zone last changed (the synced settings entity). */
+  settingsUpdatedAt: z.number().catch(0),
   /** Products whose "running low" sheet is still to be shown (once per bottle). */
   lowAlerts: z.array(z.string()).catch([]),
   pushState: PushState,
@@ -128,7 +132,8 @@ export function defaultState(userId = newUserId(), now = Date.now()): PersistedS
     todayOverride: null,
     checks: {},
     tombstones: {},
-    sync: { rev: 0, outbox: [], lastSyncAt: null, error: null },
+    sync: { rev: 0, outbox: [], lastSyncAt: null, error: null, initialized: false },
+    settingsUpdatedAt: 0,
     lowAlerts: [],
     pushState: { status: 'off', endpoint: null, registeredAt: null },
     lastSync: null,

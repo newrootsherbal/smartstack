@@ -3,10 +3,10 @@ import { setLocale } from '../i18n'
 import { loadState, saveState } from '../storage'
 import { applyTheme } from '../themes'
 import { AppStateContext } from './context'
-import { reducer } from './reducer'
+import { accountReducer } from './accountReducer'
 
 export function AppStateProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(reducer, undefined, loadState)
+  const [state, dispatch] = useReducer(accountReducer, undefined, loadState)
 
   // t() reads a module-level locale, so it is switched here, before any child renders: an
   // effect would leave the first render after a language change in the old language.

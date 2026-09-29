@@ -1,22 +1,14 @@
 import { useState } from 'react'
 import { Switch } from '../components/Switch'
 import { useInstallPrompt } from '../hooks/useInstallPrompt'
-import { intlLocale, t } from '../i18n'
+import { relative } from '../dates'
+import { t } from '../i18n'
 import { isIOS, platformName } from '../platform/detect'
 import { useSyncStatus } from '../reminders/syncStatus'
 import { useReminders } from '../reminders/useReminders'
 import { useAppState } from '../state/context'
 
 const STALE_MS = 5 * 24 * 60 * 60 * 1000
-
-function relative(ts: number, now: number): string {
-  const diffMin = Math.round((now - ts) / 60000)
-  const rtf = new Intl.RelativeTimeFormat(intlLocale(), { numeric: 'auto' })
-  if (Math.abs(diffMin) < 60) return rtf.format(-diffMin, 'minute')
-  const diffH = Math.round(diffMin / 60)
-  if (Math.abs(diffH) < 24) return rtf.format(-diffH, 'hour')
-  return rtf.format(-Math.round(diffH / 24), 'day')
-}
 
 /** Notifications: dose reminders (and, later, news) for this device. */
 export function Notifications() {

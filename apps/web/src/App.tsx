@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect } from 'react'
 import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router'
+import { AccountSync } from './account-sync/AccountSync'
 import { AccountSession } from './auth/AccountSession'
 import { AccountBanners } from './components/AccountBanners'
 import { Banner } from './components/Banner'
@@ -110,6 +111,7 @@ export function App() {
       <AccountBanners />
       <SyncManager />
       <AccountSession />
+      <AccountSync />
       <Suspense
         fallback={<main className="screen screen--no-nav muted">{t('common.loading')}</main>}
       >

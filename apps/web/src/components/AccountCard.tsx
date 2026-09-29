@@ -6,6 +6,7 @@ import { authErrorMessage, deleteAccount, signOut, startOAuth } from '../auth/fl
 import { derivePasswordKey } from '../auth/kdf'
 import { getSessionToken } from '../auth/store'
 import { ACCOUNTS_PUBLIC, APPLE_ENABLED } from '../config'
+import { relative } from '../dates'
 import { getLocale, t } from '../i18n'
 import { useAppState } from '../state/context'
 import { PasswordField } from './auth/PasswordField'
@@ -41,6 +42,7 @@ function AccountDetails() {
   const [busy, setBusy] = useState(false)
   const [notice, setNotice] = useState<string | null>(null)
   const [changing, setChanging] = useState(false)
+  const [now] = useState(() => Date.now())
   const session = getSessionToken()
   const { auth } = state
   const hasPassword = auth.providers.includes('password')
@@ -123,6 +125,16 @@ function AccountDetails() {
           </button>
         </p>
       )}
+
+      <p className="small muted" aria-live="polite">
+        {state.sync.error === 'limit_reached'
+          ? t('account.syncLimit')
+          : state.sync.error
+            ? t('account.syncError', { error: state.sync.error })
+            : state.sync.lastSyncAt
+              ? t('account.synced', { when: relative(state.sync.lastSyncAt, now) })
+              : t('account.notSynced')}
+      </p>
 
       <h3 className="small">{t('account.methods')}</h3>
       <ul className="list">

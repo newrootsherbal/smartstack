@@ -5,7 +5,7 @@ import {
   rulesForProduct,
   searchProducts,
 } from '@smartstack/engine'
-import { MAX_DOSES_PER_DAY, type Product } from '@smartstack/shared'
+import { MAX_DOSES_PER_DAY, SYNC_MAX_STACK_ITEMS, type Product } from '@smartstack/shared'
 import { lazy, Suspense, useCallback, useMemo, useState } from 'react'
 import { Link } from 'react-router'
 import { bottleFromDraft, initialBottleDraft, type BottleDraft } from '../bottle'
@@ -40,6 +40,7 @@ export function AddSupplement() {
   const [bottle, setBottle] = useState<BottleDraft | null>(null)
   const [perDose, setPerDose] = useState('1')
   const [invalid, setInvalid] = useState(false)
+  const [stackFull, setStackFull] = useState(false)
   const text = useProductText(candidate)
 
   const select = useCallback(
@@ -56,6 +57,7 @@ export function AddSupplement() {
       setBottle(inStack?.inventory ? null : initialBottleDraft(product, scannedUpc))
       setPerDose('1')
       setInvalid(false)
+      setStackFull(false)
     },
     [state.stack],
   )
@@ -77,6 +79,15 @@ export function AddSupplement() {
 
   const confirm = () => {
     if (!candidate) return
+    // An account keeps at most SYNC_MAX_STACK_ITEMS products in its stack (the Worker's limit).
+    if (
+      state.auth.mode === 'account' &&
+      !state.stack.some((s) => s.productId === candidate.id) &&
+      state.stack.length >= SYNC_MAX_STACK_ITEMS
+    ) {
+      setStackFull(true)
+      return
+    }
     const result = bottle ? bottleFromDraft(bottle, candidate) : { kind: 'none' as const }
     const units = askPerDose ? parseCount(perDose) : null
     if (result.kind === 'invalid' || (askPerDose && (units === null || units <= 0))) {
@@ -187,6 +198,11 @@ export function AddSupplement() {
             </p>
           )}
           {inStack && <p className="notice">{t('add.alreadyInStack')}</p>}
+          {stackFull && (
+            <p className="notice notice--warn" role="alert">
+              {t('add.stackFull', { max: SYNC_MAX_STACK_ITEMS })}
+            </p>
+          )}
 
           {candidate.kind !== 'topical' && (
             <div className={`card ${styles.doseCard}`}>

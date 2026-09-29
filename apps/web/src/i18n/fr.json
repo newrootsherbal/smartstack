@@ -296,6 +296,12 @@
     "N1": "Vos suppléments restent sur cet appareil. Vous pourrez les sauvegarder plus tard à partir de votre profil.",
     "N6": "Cette action supprime définitivement votre compte, vos suppléments, vos produits, votre profil santé et vos réglages de notifications sur tous vos appareils. Elle est irréversible."
   },
+  "sync": {
+    "choiceTitle": "Ce compte a déjà des suppléments",
+    "choiceBody": "Combinez ce qui se trouve sur cet appareil avec votre compte, ou gardez seulement les données de votre compte. Rien n’est supprimé de votre compte dans les deux cas.",
+    "combine": "Combiner les deux (recommandé)",
+    "useAccount": "Utiliser les données de mon compte"
+  },
   "backup": {
     "title": "Sauvegarde et synchronisation",
     "body": "Gardez vos suppléments en sécurité et utilisez-les sur vos autres appareils.",
@@ -323,7 +329,11 @@
     "delete": "Supprimer mon compte",
     "changeTitle": "Changer le mot de passe",
     "currentPassword": "Mot de passe actuel",
-    "passwordChanged": "Mot de passe changé."
+    "passwordChanged": "Mot de passe changé.",
+    "synced": "Dernière synchronisation : {when}.",
+    "notSynced": "Pas encore synchronisé.",
+    "syncError": "Synchronisation impossible ({error}). SmartStack réessaiera.",
+    "syncLimit": "Votre compte a atteint sa limite (60 produits dans vos suppléments, 200 de vos propres produits). Retirez-en pour continuer la synchronisation."
   },
   "legal": {
     "draft": "Ébauche : ce texte n’est pas encore en vigueur.",
@@ -411,6 +421,7 @@
     "adjust": "Ajuster",
     "addToStack": "Ajouter à mes suppléments",
     "alreadyInStack": "Déjà dans vos suppléments — ceci met à jour la fréquence des prises.",
+    "stackFull": "Vos suppléments peuvent compter jusqu’à {max} produits. Retirez-en un d’abord.",
     "added": "{product} fait maintenant partie de vos suppléments.",
     "ingredients": "Ingrédients médicinaux par {serving}",
     "sizes": "Formats : {sizes}",

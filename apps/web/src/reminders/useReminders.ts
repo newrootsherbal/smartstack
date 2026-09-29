@@ -1,5 +1,7 @@
 import { useCallback, useState } from 'react'
+import { accountApi } from '../api/account'
 import { api } from '../api/client'
+import { getSessionToken } from '../auth/store'
 import { t } from '../i18n'
 import { platformName } from '../platform/detect'
 import {
@@ -66,6 +68,9 @@ export function useReminders() {
         // First network calls of the app's life: create the user, then the subscription.
         await api.putMe(state.userId, { tz: state.tz, platform: platformName() })
         await api.putPushSubscription(state.userId, body)
+        // Signed in: this device's reminders and news belong to the account (best effort).
+        const session = state.auth.mode === 'account' ? getSessionToken() : null
+        if (session) void accountApi.linkDevice(session, state.userId).catch(() => undefined)
         const next = {
           ...state,
           pushState: {
