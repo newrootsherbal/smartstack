@@ -7,10 +7,12 @@ import {
 } from '@smartstack/engine'
 import { MAX_DOSES_PER_DAY, SYNC_MAX_STACK_ITEMS, type Product } from '@smartstack/shared'
 import { lazy, Suspense, useCallback, useMemo, useState } from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { bottleFromDraft, initialBottleDraft, type BottleDraft } from '../bottle'
 import { BottleCard } from '../components/BottleCard'
 import { ProductCard } from '../components/ProductCard'
+import { Sheet } from '../components/Sheet'
+import { ACCOUNTS_PUBLIC } from '../config'
 import { formatUnits, parseCount, timesLabel } from '../format'
 import { useProductText } from '../hooks/useProductText'
 import { t, tl } from '../i18n'
@@ -28,6 +30,7 @@ const MAX_RESULTS = 60
 
 export function AddSupplement() {
   const { state, dispatch } = useAppState()
+  const navigate = useNavigate()
   const [mode, setMode] = useState<Mode>(DEFAULT_MODE)
   const [upc, setUpc] = useState('')
   const [query, setQuery] = useState('')
@@ -117,6 +120,9 @@ export function AddSupplement() {
   }
 
   const results = useMemo(() => searchProducts(query), [query])
+  // An unknown code opens a sheet for accounts (add it by hand) and, once accounts are public,
+  // for guests (why an account helps). Otherwise the plain "not found" notice stays.
+  const unknownSheet = state.auth.mode === 'account' || ACCOUNTS_PUBLIC
   const inStack = candidate ? state.stack.some((s) => s.productId === candidate.id) : false
   // The label doesn't say how many units a dose is: ask, since the bottle count needs it.
   const askPerDose =
@@ -303,7 +309,7 @@ export function AddSupplement() {
         </section>
       ) : (
         <>
-          {notFound && (
+          {notFound && !unknownSheet && (
             <div className="notice notice--warn stack-v" role="alert">
               <strong>{t('add.notFound')}</strong>
               <span className="small">
@@ -314,7 +320,11 @@ export function AddSupplement() {
 
           {mode === 'scan' && (
             <Suspense fallback={<p className="muted">{t('add.scanStarting')}</p>}>
-              <ScanView onDetected={lookup} onUnavailable={() => setMode('manual')} />
+              <ScanView
+                onDetected={lookup}
+                onUnavailable={() => setMode('manual')}
+                paused={notFound !== null && unknownSheet}
+              />
             </Suspense>
           )}
 
@@ -385,6 +395,44 @@ export function AddSupplement() {
           )}
         </>
       )}
+      <Sheet
+        open={notFound !== null && unknownSheet}
+        onClose={() => setNotFound(null)}
+        title={state.auth.mode === 'account' ? t('add.unknownTitle') : t('add.notFound')}
+      >
+        {state.auth.mode === 'account' ? (
+          <>
+            <p className="muted">{t('add.unknownCode', { code: notFound ?? '' })}</p>
+            <div className="row">
+              <button
+                type="button"
+                className="btn btn--primary"
+                onClick={() => navigate(`/add?mode=other&upc=${notFound ?? ''}`)}
+              >
+                {t('add.addManually')}
+              </button>
+              <button type="button" className="btn btn--outline" onClick={() => setNotFound(null)}>
+                {t('add.scanAgain')}
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <p>{t('add.guestUnknown')}</p>
+            <div className="row">
+              <Link to="/signup?from=/add" className="btn btn--primary">
+                {t('backup.create')}
+              </Link>
+              <Link to="/login?from=/add" className="btn btn--outline">
+                {t('backup.login')}
+              </Link>
+              <button type="button" className="btn btn--link" onClick={() => setNotFound(null)}>
+                {t('add.notNow')}
+              </button>
+            </div>
+          </>
+        )}
+      </Sheet>
     </main>
   )
 }
