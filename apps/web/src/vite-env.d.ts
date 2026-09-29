@@ -6,6 +6,10 @@ interface ImportMetaEnv {
   readonly VITE_VAPID_PUBLIC_KEY: string
   /** Sent as X-Beta-Key on PUT /api/me. A speed bump, not security. */
   readonly VITE_BETA_KEY: string
+  /** Accounts launch gate: off | staff | public (config.ts). */
+  readonly VITE_ACCOUNTS_MODE?: string
+  /** "true" once Sign in with Apple is set up. */
+  readonly VITE_APPLE_ENABLED?: string
 }
 
 /** Injected by vite.config.ts from package.json. */
