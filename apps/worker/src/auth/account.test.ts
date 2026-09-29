@@ -191,6 +191,11 @@ describe('deletion and export (§5.9)', () => {
             platform: 'android',
             created_at: NOW,
             last_seen_at: NOW,
+            locale: 'fr',
+            news_opt_in: 1,
+            news_opt_in_at: NOW,
+            news_opt_out_at: null,
+            last_news_at: null,
           },
         ],
         synced: {
@@ -220,6 +225,13 @@ describe('deletion and export (§5.9)', () => {
       expiresAt: '2026-10-01T14:00:00.000Z',
     })
     expect(data.devices[0]?.timeZone).toBe('America/Toronto')
+    expect(data.devices[0]?.language).toBe('fr')
+    expect(data.devices[0]?.news).toEqual({
+      on: true,
+      turnedOnAt: new Date(NOW).toISOString(),
+      turnedOffAt: null,
+      lastReceivedAt: null,
+    })
     // Synced data: as the app syncs it, dates as ISO strings, tombstones reduced to key + dates.
     expect(data.settings).toBeNull()
     expect(data.products).toEqual([

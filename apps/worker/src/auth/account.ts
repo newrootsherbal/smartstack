@@ -214,7 +214,8 @@ export function exportStatements(accountId: string): Statement[] {
       params: [accountId],
     },
     {
-      sql: `SELECT id, tz, platform, created_at, last_seen_at FROM users
+      sql: `SELECT id, tz, platform, created_at, last_seen_at, locale, news_opt_in,
+                   news_opt_in_at, news_opt_out_at, last_news_at FROM users
             WHERE account_id = ?1 ORDER BY created_at`,
       params: [accountId],
     },
@@ -233,7 +234,19 @@ export interface ExportRows {
     'provider' | 'subject' | 'email' | 'created_at' | 'last_used_at'
   >[]
   sessions: Pick<SessionRow, 'platform' | 'created_at' | 'last_used_at' | 'expires_at'>[]
-  devices: Pick<UserRow, 'id' | 'tz' | 'platform' | 'created_at' | 'last_seen_at'>[]
+  devices: Pick<
+    UserRow,
+    | 'id'
+    | 'tz'
+    | 'platform'
+    | 'created_at'
+    | 'last_seen_at'
+    | 'locale'
+    | 'news_opt_in'
+    | 'news_opt_in_at'
+    | 'news_opt_out_at'
+    | 'last_news_at'
+  >[]
   /** Every synced row, tombstones (deleted items, kept 30 days) included. */
   synced: SyncReadRows
 }
@@ -298,6 +311,14 @@ export function buildAccountExport(rows: ExportRows, now: number) {
       platform: d.platform,
       createdAt: iso(d.created_at),
       lastSeenAt: iso(d.last_seen_at),
+      language: d.locale,
+      // News notifications (C6): whether they are on, and when they were last turned on and off.
+      news: {
+        on: d.news_opt_in === 1,
+        turnedOnAt: iso(d.news_opt_in_at),
+        turnedOffAt: iso(d.news_opt_out_at),
+        lastReceivedAt: iso(d.last_news_at),
+      },
     })),
     // As the app syncs them (docs/smartstack-phase2-prompt.md §8), dates in ISO form. A deleted
     // item stays 30 days as a tombstone: its key and dates only.
