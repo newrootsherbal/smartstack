@@ -4,6 +4,7 @@ import productsJson from '../data/products.json'
 import generatedRulesJson from '../data/rules.generated.json'
 import curatedRulesJson from '../data/rules.json'
 import { barcodesMatch } from './barcode'
+import { fold } from './fold'
 import { validateCatalogue } from './validate'
 
 function loadCatalogue(): Catalogue {
@@ -58,14 +59,6 @@ export function findProductByBarcode(
   return cat.products.find((p) => productBarcodes(p).some((upc) => barcodesMatch(upc, code)))
 }
 
-// Combining diacritical marks, built from char codes so no bare accent sits in the source.
-const DIACRITICS = new RegExp(`[${String.fromCharCode(0x300)}-${String.fromCharCode(0x36f)}]`, 'g')
-
-/** Lowercase without accents, so "echinacee" finds "Échinacée" and "acetyl" finds "Acétyl". */
-function fold(text: string): string {
-  return text.normalize('NFD').replace(DIACRITICS, '').toLowerCase()
-}
-
 /** Case- and accent-insensitive name search (EN and FR), for the browse list. */
 export function searchProducts(query: string, cat: Catalogue = catalogue): Product[] {
   const q = fold(query.trim())
@@ -87,9 +80,12 @@ export function productContainsIngredient(product: Product, ingredientId: string
  * Rules that apply to a product: ingredient-level rules for every ingredient it
  * contains, plus product-level rules, minus `ruleOverrides.disable`. When two
  * rules share an attribute, the product-level one wins; otherwise the first in
- * rules order. Result is in rules order.
+ * rules order. Result is in rules order. A medication gets none: it stays where the person
+ * takes it and carries no reasons (its ingredients still move other products, see the
+ * scheduler).
  */
 export function rulesForProduct(product: Product, cat: Catalogue = catalogue): TimingRule[] {
+  if (product.kind === 'medication') return []
   const disabled = new Set(product.ruleOverrides?.disable ?? [])
   const ingredientIds = new Set(product.ingredients.map((pi) => pi.ingredientId))
   const applicable = cat.rules.filter((r) => {

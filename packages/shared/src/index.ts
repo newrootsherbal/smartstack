@@ -329,8 +329,9 @@ export interface ReasonParams {
   /** Products in the stack that triggered a separation rule. */
   otherProductIds?: string[]
   /**
-   * Both doses are pinned by the person, so the separation could not be applied: the later
-   * one carries this reason as a timing conflict.
+   * Both doses are fixed (pinned by the person, or a medication), so the separation could not
+   * be applied: the later one carries this reason as a timing conflict (the other product's
+   * dose when the later one is a medication, which never carries reasons).
    */
   pinnedConflict?: boolean
 }

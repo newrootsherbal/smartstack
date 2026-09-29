@@ -5,7 +5,7 @@
 import type { Ingredient, LocalizedText, Product, TimingRule, Unit } from '@smartstack/shared'
 import { isValidRetailBarcode } from '../barcode'
 import { alignFrenchNames } from './french-facts'
-import { CANONICAL, canonicalIngredientId, ingredientNames } from './ingredients'
+import { CANONICAL, canonicalIngredientId, convertUnit, ingredientNames } from './ingredients'
 import { parseRecipe, type RawUnit } from './recipe'
 import { frenchSentenceFor, parseSuggestedUse, type TimingAttribute } from './suggested-use'
 
@@ -111,16 +111,6 @@ export function shortName(name: string): string {
   s = s.replace(/\s+\d[\d,.]*\s*(mg|mcg|g|IU|UI|%|billion|milliards?)\b.*$/i, '')
   s = s.replace(/[\s+·]+$/g, '').trim()
   return s || name
-}
-
-function convertUnit(amount: number, from: RawUnit, to: Unit, id: string): number | null {
-  if (from === to) return amount
-  if (from === 'g' && to === 'mg') return amount * 1000
-  if (from === 'mg' && to === 'mcg') return amount * 1000
-  if (from === 'mcg' && to === 'mg') return amount / 1000
-  if (from === 'IU' && to === 'mcg' && id === 'vitamin-d') return amount / 40
-  if (from === 'IU' && to === 'mg' && id === 'vitamin-e') return amount * 0.67 // d-alpha; approximate
-  return null
 }
 
 const SEVERITY_FOR: Record<TimingAttribute | 'REFRIGERATE', TimingRule['severity']> = {

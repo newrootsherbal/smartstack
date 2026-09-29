@@ -8,6 +8,7 @@ import {
   type MealAnchor,
   type PinAnchor,
   type Placement,
+  type Product,
   type Reason,
   type ReasonParams,
   type Routine,
@@ -65,6 +66,10 @@ interface DoseState {
   anchor: PinAnchor | null
   /** The person's chosen anchor: the dose never moves. */
   pinned: PinAnchor | null
+  /** Never moves: pinned, or a medication dose (pinned or not). */
+  fixed: boolean
+  /** A medication dose: no rules, no reasons, no adjustment; it only moves other products. */
+  medication: boolean
   movedBy: Mover | null
   reasons: Reason[]
 }
@@ -238,6 +243,12 @@ function extraDoseSlot(
  * doses take the next preferred meal (dinner, lunch, breakfast) not yet used by the
  * product. Pinned slots then take the anchor the person chose, and an unpinned dose that
  * would share a time with a pinned one takes the next free slot instead.
+ *
+ * A medication has no rules, so its doses land where a product without rules would (the
+ * first meal, then dinner, lunch, breakfast, bedtime) unless pinned, and every dose is then
+ * fixed: the app asks for one time per dose, so an unpinned medication dose only happens
+ * with incomplete data, and it is treated as if pinned where it landed (never moved, still
+ * moving other products) without being reported as a pin.
  */
 function layoutProduct(
   item: StackItem,
@@ -245,6 +256,7 @@ function layoutProduct(
   r: RoutineMinutes,
   available: ReadonlySet<MealAnchor>,
   firstMeal: MealAnchor,
+  medication: boolean,
 ): DoseState[] {
   const count = Math.min(item.dosesPerDay, MAX_DOSES_PER_DAY)
   const fixed = pickFixedAnchor(rules, available)
@@ -258,6 +270,8 @@ function layoutProduct(
       minutes: anchorMinutes(r, firstAnchor),
       anchor: firstAnchor,
       pinned: null,
+      fixed: medication,
+      medication,
       movedBy:
         fixed && firstAnchor !== firstMeal
           ? { ruleId: fixed.rule.id, code: fixed.code, params: { anchor: firstAnchor } }
@@ -279,6 +293,8 @@ function layoutProduct(
       minutes: slot.minutes,
       anchor: slot.anchor,
       pinned: null,
+      fixed: medication,
+      medication,
       movedBy: null,
       reasons: [],
     })
@@ -292,6 +308,7 @@ function layoutProduct(
     if (!pin) continue
     const anchor = resolvePin(pin, available)
     dose.pinned = anchor
+    dose.fixed = true
     dose.anchor = anchor
     dose.minutes = anchorMinutes(r, anchor)
     dose.movedBy = { ruleId: PIN_RULE_ID, code: 'MOVED_BY_YOU', params: { anchor } }
@@ -403,6 +420,24 @@ function separationConstraints(
   return constraints
 }
 
+/**
+ * A medication's push rules: the SEPARATE_FROM_CALCIUM / SEPARATE_FROM_IRON rules its
+ * canonical ingredients carry (first per attribute in rules order, as `rulesForProduct`
+ * picks them). Coffee rules are left out: coffee cannot be moved.
+ */
+function ingredientSeparationRules(product: Product, cat: Catalogue): TimingRule[] {
+  const ids = new Set(product.ingredients.map((pi) => pi.ingredientId))
+  const byAttribute = new Map<string, TimingRule>()
+  for (const rule of cat.rules) {
+    if (!('ingredientId' in rule.appliesTo) || !ids.has(rule.appliesTo.ingredientId)) continue
+    if (rule.attribute !== 'SEPARATE_FROM_CALCIUM' && rule.attribute !== 'SEPARATE_FROM_IRON') {
+      continue
+    }
+    if (!byAttribute.has(rule.attribute)) byAttribute.set(rule.attribute, rule)
+  }
+  return [...byAttribute.values()]
+}
+
 function violates(minutes: number, c: SeparationConstraint): boolean {
   return c.conflicts.some((conflict) => Math.abs(minutes - conflict) < c.separation)
 }
@@ -494,11 +529,13 @@ function ruleIngredient(rule: TimingRule): string | undefined {
 }
 
 /**
- * Step 3 for a pinned dose: it never moves. An unpinned dose it conflicts with moves
- * instead (to the earliest time that clears the pinned dose and its own rules). Two
- * pinned doses both stay, and the later one gets a timing-conflict reason.
+ * Step 3 for a dose that never moves (pinned, or a medication). An unpinned dose it
+ * conflicts with moves instead (to the earliest time that clears the fixed dose and its own
+ * rules). Two fixed doses both stay, and the later one gets a timing-conflict reason, unless
+ * it is a medication: a medication carries no reasons (not even its own separation reasons),
+ * so the other product's dose gets it.
  */
-function separateAroundPinned(
+function separateAroundFixed(
   dose: DoseState,
   constraints: SeparationConstraint[],
   all: readonly DoseState[],
@@ -506,7 +543,7 @@ function separateAroundPinned(
   r: RoutineMinutes,
   cat: Catalogue,
 ): void {
-  addSeparationReasons(dose, constraints)
+  if (!dose.medication) addSeparationReasons(dose, constraints)
   for (const c of constraints) {
     for (const other of c.others) {
       if (Math.abs(other.minutes - dose.minutes) >= c.separation) continue
@@ -516,18 +553,20 @@ function separateAroundPinned(
         ...(ingredient ? { otherIngredientId: ingredient } : {}),
         otherProductIds: [dose.productId],
       }
-      if (other.pinned) {
-        const later = other.minutes > dose.minutes ? other : dose
+      if (other.fixed) {
+        if (dose.medication && other.medication) continue
+        let flagged = other.minutes > dose.minutes ? other : dose
+        if (flagged.medication) flagged = flagged === dose ? other : dose
         const params: ReasonParams =
-          later === dose
+          flagged === dose
             ? { ...separationParams(c), otherProductIds: [other.productId], pinnedConflict: true }
             : { ...mirrored, pinnedConflict: true }
-        later.reasons.push({
+        flagged.reasons.push({
           ruleId: c.rule.id,
-          attribute: later === dose ? c.rule.attribute : mirroredAttribute(c.rule),
+          attribute: flagged === dose ? c.rule.attribute : mirroredAttribute(c.rule),
           severity: 'timing_conflict',
-          productId: later.productId,
-          doseIndex: later.doseIndex,
+          productId: flagged.productId,
+          doseIndex: flagged.doseIndex,
           params,
         })
         continue
@@ -608,15 +647,19 @@ export function buildSchedule(
 
   const doses: DoseState[] = []
   const rulesByProduct = new Map<string, TimingRule[]>()
+  /** Medications only: the separation rules their ingredients carry, used to move others. */
+  const pushRulesByProduct = new Map<string, TimingRule[]>()
   const dosesByItem = new Map<StackItem, DoseState[]>()
 
   // Steps 1 + 2: baseline, fixed anchors, extra doses, then the person's pins.
   for (const item of stack) {
     const product = getProduct(item.productId, cat)
     if (!product) throw new Error(`unknown product: ${item.productId}`)
+    const medication = product.kind === 'medication'
     const rules = rulesForProduct(product, cat)
     rulesByProduct.set(product.id, rules)
-    const productDoses = layoutProduct(item, rules, r, available, firstMeal)
+    if (medication) pushRulesByProduct.set(product.id, ingredientSeparationRules(product, cat))
+    const productDoses = layoutProduct(item, rules, r, available, firstMeal, medication)
     dosesByItem.set(item, productDoses)
     doses.push(...productDoses)
   }
@@ -626,11 +669,16 @@ export function buildSchedule(
   }
 
   // Step 3: separation, in stack order, against the current position of every other dose.
+  // A medication never moves and has no rules of its own, but the separation rules its
+  // ingredients carry move the other products away from it (an iron medication moves a
+  // calcium supplement, never the reverse).
   for (const dose of doses) {
-    const rules = rulesByProduct.get(dose.productId) ?? []
+    const rules = dose.medication
+      ? (pushRulesByProduct.get(dose.productId) ?? [])
+      : (rulesByProduct.get(dose.productId) ?? [])
     const constraints = separationConstraints(dose, rules, doses, r, cat)
     if (!constraints.length) continue
-    if (dose.pinned) separateAroundPinned(dose, constraints, doses, rulesByProduct, r, cat)
+    if (dose.fixed) separateAroundFixed(dose, constraints, doses, rulesByProduct, r, cat)
     else applySeparation(dose, constraints)
   }
 
@@ -638,11 +686,12 @@ export function buildSchedule(
     addBedtimeSuggestion(item, rulesByProduct.get(item.productId) ?? [], productDoses)
   }
 
-  // Step 4: one adjustment per product whose final time differs from baseline.
+  // Step 4: one adjustment per product whose final time differs from baseline. A medication
+  // is where the person takes it: nothing was moved, so it has none.
   const adjustments: Adjustment[] = []
   const adjusted = new Set<string>()
   for (const dose of doses) {
-    if (adjusted.has(dose.productId)) continue
+    if (dose.medication || adjusted.has(dose.productId)) continue
     if (dose.minutes === dose.baselineMinutes || !dose.movedBy) continue
     adjusted.add(dose.productId)
     adjustments.push({

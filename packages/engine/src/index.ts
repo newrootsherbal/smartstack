@@ -49,4 +49,14 @@ export { buildSchedule, type BuildScheduleOptions } from './scheduler'
 export { shiftRoutine } from './shift'
 export { loadProductText, productText, type ProductText } from './text'
 export { formatHHMM, MINUTES_PER_DAY, parseHHMM, roundUpTo } from './time'
+export {
+  canonicalIngredients,
+  engineKind,
+  mergeCatalogue,
+  normalizeIngredientUnit,
+  recognizeIngredient,
+  toEngineProduct,
+  userRuleId,
+  userRules,
+} from './user-products'
 export { validateCatalogue, type ValidationResult } from './validate'
