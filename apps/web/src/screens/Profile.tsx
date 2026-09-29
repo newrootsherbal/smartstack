@@ -192,6 +192,16 @@ export function Profile() {
         </div>
       </section>
 
+      {state.auth.mode === 'account' && state.auth.role === 'admin' && state.auth.emailVerified && (
+        <section className="card stack-v">
+          <h2>{t('admin.title')}</h2>
+          <p className="small muted">{t('admin.hint')}</p>
+          <Link to="/admin/news" className="btn btn--outline">
+            {t('admin.news')}
+          </Link>
+        </section>
+      )}
+
       <p className="small muted">
         {t('settings.catalogue', { count: catalogue.products.length })}
         <br />

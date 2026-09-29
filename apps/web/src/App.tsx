@@ -30,6 +30,7 @@ import { useAppState } from './state/context'
 const DevBarcodes = lazy(() => import('./screens/dev/Barcodes'))
 const DevStyleguide = lazy(() => import('./screens/dev/Styleguide'))
 const Legal = lazy(() => import('./screens/Legal'))
+const AdminNews = lazy(() => import('./screens/admin/News'))
 
 /** Routes that never show the bottom nav and never redirect to the welcome screen. */
 const STANDALONE = [
@@ -143,6 +144,7 @@ export function App() {
             <Route path="/reminders" element={<Navigate to="/notifications" replace />} />
             <Route path="/settings" element={<Navigate to="/profile" replace />} />
           </Route>
+          <Route path="/admin/news" element={<AdminNews />} />
           <Route path="/dev/barcodes" element={<DevBarcodes />} />
           <Route path="/dev/styleguide" element={<DevStyleguide />} />
           <Route path="*" element={<Navigate to="/" replace />} />
