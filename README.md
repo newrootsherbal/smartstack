@@ -175,17 +175,20 @@ is redeployed. Three GitHub Actions workflows in `.github/workflows/` take care 
   the `allow_shrink` input; it also refuses a partial download. GitHub may delay scheduled runs
   by minutes or, rarely, hours; a manual run is always available.
 - `deploy.yml`: on every push to `main` (so merging that pull request ships the data) runs the
-  checks, builds and runs `wrangler deploy`.
+  checks, builds, applies new D1 migrations (`wrangler d1 migrations apply --remote`) and runs
+  `wrangler deploy`. Every migration must be additive, so the running code keeps working
+  between the two steps.
+- `deploy-staging.yml`: manual (Actions → Deploy staging → Run workflow, any branch): the same
+  checks, a staging build, staging migrations and `wrangler deploy --env staging`.
 
 One-time setup, all in the GitHub repository settings once the code is pushed there:
 
 1. Actions → General → Workflow permissions: tick "Allow GitHub Actions to create and approve
    pull requests" (otherwise `gh pr create` is refused). Add a branch protection rule on `main`
    (require a pull request), since the refresh job holds a token that can push.
-2. Secrets and variables → Actions: add `CLOUDFLARE_API_TOKEN` (an API token with
-   Account → Workers Scripts → Edit on the newrootsherbal account; the "Edit Cloudflare
-   Workers" template also works but grants more) and `CLOUDFLARE_ACCOUNT_ID` (shown by
-   `wrangler whoami`).
+2. Secrets and variables → Actions: add `CLOUDFLARE_API_TOKEN` (an API token on the
+   newrootsherbal account with Account → Workers Scripts → Edit and Account → D1 → Edit, so
+   the deploy can apply migrations) and `CLOUDFLARE_ACCOUNT_ID` (shown by `wrangler whoami`).
 
 Because the pull request is opened with the workflow's own token, GitHub holds `ci.yml` on it
 until someone clicks "Approve and run"; the refresh job runs the same full check before opening
@@ -211,13 +214,21 @@ Herbal natural health product shows "Product not found."
 
 ### Environment
 
-| File                        | Committed | Contents                                                                                 |
-| --------------------------- | --------- | ---------------------------------------------------------------------------------------- |
-| `apps/web/.env`             | yes       | `VITE_VAPID_PUBLIC_KEY` (public), `VITE_BETA_KEY` (speed bump, not security)             |
-| `apps/web/.env.local`       | **no**    | Optional override of `VITE_VAPID_PUBLIC_KEY` for local testing                           |
-| `apps/worker/wrangler.toml` | yes       | `VAPID_PUBLIC_KEY`, `VAPID_SUBJECT`, `MAX_PUSHES_PER_TICK`, `BETA_KEY`, D1 binding, cron |
-| `apps/worker/.dev.vars`     | **no**    | `VAPID_PRIVATE_KEY` (and optionally `VAPID_PUBLIC_KEY`) for local `wrangler dev`         |
-| Cloudflare secret           | n/a       | `wrangler secret put VAPID_PRIVATE_KEY`                                                  |
+| File                        | Committed | Contents                                                                                                                                                                                                         |
+| --------------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `apps/web/.env`             | yes       | Production build: `VITE_VAPID_PUBLIC_KEY` (public), `VITE_BETA_KEY` (speed bump), `VITE_ACCOUNTS_MODE`, `VITE_APPLE_ENABLED`                                                                                     |
+| `apps/web/.env.development` | yes       | `vite` dev server overrides (`VITE_ACCOUNTS_MODE=public`)                                                                                                                                                        |
+| `apps/web/.env.staging`     | yes       | `vite build --mode staging` overrides                                                                                                                                                                            |
+| `apps/web/.env.local`       | **no**    | Optional override of `VITE_VAPID_PUBLIC_KEY` for local testing                                                                                                                                                   |
+| `apps/worker/wrangler.toml` | yes       | Vars (`VAPID_PUBLIC_KEY`, `VAPID_SUBJECT`, `MAX_PUSHES_PER_TICK`, `BETA_KEY`, `APP_ORIGIN`, `ACCOUNTS_MODE`, `STAFF_EMAIL_DOMAINS`, `APPLE_ENABLED`), D1 binding, cron; `[env.staging]` repeats them for staging |
+| `apps/worker/.dev.vars`     | **no**    | `VAPID_PRIVATE_KEY` (and optionally `VAPID_PUBLIC_KEY`) for local `wrangler dev`                                                                                                                                 |
+| Cloudflare secret           | n/a       | `wrangler secret put VAPID_PRIVATE_KEY` (add `--env staging` for staging)                                                                                                                                        |
+
+**Accounts launch gate.** `ACCOUNTS_MODE` (Worker) and `VITE_ACCOUNTS_MODE` (web build) are
+`off`, `staff` or `public`; anything else counts as `off`. Local (`npm run dev`,
+`npm run dev:worker`) and staging use `public`. Production uses `staff` (only addresses in
+`STAFF_EMAIL_DOMAINS` can sign up or log in, and the public UI shows no account features) until
+the Law 25 launch checklist in `docs/smartstack-phase2-setup.md` (part F) is done.
 
 Generate the real VAPID pair **once** with `npx web-push generate-vapid-keys` and store it in
 the company password manager. If the keys change, every phone must re-subscribe. The
@@ -287,6 +298,30 @@ which builds the web app and runs `wrangler deploy`. Production is
 (the zone is on Cloudflare in the same account; wrangler manages the DNS record and the
 certificate, and switches the `workers.dev` URL off). **Push subscriptions are tied to the origin**, so keep the custom domain stable once
 employees install.
+
+### Staging
+
+`https://schedule-staging.flourishbodyandmind.com` is a second Worker (`smartstack-staging`,
+`[env.staging]` in `wrangler.toml`) with its own D1 database `smartstack-staging` (ENAM) and
+`ACCOUNTS_MODE = "public"`. It sits one level below the zone so the free Universal SSL
+certificate covers it. From the repository root:
+
+```bash
+npm run db:migrate:staging -w apps/worker   # apply new migrations to the staging database
+npm run deploy:staging                      # staging build of the web app + wrangler deploy --env staging
+```
+
+Staging secrets are set separately (`npx wrangler secret put NAME --env staging`).
+
+### Security headers
+
+`apps/web/public/_headers` gives every page and asset a Content-Security-Policy
+(`default-src 'self'`, scripts only from our origin plus `'wasm-unsafe-eval'` for the ZXing
+WASM, `connect-src 'self'`, `frame-ancestors 'none'`…), `Referrer-Policy`,
+`X-Content-Type-Options` and `Permissions-Policy` (camera for our origin only). Workers static
+assets apply that file to asset responses and the SPA fallback; `/api/*` responses come from the
+Worker, which adds `Cache-Control: no-store`. There is no inline script: `index.html` loads the
+pre-paint theme from `public/theme-init.js`.
 
 ## Web Push facts baked into the code
 

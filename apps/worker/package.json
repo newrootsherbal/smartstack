@@ -5,11 +5,13 @@
   "description": "Cloudflare Worker: serves the web app, /api/*, and the every-minute reminder cron",
   "type": "module",
   "scripts": {
-    "dev": "wrangler dev --test-scheduled",
+    "dev": "wrangler dev --test-scheduled --var ACCOUNTS_MODE:public --var APP_ORIGIN:http://localhost:5173",
     "deploy": "wrangler deploy",
     "typecheck": "tsc -p tsconfig.json",
     "db:migrate:local": "wrangler d1 migrations apply smartstack --local",
-    "db:migrate:remote": "wrangler d1 migrations apply smartstack --remote"
+    "db:migrate:remote": "wrangler d1 migrations apply smartstack --remote",
+    "deploy:staging": "wrangler deploy --env staging",
+    "db:migrate:staging": "wrangler d1 migrations apply smartstack-staging --env staging --remote"
   },
   "dependencies": {
     "@block65/webcrypto-web-push": "^2.0.0",

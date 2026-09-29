@@ -1,0 +1,41 @@
+# Deploys any branch to staging (https://schedule-staging.flourishbodyandmind.com) on demand:
+# Actions → Deploy staging → Run workflow → pick the branch. Uses the same two secrets as
+# deploy.yml; staging has its own Worker (smartstack-staging), D1 database and secrets.
+name: Deploy staging
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-staging
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - name: Build the web app (staging flags)
+        run: npm run build:staging
+      - name: Apply D1 migrations to staging
+        run: npm run db:migrate:staging -w apps/worker
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      - name: Deploy the staging Worker
+        run: npm run deploy:staging -w apps/worker
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
