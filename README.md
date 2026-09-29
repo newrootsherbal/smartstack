@@ -241,15 +241,15 @@ Herbal natural health product shows "Product not found."
 
 ### Environment
 
-| File                        | Committed | Contents                                                                                                                                                                                                                                                                                              |
-| --------------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `apps/web/.env`             | yes       | Production build: `VITE_VAPID_PUBLIC_KEY` (public), `VITE_BETA_KEY` (speed bump), `VITE_ACCOUNTS_MODE`, `VITE_APPLE_ENABLED`                                                                                                                                                                          |
-| `apps/web/.env.development` | yes       | `vite` dev server overrides (`VITE_ACCOUNTS_MODE=public`)                                                                                                                                                                                                                                             |
-| `apps/web/.env.staging`     | yes       | `vite build --mode staging` overrides                                                                                                                                                                                                                                                                 |
-| `apps/web/.env.local`       | **no**    | Optional override of `VITE_VAPID_PUBLIC_KEY` for local testing                                                                                                                                                                                                                                        |
-| `apps/worker/wrangler.toml` | yes       | Vars (`VAPID_PUBLIC_KEY`, `VAPID_SUBJECT`, `MAX_PUSHES_PER_TICK`, `BETA_KEY`, `APP_ORIGIN`, `ACCOUNTS_MODE`, `STAFF_EMAIL_DOMAINS`, `APPLE_ENABLED`, `GOOGLE_CLIENT_ID`, `EMAIL_MODE`, `EMAIL_FROM`, `EMAIL_REPLY_TO`, `CONSENT_VERSION`), D1 binding, cron; `[env.staging]` repeats them for staging |
-| `apps/worker/.dev.vars`     | **no**    | Local secrets for `wrangler dev`: `VAPID_PRIVATE_KEY` (and optionally `VAPID_PUBLIC_KEY`), `AUTH_PEPPER`, `GOOGLE_CLIENT_SECRET`, optionally `SMTP2GO_API_KEY` (see `.dev.vars.example`)                                                                                                              |
-| Cloudflare secret           | n/a       | `wrangler secret put NAME` for `VAPID_PRIVATE_KEY`, `AUTH_PEPPER`, `GOOGLE_CLIENT_SECRET`, `SMTP2GO_API_KEY` (add `--env staging` for staging)                                                                                                                                                        |
+| File                        | Committed | Contents                                                                                                                                                                                                                                                                                                                |
+| --------------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `apps/web/.env`             | yes       | Production build: `VITE_VAPID_PUBLIC_KEY` (public), `VITE_BETA_KEY` (speed bump), `VITE_ACCOUNTS_MODE`, `VITE_APPLE_ENABLED`                                                                                                                                                                                            |
+| `apps/web/.env.development` | yes       | `vite` dev server overrides (`VITE_ACCOUNTS_MODE=public`)                                                                                                                                                                                                                                                               |
+| `apps/web/.env.staging`     | yes       | `vite build --mode staging` overrides                                                                                                                                                                                                                                                                                   |
+| `apps/web/.env.local`       | **no**    | Optional override of `VITE_VAPID_PUBLIC_KEY` for local testing                                                                                                                                                                                                                                                          |
+| `apps/worker/wrangler.toml` | yes       | Vars (`VAPID_PUBLIC_KEY`, `VAPID_SUBJECT`, `MAX_PUSHES_PER_TICK`, `BETA_KEY`, `APP_ORIGIN`, `ACCOUNTS_MODE`, `STAFF_EMAIL_DOMAINS`, `APPLE_ENABLED`, `GOOGLE_CLIENT_ID`, `EMAIL_MODE`, `EMAIL_FROM`, `EMAIL_REPLY_TO`, `CONSENT_VERSION`, `NEWS_URL_HOSTS`), D1 binding, cron; `[env.staging]` repeats them for staging |
+| `apps/worker/.dev.vars`     | **no**    | Local secrets for `wrangler dev`: `VAPID_PRIVATE_KEY` (and optionally `VAPID_PUBLIC_KEY`), `AUTH_PEPPER`, `GOOGLE_CLIENT_SECRET`, optionally `SMTP2GO_API_KEY` (see `.dev.vars.example`)                                                                                                                                |
+| Cloudflare secret           | n/a       | `wrangler secret put NAME` for `VAPID_PRIVATE_KEY`, `AUTH_PEPPER`, `GOOGLE_CLIENT_SECRET`, `SMTP2GO_API_KEY` (add `--env staging` for staging)                                                                                                                                                                          |
 
 **Accounts launch gate.** `ACCOUNTS_MODE` (Worker) and `VITE_ACCOUNTS_MODE` (web build) are
 `off`, `staff` or `public`; anything else counts as `off`. Local (`npm run dev`,
@@ -276,14 +276,15 @@ body is validated with the shared zod schemas (`packages/shared/src/index.ts`,
 `packages/shared/src/auth.ts`); errors are `{ error, detail? }`, and every API response has
 `Cache-Control: no-store`.
 
-| Route                              | Purpose                                                                                                 |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `PUT /api/me`                      | Create or update `{ tz, platform }`                                                                     |
-| `DELETE /api/me`                   | Delete the user, subscriptions and reminders                                                            |
-| `POST /api/me/push-subscription`   | Upsert `{ endpoint, keys }` (≤ 5 per user)                                                              |
-| `DELETE /api/me/push-subscription` | Remove one endpoint                                                                                     |
-| `PUT /api/me/schedule`             | Replace the pending, future `schedule` rows with the browser's 7-day window (≤ 200); never touches sent |
-| `POST /api/me/test-reminder`       | One `test` reminder 2 minutes out, at most once per 2 minutes                                           |
+| Route                              | Purpose                                                                                                              |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `PUT /api/me`                      | Create or update `{ tz, platform, locale? }` (`locale`: `en` or `fr`, the app language; absent = unchanged)          |
+| `DELETE /api/me`                   | Delete the user, subscriptions and reminders                                                                         |
+| `POST /api/me/push-subscription`   | Upsert `{ endpoint, keys }` (≤ 5 per user)                                                                           |
+| `DELETE /api/me/push-subscription` | Remove one endpoint                                                                                                  |
+| `PUT /api/me/schedule`             | Replace the pending, future `schedule` rows with the browser's 7-day window (≤ 200); never touches sent              |
+| `POST /api/me/test-reminder`       | One `test` reminder 2 minutes out, at most once per 2 minutes                                                        |
+| `PUT /api/me/news`                 | `{ optIn }` → `{ ok, optIn }`: news on this device (C6); stamps `news_opt_in_at` / `news_opt_out_at` when it changes |
 
 ### Accounts (`/api/auth/…`, `/api/account/…`)
 
@@ -380,6 +381,75 @@ put a throwaway `AUTH_PEPPER` (any 43-character base64url string) in
 `.claude/launch.json`) and the web app with `npm run dev`. Emails are printed in the wrangler
 console (`EMAIL_MODE=log`).
 
+### News notifications (`/api/admin/…`, M9)
+
+Staff admins compose push notifications (new product, webinar…) that reach every device that
+turned news on (Notifications → "New products, webinars and offers", C6), or a health-profile
+segment. Code: `apps/worker/src/admin-api.ts` (routes), `apps/worker/src/news/*` (pure,
+unit-tested parts), contracts in `packages/shared/src/news.ts`.
+
+**Admins** are accounts with `accounts.role = 'admin'` **and** a verified email. The role is only
+granted by SQL (`docs/smartstack-phase2-setup.md`, part I):
+`npx wrangler d1 execute smartstack --remote --command "UPDATE accounts SET role = 'admin' WHERE email = 'name@newrootsherbal.com'"`
+(staging: `smartstack-staging --env staging --remote`; local: `--local`). Every `/api/admin/*`
+route takes the session bearer and answers `401` without a session, `403 forbidden` for anyone
+else, and `404` while `ACCOUNTS_MODE` is `off`. Admins only ever see counts.
+
+| Route                                     | Body → answer                                                                                                                                                                                                                  |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `GET /api/admin/campaigns`                | `{ campaigns: CampaignView[] }`, newest first (200 at most), with status, `sentCount`, `failedCount` and `closeToAnother`                                                                                                      |
+| `POST /api/admin/campaigns`               | `CampaignInput` → `201 { campaign }` (a draft); `400 invalid_body`, `400 url_host_not_allowed`                                                                                                                                 |
+| `PUT /api/admin/campaigns/:id`            | `CampaignInput` (full replacement) → `{ campaign }`; drafts and scheduled campaigns only (`409 invalid_status`); a scheduled segment must still reach 10 devices                                                               |
+| `POST /api/admin/campaigns/:id/schedule`  | `{ sendAt }` (epoch ms) → `{ campaign }` (`scheduled`); `400 send_at_past`, `400 outside_sending_window`, `409 audience_too_small`, `409 invalid_status`                                                                       |
+| `POST /api/admin/campaigns/:id/cancel`    | → `{ campaign }` (`cancelled`); from `scheduled` or `sending` only (`409 invalid_status`)                                                                                                                                      |
+| `POST /api/admin/campaigns/:id/duplicate` | → `201 { campaign }`: a new draft "<name> (copy)" with the same texts, link and audience                                                                                                                                       |
+| `POST /api/admin/campaigns/:id/test`      | → `{ devices, sent, failed }`: sends it now to the admin's own linked devices (at most 10 subscriptions), in each device's language, whatever their opt-in or cap; counts nothing; `409 no_devices`, `503 push_not_configured` |
+| `POST /api/admin/audience-estimate`       | `{ audience }` → `{ devices, tooSmall, canSchedule, etaMinutes }`; under 10 devices `devices: null` ("fewer than 10"); `409 segments_unavailable` before migration 0004                                                        |
+
+**A campaign** (`CampaignInput`): `name` (internal, ≤ 80), `titleEn`/`titleFr`, `bodyEn`/`bodyFr`,
+`url`, `audience`. Titles are ≤ 60 characters **including** the N10 prefix ("New Roots Herbal: ",
+French « New Roots Herbal : » with a no-break space): the API **adds the prefix when it is missing**
+(and normalizes one typed by hand), so the composer can edit only the text after it
+(`stripNewsPrefix`, `newsTitleRoom`: 42 characters in English, 41 in French). Bodies ≤ 100.
+Characters are counted as code points (`newsTextLength`). No line breaks. The link must be
+`https` on a host listed in `NEWS_URL_HOSTS` (exact host names, no port); the Worker appends
+`utm_source=smartstack&utm_medium=push&utm_campaign=<slug of the name>`, each only when absent, and
+stores the result.
+
+**Audience**: `{ "type": "all" }` is every device with news on (`users.news_opt_in = 1`), guest or
+account. `{ "type": "segment", conditions?, goals?, genders?, ageMin?, ageMax?, pregnancy? }` also
+needs the device to be linked to an account whose health profile exists (not deleted), has
+targeting consent (C5, `targeting_consent_at`) and matches every part given: any of the
+conditions, any of the goals (`json_each` over the profile's arrays), one of the genders, one of
+the pregnancy statuses, and an age (the current year in Toronto minus the year of birth) within
+the range; a profile without a year of birth never matches an age range. Codes come from
+`packages/shared/src/user-data.ts`; each appears at most once, so a segment binds at most 51 SQL
+parameters. A segment needs at least one part.
+
+**Guardrails.** `sendAt` must fall between 11:00 and 19:00 America/Toronto (both included, to the
+minute; DST-safe helpers `zonedTimeToEpoch` and `inNewsWindow` in the shared package), and not
+more than a minute in the past. A segment under 10 devices can't be scheduled ("everyone" always
+can). A device gets at most one news notification per 24 hours (`users.last_news_at`). The list
+flags scheduled or sending campaigns less than 24 hours apart (`closeToAnother`).
+
+**Delivery** (cron, after the reminders): each tick, news gets what the reminders left of
+`MAX_PUSHES_PER_TICK` (a reminder push counts once per device). Scheduled campaigns whose time has
+come become `sending`; the oldest `sending` one takes the budget. The fan-out walks
+`push_subscriptions` by id after `campaigns.cursor` (no per-delivery rows): opted-in devices
+without news in the last 24 hours (and, for a segment, whose account matches), `LIMIT` the budget,
+the text in the device's `users.locale`. One `DB.batch` then moves the cursor, adds to
+`sent_count`/`failed_count` and stamps `last_news_at` on the devices that got it. `404/410`
+delete the subscription (and count as failed); every other failure counts as failed and is never
+retried. Fewer rows than the budget → `sent` with `finished_at`. Delivery only runs during the
+11:00–19:00 Toronto window: a campaign that isn't finished by 19:00 continues at 11:00 the next
+day. Push options: `TTL: 7200`, `Urgency: normal`, `Topic` = the campaign id. Payload
+`{ title, body, tag: 'news:<id>', url, kind: 'news', campaignId, lang }` (`kind` lets the service
+worker add the Android "Turn off news" action; `lang` labels it).
+
+**Throughput on the free plan**: about 20 devices a minute (`MAX_PUSHES_PER_TICK = 20`, minus the
+reminders of that minute), so roughly 1,000 an hour; `etaMinutes` in the estimate assumes the
+whole budget. The Workers paid plan would raise the ceiling a lot.
+
 ### Reminder cron
 
 **Cron (every minute).** `Date.now()` is captured once. Pending rows more than 30 minutes past
@@ -393,7 +463,7 @@ expired sessions, used or expired email tokens, OAuth attempts and throttle rows
 day. Logs contain counts, status codes and ids only.
 
 `MAX_PUSHES_PER_TICK` counts reminders claimed per tick; a user with several devices
-multiplies pushes. Start at 20 and raise toward 45 only after Workers Logs (`cpuTimeMs`)
+multiplies pushes. News notifications use whatever the reminders leave of it (see above). Start at 20 and raise toward 45 only after Workers Logs (`cpuTimeMs`)
 show a full batch under ~6 ms.
 
 Push options: `TTL: 1800`, `Urgency: high`, `Topic` = the row id (so a retry replaces rather
@@ -526,12 +596,13 @@ This is health-adjacent personal data. Phase 1 is designed to hold as little as 
 
 **What is stored on the server**
 
-| Data                                                                     | Why                                   |
-| ------------------------------------------------------------------------ | ------------------------------------- |
-| Anonymous id (`crypto.randomUUID()`)                                     | The only credential; no account       |
-| Time zone (IANA name) and platform                                       | To interpret and debug reminder times |
-| Push subscription (endpoint, `p256dh`, `auth`)                           | To deliver Web Push                   |
-| Reminder rows (time, title, body; product ids only when names are shown) | The rolling 7-day delivery window     |
+| Data                                                                     | Why                                                           |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------- |
+| Anonymous id (`crypto.randomUUID()`)                                     | The only credential; no account                               |
+| Time zone (IANA name) and platform                                       | To interpret and debug reminder times                         |
+| App language; news on/off with when it was turned on and off; last news  | News in the right language, proof of consent (C6), 1 per 24 h |
+| Push subscription (endpoint, `p256dh`, `auth`)                           | To deliver Web Push                                           |
+| Reminder rows (time, title, body; product ids only when names are shown) | The rolling 7-day delivery window                             |
 
 Not stored on the server: name, email, routine, stack, dose counts, checkbox history.
 
