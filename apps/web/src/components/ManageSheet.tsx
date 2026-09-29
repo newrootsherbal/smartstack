@@ -4,6 +4,7 @@ import { useId } from 'react'
 import { bottleStatus } from '../bottle'
 import { timesLabel } from '../format'
 import { t, tl, type MessageKey } from '../i18n'
+import { useCatalogue } from '../catalogue'
 import { useAppState } from '../state/context'
 import styles from './ManageSheet.module.css'
 import { MoreInfoButton } from './MoreInfoButton'
@@ -30,12 +31,13 @@ interface ManageSheetProps {
 /** Everything about one stack item, kept out of the list rows. */
 export function ManageSheet({ productId, onClose, onOpen }: ManageSheetProps) {
   const { state, dispatch } = useAppState()
+  const catalogue = useCatalogue()
   const id = useId()
   const entry = state.stack.find((s) => s.productId === productId)
-  const product = getProduct(productId)
+  const product = getProduct(productId, catalogue)
   if (!entry) return null
   const name = product ? tl(product.shortName) : productId
-  const status = bottleStatus(entry)
+  const status = bottleStatus(entry, catalogue)
   const onList = state.shopping.some((s) => s.productId === productId)
   const slots = Array.from({ length: entry.dosesPerDay }, (_, i) => i)
 

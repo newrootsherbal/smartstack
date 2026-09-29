@@ -4,6 +4,7 @@ import { useProductText } from '../hooks/useProductText'
 import { t, tl } from '../i18n'
 import { isShortReason } from '../i18n/render'
 import { useTodaySchedule } from '../schedule'
+import { useCatalogue } from '../catalogue'
 import { useAppState } from '../state/context'
 import styles from './ProductInfoSheet.module.css'
 import { SeverityBadge } from './SeverityBadge'
@@ -28,8 +29,9 @@ interface ScheduledDose {
  */
 export function ProductInfoSheet({ productId, onClose }: ProductInfoSheetProps) {
   const { dispatch } = useAppState()
+  const catalogue = useCatalogue()
   const { schedule } = useTodaySchedule()
-  const product = productId ? getProduct(productId) : undefined
+  const product = productId ? getProduct(productId, catalogue) : undefined
   const text = useProductText(product)
 
   const doses: ScheduledDose[] = []
@@ -56,7 +58,7 @@ export function ProductInfoSheet({ productId, onClose }: ProductInfoSheetProps) 
 
   const pinnedDoses = doses.filter((d) => d.pinned)
   const suggestion = product
-    ? rulesForProduct(product).find((r) => r.attribute === 'SUGGEST_BEDTIME')
+    ? rulesForProduct(product, catalogue).find((r) => r.attribute === 'SUGGEST_BEDTIME')
     : undefined
   // Offered even after "No thanks" on Today: this is where the person can still say yes.
   const offerBedtime =
@@ -108,7 +110,7 @@ export function ProductInfoSheet({ productId, onClose }: ProductInfoSheetProps) 
           </div>
         ))}
         {reasons.map((reason) => {
-          const rule = getRule(reason.ruleId)
+          const rule = getRule(reason.ruleId, catalogue)
           if (!rule) return null
           return (
             <article

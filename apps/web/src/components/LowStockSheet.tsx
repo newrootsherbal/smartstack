@@ -2,6 +2,7 @@ import { daysLeft, getProduct } from '@smartstack/engine'
 import { useLocation, useNavigate } from 'react-router'
 import { formatBottleAmount, formatDaysLeft } from '../format'
 import { t, tl } from '../i18n'
+import { useCatalogue } from '../catalogue'
 import { useAppState } from '../state/context'
 import { dailyUseOf } from '../state/reducer'
 import { Sheet } from './Sheet'
@@ -15,17 +16,18 @@ const QUIET_ROUTES = ['/onboarding', '/welcome']
  */
 export function LowStockSheet() {
   const { state, dispatch } = useAppState()
+  const catalogue = useCatalogue()
   const navigate = useNavigate()
   const location = useLocation()
   const productId = state.lowAlerts[0]
   const entry = productId ? state.stack.find((s) => s.productId === productId) : undefined
-  const product = productId ? getProduct(productId) : undefined
+  const product = productId ? getProduct(productId, catalogue) : undefined
   const inv = entry?.inventory
   if (!productId || !entry || !product || !inv) return null
   if (QUIET_ROUTES.some((r) => location.pathname.startsWith(r))) return null
 
   const ack = () => dispatch({ type: 'ACK_LOW_ALERT', productId })
-  const days = daysLeft(inv.remaining, dailyUseOf(entry))
+  const days = daysLeft(inv.remaining, dailyUseOf(entry, catalogue))
   return (
     <Sheet open onClose={ack} title={t('low.title')}>
       <p>

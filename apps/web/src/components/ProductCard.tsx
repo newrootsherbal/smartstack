@@ -1,6 +1,7 @@
 import { getIngredient } from '@smartstack/engine'
 import type { Product } from '@smartstack/shared'
 import { useState } from 'react'
+import { useCatalogue } from '../catalogue'
 import { formatAmount, formatServingSize } from '../format'
 import { t, tl } from '../i18n'
 import styles from './ProductCard.module.css'
@@ -8,6 +9,7 @@ import styles from './ProductCard.module.css'
 const COLLAPSED_ROWS = 8
 
 export function ProductCard({ product }: { product: Product }) {
+  const catalogue = useCatalogue()
   const [expanded, setExpanded] = useState(false)
   const rows = expanded ? product.ingredients : product.ingredients.slice(0, COLLAPSED_ROWS)
   const hidden = product.ingredients.length - rows.length
@@ -41,7 +43,7 @@ export function ProductCard({ product }: { product: Product }) {
         </p>
         <ul className={styles.ingredients}>
           {rows.map((pi) => {
-            const ing = getIngredient(pi.ingredientId)
+            const ing = getIngredient(pi.ingredientId, catalogue)
             return (
               <li key={pi.ingredientId}>
                 <span>{ing ? tl(ing.name) : pi.ingredientId}</span>

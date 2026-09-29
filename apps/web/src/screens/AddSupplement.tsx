@@ -17,6 +17,7 @@ import { formatUnits, parseCount, timesLabel } from '../format'
 import { useProductText } from '../hooks/useProductText'
 import { t, tl } from '../i18n'
 import { hasCamera } from '../platform/scanner'
+import { useCatalogue } from '../catalogue'
 import { useAppState } from '../state/context'
 import styles from './AddSupplement.module.css'
 
@@ -30,6 +31,7 @@ const MAX_RESULTS = 60
 
 export function AddSupplement() {
   const { state, dispatch } = useAppState()
+  const catalogue = useCatalogue()
   const navigate = useNavigate()
   const [mode, setMode] = useState<Mode>(DEFAULT_MODE)
   const [upc, setUpc] = useState('')
@@ -69,7 +71,7 @@ export function AddSupplement() {
     (code: string) => {
       const normalized = normalizeBarcode(code)
       if (!normalized) return
-      const product = findProductByBarcode(normalized)
+      const product = findProductByBarcode(normalized, catalogue)
       if (!product) {
         setNotFound(normalized)
         setCandidate(null)
@@ -77,7 +79,7 @@ export function AddSupplement() {
       }
       select(product, normalized)
     },
-    [select],
+    [select, catalogue],
   )
 
   const confirm = () => {
@@ -119,7 +121,7 @@ export function AddSupplement() {
     setUpc('')
   }
 
-  const results = useMemo(() => searchProducts(query), [query])
+  const results = useMemo(() => searchProducts(query, catalogue), [query, catalogue])
   // An unknown code opens a sheet for accounts (add it by hand) and, once accounts are public,
   // for guests (why an account helps). Otherwise the plain "not found" notice stays.
   const unknownSheet = state.auth.mode === 'account' || ACCOUNTS_PUBLIC
@@ -132,7 +134,7 @@ export function AddSupplement() {
     inventoryUnitFor(candidate.form) === 'unit' &&
     !candidate.unitsPerDose
   const suggestsBedtime = candidate
-    ? rulesForProduct(candidate).some((r) => r.attribute === 'SUGGEST_BEDTIME')
+    ? rulesForProduct(candidate, catalogue).some((r) => r.attribute === 'SUGGEST_BEDTIME')
     : false
 
   return (

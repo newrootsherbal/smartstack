@@ -7,6 +7,7 @@ import { MoreInfoButton } from '../components/MoreInfoButton'
 import { ProductInfoSheet } from '../components/ProductInfoSheet'
 import { t, tl } from '../i18n'
 import { buyOnlineUrl } from '../links'
+import { useCatalogue } from '../catalogue'
 import { useAppState } from '../state/context'
 import styles from './Shopping.module.css'
 
@@ -15,6 +16,7 @@ const UNDO_MS = 6000
 /** Products to buy: added when a bottle runs low, by hand, or as a suggestion. */
 export function Shopping() {
   const { state, dispatch } = useAppState()
+  const catalogue = useCatalogue()
   const [info, setInfo] = useState<string | null>(null)
   const closeInfo = useCallback(() => setInfo(null), [])
   const [bottle, setBottle] = useState<{ productId: string; kind: BottleSheetKind } | null>(null)
@@ -28,7 +30,7 @@ export function Shopping() {
   }, [removed])
 
   const nameOf = (productId: string) => {
-    const product = getProduct(productId)
+    const product = getProduct(productId, catalogue)
     return product ? tl(product.shortName) : productId
   }
 
@@ -55,9 +57,9 @@ export function Shopping() {
       ) : (
         <ul className={`list card ${styles.list}`}>
           {state.shopping.map((item) => {
-            const product = getProduct(item.productId)
+            const product = getProduct(item.productId, catalogue)
             const entry = state.stack.find((s) => s.productId === item.productId)
-            const status = bottleStatus(entry)
+            const status = bottleStatus(entry, catalogue)
             const name = nameOf(item.productId)
             const chip =
               item.reason === 'low'

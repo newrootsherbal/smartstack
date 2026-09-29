@@ -1,6 +1,15 @@
-import { applyTick, getProduct, isLow, refill, undoTick, unitsPerDose } from '@smartstack/engine'
+import {
+  applyTick,
+  catalogue as bundledCatalogue,
+  getProduct,
+  isLow,
+  refill,
+  undoTick,
+  unitsPerDose,
+} from '@smartstack/engine'
 import type {
   AccountView,
+  Catalogue,
   SyncResponse,
   InventoryUnit,
   PinAnchor,
@@ -16,6 +25,7 @@ import {
   type PushSnapshot,
 } from '../account-sync/entities'
 import { authFromAccount } from '../auth/view'
+import { catalogueFor } from '../catalogue'
 import { checkKey, type PersistedState, type PushState, type TodayOverride } from '../storage'
 import type { ThemeId } from '../themes'
 
@@ -156,7 +166,10 @@ export function reducer(state: PersistedState, action: Action): PersistedState {
         checks[key] = { units: 0, at }
         return { ...state, checks }
       }
-      const { remaining, taken } = applyTick(inv.remaining, perDose(entry))
+      const { remaining, taken } = applyTick(
+        inv.remaining,
+        perDose(entry, catalogueFor(state.userProducts)),
+      )
       checks[key] = { units: taken, at }
       const next = updateEntry({ ...state, checks }, action.productId, (s) => ({
         ...s,
@@ -171,7 +184,10 @@ export function reducer(state: PersistedState, action: Action): PersistedState {
       const before = entry.inventory
       const daily =
         entry.dosesPerDay *
-        perDose({ ...entry, inventory: { ...action.bottle, lowFlaggedAt: null } })
+        perDose(
+          { ...entry, inventory: { ...action.bottle, lowFlaggedAt: null } },
+          catalogueFor(state.userProducts),
+        )
       // Edited back above the threshold: the next low bottle is flagged again.
       const lowFlaggedAt =
         before && before.lowFlaggedAt !== null && isLow(action.bottle.remaining, daily)
@@ -238,7 +254,10 @@ export function reducer(state: PersistedState, action: Action): PersistedState {
       const replaced = item?.replacesProductId
         ? next.stack.find((s) => s.productId === item.replacesProductId)
         : undefined
-      if (replaced?.inventory && isLow(replaced.inventory.remaining, dailyUseOf(replaced))) {
+      if (
+        replaced?.inventory &&
+        isLow(replaced.inventory.remaining, dailyUseOf(replaced, catalogueFor(next.userProducts)))
+      ) {
         next = addLowItem(next, replaced.productId, at)
       }
       return next
@@ -310,14 +329,14 @@ export function withPins<T extends StackItem>(item: T, pins: readonly (PinAnchor
   return (trimmed.length > 0 ? { ...rest, pins: trimmed } : rest) as T
 }
 
-/** What one dose takes off this entry's bottle. */
-export function perDose(entry: StackEntry): number {
+/** What one dose takes off this entry's bottle (pass the catalogue with the person's products). */
+export function perDose(entry: StackEntry, catalogue: Catalogue = bundledCatalogue): number {
   const unit = entry.inventory?.unit ?? 'unit'
-  return unitsPerDose(unit, getProduct(entry.productId), entry.unitsPerDose)
+  return unitsPerDose(unit, getProduct(entry.productId, catalogue), entry.unitsPerDose)
 }
 
-export function dailyUseOf(entry: StackEntry): number {
-  return entry.dosesPerDay * perDose(entry)
+export function dailyUseOf(entry: StackEntry, catalogue: Catalogue = bundledCatalogue): number {
+  return entry.dosesPerDay * perDose(entry, catalogue)
 }
 
 function updateEntry(
@@ -357,7 +376,7 @@ function afterDecrease(state: PersistedState, productId: string, at: number): Pe
   const entry = state.stack.find((s) => s.productId === productId)
   const inv = entry?.inventory
   if (!entry || !inv || inv.lowFlaggedAt !== null) return state
-  if (!isLow(inv.remaining, dailyUseOf(entry))) return state
+  if (!isLow(inv.remaining, dailyUseOf(entry, catalogueFor(state.userProducts)))) return state
   const flagged = updateEntry(state, productId, (s) => ({
     ...s,
     inventory: { ...inv, lowFlaggedAt: at },

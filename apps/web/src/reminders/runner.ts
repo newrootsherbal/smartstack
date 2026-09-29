@@ -9,6 +9,7 @@ import { platformName } from '../platform/detect'
 import { getExistingSubscription, toSubscriptionBody } from '../platform/reminders'
 import type { Action } from '../state/reducer'
 import type { PersistedState } from '../storage'
+import { catalogueFor } from '../catalogue'
 import { computeReminderWindow, hashWindow } from '../sync'
 import { setSyncStatus } from './syncStatus'
 
@@ -39,6 +40,7 @@ export function syncSchedule(
       todayOverride: state.todayOverride,
       now: new Date(),
       productNames: state.reminderProductNames,
+      catalogue: catalogueFor(state.userProducts),
     })
     const hash = hashWindow(reminders)
     if (!opts.force && hash === state.lastSyncHash) return

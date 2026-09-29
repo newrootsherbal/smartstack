@@ -1,7 +1,8 @@
 import { buildSchedule, getProduct } from '@smartstack/engine'
-import type { Routine, Schedule, Stack } from '@smartstack/shared'
+import type { Catalogue, Routine, Schedule, Stack } from '@smartstack/shared'
 import { useMemo } from 'react'
 import { localDateKey } from './dates'
+import { catalogueFor } from './catalogue'
 import { useAppState } from './state/context'
 import type { TodayOverride } from './storage'
 
@@ -19,13 +20,14 @@ export function scheduleForDay(
   stack: Stack,
   override: TodayOverride | null,
   dateKey: string,
+  catalogue: Catalogue,
 ): Schedule | null {
   if (!routine) return null
   // A product can leave the catalogue between imports; it is shown on the Stack
   // screen as "no longer in the catalogue" and left out of the schedule.
-  const known = stack.filter((item) => getProduct(item.productId) !== undefined)
+  const known = stack.filter((item) => getProduct(item.productId, catalogue) !== undefined)
   if (known.length === 0) return null
-  return buildSchedule(routineForDay(routine, override, dateKey), known)
+  return buildSchedule(routineForDay(routine, override, dateKey), known, { catalogue })
 }
 
 /** Today's schedule, recomputed whenever routine, stack or the override change. */
@@ -33,8 +35,15 @@ export function useTodaySchedule(): { today: string; schedule: Schedule | null }
   const { state } = useAppState()
   const today = localDateKey()
   const schedule = useMemo(
-    () => scheduleForDay(state.routine, state.stack, state.todayOverride, today),
-    [state.routine, state.stack, state.todayOverride, today],
+    () =>
+      scheduleForDay(
+        state.routine,
+        state.stack,
+        state.todayOverride,
+        today,
+        catalogueFor(state.userProducts),
+      ),
+    [state.routine, state.stack, state.todayOverride, state.userProducts, today],
   )
   return { today, schedule }
 }
