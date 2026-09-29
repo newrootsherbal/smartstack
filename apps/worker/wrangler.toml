@@ -66,6 +66,9 @@ EMAIL_FROM = ""
 EMAIL_REPLY_TO = ""
 # Version of the consent texts (docs/privacy/consent-texts.md). Changing it asks everyone again.
 CONSENT_VERSION = "2026-10"
+# Hosts a news campaign may link to (https only; exact host names, comma-separated). The
+# service worker opens news links on the same hosts (apps/web).
+NEWS_URL_HOSTS = "newrootsherbal.com,www.newrootsherbal.com"
 
 # ---------------------------------------------------------------------------
 # Staging: https://schedule-staging.flourishbodyandmind.com, its own D1 database.
@@ -105,3 +108,4 @@ EMAIL_MODE = "smtp2go"
 EMAIL_FROM = ""
 EMAIL_REPLY_TO = ""
 CONSENT_VERSION = "2026-10"
+NEWS_URL_HOSTS = "newrootsherbal.com,www.newrootsherbal.com"

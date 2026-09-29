@@ -5,7 +5,8 @@
  * signature per origin, not per push.
  */
 import { encryptNotification, vapidHeaders } from '@block65/webcrypto-web-push'
-import type { PushSubscriptionRow } from './env'
+import type { NewsPushPayload } from '@smartstack/shared'
+import type { Env, PushSubscriptionRow } from './env'
 import { classifyPushStatus, PUSH_TTL_SECONDS, type PushOutcome } from './logic'
 
 export interface VapidConfig {
@@ -14,12 +15,33 @@ export interface VapidConfig {
   privateKey: string
 }
 
+/** The VAPID keys, or null until VAPID_PRIVATE_KEY (a secret) and the public vars are set. */
+export function vapidConfig(env: Env): VapidConfig | null {
+  if (!env.VAPID_PRIVATE_KEY || !env.VAPID_PUBLIC_KEY || !env.VAPID_SUBJECT) return null
+  return {
+    subject: env.VAPID_SUBJECT,
+    publicKey: env.VAPID_PUBLIC_KEY,
+    privateKey: env.VAPID_PRIVATE_KEY,
+  }
+}
+
+/** A reminder. News notifications send `NewsPushPayload` (packages/shared/src/news.ts). */
 export interface PushPayload {
   title: string
   body: string
   tag: string
   url: string
 }
+
+export type PushUrgency = 'very-low' | 'low' | 'normal' | 'high'
+
+/** Reminders: 30 minutes, high urgency (the defaults). */
+export interface PushOptions {
+  ttlSeconds: number
+  urgency: PushUrgency
+}
+
+export const REMINDER_PUSH_OPTIONS: PushOptions = { ttlSeconds: PUSH_TTL_SECONDS, urgency: 'high' }
 
 const VAPID_CACHE_MS = 11 * 60 * 60 * 1000
 const vapidCache = new Map<string, { authorization: string; expiresAt: number }>()
@@ -48,10 +70,11 @@ export interface SendResult {
 
 export async function sendPush(
   sub: Pick<PushSubscriptionRow, 'endpoint' | 'p256dh' | 'auth'>,
-  payload: PushPayload,
+  payload: PushPayload | NewsPushPayload,
   topic: string,
   vapid: VapidConfig,
   now: number,
+  options: PushOptions = REMINDER_PUSH_OPTIONS,
 ): Promise<SendResult> {
   try {
     const authorization = await authorizationFor(sub.endpoint, vapid, now)
@@ -67,8 +90,8 @@ export async function sendPush(
       method: 'POST',
       headers: {
         authorization,
-        ttl: String(PUSH_TTL_SECONDS),
-        urgency: 'high',
+        ttl: String(options.ttlSeconds),
+        urgency: options.urgency,
         topic,
         'content-encoding': 'aes128gcm',
         'content-type': 'application/octet-stream',

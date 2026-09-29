@@ -1,6 +1,7 @@
 // @smartstack/shared — types and zod schemas shared by the engine, the web app and the Worker.
 // Exported as TypeScript source (no build step).
 import { z } from 'zod'
+import { Locale } from './auth'
 import { MAX_DOSES_PER_DAY } from './limits'
 import { Inventory } from './user-data'
 
@@ -472,6 +473,8 @@ export const PutMeBody = z.object({
   /** IANA time zone, e.g. America/Toronto. */
   tz: z.string().min(1).max(64),
   platform: Platform,
+  /** The app's language on this device (news notifications use it). Absent: left unchanged. */
+  locale: Locale.optional(),
 })
 export type PutMeBody = z.infer<typeof PutMeBody>
 
@@ -521,3 +524,4 @@ export const ApiError = z.object({
 export type ApiError = z.infer<typeof ApiError>
 export * from './auth'
 export * from './sync'
+export * from './news'
