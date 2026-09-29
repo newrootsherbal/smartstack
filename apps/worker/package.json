@@ -16,6 +16,7 @@
   "dependencies": {
     "@block65/webcrypto-web-push": "^2.0.0",
     "@smartstack/shared": "*",
+    "arctic": "^3.7.0",
     "hono": "^4.13.9",
     "zod": "^4.6.5"
   },
