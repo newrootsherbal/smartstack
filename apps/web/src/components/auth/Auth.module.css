@@ -1,0 +1,71 @@
+.provider {
+  width: 100%;
+  gap: var(--space-3);
+  background: #ffffff;
+  color: #1f1f1f;
+  border: 1px solid #747775;
+  font-family: Roboto, var(--font-body, system-ui), sans-serif;
+  font-weight: 500;
+}
+
+.apple {
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
+}
+
+.providerLogo {
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.passwordRow {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.passwordRow input {
+  flex: 1;
+  min-width: 0;
+}
+
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--text-s);
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.check input {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  margin-top: 1px;
+  accent-color: var(--color-primary);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 480px;
+}

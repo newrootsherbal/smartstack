@@ -50,8 +50,10 @@ export function toSubscriptionBody(sub: PushSubscription): PushSubscriptionBody 
 
 export async function getExistingSubscription(): Promise<PushSubscription | null> {
   if (!pushSupported()) return null
-  const registration = await navigator.serviceWorker.ready
-  return registration.pushManager.getSubscription()
+  // Not `serviceWorker.ready`: it never settles when no worker is active, and deleting data or
+  // an account must never wait on that.
+  const registration = await navigator.serviceWorker.getRegistration()
+  return registration ? registration.pushManager.getSubscription() : null
 }
 
 export async function subscribe(vapidPublicKey: string): Promise<PushSubscription> {

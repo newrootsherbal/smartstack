@@ -13,3 +13,5 @@ packages/engine/data/ingredients.json
 packages/engine/data/rules.generated.json
 packages/engine/data/product-text.json
 packages/engine/data/import-report.md
+# generated from docs/privacy by apps/web/scripts/legal.mjs
+apps/web/src/legal/content.json
