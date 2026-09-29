@@ -493,6 +493,16 @@ granted by SQL (`docs/smartstack-phase2-setup.md`, part I):
 route takes the session bearer and answers `401` without a session, `403 forbidden` for anyone
 else, and `404` while `ACCOUNTS_MODE` is `off`. Admins only ever see counts.
 
+**The composer** is Profile → Admin → News (`/admin/news`, lazy-loaded; the card only shows for a
+verified admin, and the Worker checks the role on every call anyway). Code:
+`apps/web/src/screens/admin/News.tsx`, the pure form logic in `apps/web/src/admin/newsForm.ts`
+(tested). Titles are typed without the "New Roots Herbal:" prefix and counted with it; the link
+field shows the tracking tags the Worker will add; the date and time are Toronto wall-clock. Save
+draft, Send a test to my devices, Schedule (disabled for a segment under 10 devices or a time
+outside 11:00–19:00), Cancel, Duplicate. The device's language reaches the Worker with
+`PUT /api/me` (`locale`) when push is set up and whenever the language changes, so each device
+gets the campaign in its language.
+
 | Route                                     | Body → answer                                                                                                                                                                                                                  |
 | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `GET /api/admin/campaigns`                | `{ campaigns: CampaignView[] }`, newest first (200 at most), with status, `sentCount`, `failedCount` and `closeToAnother`                                                                                                      |
