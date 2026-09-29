@@ -111,7 +111,7 @@ interface SessionAuth {
   account: AccountWithProviders
 }
 
-type AuthEnv = { Bindings: Env; Variables: { auth: SessionAuth } }
+export type AuthEnv = { Bindings: Env; Variables: { auth: SessionAuth } }
 type Ctx = Context<AuthEnv>
 
 export const accountApi = new Hono<AuthEnv>()
@@ -227,7 +227,7 @@ async function authenticate(c: Ctx): Promise<SessionAuth | Response> {
   return { sessionId, account: row }
 }
 
-const requireSession = createMiddleware<AuthEnv>(async (c, next) => {
+export const requireSession = createMiddleware<AuthEnv>(async (c, next) => {
   const auth = await authenticate(c)
   if (auth instanceof Response) return auth
   c.set('auth', auth)
@@ -238,7 +238,7 @@ const requireSession = createMiddleware<AuthEnv>(async (c, next) => {
 // Launch gate and session requirement
 // ---------------------------------------------------------------------------
 
-const accountsGate = createMiddleware<AuthEnv>(async (c, next) => {
+export const accountsGate = createMiddleware<AuthEnv>(async (c, next) => {
   if (accountsMode(c.env) === 'off') return c.json({ error: 'not_found' }, 404)
   await next()
 })
