@@ -207,7 +207,11 @@ function sendLater(c: Ctx, message: EmailMessage): void {
   defer(c, sendEmail(c.env, message))
 }
 
-/** The session behind the bearer token, sliding it at most once a day (after the response). */
+/**
+ * The session behind the bearer token, sliding it at most once a day (after the response).
+ * The staff gate applies when a session is created (sign-up, login, OAuth), not here: an existing
+ * session can always log out, export and delete its account.
+ */
 async function authenticate(c: Ctx): Promise<SessionAuth | Response> {
   const sessionId = await sessionIdFromHeader(c.req.header('authorization'))
   if (!sessionId) return c.json({ error: 'unauthorized' }, 401)
@@ -216,8 +220,6 @@ async function authenticate(c: Ctx): Promise<SessionAuth | Response> {
     AccountWithProviders & { session_id: string; session_last_used_at: number }
   >()
   if (!row) return c.json({ error: 'unauthorized' }, 401)
-  const refusal = signInRefusal(c.env, row.email)
-  if (refusal) return c.json({ error: refusal }, 403)
   if (sessionNeedsSlide(row.session_last_used_at, now)) {
     defer(c, c.env.DB.batch(prepareAll(c.env.DB, slideStatements(sessionId, row.id, now))))
   }

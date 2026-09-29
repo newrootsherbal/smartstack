@@ -266,8 +266,8 @@ body is validated with the shared zod schemas (`packages/shared/src/index.ts`,
 
 All of these answer `404` while `ACCOUNTS_MODE` is `off`. In `staff` mode, sign-up, login and
 Google sign-in (at the callback, once the address is known) answer `403 accounts_not_open` for
-addresses outside `STAFF_EMAIL_DOMAINS`, and so does any session of such an account. Throttled
-routes answer `429 rate_limited` with `Retry-After`. Code: `apps/worker/src/account-api.ts`
+addresses outside `STAFF_EMAIL_DOMAINS` (an existing session can still log out, export and
+delete its account). Throttled routes answer `429 rate_limited` with `Retry-After`. Code: `apps/worker/src/account-api.ts`
 (routes), `apps/worker/src/auth/*` (pure, unit-tested parts), `apps/worker/src/email.ts`.
 
 | Route                                 | Auth         | Body → answer                                                                                                                                                                   |
