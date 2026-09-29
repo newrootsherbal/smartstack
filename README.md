@@ -302,7 +302,7 @@ delete its account). Throttled routes answer `429 rate_limited` with `Retry-Afte
 | `POST /api/auth/verify-email`         | —                 | `{ token }` → `{ ok }`; `400 invalid_token` (unknown, used or older than 48 h)                                                                                                                                                                                                                  |
 | `POST /api/auth/verify-email/resend`  | session           | `{ ok }`; `409 already_verified`; `503 email_failed`; 3 per email per hour                                                                                                                                                                                                                      |
 | `POST /api/auth/password/forgot`      | —                 | `{ email }` → always `{ ok }` (lookup and email happen after the response); 3 per email per hour                                                                                                                                                                                                |
-| `POST /api/auth/password/reset`       | —                 | `{ token, key }` → `{ ok }`; verifies the email, ends every session; `400 invalid_token` (older than 1 h or used)                                                                                                                                                                               |
+| `POST /api/auth/password/reset`       | —                 | `{ token, key, email }` → `{ ok }`; verifies the email, ends every session; `400 invalid_token` (older than 1 h or used); `400 email_mismatch` (token kept)                                                                                                                                     |
 | `POST /api/auth/password/change`      | session           | `{ currentKey, newKey }` → `{ ok }`; ends the other sessions; `401 invalid_credentials`; `409 no_password`                                                                                                                                                                                      |
 | `POST /api/auth/oauth/start`          | `X-Beta-Key`      | `{ provider, intent, claimHash, locale }` (+ session for `link`) → `{ url, state }`; Apple `404 provider_disabled`; `503 provider_not_configured`; 20 per IP per 15 min                                                                                                                         |
 | `GET /api/auth/oauth/google/callback` | —                 | `303 /auth/done?state=…` (`&error=code` on failure: `cancelled`, `invalid_state`, `identity_in_use`, `email_in_use_unverified`, `accounts_not_open`…)                                                                                                                                           |
@@ -333,7 +333,9 @@ answer `500 server_misconfigured` and log why; everything else keeps working.
 **Sessions** are 32 random bytes (base64url); D1 keeps only the hex SHA-256. They end after 90 days
 without use; `expires_at`, `last_used_at` and the account's `last_active_at` slide at most once a
 day. Emailed tokens (verify 48 h, reset 1 h) are hashed the same way, single use, and travel in the
-link's fragment (`/verify-email#token=…`). Throttling uses fixed windows in D1 (`auth_throttle`,
+link's fragment (`/verify-email#token=…`). A reset link also carries the address
+(`/reset-password#token=…&email=…`): the browser needs it to derive the new key, and the Worker
+only consumes the token when the address matches, so a typo can't lock anyone out. Throttling uses fixed windows in D1 (`auth_throttle`,
 keys are hashes of the email or IP).
 
 **Google sign-in** is a plain OAuth redirect (no Google script): start → Google → callback → claim
@@ -389,6 +391,31 @@ products, the stack with its bottles, the shopping list and today's check marks 
 offline can lose one decrease; edit the count. A device offline for more than 30 days misses
 deletions whose tombstones were cleaned up, and could bring such an item back by editing it.
 `updatedAt` comes from the device clock: a clock far ahead wins until it's corrected.
+
+**In the app** (`apps/web/src/auth/`, `src/screens/auth/`): `/welcome` is the first screen
+while accounts are public and the person hasn't chosen yet (Google, email, "I already have an
+account", or "Continue without an account", which keeps today's local-only app). `/signup`,
+`/login`, `/forgot-password`, `/reset-password`, `/verify-email`, `/auth/done` (the OAuth
+landing, which claims the session when this browsing context started the attempt and otherwise
+says "Return to the SmartStack app"; the app window claims when it becomes visible again) and
+`/auth/consent`. The session token lives in `localStorage['smartstack:session']` and a pending
+OAuth attempt in `smartstack:oauth`, outside the state blob. Consent and notice texts are the i18n
+keys `consent.C1`… and `notice.N1`… copied word for word from `docs/privacy/consent-texts.md`.
+Profile shows "Back up & sync" to guests, or the account (email status, sign-in methods,
+Download my data, Log out, Delete my account). A 401 on the account keeps local data and shows
+"Log in again". While `ACCOUNTS_MODE` is `staff`, the public app shows none of this and staff
+find "Staff sign-in" under Profile → Developer.
+
+`/privacy` and `/terms` render `docs/privacy/{privacy-policy,terms}.{en,fr}.md`, converted at build
+time into `apps/web/src/legal/content.json` by `npm run legal -w apps/web` (a test fails when it is
+stale; `?lang=fr|en` picks a version). They show a "Draft" line until `VITE_LEGAL_DRAFT=false`.
+
+**Trying accounts locally.** Apply the migrations (`npm run db:migrate:local -w apps/worker`),
+put a throwaway `AUTH_PEPPER` (any 43-character base64url string) in
+`apps/worker/.dev.vars.e2e` (gitignored), run the Worker with
+`npm run dev -w apps/worker -- --env-file .dev.vars.e2e` (the `worker-accounts` entry in
+`.claude/launch.json`) and the web app with `npm run dev`. Emails are printed in the wrangler
+console (`EMAIL_MODE=log`).
 
 ### Reminder cron
 

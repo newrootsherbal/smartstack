@@ -101,8 +101,12 @@ export type VerifyEmailBody = z.infer<typeof VerifyEmailBody>
 export const ForgotPasswordBody = z.object({ email: Email })
 export type ForgotPasswordBody = z.infer<typeof ForgotPasswordBody>
 
-/** POST /api/auth/password/reset: the key is derived from the new password. */
-export const ResetPasswordBody = z.object({ token: Base64Url32, key: PasswordKey })
+/**
+ * POST /api/auth/password/reset: the key is derived from the new password with the email as
+ * salt, so the client needs the address (the reset link carries it in its fragment) and the
+ * Worker checks it is the one the link was sent to.
+ */
+export const ResetPasswordBody = z.object({ token: Base64Url32, key: PasswordKey, email: Email })
 export type ResetPasswordBody = z.infer<typeof ResetPasswordBody>
 
 /** POST /api/auth/password/change (session). */

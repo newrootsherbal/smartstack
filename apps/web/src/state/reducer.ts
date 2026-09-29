@@ -1,5 +1,6 @@
 import { applyTick, getProduct, isLow, refill, undoTick, unitsPerDose } from '@smartstack/engine'
 import type {
+  AccountView,
   InventoryUnit,
   PinAnchor,
   Routine,
@@ -7,6 +8,7 @@ import type {
   StackEntry,
   StackItem,
 } from '@smartstack/shared'
+import { authFromAccount } from '../auth/view'
 import { checkKey, type PersistedState, type PushState, type TodayOverride } from '../storage'
 import type { ThemeId } from '../themes'
 
@@ -62,6 +64,10 @@ export type Action =
   | { type: 'SET_TZ'; tz: string }
   | { type: 'SET_LOCALE'; locale: 'en' | 'fr' }
   | { type: 'SET_THEME'; theme: ThemeId }
+  /** Signed in (sign-up, login, OAuth claim) or the account was refreshed. */
+  | { type: 'SET_ACCOUNT'; account: AccountView }
+  /** "Continue without an account", or accounts aren't open to the public. */
+  | { type: 'SET_GUEST' }
   | { type: 'RESET'; state: PersistedState }
 
 export function reducer(state: PersistedState, action: Action): PersistedState {
@@ -248,6 +254,12 @@ export function reducer(state: PersistedState, action: Action): PersistedState {
       return { ...state, locale: action.locale }
     case 'SET_THEME':
       return { ...state, theme: action.theme }
+    case 'SET_ACCOUNT':
+      return { ...state, auth: authFromAccount(action.account) }
+    case 'SET_GUEST':
+      return state.auth.mode === 'unset'
+        ? { ...state, auth: { ...state.auth, mode: 'guest' } }
+        : state
     case 'RESET':
       return action.state
   }

@@ -12,6 +12,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev", "-w", "apps/worker"],
       "port": 8787
+    },
+    {
+      "name": "worker-accounts",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "-w", "apps/worker", "--", "--env-file", ".dev.vars.e2e"],
+      "port": 8787
     }
   ]
 }

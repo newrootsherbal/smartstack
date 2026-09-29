@@ -1,0 +1,31 @@
+.welcome {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  max-width: 480px;
+  margin-inline: auto;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  text-align: center;
+  padding-top: var(--space-5);
+}
+
+.logo {
+  width: 160px;
+  height: auto;
+}
+
+.actions {
+  gap: var(--space-3);
+}
+
+.guest {
+  align-items: center;
+  text-align: center;
+  gap: var(--space-1);
+}

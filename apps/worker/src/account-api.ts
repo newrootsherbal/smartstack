@@ -90,6 +90,7 @@ import {
   consumeEmailTokenStatement,
   emailTokenLink,
   insertEmailTokenStatement,
+  liveEmailTokenStatement,
   markEmailVerifiedStatement,
   newEmailToken,
   retireEmailTokensStatement,
@@ -429,7 +430,7 @@ accountApi.post('/auth/password/forgot', async (c) => {
           resetPasswordMessage(
             account.locale,
             account.email,
-            emailTokenLink(c.env.APP_ORIGIN, 'reset_password', reset.token),
+            emailTokenLink(c.env.APP_ORIGIN, 'reset_password', reset.token, account.email),
           ),
         )
       })(),
@@ -449,12 +450,17 @@ accountApi.post('/auth/password/reset', async (c) => {
   const now = Date.now()
   const used = await prepare(
     c.env.DB,
-    consumeEmailTokenStatement(id, 'reset_password', now),
+    consumeEmailTokenStatement(id, 'reset_password', now, body.data.email),
   ).first<{
     account_id: string
     email: string
   }>()
-  if (!used) return c.json({ error: 'invalid_token' }, 400)
+  if (!used) {
+    // A key derived with another address as its salt would lock the person out: the token is
+    // kept for a retry with the right address.
+    const live = await prepare(c.env.DB, liveEmailTokenStatement(id, 'reset_password', now)).first()
+    return c.json({ error: live ? 'email_mismatch' : 'invalid_token' }, 400)
+  }
   // A reset proves the address, so it also verifies it; every session ends (except the caller's,
   // if the request carries one of this account's sessions).
   const keep = await sessionIdFromHeader(c.req.header('authorization'))
