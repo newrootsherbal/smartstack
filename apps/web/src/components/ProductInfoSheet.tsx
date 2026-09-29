@@ -1,6 +1,8 @@
 import { getProduct, getRule, rulesForProduct } from '@smartstack/engine'
 import type { PinAnchor, Reason } from '@smartstack/shared'
+import { alternativesFor } from '../alternatives'
 import { useProductText } from '../hooks/useProductText'
+import { AlternativeSuggestion } from './AlternativeSuggestion'
 import { t, tl } from '../i18n'
 import { isShortReason } from '../i18n/render'
 import { useTodaySchedule } from '../schedule'
@@ -170,6 +172,14 @@ export function ProductInfoSheet({ productId, onClose }: ProductInfoSheetProps) 
               <p className="small">{tl(text.facts)}</p>
             </section>
           )}
+          {own &&
+            alternativesFor(own.id, state, catalogue)
+              .slice(0, 1)
+              .map((alternative) => (
+                <section key={alternative.productId} className={styles.section}>
+                  <AlternativeSuggestion productId={own.id} alternative={alternative} />
+                </section>
+              ))}
           {own?.notes && (
             <section className={styles.section}>
               <h3>{t('other.notes_title')}</h3>

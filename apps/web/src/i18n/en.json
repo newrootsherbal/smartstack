@@ -197,6 +197,8 @@
     "removeTitle": "Remove from my stack"
   },
   "low": {
+    "refillCurrent": "Refill current product",
+    "bodyAlternative": "You're almost out of {product}! Have you considered New Roots Herbal's {alternative}?",
     "title": "Running low",
     "body": "You're almost out of {product}. {days} ({amount}). We added it to your shopping list.",
     "days": {
@@ -387,6 +389,17 @@
     "deleteConfirm": "Delete {product}? It also leaves your stack and your shopping list.",
     "addedByYou": "Added by you. SmartStack doesn't review products from other brands.",
     "notes_title": "Notes"
+  },
+  "alt": {
+    "consider": "Have you considered New Roots Herbal's {product}?",
+    "also": "Also {ingredient}, {amount} per {serving}",
+    "view": "View product"
+  },
+  "replace": {
+    "title": "Add {product} to your stack?",
+    "body": "It replaces {other}.",
+    "replace": "Replace",
+    "keepBoth": "Keep both"
   },
   "backup": {
     "title": "Back up & sync",

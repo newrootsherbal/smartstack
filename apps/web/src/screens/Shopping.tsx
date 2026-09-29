@@ -1,6 +1,10 @@
 import { getProduct } from '@smartstack/engine'
 import type { ShoppingItem } from '@smartstack/shared'
 import { useCallback, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router'
+import { alternativesFor } from '../alternatives'
+import { AlternativeSuggestion } from '../components/AlternativeSuggestion'
+import { Sheet } from '../components/Sheet'
 import { bottleStatus } from '../bottle'
 import { BottleSheet, type BottleSheetKind } from '../components/BottleSheet'
 import { MoreInfoButton } from '../components/MoreInfoButton'
@@ -21,6 +25,8 @@ export function Shopping() {
   const closeInfo = useCallback(() => setInfo(null), [])
   const [bottle, setBottle] = useState<{ productId: string; kind: BottleSheetKind } | null>(null)
   const [removed, setRemoved] = useState<ShoppingItem | null>(null)
+  const [replacing, setReplacing] = useState<ShoppingItem | null>(null)
+  const navigate = useNavigate()
 
   // The undo notice disappears on its own after a few seconds.
   useEffect(() => {
@@ -61,6 +67,9 @@ export function Shopping() {
             const entry = state.stack.find((s) => s.productId === item.productId)
             const status = bottleStatus(entry, catalogue)
             const name = nameOf(item.productId)
+            const suggestion = alternativesFor(item.productId, state, catalogue).find(
+              (a) => !state.shopping.some((s) => s.productId === a.productId),
+            )
             const chip =
               item.reason === 'low'
                 ? t('shopping.chipLow')
@@ -80,6 +89,15 @@ export function Shopping() {
                   )}
                 </div>
                 <div className={styles.actions}>
+                  {!entry && item.reason === 'alternative' && item.replacesProductId && (
+                    <button
+                      type="button"
+                      className="btn btn--small btn--primary"
+                      onClick={() => setReplacing(item)}
+                    >
+                      {t('bottle.refill')}
+                    </button>
+                  )}
                   {entry && (
                     <button
                       type="button"
@@ -114,6 +132,10 @@ export function Shopping() {
                     {t('common.remove')}
                   </button>
                 </div>
+                {/* Another brand: a New Roots Herbal product it could be (§4.6). */}
+                {suggestion && (
+                  <AlternativeSuggestion productId={item.productId} alternative={suggestion} />
+                )}
               </li>
             )
           })}
@@ -136,6 +158,37 @@ export function Shopping() {
         </div>
       )}
 
+      <Sheet
+        open={replacing !== null}
+        onClose={() => setReplacing(null)}
+        title={replacing ? t('replace.title', { product: nameOf(replacing.productId) }) : ''}
+      >
+        {replacing?.replacesProductId && (
+          <>
+            <p>{t('replace.body', { other: nameOf(replacing.replacesProductId) })}</p>
+            <div className="row">
+              <button
+                type="button"
+                className="btn btn--primary"
+                onClick={() =>
+                  navigate(
+                    `/add?product=${replacing.productId}&replace=${replacing.replacesProductId}`,
+                  )
+                }
+              >
+                {t('replace.replace')}
+              </button>
+              <button
+                type="button"
+                className="btn btn--outline"
+                onClick={() => navigate(`/add?product=${replacing.productId}`)}
+              >
+                {t('replace.keepBoth')}
+              </button>
+            </div>
+          </>
+        )}
+      </Sheet>
       <ProductInfoSheet productId={info} onClose={closeInfo} />
       {bottle && (
         <BottleSheet

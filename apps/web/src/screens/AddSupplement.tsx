@@ -1,5 +1,6 @@
 import {
   findProductByBarcode,
+  getProduct,
   inventoryUnitFor,
   normalizeBarcode,
   rulesForProduct,
@@ -41,11 +42,6 @@ export function AddSupplement() {
   // /add?mode=other[&upc=…][&edit=u_…] (the unknown-barcode sheet, Manage → Edit product).
   const otherUpc = params.get('upc') ?? undefined
   const otherEdit = params.get('edit') ?? undefined
-  const [lastParams, setLastParams] = useState(params.toString())
-  if (params.toString() !== lastParams) {
-    setLastParams(params.toString())
-    if (params.get('mode') === 'other') setMode('other')
-  }
   // Other brands need an account; the tab shows once accounts are public (to explain why).
   const showOther = state.auth.mode === 'account' || ACCOUNTS_PUBLIC
   const [upc, setUpc] = useState('')
@@ -80,6 +76,17 @@ export function AddSupplement() {
     },
     [state.stack],
   )
+
+  // /add?product=…[&replace=…]: the shopping list's "replacement bought" (§4.6), and
+  // /add?mode=other…: applied once per new set of parameters.
+  const [lastParams, setLastParams] = useState('')
+  if (params.toString() !== lastParams) {
+    setLastParams(params.toString())
+    if (params.get('mode') === 'other') setMode('other')
+    const preselect = params.get('product')
+    const product = preselect ? getProduct(preselect, catalogue) : undefined
+    if (product && candidate?.id !== product.id) select(product)
+  }
 
   const lookup = useCallback(
     (code: string) => {
@@ -130,6 +137,15 @@ export function AddSupplement() {
         : {}),
       ...(askPerDose && units ? { unitsPerDose: units } : {}),
     })
+    // Bought from the shopping list: it leaves the list, and "Replace" retires the other brand.
+    if (params.get('product') === candidate.id) {
+      // The replaced product leaves the stack first, so removing its replacement from the
+      // list doesn't put it back there as "still running low".
+      const replaced = params.get('replace')
+      if (replaced) dispatch({ type: 'REMOVE_PRODUCT', productId: replaced })
+      dispatch({ type: 'REMOVE_FROM_SHOPPING', productId: candidate.id })
+      setParams({}, { replace: true })
+    }
     setAdded(candidate)
     setCandidate(null)
     setUpc('')

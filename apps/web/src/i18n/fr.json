@@ -197,6 +197,8 @@
     "removeTitle": "Retirer de mes suppléments"
   },
   "low": {
+    "refillCurrent": "Remplir le produit actuel",
+    "bodyAlternative": "Il ne vous reste presque plus de {product}! Avez-vous pensé à {alternative} de New Roots Herbal?",
     "title": "Bientôt épuisé",
     "body": "Il ne vous reste presque plus de {product}. {days} ({amount}). Nous l’avons ajouté à votre liste d’achats.",
     "days": {
@@ -387,6 +389,17 @@
     "deleteConfirm": "Supprimer {product}? Il sera aussi retiré de vos suppléments et de votre liste d’achats.",
     "addedByYou": "Ajouté par vous. SmartStack ne révise pas les produits d’autres marques.",
     "notes_title": "Notes"
+  },
+  "alt": {
+    "consider": "Avez-vous pensé à {product} de New Roots Herbal?",
+    "also": "Contient aussi {ingredient} : {amount} par {serving}",
+    "view": "Voir le produit"
+  },
+  "replace": {
+    "title": "Ajouter {product} à vos suppléments?",
+    "body": "Il remplacera {other}.",
+    "replace": "Remplacer",
+    "keepBoth": "Garder les deux"
   },
   "backup": {
     "title": "Sauvegarde et synchronisation",

@@ -186,3 +186,22 @@ describe('bottles', () => {
     expect(iron(state).inventory).toBeUndefined()
   })
 })
+
+describe('replacement bought', () => {
+  it('retires the other brand without putting it back on the list', () => {
+    let s = tick(tracked(8))
+    s = reducer(s, { type: 'REMOVE_FROM_SHOPPING', productId: 'iron-bisglycinate' })
+    s = reducer(s, {
+      type: 'ADD_TO_SHOPPING',
+      productId: 'heme-iron',
+      reason: 'alternative',
+      replacesProductId: 'iron-bisglycinate',
+      at: T,
+    })
+    // "Replace": the replaced product leaves the stack, then its replacement leaves the list.
+    s = reducer(s, { type: 'REMOVE_PRODUCT', productId: 'iron-bisglycinate' })
+    s = reducer(s, { type: 'REMOVE_FROM_SHOPPING', productId: 'heme-iron' })
+    expect(s.shopping).toEqual([])
+    expect(s.stack.some((x) => x.productId === 'iron-bisglycinate')).toBe(false)
+  })
+})
