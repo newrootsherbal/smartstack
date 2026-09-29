@@ -246,8 +246,9 @@ export type SyncChanges = z.infer<typeof SyncChanges>
 
 /**
  * POST /api/sync (session + consent). `since`: the last `rev` this device applied (0 = never).
- * Answers every row whose revision is newer than `since`, tombstones included, plus the
- * server's copy of every row the request pushed (whether the push won or lost).
+ * Answers every row whose revision is newer than `since`, tombstones included, except the rows
+ * this request pushed: a pushed row comes back only when it LOST (the server's copy, to apply
+ * instead); a pushed row that isn't in the answer was stored as sent.
  */
 export const SyncRequest = z.object({
   since: z.number().int().min(0),
@@ -258,7 +259,7 @@ export type SyncRequestBody = z.input<typeof SyncRequest>
 export type SyncRequest = z.infer<typeof SyncRequest>
 
 export const SyncResponse = z.object({
-  /** The account's revision after this request: the next request's `since`. */
+  /** The account's revision after this request: the next request's `since` (0 = empty account). */
   rev: z.number().int().min(0),
   changes: z.object({
     settings: SyncSettings.nullable(),

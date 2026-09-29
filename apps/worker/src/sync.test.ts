@@ -140,7 +140,7 @@ describe('pull (empty changes)', () => {
 })
 
 describe('reads after a push', () => {
-  it("also answer the server's copy of every pushed key (won or lost)", () => {
+  it("answer newer rows, and the server's copy of a pushed key only when the push lost", () => {
     const rows = changes({
       checks: [
         { day: '2026-10-05', productId: 'iron', doseIndex: 1, units: 1, updatedAt: T },
@@ -157,9 +157,18 @@ describe('reads after a push', () => {
       ]),
     ])
     expect(s.sql).toContain(
-      `rev > ?2 OR (day, product_id, dose_index) IN (SELECT json_extract(value, '$[0]'), json_extract(value, '$[1]'), json_extract(value, '$[2]') FROM json_each(?3))`,
+      `CASE WHEN (day, product_id, dose_index) IN (SELECT json_extract(value, '$[0]'), json_extract(value, '$[1]'), json_extract(value, '$[2]') FROM json_each(?3))`,
     )
-    expect(settingsReadStatement(ACCOUNT, 3, true).params).toEqual([ACCOUNT])
+    // A pushed key that took the new revision won: it isn't echoed.
+    expect(s.sql).toContain(
+      'THEN rev <> (SELECT rev FROM accounts WHERE id = ?1) ELSE rev > ?2 END',
+    )
+    expect(settingsReadStatement(ACCOUNT, 3, true)).toEqual({
+      sql: expect.stringMatching(
+        /AND rev <> \(SELECT rev FROM accounts WHERE id = \?1\)$/,
+      ) as string,
+      params: [ACCOUNT],
+    })
   })
 })
 

@@ -397,30 +397,28 @@ WHERE ${guard.join(' AND ')}`,
   }
 }
 
+/*
+ * What a request reads back. Pull: every row with `rev > since`, tombstones included. Push: the
+ * same, except that a key this request pushed comes back only when the push LOST (the row
+ * doesn't carry the new revision), with the server's copy; a pushed row that won is exactly
+ * what the device sent, so it isn't echoed (a first backup doesn't get its 500 rows back).
+ * Rows with the new revision are only ever this request's winners: the bump and the upserts
+ * are one transaction.
+ */
+
 export function settingsReadStatement(
   accountId: string,
   since: number,
   pushed: boolean,
 ): Statement {
-  // A pushed settings row always comes back: the device learns whether its copy won.
-  return pushed
-    ? {
-        sql: `SELECT routine, tz, locale, theme, updated_at, rev FROM account_settings
-WHERE account_id = ?1`,
-        params: [accountId],
-      }
-    : {
-        sql: `SELECT routine, tz, locale, theme, updated_at, rev FROM account_settings
-WHERE account_id = ?1 AND rev > ?2`,
-        params: [accountId, since],
-      }
+  return {
+    sql: `SELECT routine, tz, locale, theme, updated_at, rev FROM account_settings
+WHERE account_id = ?1 AND ${pushed ? `rev <> ${NEW_REV}` : 'rev > ?2'}`,
+    params: pushed ? [accountId] : [accountId, since],
+  }
 }
 
-/**
- * Rows newer than `since`, tombstones included, plus the server's copy of every key this
- * request pushed (whether the push won or lost), so the device converges even when its copy
- * lost to one it had already pulled. `?3` is a JSON array of key tuples.
- */
+/** See above; for a push, `?3` is a JSON array of the pushed key tuples. */
 export function readStatement(
   table: SyncTable,
   accountId: string,
@@ -439,7 +437,8 @@ export function readStatement(
   return {
     sql: `SELECT ${columns} FROM ${table.name}
 WHERE account_id = ?1
-  AND (rev > ?2 OR (${table.key.join(', ')}) IN (SELECT ${tuple} FROM json_each(?3)))
+  AND CASE WHEN (${table.key.join(', ')}) IN (SELECT ${tuple} FROM json_each(?3))
+    THEN rev <> ${NEW_REV} ELSE rev > ?2 END
 ORDER BY rev`,
     params: [accountId, since, JSON.stringify(keys)],
   }
@@ -810,7 +809,11 @@ const EXPORT_ORDER: Record<SyncTable['name'], string> = {
 /** Settings, then SYNC_TABLES in order. */
 export function syncExportStatements(accountId: string): Statement[] {
   return [
-    settingsReadStatement(accountId, 0, true),
+    {
+      sql: `SELECT routine, tz, locale, theme, updated_at, rev FROM account_settings
+WHERE account_id = ?1`,
+      params: [accountId],
+    },
     ...SYNC_TABLES.map((table) => ({
       sql: `SELECT ${[...table.key, ...table.data, 'rev'].join(', ')} FROM ${table.name}
 WHERE account_id = ?1 ORDER BY ${EXPORT_ORDER[table.name]}`,

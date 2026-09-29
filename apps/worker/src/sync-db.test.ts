@@ -278,7 +278,9 @@ describe.skipIf(!sqlite)('POST /api/sync against SQLite', () => {
         checks: [check],
       },
     })
-    expect(pushed.rev).toBe(1)
+    // Every pushed row won: nothing to send back.
+    const empty = { settings: null, products: [], stack: [], shopping: [], checks: [] }
+    expect(pushed).toEqual({ rev: 1, changes: empty })
     const expected = {
       settings: { ...settings, deletedAt: null },
       products: [{ ...product, deletedAt: null }],
@@ -286,12 +288,24 @@ describe.skipIf(!sqlite)('POST /api/sync against SQLite', () => {
       shopping: [{ ...shoppingItem, deletedAt: null }],
       checks: [{ ...check, deletedAt: null }],
     }
-    expect(pushed.changes).toEqual(expected)
     expect(await ok(db, alice, { since: 0 })).toEqual({ rev: 1, changes: expected })
     // Up to date: nothing newer than rev 1, and a pull writes nothing.
-    const empty = { settings: null, products: [], stack: [], shopping: [], checks: [] }
     expect(await ok(db, alice, { since: 1, changes: {} })).toEqual({ rev: 1, changes: empty })
     expect(query(db, 'SELECT rev FROM accounts WHERE id = ?1', ['alice'])).toEqual([{ rev: 1 }])
+  })
+
+  it("answers another device's changes with a push, never this push's winners", async () => {
+    await ok(db, alice, { since: 0, changes: { stack: [stackItem] } }) // device B, rev 1
+    // Device A last pulled at rev 0 and pushes a shopping item.
+    const a = await ok(db, alice, { since: 0, changes: { shopping: [shoppingItem] } })
+    expect(a.rev).toBe(2)
+    expect(a.changes.stack).toEqual([{ ...stackItem, deletedAt: null }])
+    expect(a.changes.shopping).toEqual([])
+    // A retry of a push whose answer was lost: same rows, same updatedAt → they tie, the
+    // server's (identical) copies come back and the device ends up where it was.
+    const retry = await ok(db, alice, { since: 0, changes: { shopping: [shoppingItem] } })
+    expect(retry.rev).toBe(3)
+    expect(retry.changes.shopping).toEqual([{ ...shoppingItem, deletedAt: null }])
   })
 
   it('last write wins by updatedAt; a tie keeps the server copy; the loser learns it', async () => {
@@ -316,23 +330,24 @@ describe.skipIf(!sqlite)('POST /api/sync against SQLite', () => {
     })
     expect(tie.changes.stack).toEqual([{ ...stackItem, deletedAt: null }])
 
-    // Newer: wins, and takes the new revision.
+    // Newer: wins (so it isn't echoed), and takes the new revision.
     const newer = await ok(db, alice, {
       since: 3,
       changes: { stack: [{ ...stackItem, dosesPerDay: 1, pins: [], updatedAt: T + 1 }] },
     })
     expect(newer.rev).toBe(4)
-    expect(newer.changes.stack).toEqual([
-      { ...stackItem, dosesPerDay: 1, pins: [], updatedAt: T + 1, deletedAt: null },
-    ])
+    expect(newer.changes.stack).toEqual([])
     expect(query(db, 'SELECT doses_per_day, rev FROM stack_items', [])).toEqual([
       { doses_per_day: 1, rev: 4 },
+    ])
+    expect((await ok(db, alice, { since: 3 })).changes.stack).toEqual([
+      { ...stackItem, dosesPerDay: 1, pins: [], updatedAt: T + 1, deletedAt: null },
     ])
   })
 
   it('stores tombstones without the data, and they beat older live copies', async () => {
     await ok(db, alice, { since: 0, changes: { products: [product], checks: [check] } })
-    const deleted = await ok(db, alice, {
+    await ok(db, alice, {
       since: 1,
       changes: {
         products: [{ id: PRODUCT_ID, updatedAt: T + 5, deletedAt: T + 5 }],
@@ -341,6 +356,8 @@ describe.skipIf(!sqlite)('POST /api/sync against SQLite', () => {
         stack: [{ productId: 'zinc', updatedAt: T + 5, deletedAt: T + 5 }],
       },
     })
+    // Another device learns about the deletions.
+    const deleted = await ok(db, alice, { since: 1 })
     expect(deleted.changes).toMatchObject({
       products: [{ id: PRODUCT_ID, updatedAt: T + 5, deletedAt: T + 5 }],
       stack: [{ productId: 'zinc', updatedAt: T + 5, deletedAt: T + 5 }],
@@ -372,7 +389,10 @@ describe.skipIf(!sqlite)('POST /api/sync against SQLite', () => {
       since: 3,
       changes: { products: [{ ...product, updatedAt: T + 9 }] },
     })
-    expect(back.changes.products).toEqual([{ ...product, updatedAt: T + 9, deletedAt: null }])
+    expect(back.changes.products).toEqual([])
+    expect((await ok(db, alice, { since: 3 })).changes.products).toEqual([
+      { ...product, updatedAt: T + 9, deletedAt: null },
+    ])
   })
 
   it('keeps accounts apart, even when a product id collides', async () => {
@@ -386,10 +406,17 @@ describe.skipIf(!sqlite)('POST /api/sync against SQLite', () => {
       },
     })
     // Bob's product was not written (the id is Alice's) and Alice's data never shows.
-    expect(bobs.changes.products).toEqual([])
-    expect(bobs.changes.stack).toEqual([
-      { ...stackItem, dosesPerDay: 1, updatedAt: T + 1, deletedAt: null },
-    ])
+    expect(bobs.changes).toEqual({
+      settings: null,
+      products: [],
+      stack: [],
+      shopping: [],
+      checks: [],
+    })
+    expect((await ok(db, bob, { since: 0 })).changes).toMatchObject({
+      products: [],
+      stack: [{ ...stackItem, dosesPerDay: 1, updatedAt: T + 1, deletedAt: null }],
+    })
     const alices = await ok(db, alice, { since: 0 })
     expect(alices.changes.products).toEqual([{ ...product, deletedAt: null }])
     expect(alices.changes.stack).toEqual([{ ...stackItem, deletedAt: null }])
