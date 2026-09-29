@@ -729,12 +729,23 @@ accountApi.delete('/account/identity/:provider', async (c) => {
 accountApi.get('/account/export', async (c) => {
   const { account } = c.get('auth')
   const now = Date.now()
-  const [accounts, identities, sessions, devices, settings, products, stack, shopping, checks] =
-    await c.env.DB.batch(prepareAll(c.env.DB, exportStatements(account.id)))
+  const [
+    accounts,
+    identities,
+    sessions,
+    devices,
+    settings,
+    health,
+    products,
+    stack,
+    shopping,
+    checks,
+  ] = await c.env.DB.batch(prepareAll(c.env.DB, exportStatements(account.id)))
   const accountRow = accounts?.results[0] as ExportRows['account'] | undefined
   if (!accountRow) return c.json({ error: 'unauthorized' }, 401)
   const synced = {
     settings: settings?.results ?? [],
+    health: health?.results ?? [],
     products: products?.results ?? [],
     stack: stack?.results ?? [],
     shopping: shopping?.results ?? [],

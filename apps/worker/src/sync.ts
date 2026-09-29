@@ -17,12 +17,21 @@ import {
   type SyncCheck,
   type SyncProduct,
   type SyncResponse,
+  type SyncHealth,
   type SyncSettings,
   type SyncShoppingItem,
   type SyncStackItem,
 } from '@smartstack/shared'
 import type { Locale } from './env'
 import type { Statement } from './logic'
+import {
+  healthCleanupStatement,
+  healthExportStatement,
+  healthFromRow,
+  healthReadStatement,
+  healthUpsertStatement,
+  type HealthProfileRow,
+} from './sync-health'
 
 // ---------------------------------------------------------------------------
 // Rows as D1 returns them (migration 0003)
@@ -313,6 +322,7 @@ export function checkParam(c: SyncCheck): ParamRow {
 /** Every changed row of a request, per table, as bound to the upserts. */
 export interface SyncParams {
   settings: SyncSettings | null
+  health: SyncHealth | null
   user_products: ParamRow[]
   stack_items: ParamRow[]
   shopping_items: ParamRow[]
@@ -322,6 +332,7 @@ export interface SyncParams {
 export function syncParams(changes: SyncChanges): SyncParams {
   return {
     settings: changes.settings ?? null,
+    health: changes.health ?? null,
     user_products: changes.products.map(productParam),
     stack_items: changes.stack.map(stackParam),
     shopping_items: changes.shopping.map(shoppingParam),
@@ -330,7 +341,11 @@ export function syncParams(changes: SyncChanges): SyncParams {
 }
 
 export function hasChanges(params: SyncParams): boolean {
-  return params.settings !== null || SYNC_TABLES.some((t) => params[t.name].length > 0)
+  return (
+    params.settings !== null ||
+    params.health !== null ||
+    SYNC_TABLES.some((t) => params[t.name].length > 0)
+  )
 }
 
 // ---------------------------------------------------------------------------
@@ -446,7 +461,7 @@ ORDER BY rev`,
 
 export interface SyncPlan {
   statements: Statement[]
-  /** Index of the settings read; the four table reads follow in SYNC_TABLES order. */
+  /** Index of the settings read; the health read, then the four table reads follow. */
   firstRead: number
 }
 
@@ -458,12 +473,14 @@ export function syncPlan(accountId: string, since: number, params: SyncParams): 
   const push = hasChanges(params)
   const statements: Statement[] = [push ? bumpRevStatement(accountId) : readRevStatement(accountId)]
   if (params.settings) statements.push(settingsUpsertStatement(accountId, params.settings))
+  if (params.health) statements.push(healthUpsertStatement(accountId, params.health))
   for (const table of SYNC_TABLES) {
     const rows = params[table.name]
     if (rows.length > 0) statements.push(upsertStatement(table, accountId, rows))
   }
   const firstRead = statements.length
   statements.push(settingsReadStatement(accountId, since, params.settings !== null))
+  statements.push(healthReadStatement(accountId, since, params.health !== null))
   for (const table of SYNC_TABLES) {
     statements.push(readStatement(table, accountId, since, params[table.name]))
   }
@@ -579,6 +596,7 @@ export function checkFromRow(r: DoseCheckRow): SyncCheck {
 
 export interface SyncReadRows {
   settings: AccountSettingsRow[]
+  health: HealthProfileRow[]
   products: UserProductRow[]
   stack: StackItemRow[]
   shopping: ShoppingItemRow[]
@@ -591,6 +609,7 @@ export function syncResponse(rev: number, rows: SyncReadRows): SyncResponse {
     rev,
     changes: {
       settings: settings ? settingsFromRow(settings) : null,
+      health: rows.health[0] ? healthFromRow(rows.health[0]) : null,
       products: rows.products.map(productFromRow),
       stack: rows.stack.map(stackFromRow),
       shopping: rows.shopping.map(shoppingFromRow),
@@ -792,6 +811,7 @@ export function syncCleanupStatements(now: number): Statement[] {
       sql: `DELETE FROM ${table} WHERE deleted_at IS NOT NULL AND deleted_at < ?1`,
       params: [tombstoneCutoff],
     })),
+    healthCleanupStatement(tombstoneCutoff),
   ]
 }
 
@@ -806,7 +826,7 @@ const EXPORT_ORDER: Record<SyncTable['name'], string> = {
   dose_checks: 'day, product_id, dose_index',
 }
 
-/** Settings, then SYNC_TABLES in order. */
+/** Settings, the health profile, then SYNC_TABLES in order. */
 export function syncExportStatements(accountId: string): Statement[] {
   return [
     {
@@ -814,6 +834,7 @@ export function syncExportStatements(accountId: string): Statement[] {
 WHERE account_id = ?1`,
       params: [accountId],
     },
+    healthExportStatement(accountId),
     ...SYNC_TABLES.map((table) => ({
       sql: `SELECT ${[...table.key, ...table.data, 'rev'].join(', ')} FROM ${table.name}
 WHERE account_id = ?1 ORDER BY ${EXPORT_ORDER[table.name]}`,

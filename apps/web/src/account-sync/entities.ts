@@ -12,6 +12,7 @@ import {
   syncCheckKey,
   type SyncChanges,
   type SyncCheck,
+  type SyncHealth,
   type SyncProduct,
   type SyncRequestBody,
   type SyncResponse,
@@ -22,8 +23,8 @@ import {
 import type { PersistedState } from '../storage'
 import { THEME_IDS, type ThemeId } from '../themes'
 
-/** The health profile joins sync in M8 (the Worker refuses it until its table exists). */
-export const HEALTH_SYNC_ENABLED = false
+/** The health profile syncs like the rest since M8 (migration 0004). */
+export const HEALTH_SYNC_ENABLED = true
 
 export const SETTINGS_KEY = 'settings'
 export const HEALTH_KEY = 'health'
@@ -193,12 +194,20 @@ export function buildChanges(
   const checks: SyncCheck[] = []
   const snapshot: PushSnapshot = new Map()
   let settings: SyncSettings | undefined
+  let health: SyncHealth | undefined
 
   for (const key of keys) {
     const deletedAt = state.tombstones[key]
     if (key === SETTINGS_KEY) {
       settings = settingsRow(state)
       snapshot.set(key, state.settingsUpdatedAt)
+    } else if (key === HEALTH_KEY) {
+      if (!HEALTH_SYNC_ENABLED) continue
+      const live = state.healthProfile
+      if (live) health = { ...live, deletedAt: null }
+      else if (deletedAt !== undefined) health = { updatedAt: deletedAt, deletedAt }
+      else continue
+      snapshot.set(key, live?.updatedAt ?? deletedAt!)
     } else if (key.startsWith('product:')) {
       const id = key.slice('product:'.length)
       const live = state.userProducts.find((p) => p.id === id)
@@ -235,6 +244,7 @@ export function buildChanges(
   return {
     changes: {
       ...(settings ? { settings } : {}),
+      ...(health ? { health } : {}),
       products,
       stack,
       shopping,
@@ -309,6 +319,19 @@ export function applyRemote(
     }
   }
 
+  if (HEALTH_SYNC_ENABLED && remote.health) {
+    const row = remote.health
+    const version = row.deletedAt ?? row.updatedAt
+    if (wins(HEALTH_KEY, state.healthProfile?.updatedAt, version)) {
+      delete tombstones[HEALTH_KEY]
+      if (row.deletedAt !== null) next = { ...next, healthProfile: null }
+      else {
+        const { deletedAt: _d, ...profile } = row as Exclude<SyncHealth, { deletedAt: number }>
+        next = { ...next, healthProfile: profile }
+      }
+    }
+  }
+
   const merge = <
     L extends { updatedAt: number },
     R extends { updatedAt: number; deletedAt: number | null },
@@ -374,6 +397,7 @@ function remoteVersions(changes: SyncResponse['changes']): Map<string, number> {
   const out = new Map<string, number>()
   const v = (row: { updatedAt: number; deletedAt: number | null }) => row.deletedAt ?? row.updatedAt
   if (changes.settings) out.set(SETTINGS_KEY, changes.settings.updatedAt)
+  if (changes.health) out.set(HEALTH_KEY, v(changes.health))
   for (const r of changes.products) out.set(productKey(r.id), v(r))
   for (const r of changes.stack) out.set(stackKey(r.productId), v(r))
   for (const r of changes.shopping) out.set(shoppingKey(r.productId), v(r))

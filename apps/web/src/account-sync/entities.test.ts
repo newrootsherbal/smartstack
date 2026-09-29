@@ -45,7 +45,15 @@ function account(): PersistedState {
 
 const empty = (rev: number, changes: Partial<SyncResponse['changes']> = {}): SyncResponse => ({
   rev,
-  changes: { settings: null, products: [], stack: [], shopping: [], checks: [], ...changes },
+  changes: {
+    settings: null,
+    health: null,
+    products: [],
+    stack: [],
+    shopping: [],
+    checks: [],
+    ...changes,
+  },
 })
 
 describe('markChanges', () => {
@@ -290,5 +298,45 @@ describe('pushes and the first sign-in', () => {
       },
     })
     expect(next.sync).toMatchObject({ rev: 0, outbox: [], initialized: false })
+  })
+})
+
+describe('health profile (M8)', () => {
+  const profile = {
+    birthYear: 1990,
+    gender: null,
+    pregnancy: null,
+    conditions: [],
+    goals: ['energy' as const],
+    diet: [],
+    avoids: [],
+    activity: null,
+    storageConsentAt: T,
+    targetingConsentAt: null,
+    updatedAt: T,
+  }
+
+  it('queues the profile and its deletion like any other entity', () => {
+    const saved = accountReducer(account(), { type: 'SET_HEALTH_PROFILE', profile })
+    expect(saved.sync.outbox).toContain('health')
+    expect(buildChanges(saved, ['health']).changes.health).toEqual({ ...profile, deletedAt: null })
+    const deleted = accountReducer(saved, { type: 'DELETE_HEALTH_PROFILE', at: T + 9 })
+    expect(buildChanges(deleted, ['health']).changes.health).toEqual({
+      updatedAt: T + 9,
+      deletedAt: T + 9,
+    })
+  })
+
+  it('takes a newer profile from the Worker, and its deletion', () => {
+    const pulled = applyRemote(
+      account(),
+      empty(3, { health: { ...profile, deletedAt: null } }).changes,
+    )
+    expect(pulled.healthProfile).toEqual(profile)
+    const gone = applyRemote(
+      pulled,
+      empty(4, { health: { updatedAt: T + 1, deletedAt: T + 1 } }).changes,
+    )
+    expect(gone.healthProfile).toBeNull()
   })
 })

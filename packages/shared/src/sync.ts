@@ -160,8 +160,8 @@ export const SyncCheck = z.union([SyncCheckLive, SyncCheckTombstone])
 export type SyncCheck = z.infer<typeof SyncCheck>
 
 /**
- * The health profile. Accepted by the schema, but the Worker answers `403 consent_required`
- * for it until M8 creates its table (never send it before then).
+ * The health profile (M8). A live row always carries its storage consent (C4); a deletion is a
+ * tombstone. Targeting (C5) stays off unless `targetingConsentAt` is set.
  */
 export const SyncHealth = z.union([
   HealthProfile.extend({ deletedAt: NotDeleted }),
@@ -263,6 +263,8 @@ export const SyncResponse = z.object({
   rev: z.number().int().min(0),
   changes: z.object({
     settings: SyncSettings.nullable(),
+    /** Absent from Workers older than M8. */
+    health: SyncHealth.nullable().default(null),
     products: z.array(SyncProduct),
     stack: z.array(SyncStackItem),
     shopping: z.array(SyncShoppingItem),

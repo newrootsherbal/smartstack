@@ -21,6 +21,7 @@ import {
   syncExportStatements,
   type SyncReadRows,
 } from '../sync'
+import { healthFromRow } from '../sync-health'
 
 /** Correlated subquery giving an account's distinct providers ("google", "apple,google"…). */
 export const PROVIDERS_SQL = `(SELECT group_concat(DISTINCT provider) FROM auth_identities
@@ -301,6 +302,7 @@ export function buildAccountExport(rows: ExportRows, now: number) {
     // As the app syncs them (docs/smartstack-phase2-prompt.md §8), dates in ISO form. A deleted
     // item stays 30 days as a tombstone: its key and dates only.
     settings: withIsoDates(synced.settings[0] ? settingsFromRow(synced.settings[0]) : null),
+    healthProfile: withIsoDates(synced.health[0] ? healthFromRow(synced.health[0]) : null),
     products: withIsoDates(synced.products.map(productFromRow)),
     stack: withIsoDates(synced.stack.map(stackFromRow)),
     shoppingList: withIsoDates(synced.shopping.map(shoppingFromRow)),

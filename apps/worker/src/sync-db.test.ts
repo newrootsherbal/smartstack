@@ -50,7 +50,12 @@ const sqlite = (await import(/* @vite-ignore */ 'node:' + 'sqlite').catch(
 )) as SqliteModule | null
 const fs = (await import(/* @vite-ignore */ 'node:' + 'fs')) as FsModule
 
-const MIGRATIONS = ['0001_init.sql', '0002_accounts.sql', '0003_user_data.sql']
+const MIGRATIONS = [
+  '0001_init.sql',
+  '0002_accounts.sql',
+  '0003_user_data.sql',
+  '0004_health_profiles.sql',
+]
 
 function freshDatabase(): SqliteDatabase {
   const db = new sqlite!.DatabaseSync(':memory:')
@@ -279,10 +284,18 @@ describe.skipIf(!sqlite)('POST /api/sync against SQLite', () => {
       },
     })
     // Every pushed row won: nothing to send back.
-    const empty = { settings: null, products: [], stack: [], shopping: [], checks: [] }
+    const empty = {
+      settings: null,
+      health: null,
+      products: [],
+      stack: [],
+      shopping: [],
+      checks: [],
+    }
     expect(pushed).toEqual({ rev: 1, changes: empty })
     const expected = {
       settings: { ...settings, deletedAt: null },
+      health: null,
       products: [{ ...product, deletedAt: null }],
       stack: [{ ...stackItem, deletedAt: null }],
       shopping: [{ ...shoppingItem, deletedAt: null }],
@@ -408,6 +421,7 @@ describe.skipIf(!sqlite)('POST /api/sync against SQLite', () => {
     // Bob's product was not written (the id is Alice's) and Alice's data never shows.
     expect(bobs.changes).toEqual({
       settings: null,
+      health: null,
       products: [],
       stack: [],
       shopping: [],
@@ -433,16 +447,48 @@ describe.skipIf(!sqlite)('POST /api/sync against SQLite', () => {
     expect((await sync(db, { id: 'x', token: 'nope' }, { since: 0 })).status).toBe(401)
   })
 
-  it('refuses the health profile (M8) without writing anything', async () => {
-    const res = await sync(db, alice, {
+  it('syncs the health profile (M8): last write wins, and a deletion clears its answers', async () => {
+    const profile = {
+      birthYear: 1985,
+      gender: 'woman' as const,
+      pregnancy: 'none' as const,
+      conditions: ['ibs' as const],
+      goals: ['sleep' as const, 'stress' as const],
+      diet: [],
+      avoids: ['dairy' as const],
+      activity: 'moderate' as const,
+      storageConsentAt: T,
+      targetingConsentAt: T,
+      updatedAt: T,
+      deletedAt: null,
+    }
+    expect((await sync(db, alice, { since: 0, changes: { health: profile } })).status).toBe(200)
+    const pulled = await ok(db, alice, { since: 0, changes: {} })
+    expect(pulled.changes.health).toEqual(profile)
+    // An older copy loses and learns the server's.
+    const stale = await ok(db, alice, {
       since: 0,
-      changes: {
-        stack: [stackItem],
-        health: { updatedAt: T, deletedAt: T },
-      },
+      changes: { health: { ...profile, goals: [], updatedAt: T - 1 } },
     })
-    expect(res).toEqual({ status: 403, json: { error: 'consent_required', detail: ['health'] } })
-    expect(query(db, 'SELECT count(*) AS n FROM stack_items', [])).toEqual([{ n: 0 }])
+    expect(stale.changes.health).toMatchObject({ goals: ['sleep', 'stress'] })
+    // Deleting keeps a tombstone with no answers left in the row.
+    await sync(db, alice, { since: 0, changes: { health: { updatedAt: T + 5, deletedAt: T + 5 } } })
+    expect(
+      query(
+        db,
+        'SELECT conditions, goals, avoids, birth_year, targeting_consent_at, deleted_at FROM health_profiles',
+        [],
+      ),
+    ).toEqual([
+      {
+        conditions: '[]',
+        goals: '[]',
+        avoids: '[]',
+        birth_year: null,
+        targeting_consent_at: null,
+        deleted_at: T + 5,
+      },
+    ])
   })
 
   it('answers 413 above 500 rows or 512 KB, 400 for bad bodies', async () => {
@@ -559,9 +605,9 @@ describe.skipIf(!sqlite)('cleanup, limits and export statements against SQLite',
     expect(runAll(db, [limitReadStatement(LIMITED_TABLES[1]!, 'alice')])[0]).toEqual([
       { key: 'magnesium', updated_at: T, deleted_at: null },
     ])
-    const [s, products, stack, shopping, checks] = runAll(db, syncExportStatements('alice'))
-    expect([s, products, stack, shopping, checks].map((rows) => rows?.length)).toEqual([
-      1, 1, 1, 1, 1,
+    const [s, health, products, stack, shopping, checks] = runAll(db, syncExportStatements('alice'))
+    expect([s, health, products, stack, shopping, checks].map((rows) => rows?.length)).toEqual([
+      1, 0, 1, 1, 1, 1,
     ])
   })
 })

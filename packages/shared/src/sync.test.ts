@@ -221,6 +221,10 @@ describe('response', () => {
         checks: [],
       },
     }
-    expect(SyncResponse.parse(response)).toEqual(response)
+    // A Worker from before M8 sends no health: it reads as null.
+    expect(SyncResponse.parse(response)).toEqual({
+      ...response,
+      changes: { ...response.changes, health: null },
+    })
   })
 })

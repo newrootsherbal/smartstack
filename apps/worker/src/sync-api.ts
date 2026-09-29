@@ -57,11 +57,6 @@ syncApi.post('/sync', async (c) => {
     return c.json({ error: 'invalid_body', detail: describeIssues(parsed.error.issues) }, 400)
   }
   const { since, changes } = parsed.data
-  // The health profile syncs from M8 (its table and its own storage consent come then).
-  if (changes.health !== undefined) {
-    return c.json({ error: 'consent_required', detail: ['health'] }, 403)
-  }
-
   const checks = tablesToCheck(changes)
   if (checks.length > 0) {
     const results = await c.env.DB.batch<LimitRow>(
@@ -85,15 +80,17 @@ syncApi.post('/sync', async (c) => {
   const read = (i: number) => results[plan.firstRead + i]?.results ?? []
   const rows = {
     settings: read(0),
-    products: read(1),
-    stack: read(2),
-    shopping: read(3),
-    checks: read(4),
+    health: read(1),
+    products: read(2),
+    stack: read(3),
+    shopping: read(4),
+    checks: read(5),
   } as SyncReadRows
   const response = syncResponse(rev, rows)
   if (hasChanges(params)) {
     const pushed =
       (params.settings ? 1 : 0) +
+      (params.health ? 1 : 0) +
       params.user_products.length +
       params.stack_items.length +
       params.shopping_items.length +

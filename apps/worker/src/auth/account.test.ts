@@ -166,8 +166,9 @@ describe('deletion and export (§5.9)', () => {
   })
 
   it('exports every row of the account without secrets', () => {
-    // Account, sign-in methods, sessions, devices, then the 5 synced tables (migration 0003).
-    expect(exportStatements('acc-1')).toHaveLength(9)
+    // Account, sign-in methods, sessions, devices, then the synced data: settings, the health
+    // profile (0004) and the 4 tables of migration 0003.
+    expect(exportStatements('acc-1')).toHaveLength(10)
     for (const s of exportStatements('acc-1')) expect(s.params).toEqual(['acc-1'])
     expect(exportStatements('acc-1')[2]!.sql).not.toMatch(/SELECT \*|\bid\b,/)
     const data = buildAccountExport(
@@ -194,6 +195,7 @@ describe('deletion and export (§5.9)', () => {
         ],
         synced: {
           settings: [],
+          health: [],
           products: [{ ...PRODUCT_TOMBSTONE_ROW, id: 'u_0f8fad5b-d9cb-469f-a165-70867728950e' }],
           stack: [STACK_ROW],
           shopping: [],

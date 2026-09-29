@@ -80,8 +80,8 @@ describe('upsert statements (§8.2)', () => {
       products: [{ id: 'u_0f8fad5b-d9cb-469f-a165-70867728950e', updatedAt: T, deletedAt: T }],
     })
     const plan = syncPlan(ACCOUNT, 4, syncParams(all))
-    // bump + 5 upserts + 5 reads
-    expect(plan.statements).toHaveLength(11)
+    // bump + 5 upserts + 6 reads (settings, health, 4 tables)
+    expect(plan.statements).toHaveLength(12)
     expect(plan.firstRead).toBe(6)
     expect(plan.statements[0]!.sql).toBe(
       'UPDATE accounts SET rev = rev + 1 WHERE id = ?1 RETURNING rev',
@@ -126,7 +126,7 @@ describe('upsert statements (§8.2)', () => {
 describe('pull (empty changes)', () => {
   it('reads the revision and every table, without writing', () => {
     const plan = syncPlan(ACCOUNT, 7, syncParams(changes({})))
-    expect(plan.statements).toHaveLength(6)
+    expect(plan.statements).toHaveLength(7)
     expect(plan.firstRead).toBe(1)
     expect(plan.statements[0]).toEqual({
       sql: 'SELECT rev FROM accounts WHERE id = ?1',
@@ -347,6 +347,7 @@ describe('daily cleanup (§8.6)', () => {
       'DELETE FROM user_products WHERE deleted_at IS NOT NULL AND deleted_at < ?1',
       'DELETE FROM stack_items WHERE deleted_at IS NOT NULL AND deleted_at < ?1',
       'DELETE FROM shopping_items WHERE deleted_at IS NOT NULL AND deleted_at < ?1',
+      'DELETE FROM health_profiles WHERE deleted_at IS NOT NULL AND deleted_at < ?1',
     ])
     for (const s of tombstones) expect(s.params).toEqual([now - 30 * 24 * 3600_000])
   })
