@@ -19,7 +19,8 @@ personalized daily schedule with reminders and a "More info" sheet for every pro
    **Timing conflict** (orange, "Action recommended"), **Consideration** (yellow),
    **Product instruction** (blue), **Informational** (outline). Seed rules use only the middle
    three. All five are shown on `/dev/styleguide`.
-4. No accounts, no analytics, no third-party scripts, no third-party CDN loads.
+4. Accounts are optional (guest mode works as in Phase 1). No analytics, no third-party
+   scripts, no third-party CDN loads.
 5. Bilingual: no user-facing string lives in the engine; all copy is in
    `apps/web/src/i18n/en.json` and `fr.json` (same keys, checked by a test), catalogue text
    carries `{ en, fr }`, and Profile → Language switches the language (picked from the browser's
@@ -569,7 +570,10 @@ network errors leave the row for the next tick. All result writes go in one `DB.
 03:00 UTC tick deletes `sent/failed/expired` rows older than 7 days and, in a separate batch,
 expired sessions, used or expired email tokens, OAuth attempts and throttle rows older than a
 day, and, in a third batch, check marks older than 3 days and sync tombstones older than 30.
-Logs contain counts, status codes and ids only.
+Last, the inactivity step (`inactivity.ts`): at 03:00 it deletes accounts warned 30 days
+earlier and devices without an account unused for 12 months; from 03:00 to 03:09 it emails up
+to 3 inactivity warnings per tick (see [Privacy](#privacy)). Logs contain counts, status codes
+and ids only.
 
 `MAX_PUSHES_PER_TICK` counts reminders claimed per tick; a user with several devices
 multiplies pushes. News notifications use whatever the reminders leave of it (see above). Start at 20 and raise toward 45 only after Workers Logs (`cpuTimeMs`)
@@ -699,33 +703,96 @@ pre-paint theme from `public/theme-init.js`.
 4. Send me a test reminder in 2–3 minutes → lock the phone → the notification arrives.
 5. Profile → Delete my data removes the server rows and returns to onboarding.
 
+**Accounts and news** (staging first; production once accounts are public). Android installed
+app, iPhone Home Screen app and desktop Chrome:
+
+1. Sign up with email → the verification email arrives → the link confirms. Log out, log in,
+   forgot password → the new password works and the old one doesn't.
+2. Continue with Google. On the iPhone Home Screen app, you end up signed in inside the app (a
+   Safari sheet may stay open: close it; the app signs in when it comes back).
+3. Two devices on one account: a change on one appears on the other; tick a dose → the bottle
+   count follows.
+4. Other brand with its NPN or DIN → "Fill from Health Canada" fills the form.
+5. Health profile: consent → answers → the "relevant news" switch (also in Notifications) →
+   delete it.
+6. Notifications → news on. An admin sends a test from Profile → Admin → News → it arrives in the
+   device's language and opens the link. On Android, "Turn off news" switches news off.
+7. Switch the app to French → the next test arrives in French.
+8. Profile → Your account → Download my data → a JSON file. Delete my account → the welcome
+   screen, and signing in again fails.
+
+The full list, with the expected emails, is in `docs/smartstack-phase2-setup.md` (Test checklist).
+
 ## Privacy
 
-This is health-adjacent personal data. Phase 1 is designed to hold as little as possible.
+SmartStack handles health-adjacent personal information, so it keeps as little as it can, and
+the rules below are enforced in code. The public texts are in `docs/privacy/`: privacy policy and
+terms in English and French, the consent texts (C1–C7) and notices (N1–N10), the privacy impact
+assessment and the incident runbook. They stay drafts, with a "Draft" line in the app
+(`VITE_LEGAL_DRAFT`), until the Privacy Officer approves them (setup doc, part F); until then
+production runs `ACCOUNTS_MODE=staff`.
 
-**What is stored on the server**
+**Guests** (no account, the default). Routine, stack, bottles, shopping list and check marks stay
+in the browser. The server hears from a guest's device only once reminders or news are turned on,
+and then stores:
 
-| Data                                                                     | Why                                                           |
-| ------------------------------------------------------------------------ | ------------------------------------------------------------- |
-| Anonymous id (`crypto.randomUUID()`)                                     | The only credential; no account                               |
-| Time zone (IANA name) and platform                                       | To interpret and debug reminder times                         |
-| App language; news on/off with when it was turned on and off; last news  | News in the right language, proof of consent (C6), 1 per 24 h |
-| Push subscription (endpoint, `p256dh`, `auth`)                           | To deliver Web Push                                           |
-| Reminder rows (time, title, body; product ids only when names are shown) | The rolling 7-day delivery window                             |
+| Data                                                                     | Why                                                         |
+| ------------------------------------------------------------------------ | ----------------------------------------------------------- |
+| Anonymous device id (`crypto.randomUUID()`)                              | The device's only credential                                |
+| Time zone, platform, app language                                        | Reminder times; news in the device's language               |
+| News on or off, when it was last turned on and off, last news received   | Proof of consent (C6); at most 1 news notification per 24 h |
+| Push subscription (endpoint, `p256dh`, `auth`)                           | To deliver Web Push                                         |
+| Reminder rows (time, title, body; product ids only when names are shown) | The rolling 7-day delivery window                           |
 
-Not stored on the server for guests: name, email, routine, stack, dose counts, checkbox history.
-Accounts (behind `ACCOUNTS_MODE`) also store what [Sync](#sync-apisync) lists; this section is
-rewritten for accounts before they launch (M10).
+**Accounts** (optional) also store what the person chose to back up:
 
-**Where:** Cloudflare D1, database `smartstack` in the ENAM (Eastern North America) region. Sent, failed and expired reminder rows are deleted 7 days after
-their scheduled time by the 03:00 UTC cron tick. Logs contain counts, status codes and reminder
-ids, never a user id together with product names or notification text.
+| Data                                                                                                                 | Why                                                       |
+| -------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| Email, whether it is verified, optional name, language, role                                                         | Sign-in and account emails                                |
+| HMAC(`AUTH_PEPPER`, salt ‖ key), the key being the password stretched in the browser (PBKDF2-SHA256, 600,000 rounds) | Sign-in; the password never leaves the device             |
+| Google account id and email, only after "Continue with Google"                                                       | Sign-in with Google                                       |
+| Sessions (SHA-256 of the token, platform, dates)                                                                     | Staying signed in                                         |
+| Consent version and date, "14 or older" date                                                                         | Proof of consent (Law 25)                                 |
+| Routine, time zone, theme, stack, other-brand products, bottles, shopping list, check marks                          | Sync between the person's devices ([Sync](#sync-apisync)) |
+| Health profile with its storage consent (C4) and targeting consent (C5, off by default)                              | Only to choose news, and only while C5 is on              |
+| Which devices belong to the account                                                                                  | That person's reminders and news                          |
 
-**How to delete:** Profile → "Delete my data" calls `DELETE /api/me`, which deletes the user,
-their subscriptions and their reminders, then clears local storage.
+Never stored: the password, location, contacts, photos, analytics or advertising identifiers.
+Admins composing news (`/admin/news`) only ever see counts, and a health-profile segment under 10
+devices can't be scheduled.
 
-**Before any employee beta** (not only before consumer release), a privacy review under
-**PIPEDA** and **Quebec Law 25**, including a **privacy impact assessment**, is required.
+**Retention** (the 03:00 UTC cron tick: `apps/worker/src/auth/cleanup.ts`, `sync.ts`,
+`inactivity.ts`, all tested; the privacy policy, §10, promises the same):
+
+| Data                                | Kept                                                                                                  |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| An account and everything in it     | Until "Delete my account"; unused for 3 years → deleted, after a warning email (N8/N9) 30 days before |
+| A device without an account         | Until "Delete my data"; 12 months without use → deleted with its subscriptions and reminders          |
+| Health profile                      | Until "Delete my health profile" (the answers are cleared at once) or the account                     |
+| Check marks                         | 3 days                                                                                                |
+| Deleted items (sync tombstones)     | 30 days                                                                                               |
+| Sessions                            | Until "Log out", or 90 days without use                                                               |
+| Email links                         | Until used or expired (48 h to verify, 1 h to reset), then deleted within a day                       |
+| OAuth attempts, throttle counters   | 1 day                                                                                                 |
+| Reminder rows                       | 7 days after their time                                                                               |
+| D1 Time Travel (Cloudflare backups) | 7 days; it can't be switched off                                                                      |
+| Workers Logs                        | 3 days. Console logs hold counts, status codes and ids only; production has invocation logs off       |
+
+Inactivity is measured by `accounts.last_active_at` (a login or a sync, written at most once a
+day); any login or sync clears the warning. Warnings go out from 03:00 to 03:09 UTC, 3 per tick,
+and an account is only marked warned once its email was sent, so a missing email setup never
+leads to a deletion without notice.
+
+**Where:** Cloudflare Workers and D1 (database `smartstack` in ENAM, Eastern North America;
+encrypted at rest). Processors: Cloudflare; SMTP2GO (account emails: the address and the message);
+Google (only after "Continue with Google"); the browsers' push services (the payload is
+encrypted). Health Canada lookups send only the NPN or DIN, from the Worker.
+
+**Rights:** Profile → Your account → **Download my data** (`GET /api/account/export`: the
+account, its sign-in methods, sessions, devices with their language and news consent, and every
+synced row, as JSON) and **Delete my account** (`DELETE /api/account`; foreign keys cascade to
+everything above). Guests: Profile → **Delete my data** (`DELETE /api/me`), which deletes the
+device, its subscriptions and its reminders, then clears local storage.
 
 ## Sample-data rule (all of Phase 1)
 
