@@ -1,11 +1,18 @@
-import type { Catalogue, Ingredient, Product, TimingRule } from '@smartstack/shared'
+import type {
+  Catalogue,
+  CuratedAlternative,
+  Ingredient,
+  Product,
+  TimingRule,
+} from '@smartstack/shared'
+import alternativesJson from '../data/alternatives.json'
 import ingredientsJson from '../data/ingredients.json'
 import productsJson from '../data/products.json'
 import generatedRulesJson from '../data/rules.generated.json'
 import curatedRulesJson from '../data/rules.json'
 import { barcodesMatch } from './barcode'
 import { fold } from './fold'
-import { validateCatalogue } from './validate'
+import { validateAlternatives, validateCatalogue } from './validate'
 
 function loadCatalogue(): Catalogue {
   const result = validateCatalogue({
@@ -25,6 +32,18 @@ function loadCatalogue(): Catalogue {
  * newrootsherbal.com (`npm run data:import:website`), never fetched at runtime.
  */
 export const catalogue: Catalogue = loadCatalogue()
+
+function loadAlternatives(): CuratedAlternative[] {
+  const result = validateAlternatives(alternativesJson, catalogue)
+  if (!result.ok) throw new Error(`Invalid alternatives.json:\n${result.errors.join('\n')}`)
+  return result.alternatives
+}
+
+/**
+ * New Roots Herbal alternatives chosen by the product team for other brands' products
+ * (`data/alternatives.json`, filled from the other-brand report), for `suggestAlternatives`.
+ */
+export const curatedAlternatives: CuratedAlternative[] = loadAlternatives()
 
 // ---------------------------------------------------------------------------
 // Lookups

@@ -236,6 +236,24 @@ export const Catalogue = z.object({
 })
 export type Catalogue = z.infer<typeof Catalogue>
 
+/**
+ * A New Roots Herbal product the product team suggests for another brand's product
+ * (`packages/engine/data/alternatives.json`, §4.9). `match` is the other product's barcode,
+ * or its brand and name: case- and accent-insensitive, the name as "contains".
+ */
+export const CuratedAlternative = z
+  .object({
+    match: z.union([
+      z.object({ upc: z.string().regex(/^\d{8,13}$/) }).strict(),
+      z.object({ brand: z.string().min(1), name: z.string().min(1) }).strict(),
+    ]),
+    /** The catalogue product suggested (never topical). */
+    productId: z.string().min(1),
+  })
+  .extend(ReviewFields.shape)
+export type CuratedAlternative = z.infer<typeof CuratedAlternative>
+export const CuratedAlternatives = z.array(CuratedAlternative)
+
 // ---------------------------------------------------------------------------
 // User data (browser localStorage is the source of truth)
 // ---------------------------------------------------------------------------

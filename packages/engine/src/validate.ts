@@ -1,13 +1,61 @@
 import {
   Catalogue as CatalogueSchema,
+  CuratedAlternatives,
   SEED_SEVERITIES,
   USER_PRODUCT_ID_PREFIX,
   USER_RULE_ID_PREFIX,
   type Catalogue,
+  type CuratedAlternative,
 } from '@smartstack/shared'
-import { isValidRetailBarcode, SAMPLE_EAN13_PREFIX } from './barcode'
+import { isValidEan8, isValidRetailBarcode, SAMPLE_EAN13_PREFIX } from './barcode'
 
 export type ValidationResult = { ok: true; catalogue: Catalogue } | { ok: false; errors: string[] }
+
+export type AlternativesValidation =
+  { ok: true; alternatives: CuratedAlternative[] } | { ok: false; errors: string[] }
+
+/**
+ * Validate `data/alternatives.json` against an already validated catalogue: the shape, the
+ * suggested product exists and is not topical, the other product's barcode has a valid check
+ * digit (UPC-A, EAN-13 or EAN-8), brand and name are not blank, the review fields agree, and
+ * no entry is listed twice.
+ */
+export function validateAlternatives(raw: unknown, cat: Catalogue): AlternativesValidation {
+  const parsed = CuratedAlternatives.safeParse(raw)
+  if (!parsed.success) {
+    return {
+      ok: false,
+      errors: parsed.error.issues.map(
+        (i) => `alternatives.${i.path.join('.') || '<root>'}: ${i.message}`,
+      ),
+    }
+  }
+  const products = new Map(cat.products.map((p) => [p.id, p]))
+  const errors: string[] = []
+  const seen = new Set<string>()
+  parsed.data.forEach((entry, i) => {
+    const where = `alternatives[${i}]`
+    const product = products.get(entry.productId)
+    if (!product) errors.push(`${where}: unknown product ${entry.productId}`)
+    else if (product.kind === 'topical') {
+      errors.push(`${where}: ${entry.productId} is topical and cannot be suggested`)
+    } else if (product.kind === 'medication' || product.status === 'user') {
+      errors.push(`${where}: ${entry.productId} is not a catalogue product`)
+    }
+    if ('upc' in entry.match) {
+      const code = entry.match.upc
+      const valid = code.length === 8 ? isValidEan8(code) : isValidRetailBarcode(code)
+      if (!valid) errors.push(`${where}: barcode ${code} has a bad check digit`)
+    } else if (!entry.match.brand.trim() || !entry.match.name.trim()) {
+      errors.push(`${where}: brand and name must not be blank`)
+    }
+    const key = JSON.stringify([entry.match, entry.productId])
+    if (seen.has(key)) errors.push(`${where}: listed twice`)
+    seen.add(key)
+    errors.push(...reviewConsistency(where, entry))
+  })
+  return errors.length ? { ok: false, errors } : { ok: true, alternatives: parsed.data }
+}
 
 export const SEPARATION_ATTRIBUTES: ReadonlySet<string> = new Set([
   'SEPARATE_FROM_CALCIUM',
