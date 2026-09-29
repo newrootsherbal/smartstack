@@ -10,6 +10,7 @@ import {
 import type {
   AccountView,
   Catalogue,
+  HealthProfile,
   SyncResponse,
   InventoryUnit,
   PinAnchor,
@@ -96,6 +97,10 @@ export type Action =
   | { type: 'UPSERT_USER_PRODUCT'; product: UserProduct }
   /** Deleting it also takes it out of the stack and the shopping list. */
   | { type: 'DELETE_USER_PRODUCT'; id: string }
+  /** Saved on every change (the storage consent is part of the profile). */
+  | { type: 'SET_HEALTH_PROFILE'; profile: HealthProfile }
+  /** Deletes the profile; the account stays. The tombstone syncs the deletion. */
+  | { type: 'DELETE_HEALTH_PROFILE'; at: number }
   /** "Continue without an account", or accounts aren't open to the public. */
   | { type: 'SET_GUEST' }
   | { type: 'RESET'; state: PersistedState }
@@ -332,6 +337,16 @@ export function reducer(state: PersistedState, action: Action): PersistedState {
           (s) => s.productId !== action.id && s.replacesProductId !== action.id,
         ),
         lowAlerts: state.lowAlerts.filter((id) => id !== action.id),
+      }
+    case 'SET_HEALTH_PROFILE': {
+      const { health: _deleted, ...tombstones } = state.tombstones
+      return { ...state, healthProfile: action.profile, tombstones }
+    }
+    case 'DELETE_HEALTH_PROFILE':
+      return {
+        ...state,
+        healthProfile: null,
+        tombstones: { ...state.tombstones, health: action.at },
       }
     case 'SET_GUEST':
       return state.auth.mode === 'unset'

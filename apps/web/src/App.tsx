@@ -13,6 +13,7 @@ import { needsIOSInstallGate } from './platform/detect'
 import { SyncManager } from './reminders/SyncManager'
 import { AddSupplement } from './screens/AddSupplement'
 import { AuthConsent } from './screens/auth/AuthConsent'
+import { HealthProfile } from './screens/HealthProfile'
 import { AuthDone } from './screens/auth/AuthDone'
 import { Login } from './screens/auth/Login'
 import { ForgotPassword, ResetPassword, VerifyEmail } from './screens/auth/Recovery'
@@ -136,6 +137,7 @@ export function App() {
             <Route path="/stack" element={<StackScreen />} />
             <Route path="/shopping" element={<Shopping />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/health" element={<HealthProfile />} />
             <Route path="/notifications" element={<Notifications />} />
             {/* Phase 1 paths (bookmarks, notification links). */}
             <Route path="/reminders" element={<Navigate to="/notifications" replace />} />

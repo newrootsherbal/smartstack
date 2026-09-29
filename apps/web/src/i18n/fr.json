@@ -294,10 +294,15 @@
   "consent": {
     "C1": "J’accepte que New Roots Herbal conserve mes suppléments, mes médicaments, ma routine et le nombre de doses restantes dans mon compte afin que je puisse les utiliser sur mes appareils. J’ai lu la [Politique de confidentialité].",
     "C2": "J’ai 14 ans ou plus.",
+    "C4": "J’accepte que New Roots Herbal conserve mon profil santé (par exemple, mes problèmes de santé) dans mon compte. Je peux le modifier ou le supprimer en tout temps.",
+    "C5title": "Utiliser mon profil santé pour m’envoyer des nouvelles pertinentes",
+    "C5": "New Roots Herbal utilisera votre profil santé pour choisir les notifications de nouvelles que vous recevez (webinaires, nouveaux produits). C’est ce qu’on appelle du profilage. Cette option reste désactivée tant que vous ne l’activez pas, et vous pouvez la désactiver en tout temps.",
     "C3": "En créant un compte, vous acceptez les [Conditions d’utilisation]."
   },
   "notice": {
     "N1": "Vos suppléments restent sur cet appareil. Vous pourrez les sauvegarder plus tard à partir de votre profil.",
+    "N2": "Votre profil santé ne modifie pas votre horaire et ne constitue pas un avis médical.",
+    "N7": "Cette action supprime votre profil santé. Votre compte et vos suppléments sont conservés.",
     "N3": "SmartStack ne vérifie pas les interactions médicamenteuses. Suivez les directives de votre médecin ou de votre pharmacien, et demandez à votre pharmacien si vos suppléments doivent être pris à distance de ce médicament.",
     "N5": "Nous transmettons seulement le numéro entré à Santé Canada.",
     "N6": "Cette action supprime définitivement votre compte, vos suppléments, vos produits, votre profil santé et vos réglages de notifications sur tous vos appareils. Elle est irréversible."
@@ -400,6 +405,113 @@
     "body": "Il remplacera {other}.",
     "replace": "Remplacer",
     "keepBoth": "Garder les deux"
+  },
+  "health": {
+    "title": "Profil santé",
+    "intro": "Votre profil santé sert seulement à choisir les nouvelles que vous recevez, et seulement si vous l’activez. Toutes les questions sont facultatives.",
+    "start": "Créer mon profil santé",
+    "open": "Ouvrir mon profil santé",
+    "optional": "Toutes les questions sont facultatives.",
+    "summarySet": "Utilisé seulement pour choisir vos nouvelles, si vous le permettez.",
+    "summaryEmpty": "Facultatif. Aide à choisir des nouvelles qui vous conviennent.",
+    "locked": "Créez un compte pour bâtir votre profil santé.",
+    "birthYear": "Année de naissance",
+    "birthYearHint": "Nous conservons seulement l’année, jamais votre date de naissance complète.",
+    "preferNot": "Je préfère ne pas répondre",
+    "gender": {
+      "woman": "Femme",
+      "man": "Homme",
+      "non_binary": "Non binaire",
+      "another": "Autre genre",
+      "prefer_not": "Je préfère ne pas répondre"
+    },
+    "genderTitle": "Genre",
+    "pregnancyTitle": "Grossesse",
+    "conditionsTitle": "Problèmes de santé",
+    "goalsTitle": "Objectifs et intérêts",
+    "dietTitle": "Alimentation",
+    "avoidsTitle": "J’évite",
+    "activityTitle": "Niveau d’activité",
+    "listHint": "Facultatif. Ne cochez rien si vous préférez ne pas répondre.",
+    "delete": "Supprimer mon profil santé",
+    "groups": {
+      "heart": "Cœur et circulation",
+      "metabolism": "Métabolisme",
+      "digestion": "Digestion",
+      "bones": "Os et articulations",
+      "mind": "Esprit et sommeil",
+      "other": "Autres"
+    },
+    "conditions": {
+      "high_blood_pressure": "Hypertension artérielle",
+      "high_cholesterol": "Cholestérol élevé",
+      "heart_disease": "Maladie cardiaque",
+      "type2_diabetes": "Diabète de type 2",
+      "prediabetes": "Prédiabète",
+      "thyroid": "Trouble de la thyroïde",
+      "ibs": "Syndrome de l’intestin irritable (SII)",
+      "gerd": "Reflux acide / RGO",
+      "ibd": "Maladie de Crohn ou colite",
+      "celiac": "Maladie cœliaque",
+      "osteoporosis": "Ostéoporose / ostéopénie",
+      "arthritis": "Arthrite",
+      "anxiety": "Anxiété",
+      "depression": "Dépression",
+      "sleep_trouble": "Troubles du sommeil",
+      "migraine": "Migraine",
+      "iron_deficiency_anemia": "Anémie ferriprive",
+      "kidney_disease": "Maladie rénale",
+      "liver_disease": "Maladie du foie",
+      "pcos": "Syndrome des ovaires polykystiques (SOPK)",
+      "menopause": "Ménopause",
+      "asthma": "Asthme",
+      "eczema_psoriasis": "Eczéma / psoriasis",
+      "autoimmune": "Maladie auto-immune"
+    },
+    "goals": {
+      "sleep": "Sommeil",
+      "stress": "Stress",
+      "energy": "Énergie",
+      "immunity": "Immunité",
+      "digestion": "Digestion",
+      "heart": "Santé cardiaque",
+      "joints_bones": "Articulations et os",
+      "brain_focus": "Cerveau et concentration",
+      "skin_hair_nails": "Peau, cheveux et ongles",
+      "sports": "Sport et forme physique",
+      "weight": "Gestion du poids",
+      "healthy_aging": "Vieillissement en santé",
+      "womens_health": "Santé des femmes",
+      "mens_health": "Santé des hommes",
+      "prenatal": "Prénatal"
+    },
+    "diet": {
+      "vegan": "Végane",
+      "vegetarian": "Végétarien",
+      "gluten_free": "Sans gluten",
+      "dairy_free": "Sans produits laitiers",
+      "low_carb": "Céto / faible en glucides"
+    },
+    "avoids": {
+      "soy": "Soya",
+      "dairy": "Produits laitiers",
+      "gluten": "Gluten",
+      "nuts": "Noix",
+      "fish_shellfish": "Poisson et fruits de mer",
+      "eggs": "Œufs"
+    },
+    "pregnancy": {
+      "pregnant": "Enceinte",
+      "breastfeeding": "J’allaite",
+      "trying": "J’essaie de concevoir",
+      "none": "Aucune de ces situations",
+      "prefer_not": "Je préfère ne pas répondre"
+    },
+    "activity": {
+      "low": "Faible",
+      "moderate": "Modéré",
+      "high": "Élevé"
+    }
   },
   "backup": {
     "title": "Sauvegarde et synchronisation",

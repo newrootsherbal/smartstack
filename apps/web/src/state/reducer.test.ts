@@ -205,3 +205,29 @@ describe('replacement bought', () => {
     expect(s.stack.some((x) => x.productId === 'iron-bisglycinate')).toBe(false)
   })
 })
+
+describe('health profile', () => {
+  const profile = {
+    birthYear: 1985,
+    gender: null,
+    pregnancy: null,
+    conditions: [],
+    goals: ['sleep' as const],
+    diet: [],
+    avoids: [],
+    activity: null,
+    storageConsentAt: T,
+    targetingConsentAt: null,
+    updatedAt: T,
+  }
+
+  it('deletes the profile and leaves a tombstone for sync; saving again clears it', () => {
+    const saved = reducer(base(), { type: 'SET_HEALTH_PROFILE', profile })
+    expect(saved.healthProfile).toEqual(profile)
+    const deleted = reducer(saved, { type: 'DELETE_HEALTH_PROFILE', at: T + 1 })
+    expect(deleted.healthProfile).toBeNull()
+    expect(deleted.tombstones.health).toBe(T + 1)
+    const again = reducer(deleted, { type: 'SET_HEALTH_PROFILE', profile })
+    expect(again.tombstones).not.toHaveProperty('health')
+  })
+})

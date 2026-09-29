@@ -294,10 +294,15 @@
   "consent": {
     "C1": "I agree that New Roots Herbal stores my supplements, medications, routine and bottle counts in my account so I can use them on my devices. I have read the [Privacy Policy].",
     "C2": "I am 14 years of age or older.",
+    "C4": "I agree that New Roots Herbal stores my health profile (for example, my health conditions) in my account. I can change or delete it at any time.",
+    "C5title": "Use my health profile to send me relevant news",
+    "C5": "New Roots Herbal will use your health profile to choose which news notifications you receive (webinars, new products). This is called profiling. It stays off unless you turn it on, and you can turn it off at any time.",
     "C3": "By creating an account, you accept the [Terms of Use]."
   },
   "notice": {
     "N1": "Your stack stays on this device. You can back it up later from your profile.",
+    "N2": "Your health profile doesn't change your schedule and isn't medical advice.",
+    "N7": "This deletes your health profile. Your account and your stack stay.",
     "N3": "SmartStack doesn't check medication interactions. Follow your doctor’s or pharmacist’s instructions, and ask your pharmacist whether your supplements should be taken apart from this medication.",
     "N5": "We only send Health Canada the number you entered.",
     "N6": "This permanently deletes your account, your stack, your products, your health profile and your notification settings on every device. This can't be undone."
@@ -400,6 +405,113 @@
     "body": "It replaces {other}.",
     "replace": "Replace",
     "keepBoth": "Keep both"
+  },
+  "health": {
+    "title": "Health profile",
+    "intro": "Your health profile is only used to choose which news you receive, and only if you turn that on. Every question is optional.",
+    "start": "Create my health profile",
+    "open": "Open my health profile",
+    "optional": "Every question is optional.",
+    "summarySet": "Used only to choose your news, if you allow it.",
+    "summaryEmpty": "Optional. Helps choose news that fits you.",
+    "locked": "Create an account to build your health profile.",
+    "birthYear": "Year of birth",
+    "birthYearHint": "We keep the year only, never your full date of birth.",
+    "preferNot": "Prefer not to say",
+    "gender": {
+      "woman": "Woman",
+      "man": "Man",
+      "non_binary": "Non-binary",
+      "another": "Another gender",
+      "prefer_not": "Prefer not to say"
+    },
+    "genderTitle": "Gender",
+    "pregnancyTitle": "Pregnancy",
+    "conditionsTitle": "Health conditions",
+    "goalsTitle": "Goals and interests",
+    "dietTitle": "Diet",
+    "avoidsTitle": "I avoid",
+    "activityTitle": "Activity level",
+    "listHint": "Optional. Leave everything unchecked if you prefer not to say.",
+    "delete": "Delete my health profile",
+    "groups": {
+      "heart": "Heart and circulation",
+      "metabolism": "Metabolism",
+      "digestion": "Digestion",
+      "bones": "Bones and joints",
+      "mind": "Mind and sleep",
+      "other": "Other"
+    },
+    "conditions": {
+      "high_blood_pressure": "High blood pressure",
+      "high_cholesterol": "High cholesterol",
+      "heart_disease": "Heart disease",
+      "type2_diabetes": "Type 2 diabetes",
+      "prediabetes": "Prediabetes",
+      "thyroid": "Thyroid condition",
+      "ibs": "Irritable bowel syndrome (IBS)",
+      "gerd": "Acid reflux / GERD",
+      "ibd": "Crohn's disease or colitis",
+      "celiac": "Celiac disease",
+      "osteoporosis": "Osteoporosis / osteopenia",
+      "arthritis": "Arthritis",
+      "anxiety": "Anxiety",
+      "depression": "Depression",
+      "sleep_trouble": "Trouble sleeping",
+      "migraine": "Migraine",
+      "iron_deficiency_anemia": "Iron-deficiency anemia",
+      "kidney_disease": "Kidney disease",
+      "liver_disease": "Liver disease",
+      "pcos": "Polycystic ovary syndrome (PCOS)",
+      "menopause": "Menopause",
+      "asthma": "Asthma",
+      "eczema_psoriasis": "Eczema / psoriasis",
+      "autoimmune": "Autoimmune condition"
+    },
+    "goals": {
+      "sleep": "Sleep",
+      "stress": "Stress",
+      "energy": "Energy",
+      "immunity": "Immunity",
+      "digestion": "Digestion",
+      "heart": "Heart health",
+      "joints_bones": "Joints and bones",
+      "brain_focus": "Brain and focus",
+      "skin_hair_nails": "Skin, hair and nails",
+      "sports": "Sports and fitness",
+      "weight": "Weight management",
+      "healthy_aging": "Healthy aging",
+      "womens_health": "Women's health",
+      "mens_health": "Men's health",
+      "prenatal": "Prenatal"
+    },
+    "diet": {
+      "vegan": "Vegan",
+      "vegetarian": "Vegetarian",
+      "gluten_free": "Gluten-free",
+      "dairy_free": "Dairy-free",
+      "low_carb": "Keto / low-carb"
+    },
+    "avoids": {
+      "soy": "Soy",
+      "dairy": "Dairy",
+      "gluten": "Gluten",
+      "nuts": "Nuts",
+      "fish_shellfish": "Fish and shellfish",
+      "eggs": "Eggs"
+    },
+    "pregnancy": {
+      "pregnant": "Pregnant",
+      "breastfeeding": "Breastfeeding",
+      "trying": "Trying to conceive",
+      "none": "None of these",
+      "prefer_not": "Prefer not to say"
+    },
+    "activity": {
+      "low": "Low",
+      "moderate": "Moderate",
+      "high": "High"
+    }
   },
   "backup": {
     "title": "Back up & sync",

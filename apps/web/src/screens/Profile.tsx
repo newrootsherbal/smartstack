@@ -3,7 +3,8 @@ import { Link, useNavigate } from 'react-router'
 import { catalogue } from '@smartstack/engine'
 import { api } from '../api/client'
 import { AccountCard } from '../components/AccountCard'
-import { ACCOUNTS_MODE } from '../config'
+import { HealthLockedCard } from './HealthProfile'
+import { ACCOUNTS_MODE, ACCOUNTS_PUBLIC } from '../config'
 import { t, type Locale, type MessageKey } from '../i18n'
 import { unsubscribe } from '../platform/reminders'
 import { useAppState } from '../state/context'
@@ -54,6 +55,20 @@ export function Profile() {
       <h1>{t('profile.title')}</h1>
 
       <AccountCard />
+
+      {state.auth.mode === 'account' ? (
+        <section className="card stack-v">
+          <h2>{t('health.title')}</h2>
+          <p className="small muted">
+            {state.healthProfile ? t('health.summarySet') : t('health.summaryEmpty')}
+          </p>
+          <Link to="/profile/health" className="btn btn--outline">
+            {state.healthProfile ? t('health.open') : t('health.start')}
+          </Link>
+        </section>
+      ) : (
+        ACCOUNTS_PUBLIC && <HealthLockedCard />
+      )}
 
       <section className="card stack-v">
         <h2>{t('profile.notifications')}</h2>
