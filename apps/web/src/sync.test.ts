@@ -16,9 +16,10 @@ const routine: Routine = {
 
 describe('computeReminderWindow', () => {
   const now = new Date(2026, 8, 24, 11, 0) // 2026-09-24 11:00 local
+  // Magnesium is only suggested for bedtime now; the person pinned it there.
   const stack = [
     { productId: 'multi', dosesPerDay: 1 },
-    { productId: 'magnesium-bisglycinate', dosesPerDay: 1 },
+    { productId: 'magnesium-bisglycinate', dosesPerDay: 1, pins: ['bedtime' as const] },
   ]
 
   it('covers seven local calendar days and omits what is already past', () => {
@@ -89,7 +90,7 @@ describe('composeNotification', () => {
       minutes: 570,
       anchor: null,
       productIds: ['iron-bisglycinate'],
-      doses: [{ productId: 'iron-bisglycinate', doseIndex: 0 }],
+      doses: [{ productId: 'iron-bisglycinate', doseIndex: 0, slot: 0 }],
       reasons: [
         {
           ruleId: 'rule-iron-separate-calcium',
@@ -113,7 +114,7 @@ describe('composeNotification', () => {
         minutes: 570,
         anchor: null,
         productIds: ['iron-bisglycinate'],
-        doses: [{ productId: 'iron-bisglycinate', doseIndex: 0 }],
+        doses: [{ productId: 'iron-bisglycinate', doseIndex: 0, slot: 0 }],
         reasons: [
           {
             ruleId: 'rule-iron-separate-calcium',
@@ -131,5 +132,28 @@ describe('composeNotification', () => {
     } finally {
       setLocale('en')
     }
+  })
+})
+
+describe('composeNotification and the bedtime suggestion', () => {
+  it('never uses the evening suggestion as the notification hint', () => {
+    const { body } = composeNotification({
+      time: '07:30',
+      minutes: 450,
+      anchor: 'breakfast',
+      productIds: ['magnesium-bisglycinate'],
+      doses: [{ productId: 'magnesium-bisglycinate', doseIndex: 0, slot: 0 }],
+      reasons: [
+        {
+          ruleId: 'rule-magnesium-bedtime',
+          attribute: 'SUGGEST_BEDTIME',
+          severity: 'informational',
+          productId: 'magnesium-bisglycinate',
+          doseIndex: 0,
+          params: {},
+        },
+      ],
+    })
+    expect(body).toBe('Magnesium Bisglycinate')
   })
 })

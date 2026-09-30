@@ -1,3 +1,4 @@
+import type { Routine, StackItem } from '@smartstack/shared'
 import { describe, expect, it } from 'vitest'
 import { isValidRetailBarcode } from './barcode'
 import {
@@ -75,7 +76,8 @@ describe('imported New Roots Herbal catalogue', () => {
     const at = (id: string) =>
       schedule.placements.filter((p) => p.productIds.includes(id)).map((p) => p.time)
     expect(at('multi')).toEqual(['07:30'])
-    expect(at('magnesium-bisglycinate')).toEqual(['22:00'])
+    // Magnesium is only suggested for the evening (SUGGEST_BEDTIME), never moved there.
+    expect(at('magnesium-bisglycinate')).toEqual(['07:30'])
     // Omega-3 takes 2 doses on its label? No: dosesPerDay 1 here → lunch (WITH_FAT preference).
     expect(at('wild-omega-3-epa-660-mg-dha-330-mg')).toEqual(['12:00'])
     // This multi has no calcium as a medicinal ingredient, so only coffee (07:00) pushes iron.
@@ -121,28 +123,105 @@ describe('label "with food" versus ingredient anchors', () => {
 })
 
 describe('magnesium products', () => {
-  it('all magnesium products carry the bedtime rule and land at bedtime', () => {
-    const mags = catalogue.products.filter((p) => /magnes/i.test(p.name.en))
-    expect(mags.length).toBeGreaterThan(4)
-    for (const p of mags) {
-      expect(
-        p.ingredients.map((i) => i.ingredientId),
-        p.id,
-      ).toContain('magnesium')
-      const schedule = buildSchedule(
-        {
-          wake: '06:30',
-          coffee: null,
-          breakfast: '07:30',
-          lunch: '12:00',
-          dinner: '18:00',
-          exercise: null,
-          bedtime: '22:00',
-        },
-        [{ productId: p.id, dosesPerDay: 1 }],
+  const routine: Routine = {
+    wake: '06:30',
+    coffee: null,
+    breakfast: '07:30',
+    lunch: '12:00',
+    dinner: '18:00',
+    exercise: null,
+    bedtime: '22:00',
+  }
+  // The products that carried the curated bedtime rule before it became a suggestion.
+  const SUGGESTED = [
+    'ata-mgsupsup-magnesium-acetyl-taurate',
+    'magnesium-bisglycinate',
+    'magnesium-bisglycinate-capsules',
+    'magnesium-bisglycinate-plus',
+    'magnesium-citrate-plus-taurine',
+    'magnesium8',
+    'pure-magnesium-bisglycinate-115-mg-taurine',
+    'pure-magnesium-bisglycinate-130-mg-elemental-magnesium',
+  ]
+  const suggestionIds = (id: string, item: Partial<StackItem> = {}) =>
+    buildSchedule(routine, [{ productId: id, dosesPerDay: 1, ...item }])
+      .placements.flatMap((p) => p.reasons)
+      .filter((r) => r.attribute === 'SUGGEST_BEDTIME')
+      .map((r) => r.ruleId)
+
+  it('carry the evening suggestion exactly on the eight single magnesium products', () => {
+    const withRule = catalogue.products
+      .filter((p) => rulesForProduct(p).some((r) => r.id === 'rule-magnesium-bedtime'))
+      .map((p) => p.id)
+      .sort()
+    expect(withRule).toEqual([...SUGGESTED].sort())
+    for (const id of SUGGESTED) {
+      const rule = rulesForProduct(catalogue.products.find((p) => p.id === id)!).find(
+        (r) => r.id === 'rule-magnesium-bedtime',
       )
-      expect(schedule.placements[0]?.anchor, p.id).toBe('bedtime')
+      expect(rule?.attribute, id).toBe('SUGGEST_BEDTIME')
+      expect(rule?.severity, id).toBe('informational')
     }
+  })
+
+  it('are no longer moved to bedtime, but suggest it on their dose', () => {
+    for (const id of SUGGESTED) {
+      const schedule = buildSchedule(routine, [{ productId: id, dosesPerDay: 1 }])
+      expect(schedule.placements[0]?.anchor, id).not.toBe('bedtime')
+      expect(
+        schedule.adjustments.map((a) => a.code),
+        id,
+      ).not.toContain('MOVED_TO_BEDTIME')
+      expect(suggestionIds(id), id).toEqual(['rule-magnesium-bedtime'])
+    }
+    const at = (id: string) =>
+      buildSchedule(routine, [{ productId: id, dosesPerDay: 1 }]).placements[0]?.anchor
+    expect(at('magnesium-bisglycinate')).toBe('breakfast')
+  })
+
+  it('go to bedtime when the person pins them there, and stop suggesting it', () => {
+    const schedule = buildSchedule(routine, [
+      { productId: 'magnesium-bisglycinate', dosesPerDay: 1, pins: ['bedtime'] },
+    ])
+    expect(schedule.placements.map((p) => [p.time, p.anchor])).toEqual([['22:00', 'bedtime']])
+    expect(schedule.placements[0]?.doses[0]).toMatchObject({ slot: 0, pinned: 'bedtime' })
+    expect(schedule.adjustments.map((a) => [a.code, a.params.from, a.params.to])).toEqual([
+      ['MOVED_BY_YOU', '07:30', '22:00'],
+    ])
+    expect(suggestionIds('magnesium-bisglycinate', { pins: ['bedtime'] })).toEqual([])
+  })
+
+  it('stop suggesting it once the person says no thanks', () => {
+    expect(suggestionIds('magnesium-bisglycinate', { dismissed: ['SUGGEST_BEDTIME'] })).toEqual([])
+  })
+
+  it('suggest it once, on the last dose of the day', () => {
+    const schedule = buildSchedule(routine, [
+      { productId: 'magnesium-bisglycinate', dosesPerDay: 2 },
+    ])
+    const suggested = schedule.placements.filter((p) =>
+      p.reasons.some((r) => r.attribute === 'SUGGEST_BEDTIME'),
+    )
+    expect(suggested.map((p) => p.time)).toEqual(['18:00'])
+  })
+
+  it('leave sleep8, melatonin and the multis where their own rules put them', () => {
+    const place = (id: string) => {
+      const s = buildSchedule(routine, [{ productId: id, dosesPerDay: 1 }])
+      return [
+        s.placements[0]?.anchor,
+        s.placements.flatMap((p) => p.reasons).map((r) => r.attribute),
+      ]
+    }
+    for (const id of ['sleep8', 'melatonin-3-mg']) {
+      const [anchor, attributes] = place(id)
+      expect(anchor, id).toBe('bedtime')
+      expect(attributes, id).toContain('BEDTIME')
+      expect(attributes, id).not.toContain('SUGGEST_BEDTIME')
+    }
+    const [multiAnchor, multiAttributes] = place('multi')
+    expect(multiAnchor).toBe('breakfast')
+    expect(multiAttributes).not.toContain('SUGGEST_BEDTIME')
   })
 })
 

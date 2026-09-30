@@ -59,3 +59,8 @@
   background: var(--color-surface-2);
   border-left: 4px solid var(--color-text-muted);
 }
+
+.moreInfo {
+  align-self: flex-start;
+  padding-left: 0;
+}

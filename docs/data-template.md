@@ -48,7 +48,7 @@ row number. Nothing is changed in the live data until a developer merges the out
 | `warnings_en/_fr`       | EN yes   | Cautions and warnings, copied from the label.                                                                                                                               |
 | `timing_rules`          | no       | `ATTRIBUTE:severity[:anchor,anchor]` separated by `;`. See attributes below. Anchors (`breakfast`, `lunch`, `dinner`) express meal preference for `WITH_FOOD` / `WITH_FAT`. |
 | `interaction_rules`     | no       | `ATTRIBUTE:severity:minutes` separated by `;`. Example: `SEPARATE_FROM_CALCIUM:timing_conflict:120`.                                                                        |
-| `rule_explanations_en`  | if rules | `ATTRIBUTE=Plain-language explanation` separated by `;`. One per rule listed above. This is the text under "Why?".                                                          |
+| `rule_explanations_en`  | if rules | `ATTRIBUTE=Plain-language explanation` separated by `;`. One per rule listed above. This is the text in "More info".                                                          |
 | `rule_explanations_fr`  | no       | Same, in French.                                                                                                                                                            |
 | `evidence_sources`      | no       | `ATTRIBUTE=https://…` separated by `;`. Only real, public URLs (Health Canada, NIH ODS, peer-reviewed article).                                                              |
 | `disable_rules`         | no       | Ids of ingredient-level rules that must not apply to this product, separated by `;` (e.g. a multivitamin that should not be pushed to the evening by its calcium content).  |
@@ -73,10 +73,13 @@ row number. Nothing is changed in the live data until a developer merges the out
 | `SEPARATE_FROM_COFFEE_TEA` | Keep N minutes away from the user's coffee time (silent if no coffee). |
 | `TAKE_WITH_WATER`          | Shown as a line under the dose.                                       |
 | `REFRIGERATE`              | Shown as a line under the dose.                                       |
+| `SUGGEST_BEDTIME`          | Never moves the dose. Offers "Move to bedtime" on Today and in More info (`informational` only). |
 
 When several fixed-anchor rules apply to one product the engine uses this priority:
 `BEDTIME` > `EVENING` > `MORNING` > meal preference (`WITH_FAT` / `WITH_FOOD` with anchors) >
 plain `WITH_FOOD`. Product-level rules override ingredient-level rules with the same attribute.
+A time the person picks for a dose (a pin: wake-up, breakfast, lunch, dinner or bedtime) beats
+every rule, and a pinned dose never moves for a separation rule: the other product moves instead.
 
 ### Severities
 
@@ -95,5 +98,5 @@ plain `WITH_FOOD`. Product-level rules override ingredient-level rules with the 
 3. Qualified reviewer checks every rule row: explanation, severity, evidence. Sets
    `review_status = reviewed`, `last_reviewed`, `reviewed_by`.
 4. Developer merges the output into `packages/engine/data/`, runs `npm run data:validate`
-   and `npm test`, and ships. The "Why?" sheet then shows the reviewer and date instead of
+   and `npm test`, and ships. The "More info" sheet then shows the reviewer and date instead of
    "Not yet reviewed".

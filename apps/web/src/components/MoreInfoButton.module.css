@@ -1,0 +1,12 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  white-space: nowrap;
+}
+
+.chevron {
+  width: 1em;
+  height: 1em;
+  flex: none;
+}

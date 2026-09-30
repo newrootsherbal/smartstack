@@ -46,8 +46,9 @@
   display: grid;
   grid-template-columns: 1fr auto;
   grid-template-areas:
-    'check why'
-    'reasons why';
+    'check info'
+    'reasons info'
+    'suggestion suggestion';
   align-items: start;
   gap: var(--space-1) var(--space-3);
   padding: var(--space-3) 0;
@@ -92,9 +93,17 @@
   color: var(--sev-timing);
 }
 
-.why {
-  grid-area: why;
+.info {
+  grid-area: info;
   align-self: center;
+}
+
+.suggestion {
+  grid-area: suggestion;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
 }
 
 .lateButtons {

@@ -2,7 +2,7 @@
 
 Supplement-scheduling app for New Roots Herbal. Scan a product barcode, build your
 "stack", enter your daily routine, and a deterministic rules engine generates a
-personalized daily schedule with reminders and a tappable "Why?" for every placement.
+personalized daily schedule with reminders and a "More info" sheet for every product.
 
 > **Phase 1 status: sample data only.** Every product and rule in this repository is a
 > placeholder for testing. Nothing here is reviewed, and nothing is medical advice. The app
@@ -72,11 +72,16 @@ there is no build step for them.
 ### Engine in one paragraph
 
 Every product starts at breakfast (or the first available meal). Fixed-anchor rules move it
-(`BEDTIME` > `EVENING` > `MORNING` > meal preference > plain `WITH_FOOD`). Then, for every
-product with `SEPARATE_FROM_*` rules, if a conflicting product (or the coffee time) is within
-the separation window, the dose moves to the earliest time ≥ conflict + separation that clears
-every conflict, rounded up to 15 minutes. One adjustment code per product whose final time
-differs from its baseline. Extra doses take dinner, then lunch, then breakfast, then bedtime.
+(`BEDTIME` > `EVENING` > `MORNING` > meal preference > plain `WITH_FOOD`). A time the person
+picked (a pin, `StackItem.pins`: wake-up, breakfast, lunch, dinner or bedtime) beats every rule.
+Then, for every product with `SEPARATE_FROM_*` rules, if a conflicting product (or the coffee
+time) is within the separation window, the dose moves to the earliest time ≥ conflict +
+separation that clears every conflict, rounded up to 15 minutes. A pinned dose never moves: the
+other product moves instead, and when both are pinned they stay and the later one carries a
+timing-conflict reason. `SUGGEST_BEDTIME` (magnesium) never moves anything: it offers "Move to
+bedtime" on the day's last dose until the person accepts (a bedtime pin) or says no thanks. One
+adjustment code per product whose final time differs from its baseline (`MOVED_BY_YOU` for a
+pin). Extra doses take dinner, then lunch, then breakfast, then bedtime.
 Rules attach to ingredients; a product may disable inherited rules (`ruleOverrides.disable`).
 Duplicate ingredients are listed whenever two or more stack products contain the same
 ingredient, with amounts and the sum, never compared to any reference intake.
