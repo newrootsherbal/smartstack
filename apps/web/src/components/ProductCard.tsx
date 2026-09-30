@@ -27,10 +27,9 @@ export function ProductCard({ product }: { product: Product }) {
             {product.brand} · {formatServingSize(product.servingSize)}
           </p>
         </div>
-        {product.status === 'sample' ? (
+        {/* Catalogue products carry the company's own label text: no tag. Samples are flagged. */}
+        {product.status === 'sample' && (
           <span className="tag tag--sample">{t('common.sample')}</span>
-        ) : product.status === 'user' ? null : (
-          <span className="tag">{t('common.draft')}</span>
         )}
       </div>
       <p className="small muted">

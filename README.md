@@ -83,7 +83,9 @@ product asks about the bottle: **New bottle** (the scanned barcode, or a size ch
 it holds), **Already opened** ("How many are left?") or **Don't track**. Capsules, softgels and
 tablets are counted one by one; liquids and powders in servings (`parsePackageSize` in
 `packages/engine/src/inventory.ts` reads "= 32 doses", "/ 50 portions", "30 × 4.2 g", or divides
-the bottle by the serving when both are in ml or g, and otherwise the app asks). Ticking a dose
+the bottle by the serving when both are in ml or g; a liquid serving given only as a household
+measure counts as 5 ml a teaspoon, 15 ml a tablespoon and 20 drops per ml; otherwise the app
+asks, for example a teaspoon of powder without its weight). Ticking a dose
 on Today takes one dose off the bottle and unticking gives it back. At 5 days of use or less the
 product joins the shopping list once per bottle with a "running low" sheet; Refill ("5 + 30 =
 35") clears it. My stack's **Manage** sheet holds times per day, Refill, Edit count, Move to…
@@ -797,7 +799,8 @@ device, its subscriptions and its reminders, then clears local storage.
 ## Sample-data rule (all of Phase 1)
 
 - Every seed product and rule has `reviewStatus: 'unreviewed'`, `reviewedBy: null`,
-  `lastReviewed: null`; the UI renders "Not yet reviewed".
+  `lastReviewed: null`; More info shows a rule's reviewer and date only once they are set (the
+  banner says the rules aren't reviewed yet).
 - `evidenceUrl` is a real public URL that is known to exist (NIH Office of Dietary Supplements
   fact sheets, checked on 2026-09-24), or `null` ("Source: to be added"). Citations are never
   invented.

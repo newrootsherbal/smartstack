@@ -140,10 +140,19 @@ export function ProductInfoSheet({ productId, onClose }: ProductInfoSheetProps) 
                       <span className="muted">{t('common.sourceToBeAdded')}</span>
                     )}
                   </dd>
-                  <dt>{t('info.lastReviewed')}</dt>
-                  <dd>{rule.lastReviewed ?? t('common.notYetReviewed')}</dd>
-                  <dt>{t('info.reviewedBy')}</dt>
-                  <dd>{rule.reviewedBy ?? t('common.notYetReviewed')}</dd>
+                  {/* Shown once the product team has reviewed the rule (the banner covers the rest). */}
+                  {rule.lastReviewed && (
+                    <>
+                      <dt>{t('info.lastReviewed')}</dt>
+                      <dd>{rule.lastReviewed}</dd>
+                    </>
+                  )}
+                  {rule.reviewedBy && (
+                    <>
+                      <dt>{t('info.reviewedBy')}</dt>
+                      <dd>{rule.reviewedBy}</dd>
+                    </>
+                  )}
                 </dl>
               </details>
             </article>
