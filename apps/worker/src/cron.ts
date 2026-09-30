@@ -3,6 +3,7 @@
  * connections. One claim statement, one subscription lookup, at most six
  * outbound pushes in flight, then one batch of grouped result writes.
  */
+import { authCleanupStatements } from './auth/cleanup'
 import type { Env, PushSubscriptionRow, ReminderRow } from './env'
 import {
   claimStatement,
@@ -190,6 +191,16 @@ export async function runTick(env: Env, now: number): Promise<TickSummary> {
   }
 
   if (writes.length) await env.DB.batch(writes)
+
+  // Accounts cleanup (§8.6) in its own batch, so a failure here never rolls back the reminder
+  // writes above.
+  if (isRetentionTick(now)) {
+    try {
+      await env.DB.batch(authCleanupStatements(now).map((s) => bind(env.DB, s)))
+    } catch (err) {
+      console.error('auth cleanup failed:', err instanceof Error ? err.message : String(err))
+    }
+  }
 
   summary.wallMs = Date.now() - started
   // Counts and timings only: never a user id together with product names or text.

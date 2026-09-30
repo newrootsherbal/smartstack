@@ -12,6 +12,7 @@ import {
 } from '@smartstack/shared'
 import { Hono, type Context } from 'hono'
 import { z } from 'zod'
+import { accountApi } from './account-api'
 import type { Env, PushSubscriptionRow, UserRow } from './env'
 import { scheduleStatements, TEST_LEAD_MS, testReminderAllowed } from './logic'
 
@@ -196,6 +197,9 @@ api.post('/me/test-reminder', async (c) => {
     .run()
   return c.json({ ok: true, scheduledAt })
 })
+
+// /api/auth/… and /api/account/… (session bearer; 404 while ACCOUNTS_MODE is off).
+api.route('/', accountApi)
 
 api.notFound((c) => c.json({ error: 'not_found' }, 404))
 api.onError((err, c) => {
