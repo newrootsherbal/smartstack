@@ -57,6 +57,12 @@ async function parseBody<T extends z.ZodType>(
 
 export const api = new Hono<AppEnv>().basePath('/api')
 
+// API responses are per person and never cached (by the browser, the service worker or a proxy).
+api.use('*', async (c, next) => {
+  await next()
+  c.header('Cache-Control', 'no-store')
+})
+
 api.get('/health', (c) => c.json({ ok: true }))
 
 // Every /api/me route needs a well-formed bearer UUID (hono: '/me/*' also matches '/me').

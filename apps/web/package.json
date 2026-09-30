@@ -9,7 +9,7 @@
     "build": "tsc -p tsconfig.json && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -p tsconfig.json",
-    "assets": "pwa-assets-generator && node scripts/screenshots.mjs"
+    "assets": "pwa-assets-generator && node scripts/screenshots.mjs && node scripts/logo.mjs"
   },
   "dependencies": {
     "@capacitor/core": "^8.5.2",

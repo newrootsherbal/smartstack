@@ -7,6 +7,14 @@ export interface Env {
   VAPID_SUBJECT: string
   MAX_PUSHES_PER_TICK: string
   BETA_KEY: string
+  /** https origin the app is served from (OAuth redirects, email links). */
+  APP_ORIGIN: string
+  /** Accounts launch gate: off | staff | public (config.ts). */
+  ACCOUNTS_MODE: string
+  /** Comma-separated domains allowed to sign up or log in while ACCOUNTS_MODE is "staff". */
+  STAFF_EMAIL_DOMAINS: string
+  /** "true" once Sign in with Apple is set up. */
+  APPLE_ENABLED: string
 }
 
 export interface UserRow {
