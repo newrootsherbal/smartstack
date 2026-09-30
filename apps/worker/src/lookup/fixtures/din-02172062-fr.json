@@ -1,0 +1,38 @@
+{
+  "_source": "Health Canada Drug Product Database, fetched live on 2026-09-29",
+  "_urls": [
+    "https://health-products.canada.ca/api/drug/drugproduct/?din=02172062&lang=fr&type=json",
+    "https://health-products.canada.ca/api/drug/activeingredient/?id=19588&lang=fr&type=json",
+    "https://health-products.canada.ca/api/drug/form/?id=19588&lang=fr&type=json"
+  ],
+  "product": [
+    {
+      "drug_code": 19588,
+      "class_name": "Humain",
+      "drug_identification_number": "02172062",
+      "brand_name": "SYNTHROID",
+      "descriptor": "COMPRIMÉ DE 25 MCG",
+      "number_of_ais": "1",
+      "ai_group_no": "0107794018",
+      "company_name": "BGP PHARMA ULC",
+      "last_update_date": "2026-09-14"
+    }
+  ],
+  "ingredients": [
+    {
+      "dosage_unit": "",
+      "dosage_value": "",
+      "drug_code": 19588,
+      "ingredient_name": "Lévothyroxine sodique",
+      "strength": "25",
+      "strength_unit": "MCG"
+    }
+  ],
+  "form": [
+    {
+      "drug_code": 19588,
+      "pharmaceutical_form_code": 85,
+      "pharmaceutical_form_name": "Comprimé"
+    }
+  ]
+}

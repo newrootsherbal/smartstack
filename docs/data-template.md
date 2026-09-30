@@ -80,6 +80,14 @@ When several fixed-anchor rules apply to one product the engine uses this priori
 plain `WITH_FOOD`. Product-level rules override ingredient-level rules with the same attribute.
 A time the person picks for a dose (a pin: wake-up, breakfast, lunch, dinner or bedtime) beats
 every rule, and a pinned dose never moves for a separation rule: the other product moves instead.
+A medication the person adds is never moved and no rule applies to it, but the ingredient-level
+separation rules of its ingredients still move the other products (an iron medication moves a
+calcium supplement), so ingredient-level `SEPARATE_FROM_*` rules also matter for medications.
+
+Products people add themselves (other brands, medications, foods) are built on their device:
+ids starting with `u_`, `status` `user`, `kind` `medication` and rule ids starting with `user:`
+are reserved for them and refused in this data. Their label checkboxes become product-level
+rules with the severity `product_instruction` and the explanation "From your label: …".
 
 ### Severities
 
@@ -90,6 +98,32 @@ every rule, and a pinned dose never moves for a separation rule: the other produ
 | `consideration`       | Consideration       |                    |
 | `product_instruction` | Product instruction |                    |
 | `informational`       | Informational       |                    |
+
+## New Roots Herbal alternatives (`packages/engine/data/alternatives.json`)
+
+When a person's other-brand product is running low, the app may ask "Have you considered New
+Roots Herbal's {name}?". Curated pairs come first; without one, the app computes a match from
+shared ingredients. The product team hands the pairs (from the monthly other-brand report,
+`docs/smartstack-phase2-setup.md` part H) to a developer, who adds one entry per pair:
+
+```json
+{
+  "match": { "brand": "Other Brand", "name": "Magnesium Bisglycinate" },
+  "productId": "magnesium-bisglycinate-capsules",
+  "reviewStatus": "reviewed",
+  "lastReviewed": "2026-11-02",
+  "reviewedBy": "Product team"
+}
+```
+
+- `match` is either `{ "upc": "…" }` (the other product's barcode, 8, 12 or 13 digits with a
+  valid check digit) or `{ "brand", "name" }`: case and accents are ignored, and the name matches
+  when the person's product name contains it ("Magnesium Bisglycinate" matches "Magnesium
+  Bisglycinate 200 mg").
+- `productId` is a catalogue product id; topical products are refused.
+- Review fields as for rules. At most two suggestions are shown, curated ones first, never for
+  medications and never a product the person already takes.
+- `npm run data:validate` checks the file.
 
 ## Review workflow
 

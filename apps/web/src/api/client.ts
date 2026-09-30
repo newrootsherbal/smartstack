@@ -1,6 +1,7 @@
 /**
- * Thin client for /api/me/… . The anonymous id is the only credential.
- * Nothing here is called until the user taps "Turn on reminders."
+ * Thin client for the Worker. `/api/me/…` takes the anonymous device id as its bearer;
+ * `/api/auth/…` and `/api/account/…` take the session token (or nothing). Nothing here is
+ * called until the person turns on reminders or chooses to create an account / log in.
  */
 import type {
   PushSubscriptionBody,
@@ -13,6 +14,8 @@ export class ApiError extends Error {
   constructor(
     public readonly status: number,
     public readonly code: string,
+    /** Seconds from a 429's Retry-After, when the server sent one. */
+    public readonly retryAfter: number | null = null,
     message?: string,
   ) {
     super(message ?? `${status} ${code}`)
@@ -20,18 +23,18 @@ export class ApiError extends Error {
   }
 }
 
-async function request(
-  userId: string,
-  method: 'PUT' | 'POST' | 'DELETE',
+export type Method = 'GET' | 'PUT' | 'POST' | 'DELETE'
+
+/** One JSON request; `bearer` null sends no Authorization header. */
+export async function request(
+  bearer: string | null,
+  method: Method,
   path: string,
   body?: unknown,
   extraHeaders: Record<string, string> = {},
 ): Promise<unknown> {
-  const headers: Record<string, string> = {
-    Authorization: `Bearer ${userId}`,
-    Accept: 'application/json',
-    ...extraHeaders,
-  }
+  const headers: Record<string, string> = { Accept: 'application/json', ...extraHeaders }
+  if (bearer) headers.Authorization = `Bearer ${bearer}`
   if (body !== undefined) headers['Content-Type'] = 'application/json'
   const res = await fetch(path, {
     method,
@@ -53,14 +56,16 @@ async function request(
       json && typeof json === 'object' && 'error' in json
         ? String((json as { error: unknown }).error)
         : 'request_failed'
-    throw new ApiError(res.status, code)
+    const retry = Number.parseInt(res.headers.get('retry-after') ?? '', 10)
+    throw new ApiError(res.status, code, Number.isFinite(retry) ? retry : null)
   }
   return json
 }
 
+export const BETA_HEADER = { 'X-Beta-Key': import.meta.env.VITE_BETA_KEY ?? '' }
+
 export const api = {
-  putMe: (userId: string, body: PutMeBody) =>
-    request(userId, 'PUT', '/api/me', body, { 'X-Beta-Key': import.meta.env.VITE_BETA_KEY ?? '' }),
+  putMe: (userId: string, body: PutMeBody) => request(userId, 'PUT', '/api/me', body, BETA_HEADER),
   deleteMe: (userId: string) => request(userId, 'DELETE', '/api/me'),
   putPushSubscription: (userId: string, body: PushSubscriptionBody) =>
     request(userId, 'POST', '/api/me/push-subscription', body),
@@ -70,4 +75,7 @@ export const api = {
     request(userId, 'PUT', '/api/me/schedule', body),
   postTestReminder: (userId: string, body: TestReminderBody) =>
     request(userId, 'POST', '/api/me/test-reminder', body),
+  /** News on or off for this device (the Worker keeps when, as proof of consent). */
+  putNews: (userId: string, body: { optIn: boolean }) =>
+    request(userId, 'PUT', '/api/me/news', body),
 }

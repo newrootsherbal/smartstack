@@ -7,6 +7,7 @@ import { getProduct } from '@smartstack/engine'
 import {
   MAX_BODY_LENGTH,
   MAX_TITLE_LENGTH,
+  type Catalogue,
   type Placement,
   type ReminderInput,
   type Routine,
@@ -32,6 +33,8 @@ export interface WindowInput {
    * screens, so they only say how many products, and no product id reaches the server.
    */
   productNames: boolean
+  /** The bundled catalogue merged with the person's own products. */
+  catalogue: Catalogue
 }
 
 function truncate(text: string, max: number): string {
@@ -45,6 +48,7 @@ function truncate(text: string, max: number): string {
 export function composeNotification(
   placement: Placement,
   productNames = true,
+  catalogue?: Catalogue,
 ): { title: string; body: string } {
   if (!productNames) {
     const count = placement.productIds.length
@@ -60,7 +64,7 @@ export function composeNotification(
     }
   }
   const names = placement.productIds.map((id) => {
-    const product = getProduct(id)
+    const product = getProduct(id, catalogue)
     return product ? tl(product.shortName) : id
   })
   const clock = formatClock(placement.time)
@@ -72,7 +76,7 @@ export function composeNotification(
         : t('push.several', { count: names.length })
   const title = truncate(`${subject} — ${clock}`, MAX_TITLE_LENGTH)
   const first = placement.reasons.find(isShortReason)
-  const hint = first ? renderReasonShort(first) : ''
+  const hint = first ? renderReasonShort(first, catalogue) : ''
   const body = truncate(hint ? `${names.join(', ')} · ${hint}` : names.join(', '), MAX_BODY_LENGTH)
   return { title, body }
 }
@@ -83,12 +87,18 @@ export function computeReminderWindow(input: WindowInput): ReminderInput[] {
   const cutoff = input.now.getTime() + MIN_LEAD_MS
   for (let i = 0; i < WINDOW_DAYS; i++) {
     const day = addDays(today, i)
-    const schedule = scheduleForDay(input.routine, input.stack, input.todayOverride, day)
+    const schedule = scheduleForDay(
+      input.routine,
+      input.stack,
+      input.todayOverride,
+      day,
+      input.catalogue,
+    )
     if (!schedule) continue
     for (const placement of schedule.placements) {
       const scheduledAt = localDateTimeToEpoch(day, placement.time)
       if (scheduledAt < cutoff) continue
-      const { title, body } = composeNotification(placement, input.productNames)
+      const { title, body } = composeNotification(placement, input.productNames, input.catalogue)
       reminders.push({
         scheduledAt,
         slotKey: `${day}:${placement.time}`,

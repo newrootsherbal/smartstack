@@ -25,6 +25,8 @@ export interface Env {
   EMAIL_REPLY_TO: string
   /** Current consent texts version (§5.8); a change asks everyone again. */
   CONSENT_VERSION: string
+  /** Comma-separated hosts a news campaign may link to (https only), e.g. "newrootsherbal.com". */
+  NEWS_URL_HOSTS: string
   /** Secret: HMAC key for stored password hashes. Password routes answer 500 without it. */
   AUTH_PEPPER?: string
   /** Secret: Google OAuth client secret. */
@@ -41,6 +43,14 @@ export interface UserRow {
   last_seen_at: number
   /** Migration 0002: the account this device is linked to (POST /api/account/device). */
   account_id: string | null
+  /** Migration 0005: the app's language on this device ('en' | 'fr'; not constrained in SQL). */
+  locale: string
+  /** 1 while news notifications are on for this device (C6). */
+  news_opt_in: number
+  news_opt_in_at: number | null
+  news_opt_out_at: number | null
+  /** Last news notification delivered (1 per 24 h). */
+  last_news_at: number | null
 }
 
 export interface PushSubscriptionRow {
@@ -139,4 +149,29 @@ export interface ThrottleRow {
   key: string
   count: number
   window_start: number
+}
+
+export type CampaignStatus = 'draft' | 'scheduled' | 'sending' | 'sent' | 'cancelled'
+
+/** Migration 0005. */
+export interface CampaignRow {
+  id: string
+  name: string
+  title_en: string
+  title_fr: string
+  body_en: string
+  body_fr: string
+  url: string
+  /** JSON NewsAudience. */
+  audience: string
+  send_at: number | null
+  status: CampaignStatus
+  /** Last push_subscriptions.id processed by the fan-out. */
+  cursor: number
+  sent_count: number
+  failed_count: number
+  created_by: string | null
+  created_at: number
+  updated_at: number
+  finished_at: number | null
 }

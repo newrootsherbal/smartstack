@@ -39,6 +39,12 @@ export function isValidUpcA(code: string): boolean {
   return upcaCheckDigit(code.slice(0, 11)) === Number(code[11])
 }
 
+/** 8-digit EAN-8 (small packages; accepted on the person's own products only). */
+export function isValidEan8(code: string): boolean {
+  if (!/^\d{8}$/.test(code)) return false
+  return gs1CheckDigit(code.slice(0, 7)) === Number(code[7])
+}
+
 /** True for a well-formed 12-digit UPC-A or 13-digit EAN-13. */
 export function isValidRetailBarcode(code: string): boolean {
   return code.length === 12 ? isValidUpcA(code) : isValidEan13(code)

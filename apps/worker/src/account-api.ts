@@ -1,5 +1,5 @@
 /**
- * /api/auth/… and /api/account/… (Phase 2 accounts, docs/smartstack-phase2-prompt.md §5, §7).
+ * /api/auth/…, /api/account/… and /api/lookup/… (Phase 2 accounts, docs/smartstack-phase2-prompt.md §5, §7).
  * The session token in `Authorization: Bearer` is the credential here; `/api/me/*` keeps the
  * device UUID. Everything answers 404 while ACCOUNTS_MODE is "off"; "staff" refuses sign-up and
  * login for addresses outside STAFF_EMAIL_DOMAINS. Logs: counts, codes and ids only.
@@ -90,6 +90,7 @@ import {
   consumeEmailTokenStatement,
   emailTokenLink,
   insertEmailTokenStatement,
+  liveEmailTokenStatement,
   markEmailVerifiedStatement,
   newEmailToken,
   retireEmailTokensStatement,
@@ -104,13 +105,15 @@ import {
 } from './email'
 import type { AccountWithProviders, Env, OAuthAttemptRow, ThrottleRow } from './env'
 import { defer, isUniqueViolation, parseJsonBody, prepare, prepareAll } from './http'
+import { isLookupNumber, parseLookupLang } from './lookup/health-canada'
+import { lookupDin, lookupNpn, type LookupDeps } from './lookup/service'
 
-interface SessionAuth {
+export interface SessionAuth {
   sessionId: string
   account: AccountWithProviders
 }
 
-type AuthEnv = { Bindings: Env; Variables: { auth: SessionAuth } }
+export type AuthEnv = { Bindings: Env; Variables: { auth: SessionAuth } }
 type Ctx = Context<AuthEnv>
 
 export const accountApi = new Hono<AuthEnv>()
@@ -226,7 +229,7 @@ async function authenticate(c: Ctx): Promise<SessionAuth | Response> {
   return { sessionId, account: row }
 }
 
-const requireSession = createMiddleware<AuthEnv>(async (c, next) => {
+export const requireSession = createMiddleware<AuthEnv>(async (c, next) => {
   const auth = await authenticate(c)
   if (auth instanceof Response) return auth
   c.set('auth', auth)
@@ -237,7 +240,7 @@ const requireSession = createMiddleware<AuthEnv>(async (c, next) => {
 // Launch gate and session requirement
 // ---------------------------------------------------------------------------
 
-const accountsGate = createMiddleware<AuthEnv>(async (c, next) => {
+export const accountsGate = createMiddleware<AuthEnv>(async (c, next) => {
   if (accountsMode(c.env) === 'off') return c.json({ error: 'not_found' }, 404)
   await next()
 })
@@ -246,6 +249,8 @@ const accountsGate = createMiddleware<AuthEnv>(async (c, next) => {
 accountApi.use('/auth/*', accountsGate)
 accountApi.use('/account/*', accountsGate)
 accountApi.use('/account/*', requireSession)
+accountApi.use('/lookup/*', accountsGate)
+accountApi.use('/lookup/*', requireSession)
 
 // ---------------------------------------------------------------------------
 // Email + password
@@ -429,7 +434,7 @@ accountApi.post('/auth/password/forgot', async (c) => {
           resetPasswordMessage(
             account.locale,
             account.email,
-            emailTokenLink(c.env.APP_ORIGIN, 'reset_password', reset.token),
+            emailTokenLink(c.env.APP_ORIGIN, 'reset_password', reset.token, account.email),
           ),
         )
       })(),
@@ -449,12 +454,17 @@ accountApi.post('/auth/password/reset', async (c) => {
   const now = Date.now()
   const used = await prepare(
     c.env.DB,
-    consumeEmailTokenStatement(id, 'reset_password', now),
+    consumeEmailTokenStatement(id, 'reset_password', now, body.data.email),
   ).first<{
     account_id: string
     email: string
   }>()
-  if (!used) return c.json({ error: 'invalid_token' }, 400)
+  if (!used) {
+    // A key derived with another address as its salt would lock the person out: the token is
+    // kept for a retry with the right address.
+    const live = await prepare(c.env.DB, liveEmailTokenStatement(id, 'reset_password', now)).first()
+    return c.json({ error: live ? 'email_mismatch' : 'invalid_token' }, 400)
+  }
   // A reset proves the address, so it also verifies it; every session ends (except the caller's,
   // if the request carries one of this account's sessions).
   const keep = await sessionIdFromHeader(c.req.header('authorization'))
@@ -719,17 +729,35 @@ accountApi.delete('/account/identity/:provider', async (c) => {
 accountApi.get('/account/export', async (c) => {
   const { account } = c.get('auth')
   const now = Date.now()
-  const [accounts, identities, sessions, devices] = await c.env.DB.batch(
-    prepareAll(c.env.DB, exportStatements(account.id)),
-  )
+  const [
+    accounts,
+    identities,
+    sessions,
+    devices,
+    settings,
+    health,
+    products,
+    stack,
+    shopping,
+    checks,
+  ] = await c.env.DB.batch(prepareAll(c.env.DB, exportStatements(account.id)))
   const accountRow = accounts?.results[0] as ExportRows['account'] | undefined
   if (!accountRow) return c.json({ error: 'unauthorized' }, 401)
+  const synced = {
+    settings: settings?.results ?? [],
+    health: health?.results ?? [],
+    products: products?.results ?? [],
+    stack: stack?.results ?? [],
+    shopping: shopping?.results ?? [],
+    checks: checks?.results ?? [],
+  } as ExportRows['synced']
   const data = buildAccountExport(
     {
       account: accountRow,
       identities: (identities?.results ?? []) as ExportRows['identities'],
       sessions: (sessions?.results ?? []) as ExportRows['sessions'],
       devices: (devices?.results ?? []) as ExportRows['devices'],
+      synced,
     },
     now,
   )
@@ -746,3 +774,34 @@ accountApi.delete('/account', async (c) => {
   console.log(`account deleted: ${account.id}`)
   return c.body(null, 204)
 })
+
+// ---------------------------------------------------------------------------
+// Health Canada prefill (§4.7): session required, 30 lookups per account per hour
+// ---------------------------------------------------------------------------
+
+type LookupKind = 'npn' | 'din'
+
+async function healthCanadaLookup(c: Ctx, kind: LookupKind, number: string): Promise<Response> {
+  if (!isLookupNumber(number)) return c.json({ error: 'invalid_number' }, 400)
+  const lang = parseLookupLang(c.req.query('lang'))
+  const limited = await throttleHit(c, THROTTLE.lookupAccount, c.get('auth').account.id, Date.now())
+  if (limited) return limited
+  const deps: LookupDeps = {
+    cache: typeof caches === 'undefined' ? null : caches.default,
+    origin: new URL(c.req.url).origin,
+    waitUntil: (work) => defer(c, work),
+  }
+  try {
+    const prefill =
+      kind === 'npn' ? await lookupNpn(number, lang, deps) : await lookupDin(number, lang, deps)
+    if (!prefill) return c.json({ error: 'not_found' }, 404)
+    return c.json(prefill)
+  } catch (err) {
+    // Counts and codes only: never the number looked up or the account.
+    console.error(`lookup ${kind} failed: ${err instanceof Error ? err.message : 'error'}`)
+    return c.json({ error: 'lookup_failed' }, 502)
+  }
+}
+
+accountApi.get('/lookup/npn/:npn', (c) => healthCanadaLookup(c, 'npn', c.req.param('npn')))
+accountApi.get('/lookup/din/:din', (c) => healthCanadaLookup(c, 'din', c.req.param('din')))

@@ -12,6 +12,16 @@ import type {
   UserRow,
 } from '../env'
 import type { Statement } from '../logic'
+import {
+  checkFromRow,
+  productFromRow,
+  settingsFromRow,
+  shoppingFromRow,
+  stackFromRow,
+  syncExportStatements,
+  type SyncReadRows,
+} from '../sync'
+import { healthFromRow } from '../sync-health'
 
 /** Correlated subquery giving an account's distinct providers ("google", "apple,google"…). */
 export const PROVIDERS_SQL = `(SELECT group_concat(DISTINCT provider) FROM auth_identities
@@ -186,7 +196,10 @@ export function disconnectIdentityStatement(
   }
 }
 
-/** The four reads behind GET /api/account/export, in one DB.batch. */
+/**
+ * The reads behind GET /api/account/export, in one DB.batch: the account, sign-in methods,
+ * sessions, devices, then the synced data (settings, products, stack, shopping list, checks).
+ */
 export function exportStatements(accountId: string): Statement[] {
   return [
     { sql: `SELECT * FROM accounts WHERE id = ?1`, params: [accountId] },
@@ -201,10 +214,12 @@ export function exportStatements(accountId: string): Statement[] {
       params: [accountId],
     },
     {
-      sql: `SELECT id, tz, platform, created_at, last_seen_at FROM users
+      sql: `SELECT id, tz, platform, created_at, last_seen_at, locale, news_opt_in,
+                   news_opt_in_at, news_opt_out_at, last_news_at FROM users
             WHERE account_id = ?1 ORDER BY created_at`,
       params: [accountId],
     },
+    ...syncExportStatements(accountId),
   ]
 }
 
@@ -219,7 +234,33 @@ export interface ExportRows {
     'provider' | 'subject' | 'email' | 'created_at' | 'last_used_at'
   >[]
   sessions: Pick<SessionRow, 'platform' | 'created_at' | 'last_used_at' | 'expires_at'>[]
-  devices: Pick<UserRow, 'id' | 'tz' | 'platform' | 'created_at' | 'last_seen_at'>[]
+  devices: Pick<
+    UserRow,
+    | 'id'
+    | 'tz'
+    | 'platform'
+    | 'created_at'
+    | 'last_seen_at'
+    | 'locale'
+    | 'news_opt_in'
+    | 'news_opt_in_at'
+    | 'news_opt_out_at'
+    | 'last_news_at'
+  >[]
+  /** Every synced row, tombstones (deleted items, kept 30 days) included. */
+  synced: SyncReadRows
+}
+
+/** Deep copy with every number under a key ending in "At" as an ISO date. */
+export function withIsoDates<T>(value: T): unknown {
+  if (Array.isArray(value)) return value.map(withIsoDates)
+  if (typeof value !== 'object' || value === null) return value
+  return Object.fromEntries(
+    Object.entries(value).map(([key, v]) => [
+      key,
+      key.endsWith('At') && typeof v === 'number' ? iso(v) : withIsoDates(v),
+    ]),
+  )
 }
 
 /**
@@ -228,6 +269,7 @@ export interface ExportRows {
  */
 export function buildAccountExport(rows: ExportRows, now: number) {
   const a = rows.account
+  const synced = rows.synced
   return {
     format: 'smartstack-account-export',
     version: 1,
@@ -269,7 +311,23 @@ export function buildAccountExport(rows: ExportRows, now: number) {
       platform: d.platform,
       createdAt: iso(d.created_at),
       lastSeenAt: iso(d.last_seen_at),
+      language: d.locale,
+      // News notifications (C6): whether they are on, and when they were last turned on and off.
+      news: {
+        on: d.news_opt_in === 1,
+        turnedOnAt: iso(d.news_opt_in_at),
+        turnedOffAt: iso(d.news_opt_out_at),
+        lastReceivedAt: iso(d.last_news_at),
+      },
     })),
+    // As the app syncs them (docs/smartstack-phase2-prompt.md §8), dates in ISO form. A deleted
+    // item stays 30 days as a tombstone: its key and dates only.
+    settings: withIsoDates(synced.settings[0] ? settingsFromRow(synced.settings[0]) : null),
+    healthProfile: withIsoDates(synced.health[0] ? healthFromRow(synced.health[0]) : null),
+    products: withIsoDates(synced.products.map(productFromRow)),
+    stack: withIsoDates(synced.stack.map(stackFromRow)),
+    shoppingList: withIsoDates(synced.shopping.map(shoppingFromRow)),
+    doseChecks: withIsoDates(synced.checks.map(checkFromRow)),
   }
 }
 

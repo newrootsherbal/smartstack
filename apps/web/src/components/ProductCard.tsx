@@ -1,6 +1,7 @@
 import { getIngredient } from '@smartstack/engine'
 import type { Product } from '@smartstack/shared'
 import { useState } from 'react'
+import { useCatalogue } from '../catalogue'
 import { formatAmount, formatServingSize } from '../format'
 import { t, tl } from '../i18n'
 import styles from './ProductCard.module.css'
@@ -8,6 +9,7 @@ import styles from './ProductCard.module.css'
 const COLLAPSED_ROWS = 8
 
 export function ProductCard({ product }: { product: Product }) {
+  const catalogue = useCatalogue()
   const [expanded, setExpanded] = useState(false)
   const rows = expanded ? product.ingredients : product.ingredients.slice(0, COLLAPSED_ROWS)
   const hidden = product.ingredients.length - rows.length
@@ -27,12 +29,13 @@ export function ProductCard({ product }: { product: Product }) {
         </div>
         {product.status === 'sample' ? (
           <span className="tag tag--sample">{t('common.sample')}</span>
-        ) : (
+        ) : product.status === 'user' ? null : (
           <span className="tag">{t('common.draft')}</span>
         )}
       </div>
       <p className="small muted">
-        {product.npn ? `NPN ${product.npn}` : t(`common.kind.${product.kind}`)} · SKU {product.sku}
+        {product.npn ? `NPN ${product.npn}` : t(`common.kind.${product.kind}`)}
+        {product.sku && <> · SKU {product.sku}</>}
         {sizes.length > 0 && <> · {t('add.sizes', { sizes: sizes.join(', ') })}</>}
       </p>
       <div>
@@ -41,7 +44,7 @@ export function ProductCard({ product }: { product: Product }) {
         </p>
         <ul className={styles.ingredients}>
           {rows.map((pi) => {
-            const ing = getIngredient(pi.ingredientId)
+            const ing = getIngredient(pi.ingredientId, catalogue)
             return (
               <li key={pi.ingredientId}>
                 <span>{ing ? tl(ing.name) : pi.ingredientId}</span>

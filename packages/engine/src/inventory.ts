@@ -101,11 +101,17 @@ export interface ProductSize {
   size: PackageSize | null
 }
 
-/** Every retail size of a product with what a full bottle holds. */
+/**
+ * Every retail size of a product with what a full bottle holds. Empty for a product with
+ * neither variants nor a barcode (a person's own product: its bottle size is on the
+ * `UserProduct`, `packageQuantity` / `packageUnit`).
+ */
 export function productSizes(product: Product): ProductSize[] {
   const variants = product.variants?.length
     ? product.variants
-    : [{ upc: product.upc, size: undefined }]
+    : product.upc
+      ? [{ upc: product.upc, size: undefined }]
+      : []
   return variants.map((v) => ({
     upc: v.upc,
     label: v.size ?? null,

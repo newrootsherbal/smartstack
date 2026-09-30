@@ -1,7 +1,7 @@
 /**
  * Daily cleanup (§8.6), run by the 03:00 UTC cron tick: expired sessions, used or expired
  * email tokens, OAuth attempts older than a day, throttle rows older than a day.
- * (Inactive accounts and devices come with M10.)
+ * Inactive accounts and devices: inactivity.ts.
  */
 import type { Statement } from '../logic'
 

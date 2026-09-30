@@ -9,6 +9,7 @@ import { platformName } from '../platform/detect'
 import { getExistingSubscription, toSubscriptionBody } from '../platform/reminders'
 import type { Action } from '../state/reducer'
 import type { PersistedState } from '../storage'
+import { catalogueFor } from '../catalogue'
 import { computeReminderWindow, hashWindow } from '../sync'
 import { setSyncStatus } from './syncStatus'
 
@@ -29,7 +30,9 @@ export function syncSchedule(
   dispatch: Dispatch<Action>,
   opts: { force?: boolean } = {},
 ): Promise<void> {
-  if (state.pushState.status !== 'subscribed' || !state.routine) return Promise.resolve()
+  if (state.pushState.status !== 'subscribed' || !state.remindersEnabled || !state.routine) {
+    return Promise.resolve()
+  }
   if (inFlight) return inFlight
   const routine = state.routine
   inFlight = (async () => {
@@ -39,6 +42,7 @@ export function syncSchedule(
       todayOverride: state.todayOverride,
       now: new Date(),
       productNames: state.reminderProductNames,
+      catalogue: catalogueFor(state.userProducts),
     })
     const hash = hashWindow(reminders)
     if (!opts.force && hash === state.lastSyncHash) return
@@ -71,7 +75,8 @@ export async function reconcileOnOpen(
   try {
     const tz = currentTimeZone()
     if (tz !== state.tz) {
-      await api.putMe(state.userId, { tz, platform: platformName() })
+      await api.putMe(state.userId, { tz, platform: platformName(), locale: state.locale })
+      dispatch({ type: 'SET_SERVER_LOCALE', locale: state.locale })
       dispatch({ type: 'SET_TZ', tz })
       force = true
     }

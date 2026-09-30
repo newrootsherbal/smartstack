@@ -1,20 +1,12 @@
 import { useCallback, useState } from 'react'
 import { api } from '../api/client'
 import { t } from '../i18n'
-import { platformName } from '../platform/detect'
-import {
-  permissionState,
-  pushSupported,
-  requestPermission,
-  subscribe,
-  toSubscriptionBody,
-  unsubscribe,
-} from '../platform/reminders'
+import { permissionState } from '../platform/reminders'
 import { useAppState } from '../state/context'
+import { ensurePush, releasePush, vapidConfigured, type PushResult } from './push'
 import { describeError, syncSchedule } from './runner'
 
-const VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY ?? ''
-
+/** Dose reminders on this device (news is separate: see useNews). */
 export function useReminders() {
   const { state, dispatch } = useAppState()
   const [busy, setBusy] = useState(false)
@@ -24,61 +16,38 @@ export function useReminders() {
   const [permission, setPermission] = useState(permissionState())
 
   /**
-   * Click handler. `Notification.requestPermission()` is called synchronously,
-   * before any await, or iOS ignores it.
+   * Click handler. The permission prompt is requested synchronously inside ensurePush, before
+   * any await, or iOS ignores it. Resolves true when reminders were turned on.
    */
-  const enable = useCallback(() => {
-    if (!pushSupported()) {
-      dispatch({
-        type: 'SET_PUSH_STATE',
-        pushState: { status: 'unsupported', endpoint: null, registeredAt: null },
-      })
-      return
-    }
-    const permissionPromise = requestPermission()
+  const enable = useCallback((): Promise<boolean> => {
+    const pushing = ensurePush(state, dispatch)
     setBusy(true)
     setError(null)
-    void (async () => {
+    return (async () => {
       try {
-        const result = await permissionPromise
-        setPermission(result)
-        if (result !== 'granted') {
-          dispatch({
-            type: 'SET_PUSH_STATE',
-            pushState: {
-              status: result === 'denied' ? 'denied' : 'off',
-              endpoint: null,
-              registeredAt: null,
-            },
-          })
-          return
+        const result: PushResult = await pushing
+        setPermission(permissionState())
+        if (!result.ok) {
+          if (result.kind === 'push' || result.kind === 'server') {
+            setErrorKind(result.kind)
+            setError(result.error)
+          }
+          return false
         }
-        let sub: PushSubscription
-        try {
-          sub = await subscribe(VAPID_PUBLIC_KEY)
-        } catch (err) {
-          // Chrome/Safari could not register with their push service: nothing reached our server.
-          setErrorKind('push')
-          setError(describeError(err))
-          return
-        }
-        const body = toSubscriptionBody(sub)
-        // First network calls of the app's life: create the user, then the subscription.
-        await api.putMe(state.userId, { tz: state.tz, platform: platformName() })
-        await api.putPushSubscription(state.userId, body)
-        const next = {
-          ...state,
-          pushState: {
-            status: 'subscribed' as const,
-            endpoint: body.endpoint,
-            registeredAt: Date.now(),
+        dispatch({ type: 'SET_REMINDERS_ENABLED', on: true })
+        await syncSchedule(
+          {
+            ...state,
+            remindersEnabled: true,
+            pushState:
+              state.pushState.status === 'subscribed'
+                ? state.pushState
+                : { status: 'subscribed', endpoint: null, registeredAt: Date.now() },
           },
-        }
-        dispatch({ type: 'SET_PUSH_STATE', pushState: next.pushState })
-        await syncSchedule(next, dispatch, { force: true })
-      } catch (err) {
-        setErrorKind('server')
-        setError(describeError(err))
+          dispatch,
+          { force: true },
+        )
+        return true
       } finally {
         setBusy(false)
       }
@@ -89,23 +58,20 @@ export function useReminders() {
     setBusy(true)
     setError(null)
     try {
-      if (state.pushState.endpoint) {
-        await api
-          .deletePushSubscription(state.userId, state.pushState.endpoint)
-          .catch(() => undefined)
-      }
-      await unsubscribe()
-      dispatch({
-        type: 'SET_PUSH_STATE',
-        pushState: { status: 'off', endpoint: null, registeredAt: null },
-      })
+      dispatch({ type: 'SET_REMINDERS_ENABLED', on: false })
       dispatch({ type: 'SET_SYNC', lastSync: null, lastSyncHash: null })
+      if (state.newsOptIn) {
+        // News still uses the subscription: only the reminder window goes.
+        await api.putSchedule(state.userId, { reminders: [] }).catch(() => undefined)
+      } else {
+        await releasePush(state, dispatch)
+      }
     } catch (err) {
       setError(describeError(err))
     } finally {
       setBusy(false)
     }
-  }, [dispatch, state.pushState.endpoint, state.userId])
+  }, [dispatch, state])
 
   const sendTest = useCallback(async () => {
     setTestStatus('idle')
@@ -126,12 +92,13 @@ export function useReminders() {
   return {
     permission,
     pushState: state.pushState,
+    on: state.remindersEnabled && state.pushState.status === 'subscribed',
     lastSync: state.lastSync,
     busy,
     error,
     errorKind,
     testStatus,
-    vapidConfigured: VAPID_PUBLIC_KEY.length > 0,
+    vapidConfigured,
     enable,
     disable,
     sendTest,

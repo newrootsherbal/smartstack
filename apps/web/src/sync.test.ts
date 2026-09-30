@@ -1,3 +1,4 @@
+import { catalogue } from '@smartstack/engine'
 import type { Routine } from '@smartstack/shared'
 import { describe, expect, it } from 'vitest'
 import { addDays, localDateKey, localDateTimeToEpoch } from './dates'
@@ -29,6 +30,7 @@ describe('computeReminderWindow', () => {
       todayOverride: null,
       now,
       productNames: true,
+      catalogue,
     })
     const days = new Set(reminders.map((r) => r.slotKey.slice(0, 10)))
     expect(days.size).toBe(WINDOW_DAYS)
@@ -58,6 +60,7 @@ describe('computeReminderWindow', () => {
       todayOverride: null,
       now: justBefore,
       productNames: true,
+      catalogue,
     })
     expect(reminders.some((r) => r.slotKey === '2026-09-24:22:30')).toBe(false)
   })
@@ -74,6 +77,7 @@ describe('computeReminderWindow', () => {
       todayOverride: override,
       now,
       productNames: true,
+      catalogue,
     })
     expect(reminders.some((r) => r.slotKey === `${localDateKey(now)}:23:30`)).toBe(true)
     expect(reminders.some((r) => r.slotKey === `${addDays(localDateKey(now), 1)}:22:30`)).toBe(true)
@@ -86,6 +90,7 @@ describe('computeReminderWindow', () => {
       todayOverride: null,
       now,
       productNames: true,
+      catalogue,
     })
     for (const r of reminders) {
       expect(r.slotKey.length).toBeLessThanOrEqual(32)
@@ -101,6 +106,7 @@ describe('computeReminderWindow', () => {
       todayOverride: null,
       now,
       productNames: true,
+      catalogue,
     })
     const b = computeReminderWindow({
       routine,
@@ -108,6 +114,7 @@ describe('computeReminderWindow', () => {
       todayOverride: null,
       now,
       productNames: true,
+      catalogue,
     })
     expect(hashWindow(a)).toBe(hashWindow(b))
     expect(hashWindow(a)).not.toBe(hashWindow(a.slice(1)))
@@ -203,6 +210,7 @@ describe('reminders without product names (the default)', () => {
       todayOverride: null,
       now,
       productNames: false,
+      catalogue,
     })
     expect(reminders.length).toBeGreaterThan(0)
     for (const r of reminders) {

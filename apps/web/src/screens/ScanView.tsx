@@ -6,21 +6,25 @@ import styles from './ScanView.module.css'
 interface ScanViewProps {
   onDetected: (code: string) => void
   onUnavailable: () => void
+  /** While a sheet about the last code is open, nothing is reported (the camera keeps running). */
+  paused?: boolean
 }
 
 const DETECT_INTERVAL_MS = 250
 
 /** Camera + scanner loop. Lazy-loaded so the WASM only ships on this screen. */
-export default function ScanView({ onDetected, onUnavailable }: ScanViewProps) {
+export default function ScanView({ onDetected, onUnavailable, paused = false }: ScanViewProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [status, setStatus] = useState<'starting' | 'scanning' | 'denied' | 'unavailable'>(
     'starting',
   )
   const [engine, setEngine] = useState<Scanner['engine'] | null>(null)
   const detectedRef = useRef(onDetected)
+  const pausedRef = useRef(paused)
   useEffect(() => {
     detectedRef.current = onDetected
-  }, [onDetected])
+    pausedRef.current = paused
+  }, [onDetected, paused])
 
   useEffect(() => {
     let cancelled = false
@@ -57,7 +61,7 @@ export default function ScanView({ onDetected, onUnavailable }: ScanViewProps) {
 
         const tick = async () => {
           if (cancelled) return
-          if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+          if (!pausedRef.current && video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
             try {
               const codes = await scanner.detect(video)
               const code = codes[0]

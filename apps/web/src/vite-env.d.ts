@@ -10,6 +10,8 @@ interface ImportMetaEnv {
   readonly VITE_ACCOUNTS_MODE?: string
   /** "true" once Sign in with Apple is set up. */
   readonly VITE_APPLE_ENABLED?: string
+  /** "false" once the Privacy Officer approves the privacy policy and terms (hides "Draft"). */
+  readonly VITE_LEGAL_DRAFT?: string
 }
 
 /** Injected by vite.config.ts from package.json. */

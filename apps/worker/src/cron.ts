@@ -2,9 +2,13 @@
  * The every-minute tick. Budget: 10 ms CPU, 50 subrequests, 6 concurrent
  * connections. One claim statement, one subscription lookup, at most six
  * outbound pushes in flight, then one batch of grouped result writes.
+ * News notifications (§4.12) then get whatever is left of MAX_PUSHES_PER_TICK:
+ * one batch (promote + pick), one fan-out select, their pushes, one batch of writes.
  */
 import { authCleanupStatements } from './auth/cleanup'
+import { sendEmail } from './email'
 import type { Env, PushSubscriptionRow, ReminderRow } from './env'
+import { isInactivityTick, runInactivityStep, type InactivitySummary } from './inactivity'
 import {
   claimStatement,
   expireStatement,
@@ -18,7 +22,10 @@ import {
   type PushOutcome,
   type Statement,
 } from './logic'
-import { sendPush, withConcurrency, type VapidConfig } from './push'
+import { runNewsStep, type NewsStepSummary } from './news/deliver'
+import { newsBudget, NEWS_PUSH_OPTIONS } from './news/fanout'
+import { sendPush, vapidConfig, withConcurrency } from './push'
+import { syncCleanupStatements } from './sync'
 
 interface TickSummary {
   expired: number
@@ -29,6 +36,10 @@ interface TickSummary {
   pushes: number
   gone: number
   authErrors: number
+  /** News: what the step did (counts and the campaign id only). */
+  news: NewsStepSummary | null
+  /** Retention of inactive accounts and devices (03:00–03:09 UTC): counts only. */
+  inactivity: InactivitySummary | null
   wallMs: number
 }
 
@@ -47,16 +58,17 @@ export async function runTick(env: Env, now: number): Promise<TickSummary> {
     pushes: 0,
     gone: 0,
     authErrors: 0,
+    news: null,
+    inactivity: null,
     wallMs: 0,
   }
+  const batchSize = parseBatchSize(env.MAX_PUSHES_PER_TICK)
+  const vapid = vapidConfig(env)
 
   const expired = await bind(env.DB, expireStatement(now)).run()
   summary.expired = expired.meta.changes ?? 0
 
-  const claimed = await bind(
-    env.DB,
-    claimStatement(now, parseBatchSize(env.MAX_PUSHES_PER_TICK)),
-  ).all<ReminderRow>()
+  const claimed = await bind(env.DB, claimStatement(now, batchSize)).all<ReminderRow>()
   const reminders = claimed.results
   summary.claimed = reminders.length
 
@@ -64,7 +76,6 @@ export async function runTick(env: Env, now: number): Promise<TickSummary> {
   if (isRetentionTick(now)) writes.push(bind(env.DB, retentionStatement(now)))
 
   if (reminders.length > 0) {
-    const vapid = vapidConfig(env)
     const userIds = [...new Set(reminders.map((r) => r.user_id))]
     const subsByUser = new Map<string, PushSubscriptionRow[]>()
     if (vapid) {
@@ -192,6 +203,21 @@ export async function runTick(env: Env, now: number): Promise<TickSummary> {
 
   if (writes.length) await env.DB.batch(writes)
 
+  // News after the reminders' writes, so a news failure never rolls them back. Pushes share the
+  // per-tick budget (and the 50-subrequest limit): news only gets what the reminders left.
+  if (vapid) {
+    try {
+      summary.news = await runNewsStep(
+        env.DB,
+        now,
+        newsBudget(batchSize, summary.pushes),
+        (sub, payload, topic) => sendPush(sub, payload, topic, vapid, now, NEWS_PUSH_OPTIONS),
+      )
+    } catch (err) {
+      console.error('news step failed:', err instanceof Error ? err.message : String(err))
+    }
+  }
+
   // Accounts cleanup (§8.6) in its own batch, so a failure here never rolls back the reminder
   // writes above.
   if (isRetentionTick(now)) {
@@ -200,19 +226,32 @@ export async function runTick(env: Env, now: number): Promise<TickSummary> {
     } catch (err) {
       console.error('auth cleanup failed:', err instanceof Error ? err.message : String(err))
     }
+    // Synced data (§8.6): check marks older than 3 days, tombstones older than 30. Its own
+    // batch again: until migration 0003 runs these tables don't exist, and that must not undo
+    // the cleanup above.
+    try {
+      await env.DB.batch(syncCleanupStatements(now).map((s) => bind(env.DB, s)))
+    } catch (err) {
+      console.error('sync cleanup failed:', err instanceof Error ? err.message : String(err))
+    }
+  }
+
+  // Retention (§8.6): accounts unused for 3 years (warned 30 days before) and devices without an
+  // account unused for 12 months. Last, so nothing above waits on the emails.
+  if (isInactivityTick(now)) {
+    try {
+      summary.inactivity = await runInactivityStep(env.DB, now, {
+        deletions: isRetentionTick(now),
+        appOrigin: env.APP_ORIGIN,
+        send: (message) => sendEmail(env, message),
+      })
+    } catch (err) {
+      console.error('inactivity cleanup failed:', err instanceof Error ? err.message : String(err))
+    }
   }
 
   summary.wallMs = Date.now() - started
   // Counts and timings only: never a user id together with product names or text.
   console.log(JSON.stringify({ tick: new Date(now).toISOString(), ...summary }))
   return summary
-}
-
-function vapidConfig(env: Env): VapidConfig | null {
-  if (!env.VAPID_PRIVATE_KEY || !env.VAPID_PUBLIC_KEY || !env.VAPID_SUBJECT) return null
-  return {
-    subject: env.VAPID_SUBJECT,
-    publicKey: env.VAPID_PUBLIC_KEY,
-    privateKey: env.VAPID_PRIVATE_KEY,
-  }
 }

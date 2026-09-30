@@ -73,3 +73,13 @@ export function formatLongDate(key: DateKey, locale = intlLocale()): string {
   }).format(new Date(y, m - 1, d))
   return text.charAt(0).toLocaleUpperCase(locale) + text.slice(1)
 }
+
+/** "5 minutes ago", "il y a 2 heures", "yesterday" in the app's language. */
+export function relative(ts: number, now: number): string {
+  const diffMin = Math.round((now - ts) / 60000)
+  const rtf = new Intl.RelativeTimeFormat(intlLocale(), { numeric: 'auto' })
+  if (Math.abs(diffMin) < 60) return rtf.format(-diffMin, 'minute')
+  const diffH = Math.round(diffMin / 60)
+  if (Math.abs(diffH) < 24) return rtf.format(-diffH, 'hour')
+  return rtf.format(-Math.round(diffH / 24), 'day')
+}

@@ -57,8 +57,8 @@ describe('findProductByBarcode (sample fixture)', () => {
 
   it('every seed UPC is a valid EAN-13 with the sample prefix', () => {
     for (const p of sampleCatalogue.products) {
-      expect(isValidEan13(p.upc)).toBe(true)
-      expect(p.upc.startsWith('200')).toBe(true)
+      expect(isValidEan13(p.upc ?? '')).toBe(true)
+      expect(p.upc?.startsWith('200')).toBe(true)
     }
   })
 })

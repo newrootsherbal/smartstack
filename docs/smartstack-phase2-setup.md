@@ -110,12 +110,16 @@ in (see "Where commands run").
 Today the deploy workflow doesn't touch the database, so every PR with a migration needs a manual
 step. Adding one permission to the existing token fixes that.
 
-1. Go to https://dash.cloudflare.com → your avatar (top right) → **My Profile** → **API Tokens**.
-2. Find the token used by GitHub Actions for deploys (it has "Workers Scripts: Edit"). Click
-   **⋯ → Edit**.
-3. Under **Permissions**, click **+ Add more** → **Account** · **D1** · **Edit**.
-4. **Continue to summary** → **Update token**. The token's value doesn't change, so the GitHub
-   secret `CLOUDFLARE_API_TOKEN` stays as it is.
+1. Go to https://dash.cloudflare.com → left menu **Manage account** → **Account API tokens**. (An
+   older token may instead be under your avatar → **My Profile** → **API Tokens**.)
+2. Open the token used by GitHub Actions for deploys (`smartstack-github-deploy`; it has "Workers
+   Scripts" permission) → edit it.
+3. Under **Permission policies**, click **+ Add policy** → leave **Entire Account** → in the
+   permission search box type **D1** (the list only shows names matching the search) → tick
+   **Edit** on the **D1** row. Clicking **+N more** on an existing policy shows whether D1 is
+   already there.
+4. **Review token** → confirm the update. The token's value doesn't change, so the GitHub secret
+   `CLOUDFLARE_API_TOKEN` stays as it is.
 
 If you can't tell which token it is, create a new one instead: **Create Token** → **Create Custom
 Token** → name "GitHub deploy SmartStack" → permissions **Account · Workers Scripts · Edit** and

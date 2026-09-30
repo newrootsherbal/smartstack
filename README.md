@@ -19,7 +19,8 @@ personalized daily schedule with reminders and a "More info" sheet for every pro
    **Timing conflict** (orange, "Action recommended"), **Consideration** (yellow),
    **Product instruction** (blue), **Informational** (outline). Seed rules use only the middle
    three. All five are shown on `/dev/styleguide`.
-4. No accounts, no analytics, no third-party scripts, no third-party CDN loads.
+4. Accounts are optional (guest mode works as in Phase 1). No analytics, no third-party
+   scripts, no third-party CDN loads.
 5. Bilingual: no user-facing string lives in the engine; all copy is in
    `apps/web/src/i18n/en.json` and `fr.json` (same keys, checked by a test), catalogue text
    carries `{ en, fr }`, and Profile → Language switches the language (picked from the browser's
@@ -65,9 +66,10 @@ there is no build step for them.
   counts, shopping list and today's check marks (`smartstack:v1`, a versioned blob; version 2
   since Phase 2, migrated from version 1 on load by `src/storage.ts`). If it is wiped, the user
   re-onboards.
-- The server stores only what is needed to deliver reminders. **Routine and stack are never
-  sent to the server.** Reminder rows carry the notification text; by default that text only
-  says how many products to take ("Time for 3 products — 9:30 AM") and no product id is sent.
+- For guests, the server stores only what is needed to deliver reminders. **A guest's routine
+  and stack are never sent to the server** (an account syncs them: see [Sync](#sync-apisync)).
+  Reminder rows carry the notification text; by default that text only says how many products
+  to take ("Time for 3 products — 9:30 AM") and no product id is sent.
   Notifications → "Show product names in reminders" puts the names (and ids) back.
 - The app makes **no network call** until the user taps "Turn on reminders." Afterwards it
   syncs a rolling 7-day window on every change and on every app open, and retries on the next
@@ -87,6 +89,19 @@ product joins the shopping list once per bottle with a "running low" sheet; Refi
 35") clears it. My stack's **Manage** sheet holds times per day, Refill, Edit count, Move to…
 (a pin), Add to shopping list, More info and Remove. Bottles and the list work for guests too.
 
+### Other brands, medications and foods
+
+Accounts can add products that aren't in the catalogue (Add → Other brand, or "Add it manually"
+from the unknown-barcode sheet): a natural health product (NPN), a medication (DIN) or a food,
+drink or anything else. "Fill from Health Canada" prefills the form through the Worker
+(`/api/lookup/…`); the person reviews every field. They are stored as `UserProduct`s (`u_…`)
+in the device state, synced to `user_products`, and merged into the catalogue by
+`useCatalogue()` / `catalogueFor()` (`apps/web/src/catalogue.ts`), so the scheduler, the
+reminders, the bottles and the duplicates treat them like any other product. A medication's
+doses are pinned to the times the person chose, never moved, and its ingredients still push
+supplements away (a calcium supplement moves away from an iron medication); the form and More
+info show N3 (SmartStack doesn't check medication interactions).
+
 ### Engine in one paragraph
 
 Every product starts at breakfast (or the first available meal). Fixed-anchor rules move it
@@ -103,6 +118,21 @@ pin). Extra doses take dinner, then lunch, then breakfast, then bedtime.
 Rules attach to ingredients; a product may disable inherited rules (`ruleOverrides.disable`).
 Duplicate ingredients are listed whenever two or more stack products contain the same
 ingredient, with amounts and the sum, never compared to any reference intake.
+
+The person's own products (other brands, medications, foods; accounts only) are `UserProduct`s
+turned into engine products on the device: `mergeCatalogue(catalogue, userProducts)` appends
+`toEngineProduct` (id `u_…`, status `user`, the person's doses as label defaults, ingredients
+recognized by id or name and converted to canonical units as the importer does; anything else
+stays free text) and `userRules` (the label checkboxes as product-level `product_instruction`
+rules `user:{id}:{attribute}`). The web hook memoizes the merge and passes it to every lookup,
+`buildSchedule` and `findDuplicateIngredients`. A **medication** has no rules and is never
+moved: its doses stay at the times the person gave (an unpinned dose stays where it lands, at
+the first meal), it carries no reasons or adjustment, and it is left out of duplicates and
+alternatives, but the separation rules its ingredients carry move the other products away (an
+iron medication moves a calcium supplement, never the reverse). `suggestAlternatives` offers
+at most two New Roots Herbal products for another brand's product: curated entries from
+`data/alternatives.json` first, then a score over shared canonical ingredients (daily amounts,
+same form, distinctive name words), each with the facts behind it.
 
 ## Development
 
@@ -185,6 +215,13 @@ writes nothing if the merged catalogue fails validation. The original ten-produc
 catalogue lives in `data/sample/` as a test fixture. `docs/data-template.md` remains for
 products the website does not list.
 
+`data/alternatives.json` holds the product team's New Roots Herbal alternatives for other
+brands' products (`[]` until filled): `{ match: { upc } | { brand, name }, productId,
+reviewStatus, lastReviewed, reviewedBy }`. `npm run data:validate` checks it (the product
+exists and is not topical, check digits, review fields, repeats). The monthly other-brand report
+that feeds it is a D1 query in `docs/smartstack-phase2-setup.md`, part H (counts only, no
+account ids, medications excluded).
+
 #### Keeping the catalogue current
 
 The catalogue is bundled at build time, so it changes only when the importer runs and the app
@@ -241,15 +278,15 @@ Herbal natural health product shows "Product not found."
 
 ### Environment
 
-| File                        | Committed | Contents                                                                                                                                                                                                                                                                                              |
-| --------------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `apps/web/.env`             | yes       | Production build: `VITE_VAPID_PUBLIC_KEY` (public), `VITE_BETA_KEY` (speed bump), `VITE_ACCOUNTS_MODE`, `VITE_APPLE_ENABLED`                                                                                                                                                                          |
-| `apps/web/.env.development` | yes       | `vite` dev server overrides (`VITE_ACCOUNTS_MODE=public`)                                                                                                                                                                                                                                             |
-| `apps/web/.env.staging`     | yes       | `vite build --mode staging` overrides                                                                                                                                                                                                                                                                 |
-| `apps/web/.env.local`       | **no**    | Optional override of `VITE_VAPID_PUBLIC_KEY` for local testing                                                                                                                                                                                                                                        |
-| `apps/worker/wrangler.toml` | yes       | Vars (`VAPID_PUBLIC_KEY`, `VAPID_SUBJECT`, `MAX_PUSHES_PER_TICK`, `BETA_KEY`, `APP_ORIGIN`, `ACCOUNTS_MODE`, `STAFF_EMAIL_DOMAINS`, `APPLE_ENABLED`, `GOOGLE_CLIENT_ID`, `EMAIL_MODE`, `EMAIL_FROM`, `EMAIL_REPLY_TO`, `CONSENT_VERSION`), D1 binding, cron; `[env.staging]` repeats them for staging |
-| `apps/worker/.dev.vars`     | **no**    | Local secrets for `wrangler dev`: `VAPID_PRIVATE_KEY` (and optionally `VAPID_PUBLIC_KEY`), `AUTH_PEPPER`, `GOOGLE_CLIENT_SECRET`, optionally `SMTP2GO_API_KEY` (see `.dev.vars.example`)                                                                                                              |
-| Cloudflare secret           | n/a       | `wrangler secret put NAME` for `VAPID_PRIVATE_KEY`, `AUTH_PEPPER`, `GOOGLE_CLIENT_SECRET`, `SMTP2GO_API_KEY` (add `--env staging` for staging)                                                                                                                                                        |
+| File                        | Committed | Contents                                                                                                                                                                                                                                                                                                                |
+| --------------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `apps/web/.env`             | yes       | Production build: `VITE_VAPID_PUBLIC_KEY` (public), `VITE_BETA_KEY` (speed bump), `VITE_ACCOUNTS_MODE`, `VITE_APPLE_ENABLED`                                                                                                                                                                                            |
+| `apps/web/.env.development` | yes       | `vite` dev server overrides (`VITE_ACCOUNTS_MODE=public`)                                                                                                                                                                                                                                                               |
+| `apps/web/.env.staging`     | yes       | `vite build --mode staging` overrides                                                                                                                                                                                                                                                                                   |
+| `apps/web/.env.local`       | **no**    | Optional override of `VITE_VAPID_PUBLIC_KEY` for local testing                                                                                                                                                                                                                                                          |
+| `apps/worker/wrangler.toml` | yes       | Vars (`VAPID_PUBLIC_KEY`, `VAPID_SUBJECT`, `MAX_PUSHES_PER_TICK`, `BETA_KEY`, `APP_ORIGIN`, `ACCOUNTS_MODE`, `STAFF_EMAIL_DOMAINS`, `APPLE_ENABLED`, `GOOGLE_CLIENT_ID`, `EMAIL_MODE`, `EMAIL_FROM`, `EMAIL_REPLY_TO`, `CONSENT_VERSION`, `NEWS_URL_HOSTS`), D1 binding, cron; `[env.staging]` repeats them for staging |
+| `apps/worker/.dev.vars`     | **no**    | Local secrets for `wrangler dev`: `VAPID_PRIVATE_KEY` (and optionally `VAPID_PUBLIC_KEY`), `AUTH_PEPPER`, `GOOGLE_CLIENT_SECRET`, optionally `SMTP2GO_API_KEY` (see `.dev.vars.example`)                                                                                                                                |
+| Cloudflare secret           | n/a       | `wrangler secret put NAME` for `VAPID_PRIVATE_KEY`, `AUTH_PEPPER`, `GOOGLE_CLIENT_SECRET`, `SMTP2GO_API_KEY` (add `--env staging` for staging)                                                                                                                                                                          |
 
 **Accounts launch gate.** `ACCOUNTS_MODE` (Worker) and `VITE_ACCOUNTS_MODE` (web build) are
 `off`, `staff` or `public`; anything else counts as `off`. Local (`npm run dev`,
@@ -270,20 +307,21 @@ against one public key is useless with another.
 
 Two bearer credentials on separate prefixes. `/api/me/…` takes
 `Authorization: Bearer <anonymous uuid>` (the Phase 1 device id): unknown ids get `401`, except
-`PUT /api/me`, which creates the device and requires `X-Beta-Key`. `/api/auth/…` and
-`/api/account/…` take the **session token** (`Authorization: Bearer <token>`). Every request
-body is validated with the shared zod schemas (`packages/shared/src/index.ts`,
-`packages/shared/src/auth.ts`); errors are `{ error, detail? }`, and every API response has
-`Cache-Control: no-store`.
+`PUT /api/me`, which creates the device and requires `X-Beta-Key`. `/api/auth/…`,
+`/api/account/…`, `/api/sync` and `/api/lookup/…` take the **session token**
+(`Authorization: Bearer <token>`). Every request body is validated with the shared zod schemas
+(`packages/shared/src/index.ts`, `auth.ts`, `sync.ts`, `lookup.ts`); errors are `{ error, detail? }`,
+and every API response has `Cache-Control: no-store`.
 
-| Route                              | Purpose                                                                                                 |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `PUT /api/me`                      | Create or update `{ tz, platform }`                                                                     |
-| `DELETE /api/me`                   | Delete the user, subscriptions and reminders                                                            |
-| `POST /api/me/push-subscription`   | Upsert `{ endpoint, keys }` (≤ 5 per user)                                                              |
-| `DELETE /api/me/push-subscription` | Remove one endpoint                                                                                     |
-| `PUT /api/me/schedule`             | Replace the pending, future `schedule` rows with the browser's 7-day window (≤ 200); never touches sent |
-| `POST /api/me/test-reminder`       | One `test` reminder 2 minutes out, at most once per 2 minutes                                           |
+| Route                              | Purpose                                                                                                              |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `PUT /api/me`                      | Create or update `{ tz, platform, locale? }` (`locale`: `en` or `fr`, the app language; absent = unchanged)          |
+| `DELETE /api/me`                   | Delete the user, subscriptions and reminders                                                                         |
+| `POST /api/me/push-subscription`   | Upsert `{ endpoint, keys }` (≤ 5 per user)                                                                           |
+| `DELETE /api/me/push-subscription` | Remove one endpoint                                                                                                  |
+| `PUT /api/me/schedule`             | Replace the pending, future `schedule` rows with the browser's 7-day window (≤ 200); never touches sent              |
+| `POST /api/me/test-reminder`       | One `test` reminder 2 minutes out, at most once per 2 minutes                                                        |
+| `PUT /api/me/news`                 | `{ optIn }` → `{ ok, optIn }`: news on this device (C6); stamps `news_opt_in_at` / `news_opt_out_at` when it changes |
 
 ### Accounts (`/api/auth/…`, `/api/account/…`)
 
@@ -293,25 +331,26 @@ addresses outside `STAFF_EMAIL_DOMAINS` (an existing session can still log out, 
 delete its account). Throttled routes answer `429 rate_limited` with `Retry-After`. Code: `apps/worker/src/account-api.ts`
 (routes), `apps/worker/src/auth/*` (pure, unit-tested parts), `apps/worker/src/email.ts`.
 
-| Route                                 | Auth         | Body → answer                                                                                                                                                                   |
-| ------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `POST /api/auth/signup`               | `X-Beta-Key` | `{ email, key, name?, locale, consent: true, age14: true, platform? }` → `201 { token, account }`; `409 email_in_use`; sends the verify email; 5 per IP per hour                |
-| `POST /api/auth/login`                | —            | `{ email, key, platform? }` → `{ token, account, rehash? }`; `401 invalid_credentials`; 5 failures per email and 30 per IP per 15 min                                           |
-| `POST /api/auth/logout`               | session      | `204`, deletes this session                                                                                                                                                     |
-| `POST /api/auth/verify-email`         | —            | `{ token }` → `{ ok }`; `400 invalid_token` (unknown, used or older than 48 h)                                                                                                  |
-| `POST /api/auth/verify-email/resend`  | session      | `{ ok }`; `409 already_verified`; `503 email_failed`; 3 per email per hour                                                                                                      |
-| `POST /api/auth/password/forgot`      | —            | `{ email }` → always `{ ok }` (lookup and email happen after the response); 3 per email per hour                                                                                |
-| `POST /api/auth/password/reset`       | —            | `{ token, key }` → `{ ok }`; verifies the email, ends every session; `400 invalid_token` (older than 1 h or used)                                                               |
-| `POST /api/auth/password/change`      | session      | `{ currentKey, newKey }` → `{ ok }`; ends the other sessions; `401 invalid_credentials`; `409 no_password`                                                                      |
-| `POST /api/auth/oauth/start`          | `X-Beta-Key` | `{ provider, intent, claimHash, locale }` (+ session for `link`) → `{ url, state }`; Apple `404 provider_disabled`; `503 provider_not_configured`; 20 per IP per 15 min         |
-| `GET /api/auth/oauth/google/callback` | —            | `303 /auth/done?state=…` (`&error=code` on failure: `cancelled`, `invalid_state`, `identity_in_use`, `email_in_use_unverified`, `accounts_not_open`…)                           |
-| `POST /api/auth/oauth/claim`          | —            | `{ state, claimSecret, platform? }` → `{ token, account, isNew }`; single use: `409 already_claimed`, `409 not_ready`, `403 invalid_claim`, `410 expired`; 10 per IP per 15 min |
-| `GET /api/account`                    | session      | `{ id, email, emailVerified, name, locale, role, providers, hasPassword, consentNeeded }`                                                                                       |
-| `POST /api/account/consent`           | session      | `{ age14: true }` → the account; records `CONSENT_VERSION`                                                                                                                      |
-| `POST /api/account/device`            | session      | `{ deviceId }` → `{ ok }`; links the Phase 1 device row; `404 unknown_device`. `DELETE` with the same body unlinks (`204`)                                                      |
-| `DELETE /api/account/identity/:p`     | session      | `204`; `409 last_sign_in_method` when it is the only way to sign in; `404 not_connected`                                                                                        |
-| `GET /api/account/export`             | session      | JSON download (`Content-Disposition: attachment`): account (no password hash or salt), sign-in methods, sessions' platform and dates, linked devices                            |
-| `DELETE /api/account`                 | session      | `204`; deletes the account row, `ON DELETE CASCADE` removes the rest (linked devices, their subscriptions and reminders included)                                               |
+| Route                                 | Auth              | Body → answer                                                                                                                                                                                                                                                                                   |
+| ------------------------------------- | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `POST /api/auth/signup`               | `X-Beta-Key`      | `{ email, key, name?, locale, consent: true, age14: true, platform? }` → `201 { token, account }`; `409 email_in_use`; sends the verify email; 5 per IP per hour                                                                                                                                |
+| `POST /api/auth/login`                | —                 | `{ email, key, platform? }` → `{ token, account, rehash? }`; `401 invalid_credentials`; 5 failures per email and 30 per IP per 15 min                                                                                                                                                           |
+| `POST /api/auth/logout`               | session           | `204`, deletes this session                                                                                                                                                                                                                                                                     |
+| `POST /api/auth/verify-email`         | —                 | `{ token }` → `{ ok }`; `400 invalid_token` (unknown, used or older than 48 h)                                                                                                                                                                                                                  |
+| `POST /api/auth/verify-email/resend`  | session           | `{ ok }`; `409 already_verified`; `503 email_failed`; 3 per email per hour                                                                                                                                                                                                                      |
+| `POST /api/auth/password/forgot`      | —                 | `{ email }` → always `{ ok }` (lookup and email happen after the response); 3 per email per hour                                                                                                                                                                                                |
+| `POST /api/auth/password/reset`       | —                 | `{ token, key, email }` → `{ ok }`; verifies the email, ends every session; `400 invalid_token` (older than 1 h or used); `400 email_mismatch` (token kept)                                                                                                                                     |
+| `POST /api/auth/password/change`      | session           | `{ currentKey, newKey }` → `{ ok }`; ends the other sessions; `401 invalid_credentials`; `409 no_password`                                                                                                                                                                                      |
+| `POST /api/auth/oauth/start`          | `X-Beta-Key`      | `{ provider, intent, claimHash, locale }` (+ session for `link`) → `{ url, state }`; Apple `404 provider_disabled`; `503 provider_not_configured`; 20 per IP per 15 min                                                                                                                         |
+| `GET /api/auth/oauth/google/callback` | —                 | `303 /auth/done?state=…` (`&error=code` on failure: `cancelled`, `invalid_state`, `identity_in_use`, `email_in_use_unverified`, `accounts_not_open`…)                                                                                                                                           |
+| `POST /api/auth/oauth/claim`          | —                 | `{ state, claimSecret, platform? }` → `{ token, account, isNew }`; single use: `409 already_claimed`, `409 not_ready`, `403 invalid_claim`, `410 expired`; 10 per IP per 15 min                                                                                                                 |
+| `GET /api/account`                    | session           | `{ id, email, emailVerified, name, locale, role, providers, hasPassword, consentNeeded }`                                                                                                                                                                                                       |
+| `POST /api/account/consent`           | session           | `{ age14: true }` → the account; records `CONSENT_VERSION`                                                                                                                                                                                                                                      |
+| `POST /api/account/device`            | session           | `{ deviceId }` → `{ ok }`; links the Phase 1 device row; `404 unknown_device`. `DELETE` with the same body unlinks (`204`)                                                                                                                                                                      |
+| `DELETE /api/account/identity/:p`     | session           | `204`; `409 last_sign_in_method` when it is the only way to sign in; `404 not_connected`                                                                                                                                                                                                        |
+| `GET /api/account/export`             | session           | JSON download (`Content-Disposition: attachment`): account (no password hash or salt), sign-in methods, sessions' platform and dates, linked devices, and the synced data (settings, products, stack, shopping list, check marks; tombstones included, dates in ISO form)                       |
+| `DELETE /api/account`                 | session           | `204`; deletes the account row, `ON DELETE CASCADE` removes the rest (linked devices, their subscriptions and reminders included)                                                                                                                                                               |
+| `POST /api/sync`                      | session + consent | `{ since, changes }` → `{ rev, changes }` ([Sync](#sync-apisync)); `403 consent_required` (`detail: ["account"]` until the account accepts `CONSENT_VERSION`, `["health"]` for the health profile until M8); `413 payload_too_large` / `too_many_rows`; `409 limit_reached`; `400 invalid_body` |
 
 **Passwords.** The password never leaves the device. The browser derives
 `key = PBKDF2-HMAC-SHA256(password NFC, "smartstack/v1/" + lowercased email, 600 000 iterations,
@@ -331,7 +370,9 @@ answer `500 server_misconfigured` and log why; everything else keeps working.
 **Sessions** are 32 random bytes (base64url); D1 keeps only the hex SHA-256. They end after 90 days
 without use; `expires_at`, `last_used_at` and the account's `last_active_at` slide at most once a
 day. Emailed tokens (verify 48 h, reset 1 h) are hashed the same way, single use, and travel in the
-link's fragment (`/verify-email#token=…`). Throttling uses fixed windows in D1 (`auth_throttle`,
+link's fragment (`/verify-email#token=…`). A reset link also carries the address
+(`/reset-password#token=…&email=…`): the browser needs it to derive the new key, and the Worker
+only consumes the token when the address matches, so a typo can't lock anyone out. Throttling uses fixed windows in D1 (`auth_throttle`,
 keys are hashes of the email or IP).
 
 **Google sign-in** is a plain OAuth redirect (no Google script): start → Google → callback → claim
@@ -351,7 +392,172 @@ sender or key the email is skipped and an error without the address is logged. `
 
 `consentNeeded` is true until the account consents to the current `CONSENT_VERSION` (email
 sign-up records it; Google accounts consent on `/auth/consent`); `consentNeeded()` in
-`apps/worker/src/auth/account.ts` is the gate `/api/sync` will use.
+`apps/worker/src/auth/account.ts` is the gate `/api/sync` uses.
+
+### Sync (`/api/sync`)
+
+An account's devices share their settings (routine, time zone, language, theme), their own
+products, the stack with its bottles, the shopping list and today's check marks (migration
+`0003_user_data.sql`; wire format in `packages/shared/src/sync.ts`, statements in
+`apps/worker/src/sync.ts`). One endpoint does both directions:
+
+- **Request** `{ since, changes: { settings?, products[], stack[], shopping[], checks[] } }`.
+  `since` is the last `rev` the device applied (0 the first time). Empty `changes` = a pull.
+- Every entity carries `updatedAt` (the device's `Date.now()`) and `deletedAt`. A deletion is a
+  **tombstone**: the key, `updatedAt` and `deletedAt` only; the server clears the rest of the row.
+- **Last write wins** by `updatedAt`; on a tie the server's copy wins. A push bumps
+  `accounts.rev` and runs in **one `DB.batch`** (a transaction): the bump, one upsert per table
+  (the table's rows travel as one JSON parameter read with `json_each`, so a request never
+  approaches D1's 100 bound parameters or 50 queries; about 11 queries at most), then the reads.
+- **Answer** `{ rev, changes }`: every row whose revision is newer than `since` (tombstones
+  included), except what this request pushed: a pushed row comes back only when it lost, as the
+  server's copy. The device stores `rev` as its next `since`; `rev` 0 means the account is empty.
+- **Limits**: 512 KB and 500 rows per request (`413`), 200 own products and 60 stack items per
+  account, counted as live rows after the push would apply (`409 limit_reached`, checked before
+  the batch; deletions alone are never refused).
+- **Consent**: `403 consent_required` until the account has accepted the current
+  `CONSENT_VERSION`. The health profile syncs from M8; until then sending `health` answers `403`.
+- The language lives in `account_settings.locale` only; account emails keep using
+  `accounts.locale` (chosen at sign-up). `accounts.last_active_at` slides with the session, at
+  most once a day; a pull writes nothing.
+- **Retention** (03:00 UTC tick): check marks older than 3 days (by the person's local date; the
+  cutoff is the UTC date 12 hours back, minus 3 days, so no time zone loses its last 3 days) and
+  tombstones deleted more than 30 days ago. `GET /api/account/export` includes all of it.
+
+**Known limitations.** Bottle counts are last-write-wins: two devices ticking the same product
+offline can lose one decrease; edit the count. A device offline for more than 30 days misses
+deletions whose tombstones were cleaned up, and could bring such an item back by editing it.
+`updatedAt` comes from the device clock: a clock far ahead wins until it's corrected.
+
+**In the app** (`apps/web/src/auth/`, `src/screens/auth/`): `/welcome` is the first screen
+while accounts are public and the person hasn't chosen yet (Google, email, "I already have an
+account", or "Continue without an account", which keeps today's local-only app). `/signup`,
+`/login`, `/forgot-password`, `/reset-password`, `/verify-email`, `/auth/done` (the OAuth
+landing, which claims the session when this browsing context started the attempt and otherwise
+says "Return to the SmartStack app"; the app window claims when it becomes visible again) and
+`/auth/consent`. The session token lives in `localStorage['smartstack:session']` and a pending
+OAuth attempt in `smartstack:oauth`, outside the state blob. Consent and notice texts are the i18n
+keys `consent.C1`… and `notice.N1`… copied word for word from `docs/privacy/consent-texts.md`.
+Profile shows "Back up & sync" to guests, or the account (email status, sign-in methods,
+Download my data, Log out, Delete my account). A 401 on the account keeps local data and shows
+"Log in again". While `ACCOUNTS_MODE` is `staff`, the public app shows none of this and staff
+find "Staff sign-in" under Profile → Developer.
+
+`/privacy` and `/terms` render `docs/privacy/{privacy-policy,terms}.{en,fr}.md`, converted at build
+time into `apps/web/src/legal/content.json` by `npm run legal -w apps/web` (a test fails when it is
+stale; `?lang=fr|en` picks a version). They show a "Draft" line until `VITE_LEGAL_DRAFT=false`.
+
+**Trying accounts locally.** Apply the migrations (`npm run db:migrate:local -w apps/worker`),
+put a throwaway `AUTH_PEPPER` (any 43-character base64url string) in
+`apps/worker/.dev.vars.e2e` (gitignored), run the Worker with
+`npm run dev -w apps/worker -- --env-file .dev.vars.e2e` (the `worker-accounts` entry in
+`.claude/launch.json`) and the web app with `npm run dev`. Emails are printed in the wrangler
+console (`EMAIL_MODE=log`).
+
+### Health Canada lookups (`/api/lookup/…`)
+
+"Fill from Health Canada" in the Other brand form. Session required, `404` while
+`ACCOUNTS_MODE` is `off`, 30 lookups per account per hour (`429` with `Retry-After`). The Worker
+calls Health Canada's public APIs itself (no key; the app's CSP stays `connect-src 'self'` and
+the person's IP never reaches a third party), sending only the number, the language and a generic
+User-Agent. Each upstream answer is cached a week in the Cache API (`caches.default`, a synthetic
+key per upstream URL on the app's origin; "not found" a day). At most three upstream calls per
+lookup, 4 seconds each.
+
+| Route                      | Answer                                                                          |
+| -------------------------- | ------------------------------------------------------------------------------- |
+| `GET /api/lookup/npn/:npn` | `?lang=en\|fr` → `ProductPrefill` (LNHPD: licence, medicinal ingredients, dose) |
+| `GET /api/lookup/din/:din` | `?lang=en\|fr` → `ProductPrefill` (DPD: product, active ingredients, form)      |
+
+Both answer `400 invalid_number` (not 8 digits), `401` without a session, `404 not_found` (no
+such number, or accounts off), `429 rate_limited` and `502 lookup_failed` (Health Canada
+unreachable, slow or answering garbage); nothing is ever cached on an error.
+
+`ProductPrefill` (`packages/shared/src/lookup.ts`) is `{ source, npn, din, name, brand, form,
+strength, dose: { amount, unit, frequency } | null, ingredients: [{ name, amount, unit }],
+partial }`; `partial` means a follow-up call failed and the ingredients, dose or form may be
+missing. Ingredient amounts are per dosage unit, units mapped to mg, mcg, IU, CFU, g or ml. Which
+upstream field maps where is documented in `apps/worker/src/lookup/health-canada.ts`; the tests
+use real answers saved in `apps/worker/src/lookup/fixtures/`.
+
+### News notifications (`/api/admin/…`, M9)
+
+Staff admins compose push notifications (new product, webinar…) that reach every device that
+turned news on (Notifications → "New products, webinars and offers", C6), or a health-profile
+segment. Code: `apps/worker/src/admin-api.ts` (routes), `apps/worker/src/news/*` (pure,
+unit-tested parts), contracts in `packages/shared/src/news.ts`.
+
+**Admins** are accounts with `accounts.role = 'admin'` **and** a verified email. The role is only
+granted by SQL (`docs/smartstack-phase2-setup.md`, part I):
+`npx wrangler d1 execute smartstack --remote --command "UPDATE accounts SET role = 'admin' WHERE email = 'name@newrootsherbal.com'"`
+(staging: `smartstack-staging --env staging --remote`; local: `--local`). Every `/api/admin/*`
+route takes the session bearer and answers `401` without a session, `403 forbidden` for anyone
+else, and `404` while `ACCOUNTS_MODE` is `off`. Admins only ever see counts.
+
+**The composer** is Profile → Admin → News (`/admin/news`, lazy-loaded; the card only shows for a
+verified admin, and the Worker checks the role on every call anyway). Code:
+`apps/web/src/screens/admin/News.tsx`, the pure form logic in `apps/web/src/admin/newsForm.ts`
+(tested). Titles are typed without the "New Roots Herbal:" prefix and counted with it; the link
+field shows the tracking tags the Worker will add; the date and time are Toronto wall-clock. Save
+draft, Send a test to my devices, Schedule (disabled for a segment under 10 devices or a time
+outside 11:00–19:00), Cancel, Duplicate. The device's language reaches the Worker with
+`PUT /api/me` (`locale`) when push is set up and whenever the language changes, so each device
+gets the campaign in its language.
+
+| Route                                     | Body → answer                                                                                                                                                                                                                  |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `GET /api/admin/campaigns`                | `{ campaigns: CampaignView[] }`, newest first (200 at most), with status, `sentCount`, `failedCount` and `closeToAnother`                                                                                                      |
+| `POST /api/admin/campaigns`               | `CampaignInput` → `201 { campaign }` (a draft); `400 invalid_body`, `400 url_host_not_allowed`                                                                                                                                 |
+| `PUT /api/admin/campaigns/:id`            | `CampaignInput` (full replacement) → `{ campaign }`; drafts and scheduled campaigns only (`409 invalid_status`); a scheduled segment must still reach 10 devices                                                               |
+| `POST /api/admin/campaigns/:id/schedule`  | `{ sendAt }` (epoch ms) → `{ campaign }` (`scheduled`); `400 send_at_past`, `400 outside_sending_window`, `409 audience_too_small`, `409 invalid_status`                                                                       |
+| `POST /api/admin/campaigns/:id/cancel`    | → `{ campaign }` (`cancelled`); from `scheduled` or `sending` only (`409 invalid_status`)                                                                                                                                      |
+| `POST /api/admin/campaigns/:id/duplicate` | → `201 { campaign }`: a new draft "<name> (copy)" with the same texts, link and audience                                                                                                                                       |
+| `POST /api/admin/campaigns/:id/test`      | → `{ devices, sent, failed }`: sends it now to the admin's own linked devices (at most 10 subscriptions), in each device's language, whatever their opt-in or cap; counts nothing; `409 no_devices`, `503 push_not_configured` |
+| `POST /api/admin/audience-estimate`       | `{ audience }` → `{ devices, tooSmall, canSchedule, etaMinutes }`; under 10 devices `devices: null` ("fewer than 10"); `409 segments_unavailable` before migration 0004                                                        |
+
+**A campaign** (`CampaignInput`): `name` (internal, ≤ 80), `titleEn`/`titleFr`, `bodyEn`/`bodyFr`,
+`url`, `audience`. Titles are ≤ 60 characters **including** the N10 prefix ("New Roots Herbal: ",
+French « New Roots Herbal : » with a no-break space): the API **adds the prefix when it is missing**
+(and normalizes one typed by hand), so the composer can edit only the text after it
+(`stripNewsPrefix`, `newsTitleRoom`: 42 characters in English, 41 in French). Bodies ≤ 100.
+Characters are counted as code points (`newsTextLength`). No line breaks. The link must be
+`https` on a host listed in `NEWS_URL_HOSTS` (exact host names, no port); the Worker appends
+`utm_source=smartstack&utm_medium=push&utm_campaign=<slug of the name>`, each only when absent, and
+stores the result.
+
+**Audience**: `{ "type": "all" }` is every device with news on (`users.news_opt_in = 1`), guest or
+account. `{ "type": "segment", conditions?, goals?, genders?, ageMin?, ageMax?, pregnancy? }` also
+needs the device to be linked to an account whose health profile exists (not deleted), has
+targeting consent (C5, `targeting_consent_at`) and matches every part given: any of the
+conditions, any of the goals (`json_each` over the profile's arrays), one of the genders, one of
+the pregnancy statuses, and an age (the current year in Toronto minus the year of birth) within
+the range; a profile without a year of birth never matches an age range. Codes come from
+`packages/shared/src/user-data.ts`; each appears at most once, so a segment binds at most 51 SQL
+parameters. A segment needs at least one part.
+
+**Guardrails.** `sendAt` must fall between 11:00 and 19:00 America/Toronto (both included, to the
+minute; DST-safe helpers `zonedTimeToEpoch` and `inNewsWindow` in the shared package), and not
+more than a minute in the past. A segment under 10 devices can't be scheduled ("everyone" always
+can). A device gets at most one news notification per 24 hours (`users.last_news_at`). The list
+flags scheduled or sending campaigns less than 24 hours apart (`closeToAnother`).
+
+**Delivery** (cron, after the reminders): each tick, news gets what the reminders left of
+`MAX_PUSHES_PER_TICK` (a reminder push counts once per device). Scheduled campaigns whose time has
+come become `sending`; the oldest `sending` one takes the budget. The fan-out walks
+`push_subscriptions` by id after `campaigns.cursor` (no per-delivery rows): opted-in devices
+without news in the last 24 hours (and, for a segment, whose account matches), `LIMIT` the budget,
+the text in the device's `users.locale`. One `DB.batch` then moves the cursor, adds to
+`sent_count`/`failed_count` and stamps `last_news_at` on the devices that got it. `404/410`
+delete the subscription (and count as failed); every other failure counts as failed and is never
+retried. Fewer rows than the budget → `sent` with `finished_at`. Delivery only runs during the
+11:00–19:00 Toronto window: a campaign that isn't finished by 19:00 continues at 11:00 the next
+day. Push options: `TTL: 7200`, `Urgency: normal`, `Topic` = the campaign id. Payload
+`{ title, body, tag: 'news:<id>', url, kind: 'news', campaignId, lang }` (`kind` lets the service
+worker add the Android "Turn off news" action; `lang` labels it).
+
+**Throughput on the free plan**: about 20 devices a minute (`MAX_PUSHES_PER_TICK = 20`, minus the
+reminders of that minute), so roughly 1,000 an hour; `etaMinutes` in the estimate assumes the
+whole budget. The Workers paid plan would raise the ceiling a lot.
 
 ### Reminder cron
 
@@ -363,10 +569,14 @@ subscription; `401/403` keep it, fail the row and log loudly (VAPID/key problem)
 network errors leave the row for the next tick. All result writes go in one `DB.batch`. The
 03:00 UTC tick deletes `sent/failed/expired` rows older than 7 days and, in a separate batch,
 expired sessions, used or expired email tokens, OAuth attempts and throttle rows older than a
-day. Logs contain counts, status codes and ids only.
+day, and, in a third batch, check marks older than 3 days and sync tombstones older than 30.
+Last, the inactivity step (`inactivity.ts`): at 03:00 it deletes accounts warned 30 days
+earlier and devices without an account unused for 12 months; from 03:00 to 03:09 it emails up
+to 3 inactivity warnings per tick (see [Privacy](#privacy)). Logs contain counts, status codes
+and ids only.
 
 `MAX_PUSHES_PER_TICK` counts reminders claimed per tick; a user with several devices
-multiplies pushes. Start at 20 and raise toward 45 only after Workers Logs (`cpuTimeMs`)
+multiplies pushes. News notifications use whatever the reminders leave of it (see above). Start at 20 and raise toward 45 only after Workers Logs (`cpuTimeMs`)
 show a full batch under ~6 ms.
 
 Push options: `TTL: 1800`, `Urgency: high`, `Topic` = the row id (so a retry replaces rather
@@ -493,30 +703,96 @@ pre-paint theme from `public/theme-init.js`.
 4. Send me a test reminder in 2–3 minutes → lock the phone → the notification arrives.
 5. Profile → Delete my data removes the server rows and returns to onboarding.
 
+**Accounts and news** (staging first; production once accounts are public). Android installed
+app, iPhone Home Screen app and desktop Chrome:
+
+1. Sign up with email → the verification email arrives → the link confirms. Log out, log in,
+   forgot password → the new password works and the old one doesn't.
+2. Continue with Google. On the iPhone Home Screen app, you end up signed in inside the app (a
+   Safari sheet may stay open: close it; the app signs in when it comes back).
+3. Two devices on one account: a change on one appears on the other; tick a dose → the bottle
+   count follows.
+4. Other brand with its NPN or DIN → "Fill from Health Canada" fills the form.
+5. Health profile: consent → answers → the "relevant news" switch (also in Notifications) →
+   delete it.
+6. Notifications → news on. An admin sends a test from Profile → Admin → News → it arrives in the
+   device's language and opens the link. On Android, "Turn off news" switches news off.
+7. Switch the app to French → the next test arrives in French.
+8. Profile → Your account → Download my data → a JSON file. Delete my account → the welcome
+   screen, and signing in again fails.
+
+The full list, with the expected emails, is in `docs/smartstack-phase2-setup.md` (Test checklist).
+
 ## Privacy
 
-This is health-adjacent personal data. Phase 1 is designed to hold as little as possible.
+SmartStack handles health-adjacent personal information, so it keeps as little as it can, and
+the rules below are enforced in code. The public texts are in `docs/privacy/`: privacy policy and
+terms in English and French, the consent texts (C1–C7) and notices (N1–N10), the privacy impact
+assessment and the incident runbook. They stay drafts, with a "Draft" line in the app
+(`VITE_LEGAL_DRAFT`), until the Privacy Officer approves them (setup doc, part F); until then
+production runs `ACCOUNTS_MODE=staff`.
 
-**What is stored on the server**
+**Guests** (no account, the default). Routine, stack, bottles, shopping list and check marks stay
+in the browser. The server hears from a guest's device only once reminders or news are turned on,
+and then stores:
 
-| Data                                                                     | Why                                   |
-| ------------------------------------------------------------------------ | ------------------------------------- |
-| Anonymous id (`crypto.randomUUID()`)                                     | The only credential; no account       |
-| Time zone (IANA name) and platform                                       | To interpret and debug reminder times |
-| Push subscription (endpoint, `p256dh`, `auth`)                           | To deliver Web Push                   |
-| Reminder rows (time, title, body; product ids only when names are shown) | The rolling 7-day delivery window     |
+| Data                                                                     | Why                                                         |
+| ------------------------------------------------------------------------ | ----------------------------------------------------------- |
+| Anonymous device id (`crypto.randomUUID()`)                              | The device's only credential                                |
+| Time zone, platform, app language                                        | Reminder times; news in the device's language               |
+| News on or off, when it was last turned on and off, last news received   | Proof of consent (C6); at most 1 news notification per 24 h |
+| Push subscription (endpoint, `p256dh`, `auth`)                           | To deliver Web Push                                         |
+| Reminder rows (time, title, body; product ids only when names are shown) | The rolling 7-day delivery window                           |
 
-Not stored on the server: name, email, routine, stack, dose counts, checkbox history.
+**Accounts** (optional) also store what the person chose to back up:
 
-**Where:** Cloudflare D1, database `smartstack` in the ENAM (Eastern North America) region. Sent, failed and expired reminder rows are deleted 7 days after
-their scheduled time by the 03:00 UTC cron tick. Logs contain counts, status codes and reminder
-ids, never a user id together with product names or notification text.
+| Data                                                                                                                 | Why                                                       |
+| -------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| Email, whether it is verified, optional name, language, role                                                         | Sign-in and account emails                                |
+| HMAC(`AUTH_PEPPER`, salt ‖ key), the key being the password stretched in the browser (PBKDF2-SHA256, 600,000 rounds) | Sign-in; the password never leaves the device             |
+| Google account id and email, only after "Continue with Google"                                                       | Sign-in with Google                                       |
+| Sessions (SHA-256 of the token, platform, dates)                                                                     | Staying signed in                                         |
+| Consent version and date, "14 or older" date                                                                         | Proof of consent (Law 25)                                 |
+| Routine, time zone, theme, stack, other-brand products, bottles, shopping list, check marks                          | Sync between the person's devices ([Sync](#sync-apisync)) |
+| Health profile with its storage consent (C4) and targeting consent (C5, off by default)                              | Only to choose news, and only while C5 is on              |
+| Which devices belong to the account                                                                                  | That person's reminders and news                          |
 
-**How to delete:** Profile → "Delete my data" calls `DELETE /api/me`, which deletes the user,
-their subscriptions and their reminders, then clears local storage.
+Never stored: the password, location, contacts, photos, analytics or advertising identifiers.
+Admins composing news (`/admin/news`) only ever see counts, and a health-profile segment under 10
+devices can't be scheduled.
 
-**Before any employee beta** (not only before consumer release), a privacy review under
-**PIPEDA** and **Quebec Law 25**, including a **privacy impact assessment**, is required.
+**Retention** (the 03:00 UTC cron tick: `apps/worker/src/auth/cleanup.ts`, `sync.ts`,
+`inactivity.ts`, all tested; the privacy policy, §10, promises the same):
+
+| Data                                | Kept                                                                                                  |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| An account and everything in it     | Until "Delete my account"; unused for 3 years → deleted, after a warning email (N8/N9) 30 days before |
+| A device without an account         | Until "Delete my data"; 12 months without use → deleted with its subscriptions and reminders          |
+| Health profile                      | Until "Delete my health profile" (the answers are cleared at once) or the account                     |
+| Check marks                         | 3 days                                                                                                |
+| Deleted items (sync tombstones)     | 30 days                                                                                               |
+| Sessions                            | Until "Log out", or 90 days without use                                                               |
+| Email links                         | Until used or expired (48 h to verify, 1 h to reset), then deleted within a day                       |
+| OAuth attempts, throttle counters   | 1 day                                                                                                 |
+| Reminder rows                       | 7 days after their time                                                                               |
+| D1 Time Travel (Cloudflare backups) | 7 days; it can't be switched off                                                                      |
+| Workers Logs                        | 3 days. Console logs hold counts, status codes and ids only; production has invocation logs off       |
+
+Inactivity is measured by `accounts.last_active_at` (a login or a sync, written at most once a
+day); any login or sync clears the warning. Warnings go out from 03:00 to 03:09 UTC, 3 per tick,
+and an account is only marked warned once its email was sent, so a missing email setup never
+leads to a deletion without notice.
+
+**Where:** Cloudflare Workers and D1 (database `smartstack` in ENAM, Eastern North America;
+encrypted at rest). Processors: Cloudflare; SMTP2GO (account emails: the address and the message);
+Google (only after "Continue with Google"); the browsers' push services (the payload is
+encrypted). Health Canada lookups send only the NPN or DIN, from the Worker.
+
+**Rights:** Profile → Your account → **Download my data** (`GET /api/account/export`: the
+account, its sign-in methods, sessions, devices with their language and news consent, and every
+synced row, as JSON) and **Delete my account** (`DELETE /api/account`; foreign keys cascade to
+everything above). Guests: Profile → **Delete my data** (`DELETE /api/me`), which deletes the
+device, its subscriptions and its reminders, then clears local storage.
 
 ## Sample-data rule (all of Phase 1)
 

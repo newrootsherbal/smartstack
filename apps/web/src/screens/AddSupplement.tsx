@@ -1,26 +1,31 @@
 import {
   findProductByBarcode,
+  getProduct,
   inventoryUnitFor,
   normalizeBarcode,
   rulesForProduct,
   searchProducts,
 } from '@smartstack/engine'
-import { MAX_DOSES_PER_DAY, type Product } from '@smartstack/shared'
+import { MAX_DOSES_PER_DAY, SYNC_MAX_STACK_ITEMS, type Product } from '@smartstack/shared'
 import { lazy, Suspense, useCallback, useMemo, useState } from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate, useSearchParams } from 'react-router'
 import { bottleFromDraft, initialBottleDraft, type BottleDraft } from '../bottle'
 import { BottleCard } from '../components/BottleCard'
 import { ProductCard } from '../components/ProductCard'
+import { OtherBrandForm } from './OtherBrandForm'
+import { Sheet } from '../components/Sheet'
+import { ACCOUNTS_PUBLIC } from '../config'
 import { formatUnits, parseCount, timesLabel } from '../format'
 import { useProductText } from '../hooks/useProductText'
 import { t, tl } from '../i18n'
 import { hasCamera } from '../platform/scanner'
+import { useCatalogue } from '../catalogue'
 import { useAppState } from '../state/context'
 import styles from './AddSupplement.module.css'
 
 const ScanView = lazy(() => import('./ScanView'))
 
-type Mode = 'scan' | 'manual' | 'browse'
+type Mode = 'scan' | 'manual' | 'browse' | 'other'
 
 // Decided once at load: a device without a camera opens on the product list.
 const DEFAULT_MODE: Mode = hasCamera() ? 'scan' : 'browse'
@@ -28,7 +33,17 @@ const MAX_RESULTS = 60
 
 export function AddSupplement() {
   const { state, dispatch } = useAppState()
-  const [mode, setMode] = useState<Mode>(DEFAULT_MODE)
+  const catalogue = useCatalogue()
+  const navigate = useNavigate()
+  const [params, setParams] = useSearchParams()
+  const [mode, setMode] = useState<Mode>(() =>
+    params.get('mode') === 'other' ? 'other' : DEFAULT_MODE,
+  )
+  // /add?mode=other[&upc=…][&edit=u_…] (the unknown-barcode sheet, Manage → Edit product).
+  const otherUpc = params.get('upc') ?? undefined
+  const otherEdit = params.get('edit') ?? undefined
+  // Other brands need an account; the tab shows once accounts are public (to explain why).
+  const showOther = state.auth.mode === 'account' || ACCOUNTS_PUBLIC
   const [upc, setUpc] = useState('')
   const [query, setQuery] = useState('')
   const [candidate, setCandidate] = useState<Product | null>(null)
@@ -40,6 +55,7 @@ export function AddSupplement() {
   const [bottle, setBottle] = useState<BottleDraft | null>(null)
   const [perDose, setPerDose] = useState('1')
   const [invalid, setInvalid] = useState(false)
+  const [stackFull, setStackFull] = useState(false)
   const text = useProductText(candidate)
 
   const select = useCallback(
@@ -56,15 +72,27 @@ export function AddSupplement() {
       setBottle(inStack?.inventory ? null : initialBottleDraft(product, scannedUpc))
       setPerDose('1')
       setInvalid(false)
+      setStackFull(false)
     },
     [state.stack],
   )
+
+  // /add?product=…[&replace=…]: the shopping list's "replacement bought" (§4.6), and
+  // /add?mode=other…: applied once per new set of parameters.
+  const [lastParams, setLastParams] = useState('')
+  if (params.toString() !== lastParams) {
+    setLastParams(params.toString())
+    if (params.get('mode') === 'other') setMode('other')
+    const preselect = params.get('product')
+    const product = preselect ? getProduct(preselect, catalogue) : undefined
+    if (product && candidate?.id !== product.id) select(product)
+  }
 
   const lookup = useCallback(
     (code: string) => {
       const normalized = normalizeBarcode(code)
       if (!normalized) return
-      const product = findProductByBarcode(normalized)
+      const product = findProductByBarcode(normalized, catalogue)
       if (!product) {
         setNotFound(normalized)
         setCandidate(null)
@@ -72,11 +100,20 @@ export function AddSupplement() {
       }
       select(product, normalized)
     },
-    [select],
+    [select, catalogue],
   )
 
   const confirm = () => {
     if (!candidate) return
+    // An account keeps at most SYNC_MAX_STACK_ITEMS products in its stack (the Worker's limit).
+    if (
+      state.auth.mode === 'account' &&
+      !state.stack.some((s) => s.productId === candidate.id) &&
+      state.stack.length >= SYNC_MAX_STACK_ITEMS
+    ) {
+      setStackFull(true)
+      return
+    }
     const result = bottle ? bottleFromDraft(bottle, candidate) : { kind: 'none' as const }
     const units = askPerDose ? parseCount(perDose) : null
     if (result.kind === 'invalid' || (askPerDose && (units === null || units <= 0))) {
@@ -100,12 +137,26 @@ export function AddSupplement() {
         : {}),
       ...(askPerDose && units ? { unitsPerDose: units } : {}),
     })
+    // Bought from the shopping list: it leaves the list, and "Replace" retires the other brand.
+    if (params.get('product') === candidate.id) {
+      // The replaced product leaves the stack first, so removing its replacement from the
+      // list doesn't put it back there as "still running low".
+      const replaced = params.get('replace')
+      if (replaced) dispatch({ type: 'REMOVE_PRODUCT', productId: replaced })
+      dispatch({ type: 'REMOVE_FROM_SHOPPING', productId: candidate.id })
+      setParams({}, { replace: true })
+    }
     setAdded(candidate)
     setCandidate(null)
     setUpc('')
   }
 
-  const results = useMemo(() => searchProducts(query), [query])
+  const results = useMemo(() => searchProducts(query, catalogue), [query, catalogue])
+  const mine = results.filter((p) => p.status === 'user')
+  const theirs = results.filter((p) => p.status !== 'user')
+  // An unknown code opens a sheet for accounts (add it by hand) and, once accounts are public,
+  // for guests (why an account helps). Otherwise the plain "not found" notice stays.
+  const unknownSheet = state.auth.mode === 'account' || ACCOUNTS_PUBLIC
   const inStack = candidate ? state.stack.some((s) => s.productId === candidate.id) : false
   // The label doesn't say how many units a dose is: ask, since the bottle count needs it.
   const askPerDose =
@@ -115,7 +166,7 @@ export function AddSupplement() {
     inventoryUnitFor(candidate.form) === 'unit' &&
     !candidate.unitsPerDose
   const suggestsBedtime = candidate
-    ? rulesForProduct(candidate).some((r) => r.attribute === 'SUGGEST_BEDTIME')
+    ? rulesForProduct(candidate, catalogue).some((r) => r.attribute === 'SUGGEST_BEDTIME')
     : false
 
   return (
@@ -123,21 +174,24 @@ export function AddSupplement() {
       <h1>{t('add.title')}</h1>
 
       <div className={styles.tabs} role="tablist">
-        {(['scan', 'manual', 'browse'] as Mode[]).map((m) => (
-          <button
-            key={m}
-            type="button"
-            role="tab"
-            aria-selected={mode === m}
-            className={`${styles.tab} ${mode === m ? styles.tabActive : ''}`}
-            onClick={() => {
-              setMode(m)
-              setNotFound(null)
-            }}
-          >
-            {t(`add.${m}`)}
-          </button>
-        ))}
+        {(['scan', 'manual', 'browse', 'other'] as Mode[])
+          .filter((m) => m !== 'other' || showOther)
+          .map((m) => (
+            <button
+              key={m}
+              type="button"
+              role="tab"
+              aria-selected={mode === m}
+              className={`${styles.tab} ${mode === m ? styles.tabActive : ''}`}
+              onClick={() => {
+                setMode(m)
+                setNotFound(null)
+                if (params.size > 0) setParams({}, { replace: true })
+              }}
+            >
+              {m === 'other' ? t('other.tab') : t(`add.${m}`)}
+            </button>
+          ))}
       </div>
 
       {added && (
@@ -158,7 +212,33 @@ export function AddSupplement() {
         </div>
       )}
 
-      {candidate ? (
+      {mode === 'other' ? (
+        state.auth.mode === 'account' ? (
+          <OtherBrandForm
+            key={`${otherUpc ?? ''}:${otherEdit ?? ''}`}
+            upc={otherUpc}
+            editId={otherEdit}
+            onDone={() => navigate('/stack')}
+            onCancel={() => {
+              setMode(DEFAULT_MODE)
+              setParams({}, { replace: true })
+            }}
+          />
+        ) : (
+          <section className="card stack-v">
+            <h2>{t('other.needAccountTitle')}</h2>
+            <p className="small muted">{t('other.needAccount')}</p>
+            <div className="row">
+              <Link to="/signup?from=/add" className="btn btn--primary">
+                {t('backup.create')}
+              </Link>
+              <Link to="/login?from=/add" className="btn btn--outline">
+                {t('backup.login')}
+              </Link>
+            </div>
+          </section>
+        )
+      ) : candidate ? (
         <section className="stack-v">
           <h2>{t('add.confirmTitle')}</h2>
           <ProductCard product={candidate} />
@@ -187,6 +267,11 @@ export function AddSupplement() {
             </p>
           )}
           {inStack && <p className="notice">{t('add.alreadyInStack')}</p>}
+          {stackFull && (
+            <p className="notice notice--warn" role="alert">
+              {t('add.stackFull', { max: SYNC_MAX_STACK_ITEMS })}
+            </p>
+          )}
 
           {candidate.kind !== 'topical' && (
             <div className={`card ${styles.doseCard}`}>
@@ -287,7 +372,7 @@ export function AddSupplement() {
         </section>
       ) : (
         <>
-          {notFound && (
+          {notFound && !unknownSheet && (
             <div className="notice notice--warn stack-v" role="alert">
               <strong>{t('add.notFound')}</strong>
               <span className="small">
@@ -298,7 +383,11 @@ export function AddSupplement() {
 
           {mode === 'scan' && (
             <Suspense fallback={<p className="muted">{t('add.scanStarting')}</p>}>
-              <ScanView onDetected={lookup} onUnavailable={() => setMode('manual')} />
+              <ScanView
+                onDetected={lookup}
+                onUnavailable={() => setMode('manual')}
+                paused={notFound !== null && unknownSheet}
+              />
             </Suspense>
           )}
 
@@ -346,7 +435,11 @@ export function AddSupplement() {
                 <p className="notice">{t('add.noResults', { query })}</p>
               ) : (
                 <ul className={`list card ${styles.productList}`}>
-                  {results.slice(0, MAX_RESULTS).map((p) => (
+                  {/* The person's own products first, under their own heading. */}
+                  {mine.length > 0 && (
+                    <li className={styles.listHeading}>{t('other.yourProducts')}</li>
+                  )}
+                  {[...mine, ...theirs].slice(0, MAX_RESULTS).map((p) => (
                     <li key={p.id}>
                       <button
                         type="button"
@@ -369,6 +462,44 @@ export function AddSupplement() {
           )}
         </>
       )}
+      <Sheet
+        open={notFound !== null && unknownSheet}
+        onClose={() => setNotFound(null)}
+        title={state.auth.mode === 'account' ? t('add.unknownTitle') : t('add.notFound')}
+      >
+        {state.auth.mode === 'account' ? (
+          <>
+            <p className="muted">{t('add.unknownCode', { code: notFound ?? '' })}</p>
+            <div className="row">
+              <button
+                type="button"
+                className="btn btn--primary"
+                onClick={() => navigate(`/add?mode=other&upc=${notFound ?? ''}`)}
+              >
+                {t('add.addManually')}
+              </button>
+              <button type="button" className="btn btn--outline" onClick={() => setNotFound(null)}>
+                {t('add.scanAgain')}
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <p>{t('add.guestUnknown')}</p>
+            <div className="row">
+              <Link to="/signup?from=/add" className="btn btn--primary">
+                {t('backup.create')}
+              </Link>
+              <Link to="/login?from=/add" className="btn btn--outline">
+                {t('backup.login')}
+              </Link>
+              <button type="button" className="btn btn--link" onClick={() => setNotFound(null)}>
+                {t('add.notNow')}
+              </button>
+            </div>
+          </>
+        )}
+      </Sheet>
     </main>
   )
 }

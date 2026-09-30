@@ -1,0 +1,162 @@
+{
+  "_source": "Health Canada LNHPD, fetched live on 2026-09-29",
+  "_urls": [
+    "https://health-products.canada.ca/api/natural-licences/productlicence/?id=80077104&lang=en&type=json",
+    "https://health-products.canada.ca/api/natural-licences/medicinalingredient/?id=8969454&lang=en&type=json",
+    "https://health-products.canada.ca/api/natural-licences/productdose/?id=8969454&lang=en&type=json"
+  ],
+  "licence": [
+    {
+      "lnhpd_id": 8969454,
+      "licence_number": "80077104",
+      "licence_date": "2017-05-02",
+      "revised_date": "2024-11-15",
+      "time_receipt": "2017-04-20",
+      "date_start": "2017-04-27",
+      "product_name_id": 11097161,
+      "product_name": "Wild Omega 3 - Easy swallow size",
+      "dosage_form": "Capsule, soft",
+      "company_id": 10651,
+      "company_name_id": 24929,
+      "company_name": "New Roots Herbal Inc.",
+      "sub_submission_type_code": 1,
+      "sub_submission_type_desc": "Compendial",
+      "flag_primary_name": 1,
+      "flag_product_status": 1,
+      "flag_attested_monograph": 1
+    }
+  ],
+  "ingredients": {
+    "metadata": {
+      "pagination": null,
+      "dateReceived": "2026-09-30T02:13:36.4843517Z"
+    },
+    "data": [
+      {
+        "lnhpd_id": 8969454,
+        "ingredient_name": "Fish oil",
+        "ingredient_Text": null,
+        "potency_amount": 333,
+        "potency_constituent": "EPA",
+        "potency_unit_of_measure": "milligrams",
+        "quantity": 750,
+        "quantity_minimum": 0,
+        "quantity_maximum": 0,
+        "quantity_unit_of_measure": "milligrams",
+        "ratio_numerator": "",
+        "ratio_denominator": "",
+        "dried_herb_equivalent": "",
+        "dhe_unit_of_measure": "",
+        "extract_type_desc": "",
+        "source_material": "Engraulidae - Whole"
+      },
+      {
+        "lnhpd_id": 8969454,
+        "ingredient_name": "Fish oil",
+        "ingredient_Text": null,
+        "potency_amount": 165,
+        "potency_constituent": "DHA",
+        "potency_unit_of_measure": "milligrams",
+        "quantity": 0,
+        "quantity_minimum": 0,
+        "quantity_maximum": 0,
+        "quantity_unit_of_measure": "",
+        "ratio_numerator": "",
+        "ratio_denominator": "",
+        "dried_herb_equivalent": "",
+        "dhe_unit_of_measure": "",
+        "extract_type_desc": "",
+        "source_material": "Engraulidae - Whole"
+      },
+      {
+        "lnhpd_id": 8969454,
+        "ingredient_name": "Fish oil",
+        "ingredient_Text": null,
+        "potency_amount": 333,
+        "potency_constituent": "EPA",
+        "potency_unit_of_measure": "milligrams",
+        "quantity": 750,
+        "quantity_minimum": 0,
+        "quantity_maximum": 0,
+        "quantity_unit_of_measure": "milligrams",
+        "ratio_numerator": "",
+        "ratio_denominator": "",
+        "dried_herb_equivalent": "",
+        "dhe_unit_of_measure": "",
+        "extract_type_desc": "",
+        "source_material": "Clupeidae - Whole"
+      },
+      {
+        "lnhpd_id": 8969454,
+        "ingredient_name": "Fish oil",
+        "ingredient_Text": null,
+        "potency_amount": 165,
+        "potency_constituent": "DHA",
+        "potency_unit_of_measure": "milligrams",
+        "quantity": 0,
+        "quantity_minimum": 0,
+        "quantity_maximum": 0,
+        "quantity_unit_of_measure": "",
+        "ratio_numerator": "",
+        "ratio_denominator": "",
+        "dried_herb_equivalent": "",
+        "dhe_unit_of_measure": "",
+        "extract_type_desc": "",
+        "source_material": "Clupeidae - Whole"
+      }
+    ]
+  },
+  "dose": [
+    {
+      "lnhpd_id": 8969454,
+      "dose_id": 24104033,
+      "population_type_desc": "Adolescents",
+      "age": 0,
+      "age_minimum": 12,
+      "age_maximum": 18,
+      "uom_type_desc_age": "year(s)",
+      "quantity_dose": 2,
+      "quantity_dose_minimum": 0,
+      "quantity_dose_maximum": 0,
+      "uom_type_desc_quantity_dose": "capsule",
+      "frequency": 2,
+      "frequency_minimum": 0,
+      "frequency_maximum": 0,
+      "uom_type_desc_frequency": "daily"
+    },
+    {
+      "lnhpd_id": 8969454,
+      "dose_id": 11097289,
+      "population_type_desc": "Adults",
+      "age": 0,
+      "age_minimum": 19,
+      "age_maximum": 0,
+      "uom_type_desc_age": "year(s)",
+      "quantity_dose": 2,
+      "quantity_dose_minimum": 0,
+      "quantity_dose_maximum": 0,
+      "uom_type_desc_quantity_dose": "softgel",
+      "frequency": 2,
+      "frequency_minimum": 0,
+      "frequency_maximum": 0,
+      "uom_type_desc_frequency": "daily"
+    },
+    {
+      "lnhpd_id": 8969454,
+      "dose_id": 24104055,
+      "population_type_desc": "Children",
+      "age": 0,
+      "age_minimum": 9,
+      "age_maximum": 11,
+      "uom_type_desc_age": "year(s)",
+      "quantity_dose": 2,
+      "quantity_dose_minimum": 0,
+      "quantity_dose_maximum": 0,
+      "uom_type_desc_quantity_dose": "capsule",
+      "frequency": 2,
+      "frequency_minimum": 0,
+      "frequency_maximum": 0,
+      "uom_type_desc_frequency": "daily"
+    }
+  ]
+}

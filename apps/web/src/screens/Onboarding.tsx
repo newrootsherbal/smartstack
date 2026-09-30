@@ -1,5 +1,5 @@
 import { Routine, type HHMM } from '@smartstack/shared'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router'
 import { currentTimeZone } from '../dates'
 import { t } from '../i18n'
@@ -49,6 +49,13 @@ export function Onboarding() {
     remembered: {},
   }))
   const [error, setError] = useState<string | null>(null)
+  const submitted = useRef(false)
+
+  // A routine that arrives from the account (the first sign-in on this device pulls it) makes
+  // onboarding pointless: go to the schedule instead.
+  useEffect(() => {
+    if (!editing && !submitted.current && state.routine) navigate('/today', { replace: true })
+  }, [editing, state.routine, navigate])
 
   const setTime = (key: keyof Routine, value: string) => {
     if (!/^\d{2}:\d{2}$/.test(value)) return
@@ -77,6 +84,7 @@ export function Onboarding() {
       setError(t('onboarding.mealRequired'))
       return
     }
+    submitted.current = true
     dispatch({ type: 'SET_ROUTINE', routine: parsed.data })
     navigate(editing || state.stack.length > 0 ? '/today' : '/add', { replace: true })
   }

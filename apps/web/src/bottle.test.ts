@@ -1,4 +1,4 @@
-import { getProduct } from '@smartstack/engine'
+import { catalogue, getProduct } from '@smartstack/engine'
 import { describe, expect, it } from 'vitest'
 import { bottleFromDraft, bottleStatus, initialBottleDraft } from './bottle'
 
@@ -54,10 +54,10 @@ describe('bottle questions', () => {
       updatedAt: 0,
       inventory: { remaining: 68, unit: 'unit' as const, packageSize: 120, lowFlaggedAt: null },
     }
-    expect(bottleStatus(entry)).toBe('68 capsules left · about 34 days')
-    expect(bottleStatus({ ...entry, inventory: { ...entry.inventory, remaining: 1 } })).toBe(
-      '1 capsule left · Empty',
-    )
-    expect(bottleStatus({ ...entry, inventory: undefined })).toBeNull()
+    expect(bottleStatus(entry, catalogue)).toBe('68 capsules left · about 34 days')
+    expect(
+      bottleStatus({ ...entry, inventory: { ...entry.inventory, remaining: 1 } }, catalogue),
+    ).toBe('1 capsule left · Empty')
+    expect(bottleStatus({ ...entry, inventory: undefined }, catalogue)).toBeNull()
   })
 })

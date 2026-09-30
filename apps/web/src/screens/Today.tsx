@@ -10,6 +10,7 @@ import { formatUnits } from '../format'
 import { t, tl } from '../i18n'
 import { isShortReason, renderAdjustment, renderReasonShort } from '../i18n/render'
 import { useTodaySchedule } from '../schedule'
+import { useCatalogue } from '../catalogue'
 import { useAppState } from '../state/context'
 import type { Action } from '../state/reducer'
 import { checkKey, type Check } from '../storage'
@@ -19,6 +20,7 @@ type SheetKind = 'none' | 'late' | 'adjustments'
 
 export function Today() {
   const { state, dispatch } = useAppState()
+  const catalogue = useCatalogue()
   const { today, schedule } = useTodaySchedule()
   const [sheet, setSheet] = useState<SheetKind>('none')
   const [info, setInfo] = useState<string | null>(null)
@@ -78,7 +80,7 @@ export function Today() {
       )}
 
       {schedule &&
-        state.pushState.status !== 'subscribed' &&
+        !(state.remindersEnabled && state.pushState.status === 'subscribed') &&
         state.pushState.status !== 'unsupported' &&
         !state.remindersCardDismissed && (
           <section className="card stack-v">
@@ -172,7 +174,7 @@ export function Today() {
           <ol className={styles.adjustments}>
             {schedule.adjustments.map((a) => (
               <li key={`${a.productId}:${a.ruleId}`}>
-                <span>{renderAdjustment(a)}</span>
+                <span>{renderAdjustment(a, catalogue)}</span>
                 <span className="muted small">
                   {formatClock(a.params.from)} → {formatClock(a.params.to)}
                 </span>
@@ -205,6 +207,7 @@ function PlacementSection({
   onInfo,
   dispatch,
 }: PlacementSectionProps) {
+  const catalogue = useCatalogue()
   const heading = placement.anchor ? t(`anchor.${placement.anchor}`) : formatClock(placement.time)
   const past = parseHHMM(placement.time) < minutesOfDay()
   return (
@@ -215,7 +218,7 @@ function PlacementSection({
       </header>
       <ul className={`list ${styles.rows}`}>
         {placement.doses.map((dose) => {
-          const product = getProduct(dose.productId)
+          const product = getProduct(dose.productId, catalogue)
           // Only this dose's reasons: another dose of the same product may share the slot.
           const reasons = placement.reasons.filter(
             (r) => r.productId === dose.productId && r.doseIndex === dose.doseIndex,
@@ -226,7 +229,7 @@ function PlacementSection({
           const name = product ? tl(product.shortName) : dose.productId
           const lines = reasons.filter(isShortReason)
           const suggestion = reasons.find((r) => r.attribute === 'SUGGEST_BEDTIME')
-          const suggestionRule = suggestion ? getRule(suggestion.ruleId) : undefined
+          const suggestionRule = suggestion ? getRule(suggestion.ruleId, catalogue) : undefined
           return (
             <li key={key} className={styles.row}>
               <label className={styles.check}>
@@ -251,12 +254,15 @@ function PlacementSection({
                   )}
                 </span>
               </label>
-              {(lines.length > 0 || dose.pinned) && (
+              {(lines.length > 0 || (dose.pinned && product?.kind !== 'medication')) && (
                 <ul className={styles.reasons}>
-                  {dose.pinned && <li>{t(`pinned.${dose.pinned}`)}</li>}
+                  {/* A medication's time is always the person's own: nothing was "moved". */}
+                  {dose.pinned && product?.kind !== 'medication' && (
+                    <li>{t(`pinned.${dose.pinned}`)}</li>
+                  )}
                   {lines.map((r) => (
                     <li key={`${r.ruleId}:${r.params.pinnedConflict ? 1 : 0}`}>
-                      {renderReasonShort(r)}
+                      {renderReasonShort(r, catalogue)}
                     </li>
                   ))}
                 </ul>

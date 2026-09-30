@@ -8,12 +8,14 @@ import { MoreInfoButton } from '../components/MoreInfoButton'
 import { ProductInfoSheet } from '../components/ProductInfoSheet'
 import { formatAmount, timesLabel } from '../format'
 import { t, tl } from '../i18n'
+import { useCatalogue } from '../catalogue'
 import { useAppState } from '../state/context'
 import styles from './StackScreen.module.css'
 
 export function StackScreen() {
   const { state, dispatch } = useAppState()
-  const duplicates = findDuplicateIngredients(state.stack)
+  const catalogue = useCatalogue()
+  const duplicates = findDuplicateIngredients(state.stack, catalogue)
   const [info, setInfo] = useState<string | null>(null)
   const closeInfo = useCallback(() => setInfo(null), [])
   const [manage, setManage] = useState<string | null>(null)
@@ -45,7 +47,7 @@ export function StackScreen() {
       ) : (
         <ul className={`list card ${styles.list}`}>
           {state.stack.map((item) => {
-            const product = getProduct(item.productId)
+            const product = getProduct(item.productId, catalogue)
             if (!product) {
               return (
                 <li key={item.productId} className={styles.item}>
@@ -64,7 +66,7 @@ export function StackScreen() {
                 </li>
               )
             }
-            const status = bottleStatus(item)
+            const status = bottleStatus(item, catalogue)
             const name = tl(product.shortName)
             return (
               <li key={item.productId} className={styles.item}>
@@ -119,14 +121,14 @@ export function StackScreen() {
         <section className={`card stack-v ${styles.overlap}`}>
           <h2>{t('stack.overlapTitle')}</h2>
           {duplicates.map((d) => {
-            const ingredient = getIngredient(d.ingredientId)
+            const ingredient = getIngredient(d.ingredientId, catalogue)
             const name = ingredient ? tl(ingredient.name) : d.ingredientId
             return (
               <div key={d.ingredientId} className="stack-v">
                 <h3>{name}</h3>
                 <ul className={styles.amounts}>
                   {d.entries.map((e) => {
-                    const p = getProduct(e.productId)
+                    const p = getProduct(e.productId, catalogue)
                     return (
                       <li key={e.productId}>
                         <span>{p ? tl(p.shortName) : e.productId}</span>

@@ -1,9 +1,12 @@
 import { getProduct, getRule, rulesForProduct } from '@smartstack/engine'
 import type { PinAnchor, Reason } from '@smartstack/shared'
+import { alternativesFor } from '../alternatives'
 import { useProductText } from '../hooks/useProductText'
+import { AlternativeSuggestion } from './AlternativeSuggestion'
 import { t, tl } from '../i18n'
 import { isShortReason } from '../i18n/render'
 import { useTodaySchedule } from '../schedule'
+import { useCatalogue } from '../catalogue'
 import { useAppState } from '../state/context'
 import styles from './ProductInfoSheet.module.css'
 import { SeverityBadge } from './SeverityBadge'
@@ -27,9 +30,11 @@ interface ScheduledDose {
  * person's own choices), then the label text and where it comes from.
  */
 export function ProductInfoSheet({ productId, onClose }: ProductInfoSheetProps) {
-  const { dispatch } = useAppState()
+  const { state, dispatch } = useAppState()
+  const catalogue = useCatalogue()
   const { schedule } = useTodaySchedule()
-  const product = productId ? getProduct(productId) : undefined
+  const product = productId ? getProduct(productId, catalogue) : undefined
+  const own = productId ? state.userProducts.find((p) => p.id === productId) : undefined
   const text = useProductText(product)
 
   const doses: ScheduledDose[] = []
@@ -56,7 +61,7 @@ export function ProductInfoSheet({ productId, onClose }: ProductInfoSheetProps) 
 
   const pinnedDoses = doses.filter((d) => d.pinned)
   const suggestion = product
-    ? rulesForProduct(product).find((r) => r.attribute === 'SUGGEST_BEDTIME')
+    ? rulesForProduct(product, catalogue).find((r) => r.attribute === 'SUGGEST_BEDTIME')
     : undefined
   // Offered even after "No thanks" on Today: this is where the person can still say yes.
   const offerBedtime =
@@ -72,6 +77,7 @@ export function ProductInfoSheet({ productId, onClose }: ProductInfoSheetProps) 
 
   return (
     <Sheet open={open} onClose={onClose} title={title}>
+      {product?.kind === 'medication' && <p className="notice notice--warn">{t('notice.N3')}</p>}
       <section className={styles.section}>
         <h3>{t('info.timing')}</h3>
         {offerBedtime && suggestion && lastDose && (
@@ -108,7 +114,7 @@ export function ProductInfoSheet({ productId, onClose }: ProductInfoSheetProps) 
           </div>
         ))}
         {reasons.map((reason) => {
-          const rule = getRule(reason.ruleId)
+          const rule = getRule(reason.ruleId, catalogue)
           if (!rule) return null
           return (
             <article
@@ -166,13 +172,29 @@ export function ProductInfoSheet({ productId, onClose }: ProductInfoSheetProps) 
               <p className="small">{tl(text.facts)}</p>
             </section>
           )}
+          {own &&
+            alternativesFor(own.id, state, catalogue)
+              .slice(0, 1)
+              .map((alternative) => (
+                <section key={alternative.productId} className={styles.section}>
+                  <AlternativeSuggestion productId={own.id} alternative={alternative} />
+                </section>
+              ))}
+          {own?.notes && (
+            <section className={styles.section}>
+              <h3>{t('other.notes_title')}</h3>
+              <p className="small">{own.notes}</p>
+            </section>
+          )}
           <section className={styles.section}>
             {product.sourceUrl && (
               <a href={product.sourceUrl} target="_blank" rel="noopener noreferrer">
                 {t('info.productPage')}
               </a>
             )}
-            {product.status === 'sample' ? (
+            {product.status === 'user' ? (
+              <p className="small muted">{t('other.addedByYou')}</p>
+            ) : product.status === 'sample' ? (
               <p className="small muted">
                 <span className="tag tag--sample">{t('common.sample')}</span> {t('info.sampleNote')}
               </p>

@@ -23,6 +23,12 @@ run_worker_first = ["/api/*", "/__scheduled"]
 [observability]
 enabled = true
 
+# Production keeps its own console logs (counts, status codes and ids only) but not the
+# invocation logs, which hold request metadata (§12, M10). Workers Logs keep 3 days.
+[observability.logs]
+enabled = true
+invocation_logs = false
+
 [triggers]
 # Every minute. Cron invocations count toward the 100k/day request limit (1,440/day).
 crons = ["* * * * *"]
@@ -66,6 +72,9 @@ EMAIL_FROM = "donotreply@newrootsherbal.com"
 EMAIL_REPLY_TO = "info@newrootsherbal.com"
 # Version of the consent texts (docs/privacy/consent-texts.md). Changing it asks everyone again.
 CONSENT_VERSION = "2026-10"
+# Hosts a news campaign may link to (https only; exact host names, comma-separated). The
+# service worker opens news links on the same hosts (apps/web).
+NEWS_URL_HOSTS = "newrootsherbal.com,www.newrootsherbal.com"
 
 # ---------------------------------------------------------------------------
 # Staging: https://schedule-staging.flourishbodyandmind.com, its own D1 database.
@@ -82,6 +91,14 @@ directory = "../web/dist"
 binding = "ASSETS"
 not_found_handling = "single-page-application"
 run_worker_first = ["/api/*", "/__scheduled"]
+
+# Staging keeps the invocation logs (tuning MAX_PUSHES_PER_TICK, debugging).
+[env.staging.observability]
+enabled = true
+
+[env.staging.observability.logs]
+enabled = true
+invocation_logs = true
 
 [[env.staging.d1_databases]]
 binding = "DB"
@@ -105,3 +122,4 @@ EMAIL_MODE = "smtp2go"
 EMAIL_FROM = "donotreply@newrootsherbal.com"
 EMAIL_REPLY_TO = "info@newrootsherbal.com"
 CONSENT_VERSION = "2026-10"
+NEWS_URL_HOSTS = "newrootsherbal.com,www.newrootsherbal.com"

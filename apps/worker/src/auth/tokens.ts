@@ -32,12 +32,19 @@ export async function newEmailToken(): Promise<NewEmailToken> {
   return { token, id }
 }
 
+/**
+ * The emailed link. A reset link also carries the address: the browser needs it to derive the
+ * new password key (the email is the PBKDF2 salt). Both stay in the fragment, never sent to a
+ * server.
+ */
 export function emailTokenLink(
   appOrigin: string,
   purpose: EmailTokenPurpose,
   token: string,
+  email?: string,
 ): string {
-  return `${appOrigin.replace(/\/+$/, '')}${LINK_PATHS[purpose]}#token=${token}`
+  const base = `${appOrigin.replace(/\/+$/, '')}${LINK_PATHS[purpose]}#token=${token}`
+  return email && purpose === 'reset_password' ? `${base}&email=${encodeURIComponent(email)}` : base
 }
 
 export function insertEmailTokenStatement(
@@ -62,11 +69,34 @@ export function consumeEmailTokenStatement(
   id: string,
   purpose: EmailTokenPurpose,
   now: number,
+  /** When given, only a token sent to this address is consumed (password reset). */
+  email?: string,
+): Statement {
+  return email === undefined
+    ? {
+        sql: `UPDATE email_tokens SET used_at = ?3
+              WHERE id = ?1 AND purpose = ?2 AND used_at IS NULL AND expires_at > ?3
+              RETURNING account_id, email`,
+        params: [id, purpose, now],
+      }
+    : {
+        sql: `UPDATE email_tokens SET used_at = ?3
+              WHERE id = ?1 AND purpose = ?2 AND used_at IS NULL AND expires_at > ?3
+                AND email = ?4
+              RETURNING account_id, email`,
+        params: [id, purpose, now, email],
+      }
+}
+
+/** Why a reset didn't consume its token: a live token sent to another address → email_mismatch. */
+export function liveEmailTokenStatement(
+  id: string,
+  purpose: EmailTokenPurpose,
+  now: number,
 ): Statement {
   return {
-    sql: `UPDATE email_tokens SET used_at = ?3
-          WHERE id = ?1 AND purpose = ?2 AND used_at IS NULL AND expires_at > ?3
-          RETURNING account_id, email`,
+    sql: `SELECT email FROM email_tokens
+          WHERE id = ?1 AND purpose = ?2 AND used_at IS NULL AND expires_at > ?3`,
     params: [id, purpose, now],
   }
 }

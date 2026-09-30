@@ -7,14 +7,18 @@ import {
   MAX_SUBSCRIPTIONS_PER_USER,
   PushSubscriptionBody,
   PutMeBody,
+  PutNewsBody,
   PutScheduleBody,
   TestReminderBody,
 } from '@smartstack/shared'
 import { Hono, type Context } from 'hono'
 import { z } from 'zod'
 import { accountApi } from './account-api'
+import { adminApi } from './admin-api'
 import type { Env, PushSubscriptionRow, UserRow } from './env'
 import { scheduleStatements, TEST_LEAD_MS, testReminderAllowed } from './logic'
+import { syncApi } from './sync-api'
+import { newsOptInStatement } from './news/campaigns'
 
 type Variables = { userId: string }
 type AppEnv = { Bindings: Env; Variables: Variables }
@@ -92,13 +96,27 @@ api.put('/me', async (c) => {
   const body = await parseBody(c, PutMeBody)
   if (!body.ok) return body.response
   const now = Date.now()
+  // The language is optional: an older client that doesn't send it leaves it unchanged.
   await c.env.DB.prepare(
-    `INSERT INTO users (id, tz, platform, created_at, last_seen_at) VALUES (?1, ?2, ?3, ?4, ?4)
-     ON CONFLICT(id) DO UPDATE SET tz = excluded.tz, platform = excluded.platform, last_seen_at = excluded.last_seen_at`,
+    `INSERT INTO users (id, tz, platform, created_at, last_seen_at, locale)
+     VALUES (?1, ?2, ?3, ?4, ?4, COALESCE(?5, 'en'))
+     ON CONFLICT(id) DO UPDATE SET tz = excluded.tz, platform = excluded.platform,
+       last_seen_at = excluded.last_seen_at, locale = COALESCE(?5, users.locale)`,
   )
-    .bind(c.get('userId'), body.data.tz, body.data.platform, now)
+    .bind(c.get('userId'), body.data.tz, body.data.platform, now, body.data.locale ?? null)
     .run()
   return c.json({ ok: true })
+})
+
+/** News notifications on this device (C6): on stamps news_opt_in_at, off news_opt_out_at. */
+api.put('/me/news', async (c) => {
+  const body = await parseBody(c, PutNewsBody)
+  if (!body.ok) return body.response
+  const s = newsOptInStatement(c.get('userId'), body.data.optIn, Date.now())
+  await c.env.DB.prepare(s.sql)
+    .bind(...s.params)
+    .run()
+  return c.json({ ok: true, optIn: body.data.optIn })
 })
 
 /** Delete the user and everything attached (explicit, even with ON DELETE CASCADE). */
@@ -200,6 +218,10 @@ api.post('/me/test-reminder', async (c) => {
 
 // /api/auth/… and /api/account/… (session bearer; 404 while ACCOUNTS_MODE is off).
 api.route('/', accountApi)
+// /api/sync (session + consent, §8).
+api.route('/', syncApi)
+// /api/admin/… (session + role 'admin' + verified email; 404 while ACCOUNTS_MODE is off).
+api.route('/', adminApi)
 
 api.notFound((c) => c.json({ error: 'not_found' }, 404))
 api.onError((err, c) => {

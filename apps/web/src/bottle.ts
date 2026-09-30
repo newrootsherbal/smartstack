@@ -6,23 +6,23 @@ import {
   inventoryUnitFor,
   productSizes,
 } from '@smartstack/engine'
-import type { Product, StackEntry } from '@smartstack/shared'
+import type { Catalogue, Product, StackEntry } from '@smartstack/shared'
 import { formatBottleAmount, formatDaysLeft, parseCount } from './format'
 import { t } from './i18n'
 import { dailyUseOf, type BottleInput } from './state/reducer'
 
 /** "68 capsules left · about 34 days", or null when the bottle isn't tracked. */
-export function bottleStatus(entry: StackEntry | undefined): string | null {
+export function bottleStatus(entry: StackEntry | undefined, catalogue: Catalogue): string | null {
   const inv = entry?.inventory
   if (!entry || !inv) return null
-  const product = getProduct(entry.productId)
+  const product = getProduct(entry.productId, catalogue)
   const amount = formatBottleAmount(
     inv.remaining,
     inv.unit,
     product?.form ?? 'other',
     product?.unitLabel,
   )
-  const days = daysLeft(inv.remaining, dailyUseOf(entry))
+  const days = daysLeft(inv.remaining, dailyUseOf(entry, catalogue))
   return t('bottle.status', { amount, days: formatDaysLeft(days) })
 }
 

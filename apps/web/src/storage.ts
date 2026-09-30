@@ -61,6 +61,8 @@ export const SyncState = z.object({
   outbox: z.array(z.string()),
   lastSyncAt: z.number().nullable(),
   error: z.string().nullable(),
+  /** The first sign-in choice on this device (§8.4) was made. */
+  initialized: z.boolean().default(false),
 })
 export type SyncState = z.infer<typeof SyncState>
 
@@ -80,7 +82,9 @@ export const PersistedState = z.object({
   checks: z.record(z.string(), Check),
   /** Entity key → deletedAt, kept until the deletion is pushed (accounts). */
   tombstones: z.record(z.string(), z.number()).catch({}),
-  sync: SyncState.catch({ rev: 0, outbox: [], lastSyncAt: null, error: null }),
+  sync: SyncState.catch({ rev: 0, outbox: [], lastSyncAt: null, error: null, initialized: false }),
+  /** When routine, language, theme or time zone last changed (the synced settings entity). */
+  settingsUpdatedAt: z.number().catch(0),
   /** Products whose "running low" sheet is still to be shown (once per bottle). */
   lowAlerts: z.array(z.string()).catch([]),
   pushState: PushState,
@@ -88,10 +92,19 @@ export const PersistedState = z.object({
   lastSyncHash: z.string().nullable(),
   /** Reminders name the products only when the person turns this on (N4, off by default). */
   reminderProductNames: z.boolean().catch(false),
+  /**
+   * Dose reminders on this device. The push subscription (pushState) is shared with news, so
+   * either can be on alone.
+   */
+  remindersEnabled: z.boolean().catch(false),
   /** News notifications on this device (off by default). */
   newsOptIn: z.boolean().catch(false),
+  /** The one-time "Also get news…?" question (C7) was asked. */
+  newsPromptAsked: z.boolean().catch(false),
   /** The "Turn on reminders" card on Today was dismissed. */
   remindersCardDismissed: z.boolean().catch(false),
+  /** The language last sent with PUT /api/me (news uses it); null: not sent yet. */
+  serverLocale: z.enum(['en', 'fr']).nullable().catch(null),
   tz: z.string(),
   locale: z.enum(['en', 'fr']),
   /** Colour theme (themes.ts). Missing or unknown falls back instead of resetting the user. */
@@ -128,14 +141,18 @@ export function defaultState(userId = newUserId(), now = Date.now()): PersistedS
     todayOverride: null,
     checks: {},
     tombstones: {},
-    sync: { rev: 0, outbox: [], lastSyncAt: null, error: null },
+    sync: { rev: 0, outbox: [], lastSyncAt: null, error: null, initialized: false },
+    settingsUpdatedAt: 0,
     lowAlerts: [],
     pushState: { status: 'off', endpoint: null, registeredAt: null },
     lastSync: null,
     lastSyncHash: null,
     reminderProductNames: false,
+    remindersEnabled: false,
     newsOptIn: false,
+    newsPromptAsked: false,
     remindersCardDismissed: false,
+    serverLocale: null,
     tz: currentTimeZone(),
     // A new user starts in the browser's language when the app speaks it.
     locale: detectLocale(),
@@ -179,6 +196,8 @@ export function migrateV1(raw: unknown, now = Date.now()): PersistedState | null
     todayOverride: v1.todayOverride,
     checks,
     pushState: v1.pushState,
+    // In Phase 1 a subscribed device meant reminders were on.
+    remindersEnabled: v1.pushState.status === 'subscribed',
     lastSync: v1.lastSync,
     // Forces a re-send, so the server's rows lose their product names too.
     lastSyncHash: null,
@@ -213,7 +232,14 @@ export function loadState(storage: Storage = localStorage): PersistedState {
       if (migrated) return pruneForToday(migrated)
     } else {
       const parsed = PersistedState.safeParse(json)
-      if (parsed.success) return pruneForToday(parsed.data)
+      if (parsed.success) {
+        // Saved before reminders and news were separate: a subscribed device had reminders on.
+        const remindersEnabled =
+          'remindersEnabled' in json
+            ? parsed.data.remindersEnabled
+            : parsed.data.pushState.status === 'subscribed'
+        return pruneForToday({ ...parsed.data, remindersEnabled })
+      }
     }
     // Keep the anonymous id if we can, so server-side rows stay deletable.
     const idCheck = z.uuid().safeParse(json.userId)

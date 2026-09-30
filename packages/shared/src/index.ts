@@ -1,10 +1,12 @@
 // @smartstack/shared — types and zod schemas shared by the engine, the web app and the Worker.
 // Exported as TypeScript source (no build step).
 import { z } from 'zod'
+import { Locale } from './auth'
 import { MAX_DOSES_PER_DAY } from './limits'
 import { Inventory } from './user-data'
 
 export { MAX_DOSES_PER_DAY } from './limits'
+export * from './lookup'
 export * from './user-data'
 
 export const SHARED_VERSION = '0.1.0'
@@ -87,8 +89,20 @@ export const ProductIngredient = z.object({
 })
 export type ProductIngredient = z.infer<typeof ProductIngredient>
 
-export const ProductStatus = z.enum(['sample', 'draft', 'reviewed'])
+/**
+ * sample: test fixture · draft / reviewed: bundled catalogue data · user: a product the person
+ * added by hand (built on the device from a `UserProduct`, never in bundled data).
+ */
+export const ProductStatus = z.enum(['sample', 'draft', 'reviewed', 'user'])
 export type ProductStatus = z.infer<typeof ProductStatus>
+
+/**
+ * nhp: licensed natural health product · food: ingested but not licensed (protein, MCT oil,
+ * sweeteners) · topical: essential and skin oils, never scheduled · medication: a person's own
+ * prescription or over-the-counter drug (user products only; never moved, no rules of its own).
+ */
+export const PRODUCT_KINDS = ['nhp', 'food', 'topical', 'medication'] as const
+export type ProductKind = (typeof PRODUCT_KINDS)[number]
 
 /** A product may switch off rules inherited from its ingredients. */
 export const RuleOverrides = z.object({
@@ -110,18 +124,22 @@ export type ProductVariant = z.infer<typeof ProductVariant>
 export const Product = z
   .object({
     id: z.string().min(1),
-    /** Primary SKU (first variant). */
-    sku: z.string().min(1),
-    /** Primary barcode as printed: 12-digit UPC-A or 13-digit EAN-13. */
-    upc: z.string().regex(/^\d{12,13}$/),
+    /** Primary SKU (first variant). Required in bundled data (validateCatalogue); none on user products. */
+    sku: z.string().min(1).optional(),
+    /**
+     * Primary barcode as printed: 12-digit UPC-A or 13-digit EAN-13 (validateCatalogue requires
+     * one in bundled data); a user product may carry an 8-digit EAN-8, or none.
+     */
+    upc: z
+      .string()
+      .regex(/^\d{8,13}$/)
+      .optional(),
     /** Natural Product Number; absent for foods, sweeteners, essential and skin oils. */
     npn: z.string().min(1).optional(),
-    /**
-     * nhp: licensed natural health product · food: ingested but not licensed (protein,
-     * MCT oil, sweeteners) · topical: essential and skin oils, never scheduled.
-     */
-    kind: z.enum(['nhp', 'food', 'topical']).default('nhp'),
-    brand: z.string().min(1),
+    /** See PRODUCT_KINDS; `medication` only on user products. */
+    kind: z.enum(PRODUCT_KINDS).default('nhp'),
+    /** Required in bundled data; empty for a medication whose company was not given. */
+    brand: z.string(),
     name: LocalizedText,
     /** Short label for schedule rows, push titles and adjustment sentences, e.g. "Iron". */
     shortName: LocalizedText,
@@ -142,7 +160,8 @@ export const Product = z
     directions: LocalizedText.optional(),
     warnings: LocalizedText.optional(),
     status: ProductStatus,
-    labelVersion: z.string().min(1),
+    /** Label revision. Required in bundled data (validateCatalogue); none on user products. */
+    labelVersion: z.string().min(1).optional(),
     /** May be empty when the label lists no medicinal ingredient the importer can read. */
     ingredients: z.array(ProductIngredient),
     variants: z.array(ProductVariant).optional(),
@@ -218,6 +237,24 @@ export const Catalogue = z.object({
   rules: z.array(TimingRule),
 })
 export type Catalogue = z.infer<typeof Catalogue>
+
+/**
+ * A New Roots Herbal product the product team suggests for another brand's product
+ * (`packages/engine/data/alternatives.json`, §4.9). `match` is the other product's barcode,
+ * or its brand and name: case- and accent-insensitive, the name as "contains".
+ */
+export const CuratedAlternative = z
+  .object({
+    match: z.union([
+      z.object({ upc: z.string().regex(/^\d{8,13}$/) }).strict(),
+      z.object({ brand: z.string().min(1), name: z.string().min(1) }).strict(),
+    ]),
+    /** The catalogue product suggested (never topical). */
+    productId: z.string().min(1),
+  })
+  .extend(ReviewFields.shape)
+export type CuratedAlternative = z.infer<typeof CuratedAlternative>
+export const CuratedAlternatives = z.array(CuratedAlternative)
 
 // ---------------------------------------------------------------------------
 // User data (browser localStorage is the source of truth)
@@ -312,8 +349,9 @@ export interface ReasonParams {
   /** Products in the stack that triggered a separation rule. */
   otherProductIds?: string[]
   /**
-   * Both doses are pinned by the person, so the separation could not be applied: the later
-   * one carries this reason as a timing conflict.
+   * Both doses are fixed (pinned by the person, or a medication), so the separation could not
+   * be applied: the later one carries this reason as a timing conflict (the other product's
+   * dose when the later one is a medication, which never carries reasons).
    */
   pinnedConflict?: boolean
 }
@@ -435,6 +473,8 @@ export const PutMeBody = z.object({
   /** IANA time zone, e.g. America/Toronto. */
   tz: z.string().min(1).max(64),
   platform: Platform,
+  /** The app's language on this device (news notifications use it). Absent: left unchanged. */
+  locale: Locale.optional(),
 })
 export type PutMeBody = z.infer<typeof PutMeBody>
 
@@ -483,3 +523,5 @@ export const ApiError = z.object({
 })
 export type ApiError = z.infer<typeof ApiError>
 export * from './auth'
+export * from './sync'
+export * from './news'

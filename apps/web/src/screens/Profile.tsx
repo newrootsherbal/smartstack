@@ -2,6 +2,9 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { catalogue } from '@smartstack/engine'
 import { api } from '../api/client'
+import { AccountCard } from '../components/AccountCard'
+import { HealthLockedCard } from './HealthProfile'
+import { ACCOUNTS_MODE, ACCOUNTS_PUBLIC } from '../config'
 import { t, type Locale, type MessageKey } from '../i18n'
 import { unsubscribe } from '../platform/reminders'
 import { useAppState } from '../state/context'
@@ -40,9 +43,9 @@ export function Profile() {
       setBusy(false)
       if (serverFailed) {
         setNotice(t('settings.deleteFailedServer'))
-        window.setTimeout(() => navigate('/onboarding', { replace: true }), 2500)
+        window.setTimeout(() => navigate('/', { replace: true }), 2500)
       } else {
-        navigate('/onboarding', { replace: true })
+        navigate('/', { replace: true })
       }
     }
   }
@@ -50,6 +53,22 @@ export function Profile() {
   return (
     <main className="screen">
       <h1>{t('profile.title')}</h1>
+
+      <AccountCard />
+
+      {state.auth.mode === 'account' ? (
+        <section className="card stack-v">
+          <h2>{t('health.title')}</h2>
+          <p className="small muted">
+            {state.healthProfile ? t('health.summarySet') : t('health.summaryEmpty')}
+          </p>
+          <Link to="/profile/health" className="btn btn--outline">
+            {state.healthProfile ? t('health.open') : t('health.start')}
+          </Link>
+        </section>
+      ) : (
+        ACCOUNTS_PUBLIC && <HealthLockedCard />
+      )}
 
       <section className="card stack-v">
         <h2>{t('profile.notifications')}</h2>
@@ -130,20 +149,30 @@ export function Profile() {
       <section className="card stack-v">
         <h2>{t('settings.privacy')}</h2>
         <p className="small">{t('settings.privacyBody')}</p>
+        <div className="row">
+          <Link to="/privacy" className="btn btn--small btn--outline">
+            {t('legal.privacyTitle')}
+          </Link>
+          <Link to="/terms" className="btn btn--small btn--outline">
+            {t('legal.termsTitle')}
+          </Link>
+        </div>
       </section>
 
-      <section className="card stack-v">
-        <h2>{t('settings.data')}</h2>
-        <button
-          type="button"
-          className="btn btn--danger"
-          onClick={() => void deleteEverything()}
-          disabled={busy}
-        >
-          {t('settings.delete')}
-        </button>
-        {notice && <p className="notice notice--warn">{notice}</p>}
-      </section>
+      {state.auth.mode !== 'account' && (
+        <section className="card stack-v">
+          <h2>{t('settings.data')}</h2>
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={() => void deleteEverything()}
+            disabled={busy}
+          >
+            {t('settings.delete')}
+          </button>
+          {notice && <p className="notice notice--warn">{notice}</p>}
+        </section>
+      )}
 
       <section className="card stack-v">
         <h2>{t('settings.dev')}</h2>
@@ -154,8 +183,24 @@ export function Profile() {
           <Link to="/dev/styleguide" className="btn btn--small btn--outline">
             {t('settings.devStyleguide')}
           </Link>
+          {/* Before the public launch only staff can sign in; they find the way in here. */}
+          {ACCOUNTS_MODE === 'staff' && state.auth.mode !== 'account' && (
+            <Link to="/login?from=/profile" className="btn btn--small btn--outline">
+              {t('settings.staffLogin')}
+            </Link>
+          )}
         </div>
       </section>
+
+      {state.auth.mode === 'account' && state.auth.role === 'admin' && state.auth.emailVerified && (
+        <section className="card stack-v">
+          <h2>{t('admin.title')}</h2>
+          <p className="small muted">{t('admin.hint')}</p>
+          <Link to="/admin/news" className="btn btn--outline">
+            {t('admin.news')}
+          </Link>
+        </section>
+      )}
 
       <p className="small muted">
         {t('settings.catalogue', { count: catalogue.products.length })}

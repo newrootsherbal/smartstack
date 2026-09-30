@@ -186,3 +186,48 @@ describe('bottles', () => {
     expect(iron(state).inventory).toBeUndefined()
   })
 })
+
+describe('replacement bought', () => {
+  it('retires the other brand without putting it back on the list', () => {
+    let s = tick(tracked(8))
+    s = reducer(s, { type: 'REMOVE_FROM_SHOPPING', productId: 'iron-bisglycinate' })
+    s = reducer(s, {
+      type: 'ADD_TO_SHOPPING',
+      productId: 'heme-iron',
+      reason: 'alternative',
+      replacesProductId: 'iron-bisglycinate',
+      at: T,
+    })
+    // "Replace": the replaced product leaves the stack, then its replacement leaves the list.
+    s = reducer(s, { type: 'REMOVE_PRODUCT', productId: 'iron-bisglycinate' })
+    s = reducer(s, { type: 'REMOVE_FROM_SHOPPING', productId: 'heme-iron' })
+    expect(s.shopping).toEqual([])
+    expect(s.stack.some((x) => x.productId === 'iron-bisglycinate')).toBe(false)
+  })
+})
+
+describe('health profile', () => {
+  const profile = {
+    birthYear: 1985,
+    gender: null,
+    pregnancy: null,
+    conditions: [],
+    goals: ['sleep' as const],
+    diet: [],
+    avoids: [],
+    activity: null,
+    storageConsentAt: T,
+    targetingConsentAt: null,
+    updatedAt: T,
+  }
+
+  it('deletes the profile and leaves a tombstone for sync; saving again clears it', () => {
+    const saved = reducer(base(), { type: 'SET_HEALTH_PROFILE', profile })
+    expect(saved.healthProfile).toEqual(profile)
+    const deleted = reducer(saved, { type: 'DELETE_HEALTH_PROFILE', at: T + 1 })
+    expect(deleted.healthProfile).toBeNull()
+    expect(deleted.tombstones.health).toBe(T + 1)
+    const again = reducer(deleted, { type: 'SET_HEALTH_PROFILE', profile })
+    expect(again.tombstones).not.toHaveProperty('health')
+  })
+})

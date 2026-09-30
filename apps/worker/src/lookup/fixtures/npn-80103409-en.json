@@ -1,0 +1,126 @@
+{
+  "_source": "Health Canada LNHPD, fetched live on 2026-09-29",
+  "_urls": [
+    "https://health-products.canada.ca/api/natural-licences/productlicence/?id=80103409&lang=en&type=json",
+    "https://health-products.canada.ca/api/natural-licences/medicinalingredient/?id=24590748&lang=en&type=json",
+    "https://health-products.canada.ca/api/natural-licences/productdose/?id=24590748&lang=en&type=json"
+  ],
+  "licence": [
+    {
+      "lnhpd_id": 24590748,
+      "licence_number": "80103409",
+      "licence_date": "2020-08-10",
+      "revised_date": "2024-02-21",
+      "time_receipt": "2020-05-29",
+      "date_start": "2020-06-17",
+      "product_name_id": 17295630,
+      "product_name": "Vitamin D Softgel",
+      "dosage_form": "Capsule, soft",
+      "company_id": 10651,
+      "company_name_id": 24929,
+      "company_name": "New Roots Herbal Inc.",
+      "sub_submission_type_code": 1,
+      "sub_submission_type_desc": "Compendial",
+      "flag_primary_name": 1,
+      "flag_product_status": 1,
+      "flag_attested_monograph": 0
+    }
+  ],
+  "ingredients": {
+    "metadata": {
+      "pagination": null,
+      "dateReceived": "2026-09-30T02:13:35.3437854Z"
+    },
+    "data": [
+      {
+        "lnhpd_id": 24590748,
+        "ingredient_name": "Vitamin D",
+        "ingredient_Text": null,
+        "potency_amount": 0,
+        "potency_constituent": "",
+        "potency_unit_of_measure": "",
+        "quantity": 1000,
+        "quantity_minimum": 0,
+        "quantity_maximum": 0,
+        "quantity_unit_of_measure": "IU",
+        "ratio_numerator": "",
+        "ratio_denominator": "",
+        "dried_herb_equivalent": "",
+        "dhe_unit_of_measure": "",
+        "extract_type_desc": "",
+        "source_material": "Vitamin D"
+      },
+      {
+        "lnhpd_id": 24590748,
+        "ingredient_name": "Vitamin D",
+        "ingredient_Text": null,
+        "potency_amount": 0,
+        "potency_constituent": "",
+        "potency_unit_of_measure": "",
+        "quantity": 25,
+        "quantity_minimum": 0,
+        "quantity_maximum": 0,
+        "quantity_unit_of_measure": "Microgram",
+        "ratio_numerator": "",
+        "ratio_denominator": "",
+        "dried_herb_equivalent": "",
+        "dhe_unit_of_measure": "",
+        "extract_type_desc": "",
+        "source_material": "Vitamin D"
+      }
+    ]
+  },
+  "dose": [
+    {
+      "lnhpd_id": 24590748,
+      "dose_id": 17295633,
+      "population_type_desc": "Adolescents",
+      "age": 0,
+      "age_minimum": 14,
+      "age_maximum": 18,
+      "uom_type_desc_age": "year(s)",
+      "quantity_dose": 1,
+      "quantity_dose_minimum": 0,
+      "quantity_dose_maximum": 0,
+      "uom_type_desc_quantity_dose": "capsule",
+      "frequency": 1,
+      "frequency_minimum": 0,
+      "frequency_maximum": 0,
+      "uom_type_desc_frequency": "Day"
+    },
+    {
+      "lnhpd_id": 24590748,
+      "dose_id": 17295635,
+      "population_type_desc": "Adults",
+      "age": 0,
+      "age_minimum": 19,
+      "age_maximum": 0,
+      "uom_type_desc_age": "year(s)",
+      "quantity_dose": 1,
+      "quantity_dose_minimum": 0,
+      "quantity_dose_maximum": 0,
+      "uom_type_desc_quantity_dose": "capsule",
+      "frequency": 1,
+      "frequency_minimum": 0,
+      "frequency_maximum": 0,
+      "uom_type_desc_frequency": "Day"
+    },
+    {
+      "lnhpd_id": 24590748,
+      "dose_id": 17295631,
+      "population_type_desc": "Adolescents",
+      "age": 0,
+      "age_minimum": 9,
+      "age_maximum": 13,
+      "uom_type_desc_age": "year(s)",
+      "quantity_dose": 1,
+      "quantity_dose_minimum": 0,
+      "quantity_dose_maximum": 0,
+      "uom_type_desc_quantity_dose": "capsule",
+      "frequency": 1,
+      "frequency_minimum": 0,
+      "frequency_maximum": 0,
+      "uom_type_desc_frequency": "Day"
+    }
+  ]
+}

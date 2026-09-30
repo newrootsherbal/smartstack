@@ -2,6 +2,7 @@ import { getProduct, inventoryUnitFor, refill } from '@smartstack/engine'
 import { useId, useState } from 'react'
 import { bottleUnitWord, formatNumber, parseCount } from '../format'
 import { t, tl } from '../i18n'
+import { useCatalogue } from '../catalogue'
 import { useAppState } from '../state/context'
 import { bottleFromDraft, initialBottleDraft, type BottleDraft } from '../bottle'
 import { BottleCard } from './BottleCard'
@@ -23,8 +24,9 @@ interface BottleSheetProps {
  */
 export function BottleSheet({ productId, kind, onClose, onDone }: BottleSheetProps) {
   const { state, dispatch } = useAppState()
+  const catalogue = useCatalogue()
   const entry = state.stack.find((s) => s.productId === productId)
-  const product = getProduct(productId)
+  const product = getProduct(productId, catalogue)
   const inv = entry?.inventory
   const id = useId()
   const [amount, setAmount] = useState(() =>

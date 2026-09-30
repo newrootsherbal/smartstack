@@ -1,10 +1,18 @@
-import type { Catalogue, Ingredient, Product, TimingRule } from '@smartstack/shared'
+import type {
+  Catalogue,
+  CuratedAlternative,
+  Ingredient,
+  Product,
+  TimingRule,
+} from '@smartstack/shared'
+import alternativesJson from '../data/alternatives.json'
 import ingredientsJson from '../data/ingredients.json'
 import productsJson from '../data/products.json'
 import generatedRulesJson from '../data/rules.generated.json'
 import curatedRulesJson from '../data/rules.json'
 import { barcodesMatch } from './barcode'
-import { validateCatalogue } from './validate'
+import { fold } from './fold'
+import { validateAlternatives, validateCatalogue } from './validate'
 
 function loadCatalogue(): Catalogue {
   const result = validateCatalogue({
@@ -24,6 +32,18 @@ function loadCatalogue(): Catalogue {
  * newrootsherbal.com (`npm run data:import:website`), never fetched at runtime.
  */
 export const catalogue: Catalogue = loadCatalogue()
+
+function loadAlternatives(): CuratedAlternative[] {
+  const result = validateAlternatives(alternativesJson, catalogue)
+  if (!result.ok) throw new Error(`Invalid alternatives.json:\n${result.errors.join('\n')}`)
+  return result.alternatives
+}
+
+/**
+ * New Roots Herbal alternatives chosen by the product team for other brands' products
+ * (`data/alternatives.json`, filled from the other-brand report), for `suggestAlternatives`.
+ */
+export const curatedAlternatives: CuratedAlternative[] = loadAlternatives()
 
 // ---------------------------------------------------------------------------
 // Lookups
@@ -48,7 +68,7 @@ export function getRule(id: string, cat: Catalogue = catalogue): TimingRule | un
 /** Every barcode that identifies the product (primary + all variants). */
 export function productBarcodes(product: Product): string[] {
   const codes = [product.upc, ...(product.variants ?? []).map((v) => v.upc)]
-  return [...new Set(codes)]
+  return [...new Set(codes)].filter((code): code is string => code !== undefined)
 }
 
 export function findProductByBarcode(
@@ -56,14 +76,6 @@ export function findProductByBarcode(
   cat: Catalogue = catalogue,
 ): Product | undefined {
   return cat.products.find((p) => productBarcodes(p).some((upc) => barcodesMatch(upc, code)))
-}
-
-// Combining diacritical marks, built from char codes so no bare accent sits in the source.
-const DIACRITICS = new RegExp(`[${String.fromCharCode(0x300)}-${String.fromCharCode(0x36f)}]`, 'g')
-
-/** Lowercase without accents, so "echinacee" finds "Échinacée" and "acetyl" finds "Acétyl". */
-function fold(text: string): string {
-  return text.normalize('NFD').replace(DIACRITICS, '').toLowerCase()
 }
 
 /** Case- and accent-insensitive name search (EN and FR), for the browse list. */
@@ -87,9 +99,12 @@ export function productContainsIngredient(product: Product, ingredientId: string
  * Rules that apply to a product: ingredient-level rules for every ingredient it
  * contains, plus product-level rules, minus `ruleOverrides.disable`. When two
  * rules share an attribute, the product-level one wins; otherwise the first in
- * rules order. Result is in rules order.
+ * rules order. Result is in rules order. A medication gets none: it stays where the person
+ * takes it and carries no reasons (its ingredients still move other products, see the
+ * scheduler).
  */
 export function rulesForProduct(product: Product, cat: Catalogue = catalogue): TimingRule[] {
+  if (product.kind === 'medication') return []
   const disabled = new Set(product.ruleOverrides?.disable ?? [])
   const ingredientIds = new Set(product.ingredients.map((pi) => pi.ingredientId))
   const applicable = cat.rules.filter((r) => {
