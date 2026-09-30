@@ -33,12 +33,17 @@ export function BottleCard({ product, draft, onChange, trackOnly, invalid }: Bot
     none: 'bottle.dontTrack',
   } as const
 
-  const sizeLabel = (s: (typeof sizes)[number]) =>
-    s.size
-      ? formatBottleAmount(s.size.quantity, s.size.unit, product.form, product.unitLabel)
-      : s.label
-        ? tl(s.label)
-        : s.upc
+  // Capsules: "120 capsules". Liquids and powders: the size as printed, then what it holds
+  // ("200 ml · 40 servings"), since the printed size is what the person sees on the bottle.
+  const sizeLabel = (s: (typeof sizes)[number]) => {
+    const printed = s.label ? tl(s.label) : null
+    if (!s.size) return printed ?? s.upc
+    const amount = formatBottleAmount(s.size.quantity, s.size.unit, product.form, product.unitLabel)
+    if (s.size.unit !== 'serving' || !printed) return amount
+    // "226 g = 45 portions" already says it: don't repeat "· 45 servings".
+    const digits = String(s.size.quantity).replace('.', '\\.')
+    return new RegExp(`(^|\\D)${digits}(\\D|$)`).test(printed) ? printed : `${printed} · ${amount}`
+  }
 
   return (
     <div className="card stack-v">
