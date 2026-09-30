@@ -44,14 +44,55 @@ function metricAmount(text: string): { value: number; unit: 'ml' | 'g' } | null 
   return { value, unit: 'g' }
 }
 
+/** Household measures of a liquid, in ml: a teaspoon, a tablespoon, a drop (20 per ml). */
+const HOUSEHOLD_ML: [RegExp, number][] = [
+  [/\b(?:teaspoons?|tsp\.?|c\.\s*à\s*thé|cuill(?:ère|ere)s?\s+à\s+thé)\b/i, 5],
+  [
+    /\b(?:tablespoons?|tbsp\.?|c\.\s*à\s*(?:soupe|table)|cuill(?:ère|ere)s?\s+à\s+(?:soupe|table))\b/i,
+    15,
+  ],
+  [/\b(?:drops?|gouttes?)\b/i, 0.05],
+]
+const HOUSEHOLD_COUNT =
+  /(\d+(?:[.,]\d+)?(?:\s*[¼½¾])?|[¼½¾]|\d\s*\/\s*\d)\s*(?:(?:rounded|heaping|level|scant)\s+)?(?:teaspoon|tsp|tablespoon|tbsp|drop|goutte|c\.|cuill)/i
+const VULGAR: Record<string, number> = { '¼': 0.25, '½': 0.5, '¾': 0.75 }
+
+/** "½", "1 ½", "1/2", "2.5" → a number. */
+function householdCount(text: string): number {
+  const mixed = /^(\d+(?:[.,]\d+)?)?\s*([¼½¾])?$/.exec(text.trim())
+  if (mixed) return (mixed[1] ? num(mixed[1]) : 0) + (mixed[2] ? VULGAR[mixed[2]]! : 0)
+  const fraction = /^(\d)\s*\/\s*(\d)$/.exec(text.trim())
+  return fraction ? Number(fraction[1]) / Number(fraction[2]) : NaN
+}
+
+/**
+ * A liquid serving given only as a household measure: "1 teaspoon" → 5 ml, "½ tsp." → 2.5 ml,
+ * "1 tablespoon" → 15 ml, "6 drops" → 0.3 ml (an estimate: 20 drops per ml). Null otherwise.
+ */
+function householdAmount(servingSize: string): { value: number; unit: 'ml' } | null {
+  const count = HOUSEHOLD_COUNT.exec(servingSize)
+  if (!count) return null
+  const times = householdCount(count[1]!)
+  if (!Number.isFinite(times) || times <= 0) return null
+  for (const [pattern, ml] of HOUSEHOLD_ML) {
+    if (pattern.test(servingSize)) return { value: times * ml, unit: 'ml' }
+  }
+  return null
+}
+
 /**
  * The amount one serving holds, in ml or g, from the label's serving size:
  * "3 rounded tbsp. (30 g)" → 30 g, "1 teaspoon (5 ml)" → 5 ml, "10 g (2 heaping
- * teaspoons) serving" → 10 g. Null when the serving names no metric amount ("1 drop").
+ * teaspoons) serving" → 10 g; a bare household measure counts as ml ("1 teaspoon" → 5 ml), which
+ * only matches a bottle measured in ml. Null when nothing is measurable ("1 scoop").
  */
 function servingAmount(servingSize: string): { value: number; unit: 'ml' | 'g' } | null {
   const inParens = /\(([^)]*)\)/.exec(servingSize)
-  return (inParens ? metricAmount(inParens[1]!) : null) ?? metricAmount(servingSize)
+  return (
+    (inParens ? metricAmount(inParens[1]!) : null) ??
+    metricAmount(servingSize) ??
+    householdAmount(servingSize)
+  )
 }
 
 /**
@@ -60,7 +101,9 @@ function servingAmount(servingSize: string): { value: number; unit: 'ml' | 'g' }
  * - "100 g = 32 doses", "150 g / 50 portions", "30 ml · 1,050 Servings" → servings as printed;
  * - "30 × 4.2 g" (sachets) → 30 servings;
  * - "300 g" with a serving of "(30 g)" → 10 servings (both in ml, or both in g);
- * - anything else (a gift pack, drops without a volume) → null: the app asks.
+ * - "50 ml" with a serving of "1 teaspoon" → 10 servings (5 ml a teaspoon, 15 ml a tablespoon,
+ *   20 drops per ml: estimates, for liquids only);
+ * - anything else (a gift pack, a scoop of powder without its weight) → null: the app asks.
  */
 export function parsePackageSize(
   size: string | undefined,
@@ -86,8 +129,8 @@ export function parsePackageSize(
   const bottle = metricAmount(text)
   const serving = servingAmount(servingSize)
   if (!bottle || !serving || bottle.unit !== serving.unit || serving.value <= 0) return null
-  // Decimals are fine for servings; one decimal is enough.
-  return positive(Math.floor((bottle.value / serving.value) * 10) / 10)
+  // One decimal is enough; the epsilon absorbs 15 / 0.3 = 49.999…
+  return positive(Math.floor((bottle.value / serving.value) * 10 + 1e-6) / 10)
 }
 
 function positive(quantity: number): PackageSize | null {

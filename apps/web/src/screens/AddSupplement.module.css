@@ -1,6 +1,8 @@
 .tabs {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  /* One row whatever the number of tabs (two, or three with "Other brand"). */
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
   gap: var(--space-1);
   padding: var(--space-1);
   background: var(--color-surface-2);

@@ -25,10 +25,15 @@ import styles from './AddSupplement.module.css'
 
 const ScanView = lazy(() => import('./ScanView'))
 
-type Mode = 'scan' | 'manual' | 'browse' | 'other'
+type Mode = 'scan' | 'browse' | 'other'
 
 // Decided once at load: a device without a camera opens on the product list.
 const DEFAULT_MODE: Mode = hasCamera() ? 'scan' : 'browse'
+
+/** Digits only, the length of a UPC-A, EAN-8/13 or GTIN-14 (spaces allowed). */
+function looksLikeBarcode(query: string): boolean {
+  return /^\d{8,14}$/.test(query.replace(/\s+/g, ''))
+}
 const MAX_RESULTS = 60
 
 export function AddSupplement() {
@@ -44,7 +49,6 @@ export function AddSupplement() {
   const otherEdit = params.get('edit') ?? undefined
   // Other brands need an account; the tab shows once accounts are public (to explain why).
   const showOther = state.auth.mode === 'account' || ACCOUNTS_PUBLIC
-  const [upc, setUpc] = useState('')
   const [query, setQuery] = useState('')
   const [candidate, setCandidate] = useState<Product | null>(null)
   const [doses, setDoses] = useState(1)
@@ -148,7 +152,6 @@ export function AddSupplement() {
     }
     setAdded(candidate)
     setCandidate(null)
-    setUpc('')
   }
 
   const results = useMemo(() => searchProducts(query, catalogue), [query, catalogue])
@@ -174,7 +177,7 @@ export function AddSupplement() {
       <h1>{t('add.title')}</h1>
 
       <div className={styles.tabs} role="tablist">
-        {(['scan', 'manual', 'browse', 'other'] as Mode[])
+        {(['scan', 'browse', 'other'] as Mode[])
           .filter((m) => m !== 'other' || showOther)
           .map((m) => (
             <button
@@ -385,38 +388,10 @@ export function AddSupplement() {
             <Suspense fallback={<p className="muted">{t('add.scanStarting')}</p>}>
               <ScanView
                 onDetected={lookup}
-                onUnavailable={() => setMode('manual')}
+                onUnavailable={() => setMode('browse')}
                 paused={notFound !== null && unknownSheet}
               />
             </Suspense>
-          )}
-
-          {mode === 'manual' && (
-            <form
-              className="stack-v"
-              onSubmit={(e) => {
-                e.preventDefault()
-                lookup(upc)
-              }}
-            >
-              <div className="field">
-                <label className="field__label" htmlFor="upc">
-                  {t('add.upcLabel')}
-                </label>
-                <input
-                  id="upc"
-                  className="input"
-                  inputMode="numeric"
-                  autoComplete="off"
-                  placeholder={t('add.upcPlaceholder')}
-                  value={upc}
-                  onChange={(e) => setUpc(e.target.value)}
-                />
-              </div>
-              <button type="submit" className="btn btn--primary" disabled={upc.trim() === ''}>
-                {t('add.lookup')}
-              </button>
-            </form>
           )}
 
           {mode === 'browse' && (
@@ -432,7 +407,19 @@ export function AddSupplement() {
               />
               <p className="small muted">{t('add.results', { count: results.length })}</p>
               {results.length === 0 ? (
-                <p className="notice">{t('add.noResults', { query })}</p>
+                <div className="notice stack-v">
+                  <p>{t('add.noResults', { query })}</p>
+                  {/* A barcode the catalogue doesn't know: the same sheet as an unknown scan. */}
+                  {looksLikeBarcode(query) && (
+                    <button
+                      type="button"
+                      className="btn btn--small btn--outline"
+                      onClick={() => lookup(query)}
+                    >
+                      {t('add.lookup')}
+                    </button>
+                  )}
+                </div>
               ) : (
                 <ul className={`list card ${styles.productList}`}>
                   {/* The person's own products first, under their own heading. */}

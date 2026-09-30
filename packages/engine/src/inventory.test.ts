@@ -44,7 +44,24 @@ describe('parsePackageSize', () => {
     expect(parsePackageSize('100 g', 'powder', '¼ teaspoon (1,090 mg)')?.quantity).toBe(91.7)
     // Different units, or a serving with no metric amount: ask the person.
     expect(parsePackageSize('300 g', 'powder', '1 tbsp. (15 ml)')).toBeNull()
-    expect(parsePackageSize('30 ml', 'liquid', '1 drop')).toBeNull()
+    expect(parsePackageSize('150 g', 'powder', '1 scoop')).toBeNull()
+  })
+
+  it('converts household measures of a liquid: teaspoons, tablespoons, drops', () => {
+    expect(parsePackageSize('50 ml', 'liquid', '1 teaspoon')?.quantity).toBe(10)
+    expect(parsePackageSize('95 ml', 'liquid', '½ teaspoon')?.quantity).toBe(38)
+    expect(parsePackageSize('100 ml', 'liquid', '1/2 tsp.')?.quantity).toBe(40)
+    expect(parsePackageSize('500 ml', 'liquid', '1 tablespoon')?.quantity).toBe(33.3)
+    expect(parsePackageSize('500 ml', 'liquid', '1 c. à soupe')?.quantity).toBe(33.3)
+    expect(parsePackageSize('15 ml', 'liquid', '1 drop')?.quantity).toBe(300)
+    expect(parsePackageSize('15 ml', 'liquid', '6 drops')?.quantity).toBe(50)
+    expect(parsePackageSize('30 ml', 'liquid', '2 gouttes')?.quantity).toBe(300)
+    // A teaspoon of powder has no fixed weight: the label's grams are needed.
+    expect(parsePackageSize('227 g', 'powder', '1 teaspoon')).toBeNull()
+    expect(parsePackageSize('100 g', 'powder', '1 rounded teaspoon')).toBeNull()
+    // Not measures at all.
+    expect(parsePackageSize('15 ml', 'liquid', '1 bottle')).toBeNull()
+    expect(parsePackageSize('50 ml', 'liquid', '1 liquid')).toBeNull()
   })
 
   it('parses the catalogue: every countable size, and prints the rate', () => {
