@@ -29,11 +29,11 @@ export default function DevStyleguide() {
     <main className="screen screen--no-nav">
       <header className="stack-v">
         <Link
-          to="/settings"
+          to="/profile"
           className="btn btn--link btn--small"
           style={{ alignSelf: 'flex-start' }}
         >
-          ← {t('nav.settings')}
+          ← {t('nav.profile')}
         </Link>
         <h1>{t('dev.styleguideTitle')}</h1>
       </header>

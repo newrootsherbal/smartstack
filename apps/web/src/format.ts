@@ -106,3 +106,41 @@ function slug(phrase: string): string {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
 }
+
+/** "68 capsules", "10 servings", "1,5 portion" — a bottle count in its own unit. */
+export function formatBottleAmount(
+  n: number,
+  unit: 'unit' | 'serving',
+  form: Product['form'],
+  unitLabel?: string | undefined,
+): string {
+  if (unit === 'serving') return `${formatNumber(n)} ${t(`bottle.serving.${pluralForm(n)}`)}`
+  return formatUnits(n, form, unitLabel)
+}
+
+/** The plural word alone, for questions: "capsules", "servings", "drops". */
+export function bottleUnitWord(
+  unit: 'unit' | 'serving',
+  form: Product['form'],
+  unitLabel?: string | undefined,
+): string {
+  if (unit === 'serving') return t('bottle.serving.other')
+  if (unitLabel) {
+    const known = lookupMessage(`unitLabel.${unitLabel}.other`)
+    if (known) return known
+  }
+  return t(`form.${form}.other`)
+}
+
+/** "about 34 days", "about 1 day", "Empty" (for 0). */
+export function formatDaysLeft(days: number, scope: 'bottle' | 'low' = 'bottle'): string {
+  if (!Number.isFinite(days)) return ''
+  const form = days === 0 ? 'zero' : days === 1 ? 'one' : 'other'
+  return t(`${scope}.days.${form}`, { days })
+}
+
+/** Parse a count typed by the person ("30", "12,5", "12.5"); null when not a number ≥ 0. */
+export function parseCount(text: string): number | null {
+  const n = Number(text.trim().replace(',', '.'))
+  return text.trim() !== '' && Number.isFinite(n) && n >= 0 ? n : null
+}

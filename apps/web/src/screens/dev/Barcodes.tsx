@@ -39,11 +39,11 @@ export default function DevBarcodes() {
     <main className="screen screen--no-nav">
       <header className="stack-v">
         <Link
-          to="/settings"
+          to="/profile"
           className="btn btn--link btn--small"
           style={{ alignSelf: 'flex-start' }}
         >
-          ← {t('nav.settings')}
+          ← {t('nav.profile')}
         </Link>
         <h1>{t('dev.barcodesTitle')}</h1>
         <p className="muted">{t('dev.barcodesIntro')}</p>

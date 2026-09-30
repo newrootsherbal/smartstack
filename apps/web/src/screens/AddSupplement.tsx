@@ -1,5 +1,6 @@
 import {
   findProductByBarcode,
+  inventoryUnitFor,
   normalizeBarcode,
   rulesForProduct,
   searchProducts,
@@ -7,8 +8,10 @@ import {
 import { MAX_DOSES_PER_DAY, type Product } from '@smartstack/shared'
 import { lazy, Suspense, useCallback, useMemo, useState } from 'react'
 import { Link } from 'react-router'
+import { bottleFromDraft, initialBottleDraft, type BottleDraft } from '../bottle'
+import { BottleCard } from '../components/BottleCard'
 import { ProductCard } from '../components/ProductCard'
-import { formatUnits, timesLabel } from '../format'
+import { formatUnits, parseCount, timesLabel } from '../format'
 import { useProductText } from '../hooks/useProductText'
 import { t, tl } from '../i18n'
 import { hasCamera } from '../platform/scanner'
@@ -34,10 +37,13 @@ export function AddSupplement() {
   const [notFound, setNotFound] = useState<string | null>(null)
   const [added, setAdded] = useState<Product | null>(null)
   const [atBedtime, setAtBedtime] = useState(false)
+  const [bottle, setBottle] = useState<BottleDraft | null>(null)
+  const [perDose, setPerDose] = useState('1')
+  const [invalid, setInvalid] = useState(false)
   const text = useProductText(candidate)
 
   const select = useCallback(
-    (product: Product) => {
+    (product: Product, scannedUpc: string | null = null) => {
       const inStack = state.stack.find((s) => s.productId === product.id)
       setNotFound(null)
       setAdded(null)
@@ -45,6 +51,11 @@ export function AddSupplement() {
       setDoses(inStack?.dosesPerDay ?? product.dosesPerDayDefault)
       setAdjusting(!!inStack && inStack.dosesPerDay !== product.dosesPerDayDefault)
       setAtBedtime(false)
+      // A bottle already tracked keeps its count; otherwise "New bottle" is preselected and
+      // a scanned barcode says which size it is.
+      setBottle(inStack?.inventory ? null : initialBottleDraft(product, scannedUpc))
+      setPerDose('1')
+      setInvalid(false)
     },
     [state.stack],
   )
@@ -59,13 +70,19 @@ export function AddSupplement() {
         setCandidate(null)
         return
       }
-      select(product)
+      select(product, normalized)
     },
     [select],
   )
 
   const confirm = () => {
     if (!candidate) return
+    const result = bottle ? bottleFromDraft(bottle, candidate) : { kind: 'none' as const }
+    const units = askPerDose ? parseCount(perDose) : null
+    if (result.kind === 'invalid' || (askPerDose && (units === null || units <= 0))) {
+      setInvalid(true)
+      return
+    }
     // "Take it at bedtime" pins the day's last dose (slot doses - 1) to bedtime.
     const pins = atBedtime
       ? [...Array.from({ length: doses - 1 }, () => null), 'bedtime' as const]
@@ -75,6 +92,13 @@ export function AddSupplement() {
       productId: candidate.id,
       dosesPerDay: doses,
       ...(pins ? { pins } : {}),
+      ...(result.kind === 'bottle'
+        ? {
+            bottle: result.bottle,
+            ...(result.variantUpc ? { variantUpc: result.variantUpc } : {}),
+          }
+        : {}),
+      ...(askPerDose && units ? { unitsPerDose: units } : {}),
     })
     setAdded(candidate)
     setCandidate(null)
@@ -83,6 +107,13 @@ export function AddSupplement() {
 
   const results = useMemo(() => searchProducts(query), [query])
   const inStack = candidate ? state.stack.some((s) => s.productId === candidate.id) : false
+  // The label doesn't say how many units a dose is: ask, since the bottle count needs it.
+  const askPerDose =
+    !!candidate &&
+    !!bottle &&
+    bottle.mode !== 'none' &&
+    inventoryUnitFor(candidate.form) === 'unit' &&
+    !candidate.unitsPerDose
   const suggestsBedtime = candidate
     ? rulesForProduct(candidate).some((r) => r.attribute === 'SUGGEST_BEDTIME')
     : false
@@ -199,6 +230,34 @@ export function AddSupplement() {
                 </button>
               )}
             </div>
+          )}
+
+          {candidate.kind !== 'topical' && bottle && (
+            <BottleCard
+              product={candidate}
+              draft={bottle}
+              onChange={(d) => {
+                setBottle(d)
+                setInvalid(false)
+              }}
+              invalid={invalid}
+            />
+          )}
+
+          {askPerDose && (
+            <label className="card field">
+              <span className="field__label">{t('bottle.perDoseQuestion')}</span>
+              <span className="small muted">{t('bottle.perDoseHint')}</span>
+              <input
+                className="input"
+                inputMode="decimal"
+                value={perDose}
+                onChange={(e) => {
+                  setPerDose(e.target.value)
+                  setInvalid(false)
+                }}
+              />
+            </label>
           )}
 
           {candidate.kind !== 'topical' && suggestsBedtime && (

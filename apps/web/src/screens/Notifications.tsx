@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import { Switch } from '../components/Switch'
 import { useInstallPrompt } from '../hooks/useInstallPrompt'
 import { intlLocale, t } from '../i18n'
 import { isIOS, platformName } from '../platform/detect'
 import { useSyncStatus } from '../reminders/syncStatus'
 import { useReminders } from '../reminders/useReminders'
+import { useAppState } from '../state/context'
 
 const STALE_MS = 5 * 24 * 60 * 60 * 1000
 
@@ -16,7 +18,9 @@ function relative(ts: number, now: number): string {
   return rtf.format(-Math.round(diffH / 24), 'day')
 }
 
-export function Reminders() {
+/** Notifications: dose reminders (and, later, news) for this device. */
+export function Notifications() {
+  const { state, dispatch } = useAppState()
   const r = useReminders()
   const [now] = useState(() => Date.now())
   const sync = useSyncStatus()
@@ -52,6 +56,7 @@ export function Reminders() {
       {stale && <p className="notice notice--warn">{t('reminders.stale')}</p>}
 
       <section className="card stack-v">
+        <h2>{t('reminders.section')}</h2>
         {unsupported ? (
           <p className="notice notice--warn">{t('reminders.unsupported')}</p>
         ) : denied ? (
@@ -109,6 +114,14 @@ export function Reminders() {
             </button>
           </>
         )}
+
+        <Switch
+          checked={state.reminderProductNames}
+          onChange={(on) => dispatch({ type: 'SET_REMINDER_NAMES', on })}
+          label={t('reminders.namesTitle')}
+        >
+          {t('reminders.namesBody')}
+        </Switch>
 
         {(r.error || sync.error) && (
           <p className="notice notice--error" role="alert">

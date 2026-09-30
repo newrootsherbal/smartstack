@@ -5,9 +5,7 @@
 .item {
   display: grid;
   grid-template-columns: 1fr auto;
-  grid-template-areas:
-    'info remove'
-    'doses remove';
+  grid-template-areas: 'info manage';
   gap: var(--space-2) var(--space-3);
   align-items: center;
   padding: var(--space-3) var(--space-4);
@@ -17,19 +15,19 @@
   grid-area: info;
   display: flex;
   flex-direction: column;
-}
-
-.doses {
-  grid-area: doses;
-  max-width: 180px;
-}
-
-.doses select {
-  min-height: 38px;
+  gap: 2px;
 }
 
 .item > button {
-  grid-area: remove;
+  grid-area: manage;
+  align-self: start;
+}
+
+.inline {
+  display: inline;
+  min-height: 0;
+  padding: 0;
+  font-size: inherit;
 }
 
 .overlap {

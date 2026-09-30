@@ -11,8 +11,9 @@
     "today": "Aujourd’hui",
     "stack": "Suppléments",
     "add": "Ajouter",
-    "reminders": "Rappels",
-    "settings": "Paramètres"
+    "shopping": "Achats",
+    "shoppingCount": { "one": "Achats, 1 article", "other": "Achats, {count} articles" },
+    "profile": "Profil"
   },
   "severity": {
     "important": { "label": "Important", "sub": "Action requise" },
@@ -67,7 +68,12 @@
     "noThanks": "Non merci"
   },
   "push": {
-    "several": "{count} suppléments"
+    "several": "{count} suppléments",
+    "hidden": {
+      "one": "1 produit à prendre — {time}",
+      "other": "{count} produits à prendre — {time}"
+    },
+    "hiddenBody": "Ouvrez SmartStack pour voir quoi prendre."
   },
   "unit": {
     "mg": "mg",
@@ -148,6 +154,74 @@
     "3": "Trois fois par jour",
     "4": "Quatre fois par jour"
   },
+  "bottle": {
+    "title": "Votre flacon",
+    "new": "Nouveau flacon",
+    "opened": "Déjà entamé",
+    "dontTrack": "Ne pas suivre",
+    "whichSize": "Quel format?",
+    "fullQuestion": "Combien de {units} dans un flacon plein?",
+    "leftQuestion": "Combien de {units} reste-t-il?",
+    "perDoseQuestion": "Combien par dose?",
+    "perDoseHint": "L’étiquette n’indique pas combien en prendre à la fois.",
+    "status": "Reste {amount} · {days}",
+    "days": {
+      "zero": "Vide",
+      "one": "environ 1 jour",
+      "other": "environ {days} jours"
+    },
+    "notTracked": "Non suivi",
+    "track": "Suivre ce flacon",
+    "serving": { "one": "portion", "other": "portions" },
+    "refill": "Remplir",
+    "refillTitle": "Remplir : {product}",
+    "refillQuestion": "Combien en avez-vous ajouté?",
+    "refillSum": "{left} + {added} = {total}",
+    "editCount": "Modifier le nombre",
+    "editCountTitle": "Combien de {units} reste-t-il?",
+    "stopTracking": "Arrêter le suivi",
+    "trackTitle": "Suivre : {product}",
+    "invalid": "Entrez un nombre."
+  },
+  "manage": {
+    "button": "Gérer",
+    "buttonLabel": "Gérer : {product}",
+    "moveTo": "Déplacer à…",
+    "moveToHint": "Votre choix l’emporte sur l’horaire automatique.",
+    "automatic": "Automatique",
+    "doseN": "Dose {n}",
+    "addToShopping": "Ajouter à la liste d’achats",
+    "onShopping": "Dans votre liste d’achats",
+    "removeTitle": "Retirer de mes suppléments"
+  },
+  "low": {
+    "title": "Bientôt épuisé",
+    "body": "Il ne vous reste presque plus de {product}. {days} ({amount}). Nous l’avons ajouté à votre liste d’achats.",
+    "days": {
+      "zero": "Vide",
+      "one": "Environ 1 jour",
+      "other": "Environ {days} jours"
+    },
+    "viewList": "Voir la liste d’achats",
+    "ok": "OK"
+  },
+  "shopping": {
+    "title": "Liste d’achats",
+    "empty": "Rien à acheter. Les produits qui ont 5 jours ou moins de réserve s’affichent ici.",
+    "count": { "one": "1 produit", "other": "{count} produits" },
+    "chipLow": "Bientôt épuisé",
+    "chipManual": "Ajouté par vous",
+    "chipInstead": "Au lieu de {product}",
+    "buyOnline": "Acheter en ligne",
+    "buyOnlineLabel": "Acheter {product} en ligne (ouvre newrootsherbal.com)",
+    "removed": "{product} retiré de votre liste.",
+    "undo": "Annuler"
+  },
+  "profile": {
+    "title": "Profil",
+    "notifications": "Notifications",
+    "notificationsHint": "Rappels de doses sur cet appareil."
+  },
   "common": {
     "back": "Retour",
     "cancel": "Annuler",
@@ -186,7 +260,7 @@
   "onboarding": {
     "title": "Votre routine quotidienne",
     "editTitle": "Modifier votre routine",
-    "intro": "SmartStack organise vos suppléments autour de votre journée. Vous pourrez modifier ceci en tout temps dans les paramètres.",
+    "intro": "SmartStack organise vos suppléments autour de votre journée. Vous pourrez modifier ceci en tout temps dans votre profil.",
     "wake": "Réveil",
     "coffee": "Café ou thé",
     "breakfast": "Déjeuner",
@@ -292,7 +366,13 @@
     "productPage": "Page du produit"
   },
   "reminders": {
-    "title": "Rappels",
+    "title": "Notifications",
+    "section": "Rappels de doses",
+    "namesTitle": "Afficher le nom des produits dans les rappels",
+    "namesBody": "Les rappels peuvent s’afficher sur votre écran verrouillé. Lorsque cette option est désactivée, ils indiquent seulement le nombre de produits à prendre.",
+    "cardTitle": "Activer les rappels",
+    "cardBody": "Recevez une notification à chaque heure prévue, même quand l’application est fermée.",
+    "cardNotNow": "Plus tard",
     "intro": "Recevez une notification à chaque heure prévue. SmartStack n’envoie rien au serveur tant que vous n’activez pas cette option.",
     "turnOn": "Activer les rappels",
     "turningOn": "Configuration…",
@@ -316,7 +396,7 @@
     "syncFailed": "Impossible de joindre le service de rappels ({error}). Nouvel essai à la prochaine ouverture de l’application.",
     "vapidMissing": "Les rappels ne sont pas encore configurés dans cette version (clé publique manquante).",
     "windowNote": "Les rappels sont programmés 7 jours à l’avance chaque fois que vous ouvrez l’application.",
-    "privacy": "Ce qui est envoyé : un identifiant anonyme, votre fuseau horaire, votre abonnement aux notifications et les heures de rappel avec les noms des produits. Jamais votre routine ni la liste complète de vos suppléments."
+    "privacy": "Ce qui est envoyé : un identifiant anonyme, votre fuseau horaire, votre abonnement aux notifications et les heures de rappel avec leur texte (le nom des produits seulement si vous l’activez ci-dessus). Jamais votre routine ni la liste complète de vos suppléments."
   },
   "settings": {
     "title": "Paramètres",
@@ -331,10 +411,10 @@
     "themeHint": "Choisissez l’apparence qui vous plaît. Le choix reste sur cet appareil.",
     "data": "Vos données",
     "delete": "Supprimer mes données",
-    "deleteConfirm": "Supprimer vos suppléments, votre routine et vos rappels sur cet appareil et sur le serveur? Cette action est irréversible.",
+    "deleteConfirm": "Supprimer vos suppléments, votre routine, vos flacons, votre liste d’achats et vos rappels sur cet appareil et sur le serveur? Cette action est irréversible.",
     "deleteFailedServer": "Le serveur n’a pas pu être joint; les données locales ont tout de même été supprimées. Les données du serveur expirent d’elles-mêmes dans les 7 jours.",
     "privacy": "Confidentialité",
-    "privacyBody": "SmartStack conserve votre routine et vos suppléments uniquement sur cet appareil. Si vous activez les rappels, le serveur garde un identifiant anonyme, votre fuseau horaire, votre abonnement aux notifications et les heures de rappel des 7 prochains jours avec les noms des produits. Les rappels envoyés sont supprimés après 7 jours. Rien n’est partagé avec des tiers et il n’y a aucune analyse d’audience.",
+    "privacyBody": "SmartStack conserve votre routine et vos suppléments uniquement sur cet appareil. Si vous activez les rappels, le serveur garde un identifiant anonyme, votre fuseau horaire, votre abonnement aux notifications et les heures de rappel des 7 prochains jours avec leur texte (le nom des produits seulement si vous choisissez de l’afficher). Les rappels envoyés sont supprimés après 7 jours. Rien n’est partagé avec des tiers et il n’y a aucune analyse d’audience.",
     "catalogue": "Catalogue : {count} produits New Roots Herbal importés de newrootsherbal.com",
     "version": "Version {version}",
     "dev": "Développement",
