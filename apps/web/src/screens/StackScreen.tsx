@@ -32,7 +32,11 @@ export function StackScreen() {
       <header className="screen-header">
         <h1>{t('stack.title')}</h1>
         {state.stack.length > 0 && (
-          <p className="muted small">{t('stack.count', { count: state.stack.length })}</p>
+          <p className="muted small">
+            {t(`stack.count.${state.stack.length === 1 ? 'one' : 'other'}`, {
+              count: state.stack.length,
+            })}
+          </p>
         )}
       </header>
 

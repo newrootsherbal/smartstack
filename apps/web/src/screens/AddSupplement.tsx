@@ -405,7 +405,11 @@ export function AddSupplement() {
                 onChange={(e) => setQuery(e.target.value)}
                 aria-label={t('add.searchPlaceholder')}
               />
-              <p className="small muted">{t('add.results', { count: results.length })}</p>
+              <p className="small muted">
+                {t(`add.results.${results.length === 1 ? 'one' : 'other'}`, {
+                  count: results.length,
+                })}
+              </p>
               {results.length === 0 ? (
                 <div className="notice stack-v">
                   <p>{t('add.noResults', { query })}</p>

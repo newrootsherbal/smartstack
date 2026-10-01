@@ -56,7 +56,7 @@ export default function DevBarcodes() {
           aria-label={t('add.searchPlaceholder')}
         />
         <p className="small muted">
-          {t('add.results', { count: matches.length })}
+          {t(`add.results.${matches.length === 1 ? 'one' : 'other'}`, { count: matches.length })}
           {matches.length > MAX_RENDERED && ` · ${t('dev.showing', { count: MAX_RENDERED })}`}
         </p>
       </header>
