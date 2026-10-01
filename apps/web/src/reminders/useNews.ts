@@ -59,5 +59,8 @@ export function useNews() {
     }
   }, [dispatch, state])
 
-  return { on: state.newsOptIn, busy, error, vapidConfigured, enable, disable }
+  // Like reminders: without a push subscription (permission reset, icon removed) nothing can
+  // arrive, so the switch shows off and turning it on subscribes again.
+  const on = state.newsOptIn && state.pushState.status === 'subscribed'
+  return { on, busy, error, vapidConfigured, enable, disable }
 }

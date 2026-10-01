@@ -37,15 +37,28 @@ export function completeSignIn(
   }
 }
 
-/** What a device keeps when the person leaves their account: the device, not their data. */
-function clearedState(state: PersistedState, keepDevice: boolean): PersistedState {
+/**
+ * What a device keeps when the person leaves their account: the device, not their data. A kept
+ * device also keeps its notification choices, which the Worker holds per device: its push
+ * subscription, reminders on or off, and news on or off (C6). Resetting the news switch here
+ * would show "off" while the Worker still sends, so the person couldn't turn news off.
+ */
+export function clearedState(state: PersistedState, keepDevice: boolean): PersistedState {
   const fresh = defaultState(keepDevice ? state.userId : undefined)
   return {
     ...fresh,
     theme: state.theme,
     locale: state.locale,
     tz: state.tz,
-    ...(keepDevice ? { pushState: state.pushState } : {}),
+    ...(keepDevice
+      ? {
+          pushState: state.pushState,
+          remindersEnabled: state.remindersEnabled,
+          newsOptIn: state.newsOptIn,
+          newsPromptAsked: state.newsPromptAsked,
+          serverLocale: state.serverLocale,
+        }
+      : {}),
     auth: { ...fresh.auth, mode: ACCOUNTS_PUBLIC ? 'unset' : 'guest' },
   }
 }
