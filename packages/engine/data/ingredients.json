@@ -1994,6 +1994,14 @@
     "unit": "mg"
   },
   {
+    "id": "oat-fibre-extract-22-beta-glucans",
+    "name": {
+      "en": "Oat fibre extract, 22% beta-glucans",
+      "fr": "Extrait de fibre d’avoine, 22 % de bêta-glucanes"
+    },
+    "unit": "mg"
+  },
+  {
     "id": "odourless-garlic-bulb",
     "name": {
       "en": "Odourless garlic bulb",
@@ -3373,14 +3381,6 @@
     "id": "wild-crafted-saw-palmetto-fruit-liposterolic-extract-95-fatty-acids",
     "name": {
       "en": "Wild-crafted saw palmetto fruit liposterolic extract, 95% fatty acids"
-    },
-    "unit": "mg"
-  },
-  {
-    "id": "wild-harvested-saw-palmetto-fruit-extract-95-purified",
-    "name": {
-      "en": "Wild-harvested saw palmetto fruit extract, 95% purified",
-      "fr": "Extrait de fruit de chou palmiste de cueillette sauvage, purifié à 95 %"
     },
     "unit": "mg"
   },

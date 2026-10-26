@@ -2,13 +2,13 @@
 
 Source: https://newrootsherbal.com/ai-catalog
 
-- Records: 392
-- Products imported: 392
+- Records: 391
+- Products imported: 391
 - Skipped: 0
 - Ingredients: 447
 - Label-derived rules: 173 (curated: 10)
-- Ingredients with a French name: 309 (French facts lined up for 309 products, differed for 18)
-- Parser warnings: 146
+- Ingredients with a French name: 309 (French facts lined up for 308 products, differed for 18)
+- Parser warnings: 144
 
 ## Skipped
 
@@ -41,7 +41,6 @@ childrens-omega-3: unparsed "of DHA"
 childrens-probiotic-10-billion: unparsed "CFU Cells = Colony-Forming Unit Cells. Potency guaranteed at"
 chlorella-capsules: unparsed "Source of antioxidants. Our deep-green, broken-cell chlorell"
 chlorella-powder: unparsed "Deep green, broken-cell chlorella has 78% digestibility. It "
-cho-less-terin: unparsed "beta-Sitosterol 40% Campesterol 20% Stigmasterol 20% Oat (Av"
 citronella-essential-oil: unparsed "Attributes: Purifying, reviving, cleansing"
 clary-sage-essential-oil: unparsed "Attributes: Inspiring, focusing, centering"
 clove-bud-essential-oil: unparsed "Eugenol and beta-caryophyllene"
@@ -91,8 +90,7 @@ maxabsorb-curcumin: unparsed "www.therabio.co.jp/curcurouge"
 mct-energy-liquid: nutrition facts table (food); no medicinal ingredients
 menopeace: unparsed "AIE = Aglycone Isoflavone Equivalents"
 moringa-seed-oil: unparsed "Ingredients: Moringa oleifera seed oil and Rosmarinus offici"
-msm-powder: unparsed "3"
-msm-powder: unparsed "of 100% pure, pharmaceutical-grade methylsulfonylmethane"
+msm-powder: unparsed "100% pure, pharmaceutical-grade methylsulfonylmethane"
 msm-powder: no medicinal ingredient could be parsed from the facts
 multi-5-collagen: nutrition facts table (food); no medicinal ingredients
 multi-5-collagen-with-delicious-organic-cocoa: nutrition facts table (food); no medicinal ingredients
