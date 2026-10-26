@@ -3902,7 +3902,7 @@
     "unitsPerDose": 2,
     "unitLabel": "softgel",
     "status": "draft",
-    "labelVersion": "R5",
+    "labelVersion": "R6",
     "ingredients": [
       {
         "ingredientId": "guggul-gum-resin-extract-3-5-guggulsterone",
@@ -3911,6 +3911,10 @@
       {
         "ingredientId": "free-plant-sterols",
         "amountPerDose": 200
+      },
+      {
+        "ingredientId": "oat-fibre-extract-22-beta-glucans",
+        "amountPerDose": 150
       },
       {
         "ingredientId": "red-yeast-rice-extract-0-5-lovastatin",
@@ -18062,57 +18066,6 @@
       }
     ],
     "sourceUrl": "https://newrootsherbal.com/shop/saffron-zen",
-    "reviewStatus": "unreviewed",
-    "lastReviewed": null,
-    "reviewedBy": null
-  },
-  {
-    "id": "saw-palmetto",
-    "sku": "0717",
-    "upc": "628747107174",
-    "npn": "80020986",
-    "kind": "nhp",
-    "brand": "New Roots Herbal",
-    "name": {
-      "en": "Saw Palmetto",
-      "fr": "Chou Palmiste"
-    },
-    "shortName": {
-      "en": "Saw Palmetto",
-      "fr": "Chou Palmiste"
-    },
-    "subtitle": {
-      "en": "95% Fatty Acids · 160 mg",
-      "fr": "95 % d’acides gras · 160 mg"
-    },
-    "form": "softgel",
-    "servingSize": "1 softgel",
-    "dosesPerDayDefault": 2,
-    "unitsPerDose": 1,
-    "unitLabel": "softgel",
-    "status": "draft",
-    "labelVersion": "R1",
-    "ingredients": [
-      {
-        "ingredientId": "wild-harvested-saw-palmetto-fruit-extract-95-purified",
-        "amountPerDose": 160
-      }
-    ],
-    "variants": [
-      {
-        "sku": "0717",
-        "upc": "628747107174",
-        "size": {
-          "en": "60",
-          "fr": "60"
-        },
-        "format": {
-          "en": "Softgels",
-          "fr": "Gélules"
-        }
-      }
-    ],
-    "sourceUrl": "https://newrootsherbal.com/shop/saw-palmetto",
     "reviewStatus": "unreviewed",
     "lastReviewed": null,
     "reviewedBy": null
