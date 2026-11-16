@@ -7,6 +7,14 @@
     "unit": "mg"
   },
   {
+    "id": "acetyl-carnitine",
+    "name": {
+      "en": "Acetyl-ʟ‑carnitine",
+      "fr": "Acétyl‑ʟ‑carnitine"
+    },
+    "unit": "mg"
+  },
+  {
     "id": "acetyl-carnitine-hydrochloride",
     "name": {
       "en": "Acetyl‒ʟ‒carnitine hydrochloride",
@@ -49,13 +57,6 @@
     "name": {
       "en": "alpha-Linolenic acid",
       "fr": "Acide alpha-linolénique"
-    },
-    "unit": "mg"
-  },
-  {
-    "id": "alpha-linolenic-acid-omega-3-fatty-acids",
-    "name": {
-      "en": "alpha‑Linolenic acid omega‑3 fatty acids"
     },
     "unit": "mg"
   },
@@ -1472,13 +1473,6 @@
     "unit": "mg"
   },
   {
-    "id": "hydrolyzed-alpha-lactalbumin",
-    "name": {
-      "en": "Hydrolyzed alpha-lactalbumin"
-    },
-    "unit": "mg"
-  },
-  {
     "id": "hydrolyzed-collagen-type-i-6-elastin",
     "name": {
       "en": "Hydrolyzed collagen—type I, 6% elastin",
@@ -1994,6 +1988,14 @@
     "unit": "mg"
   },
   {
+    "id": "oat-fibre-extract-22-beta-glucans",
+    "name": {
+      "en": "Oat fibre extract, 22% beta-glucans",
+      "fr": "Extrait de fibre d’avoine, 22 % de bêta-glucanes"
+    },
+    "unit": "mg"
+  },
+  {
     "id": "odourless-garlic-bulb",
     "name": {
       "en": "Odourless garlic bulb",
@@ -2061,13 +2063,6 @@
       "en": "of Haematococcus pluvialis"
     },
     "unit": "mcg"
-  },
-  {
-    "id": "oleic-acid",
-    "name": {
-      "en": "Oleic acid"
-    },
-    "unit": "mg"
   },
   {
     "id": "olive-leaf-extract-20-oleuropein",
@@ -3317,6 +3312,13 @@
     "unit": "mcg"
   },
   {
+    "id": "whey-protein-concentrate",
+    "name": {
+      "en": "Whey protein concentrate"
+    },
+    "unit": "mg"
+  },
+  {
     "id": "white-willow-bark",
     "name": {
       "en": "White willow bark",
@@ -3373,14 +3375,6 @@
     "id": "wild-crafted-saw-palmetto-fruit-liposterolic-extract-95-fatty-acids",
     "name": {
       "en": "Wild-crafted saw palmetto fruit liposterolic extract, 95% fatty acids"
-    },
-    "unit": "mg"
-  },
-  {
-    "id": "wild-harvested-saw-palmetto-fruit-extract-95-purified",
-    "name": {
-      "en": "Wild-harvested saw palmetto fruit extract, 95% purified",
-      "fr": "Extrait de fruit de chou palmiste de cueillette sauvage, purifié à 95 %"
     },
     "unit": "mg"
   },

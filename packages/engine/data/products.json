@@ -669,7 +669,7 @@
     "id": "amino-mix",
     "sku": "1167",
     "upc": "628747111676",
-    "npn": "80023663",
+    "npn": "80151131",
     "kind": "nhp",
     "brand": "New Roots Herbal",
     "name": {
@@ -690,10 +690,10 @@
     "unitsPerDose": 3,
     "unitLabel": "tablet",
     "status": "draft",
-    "labelVersion": "R2",
+    "labelVersion": "R4",
     "ingredients": [
       {
-        "ingredientId": "hydrolyzed-alpha-lactalbumin",
+        "ingredientId": "whey-protein-concentrate",
         "amountPerDose": 850
       },
       {
@@ -3902,7 +3902,7 @@
     "unitsPerDose": 2,
     "unitLabel": "softgel",
     "status": "draft",
-    "labelVersion": "R5",
+    "labelVersion": "R6",
     "ingredients": [
       {
         "ingredientId": "guggul-gum-resin-extract-3-5-guggulsterone",
@@ -3911,6 +3911,10 @@
       {
         "ingredientId": "free-plant-sterols",
         "amountPerDose": 200
+      },
+      {
+        "ingredientId": "oat-fibre-extract-22-beta-glucans",
+        "amountPerDose": 150
       },
       {
         "ingredientId": "red-yeast-rice-extract-0-5-lovastatin",
@@ -4460,6 +4464,69 @@
       }
     ],
     "sourceUrl": "https://newrootsherbal.com/shop/co-enzyme-q10-100-mg",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
+    "id": "coenzyme-q10-100mg-softgels",
+    "sku": "3235",
+    "upc": "628747132350",
+    "npn": "80126332",
+    "kind": "nhp",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Co-Enzyme Q10 · 100 mg Softgels",
+      "fr": "Co-Enzyme Q10 · 100 mg Gélules"
+    },
+    "shortName": {
+      "en": "Co-Enzyme Q10",
+      "fr": "Co-Enzyme Q10"
+    },
+    "subtitle": {
+      "en": "Enhanced Absorption",
+      "fr": "Absorption accrue"
+    },
+    "form": "softgel",
+    "servingSize": "1 softgel",
+    "dosesPerDayDefault": 1,
+    "unitsPerDose": 2,
+    "unitLabel": "softgel",
+    "status": "draft",
+    "labelVersion": "R3",
+    "ingredients": [
+      {
+        "ingredientId": "coenzyme-q10",
+        "amountPerDose": 100
+      }
+    ],
+    "variants": [
+      {
+        "sku": "3235",
+        "upc": "628747132350",
+        "size": {
+          "en": "60",
+          "fr": "60"
+        },
+        "format": {
+          "en": "Softgels",
+          "fr": "Gélules"
+        }
+      },
+      {
+        "sku": "3616",
+        "upc": "628747136167",
+        "size": {
+          "en": "125",
+          "fr": "125"
+        },
+        "format": {
+          "en": "Softgels",
+          "fr": "Gélules"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/coenzyme-q10-100mg-softgels",
     "reviewStatus": "unreviewed",
     "lastReviewed": null,
     "reviewedBy": null
@@ -5109,8 +5176,8 @@
       "fr": "Cordyceps Militaris"
     },
     "subtitle": {
-      "en": "Hot-Water Extract · 20% beta‑Glucans from 40% Polysaccharides · 400 mg",
-      "fr": "Extrait à l’eau chaude · 20 % de bêta-glucanes de 40 % de polysaccharides · 400 mg"
+      "en": "Hot-Water Extract · 14% beta‑Glucans from 40% Polysaccharides · 400 mg",
+      "fr": "Extrait à l’eau chaude · 14 % de bêta-glucanes de 40 % de polysaccharides · 400 mg"
     },
     "form": "capsule",
     "servingSize": "1 capsule",
@@ -5118,7 +5185,7 @@
     "unitsPerDose": 1,
     "unitLabel": "capsule",
     "status": "draft",
-    "labelVersion": "R1",
+    "labelVersion": "R2",
     "ingredients": [
       {
         "ingredientId": "cordyceps-mushroom-fruiting-body-extract",
@@ -7138,21 +7205,8 @@
     "unitsPerDose": 2,
     "unitLabel": "softgel",
     "status": "draft",
-    "labelVersion": "R4",
-    "ingredients": [
-      {
-        "ingredientId": "alpha-linolenic-acid-omega-3-fatty-acids",
-        "amountPerDose": 550
-      },
-      {
-        "ingredientId": "oleic-acid",
-        "amountPerDose": 184
-      },
-      {
-        "ingredientId": "linoleic-acid",
-        "amountPerDose": 174
-      }
-    ],
+    "labelVersion": "R5",
+    "ingredients": [],
     "variants": [
       {
         "sku": "0590",
@@ -14007,6 +14061,77 @@
     "reviewedBy": null
   },
   {
+    "id": "nerve-serenity",
+    "sku": "3683",
+    "upc": "628747136839",
+    "npn": "80141557",
+    "kind": "nhp",
+    "brand": "New Roots Herbal",
+    "name": {
+      "en": "Nerve Serenity",
+      "fr": "Nerfs Sereins"
+    },
+    "shortName": {
+      "en": "Nerve Serenity",
+      "fr": "Nerfs Sereins"
+    },
+    "subtitle": {
+      "en": "Advanced Formula",
+      "fr": "Formule avancée"
+    },
+    "form": "capsule",
+    "servingSize": "1 capsule",
+    "dosesPerDayDefault": 2,
+    "unitsPerDose": 2,
+    "unitLabel": "capsule",
+    "status": "draft",
+    "labelVersion": "R1",
+    "ingredients": [
+      {
+        "ingredientId": "acetyl-carnitine",
+        "amountPerDose": 318.75
+      },
+      {
+        "ingredientId": "berberine",
+        "amountPerDose": 125
+      },
+      {
+        "ingredientId": "alpha-lipoic-acid",
+        "amountPerDose": 150
+      },
+      {
+        "ingredientId": "benfotiamine",
+        "amountPerDose": 112.5
+      },
+      {
+        "ingredientId": "vitamin-b1",
+        "amountPerDose": 64.125
+      },
+      {
+        "ingredientId": "vitamin-b12",
+        "amountPerDose": 250
+      }
+    ],
+    "variants": [
+      {
+        "sku": "3683",
+        "upc": "628747136839",
+        "size": {
+          "en": "120",
+          "fr": "120"
+        },
+        "format": {
+          "en": "Vegetable Capsules",
+          "fr": "Capsules végétales"
+        }
+      }
+    ],
+    "sourceUrl": "https://newrootsherbal.com/shop/nerve-serenity",
+    "reviewStatus": "unreviewed",
+    "lastReviewed": null,
+    "reviewedBy": null
+  },
+  {
     "id": "neuroperform",
     "sku": "3090",
     "upc": "628747130905",
@@ -18062,57 +18187,6 @@
       }
     ],
     "sourceUrl": "https://newrootsherbal.com/shop/saffron-zen",
-    "reviewStatus": "unreviewed",
-    "lastReviewed": null,
-    "reviewedBy": null
-  },
-  {
-    "id": "saw-palmetto",
-    "sku": "0717",
-    "upc": "628747107174",
-    "npn": "80020986",
-    "kind": "nhp",
-    "brand": "New Roots Herbal",
-    "name": {
-      "en": "Saw Palmetto",
-      "fr": "Chou Palmiste"
-    },
-    "shortName": {
-      "en": "Saw Palmetto",
-      "fr": "Chou Palmiste"
-    },
-    "subtitle": {
-      "en": "95% Fatty Acids · 160 mg",
-      "fr": "95 % d’acides gras · 160 mg"
-    },
-    "form": "softgel",
-    "servingSize": "1 softgel",
-    "dosesPerDayDefault": 2,
-    "unitsPerDose": 1,
-    "unitLabel": "softgel",
-    "status": "draft",
-    "labelVersion": "R1",
-    "ingredients": [
-      {
-        "ingredientId": "wild-harvested-saw-palmetto-fruit-extract-95-purified",
-        "amountPerDose": 160
-      }
-    ],
-    "variants": [
-      {
-        "sku": "0717",
-        "upc": "628747107174",
-        "size": {
-          "en": "60",
-          "fr": "60"
-        },
-        "format": {
-          "en": "Softgels",
-          "fr": "Gélules"
-        }
-      }
-    ],
-    "sourceUrl": "https://newrootsherbal.com/shop/saw-palmetto",
     "reviewStatus": "unreviewed",
     "lastReviewed": null,
     "reviewedBy": null
